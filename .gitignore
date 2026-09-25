@@ -1,0 +1,7 @@
+# ProcessWire exports hold user accounts, password hashes and private emails. Keep local only.
+source/
+
+__pycache__/
+*.pyc
+.env*
+node_modules/
