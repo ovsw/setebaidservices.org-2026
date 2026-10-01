@@ -160,6 +160,13 @@ steps replace the ones written inside those skills. `/implement` does not run
 the full suite while it works; it follows that file's closing steps and its
 review sequence.
 
+### Page content work
+
+The page skills `/page-plan`, `/page-draft` and `/page-polish` (installed
+globally) hold the process. This project's facts for them (page record,
+release scope, readers, wording, Sanity target) are in
+`docs/agents/pages.md`.
+
 ### Page Builder work
 
 Before adding or changing a Page Builder section, its fields, or its stored
