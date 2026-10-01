@@ -52,11 +52,10 @@ const model: HeaderModel = {
 };
 
 describe("Site Header", () => {
-  it("shows the location subtitle only with the text fallback", () => {
+  it("shows the site name as text until a logo is set", () => {
     const { rerender } = render(<HeaderBrand brand={model.brand} />);
 
     expect(screen.getByText("Northline")).toBeInTheDocument();
-    expect(screen.getByText("Temagami, Ontario · Est. 1975")).toBeInTheDocument();
 
     rerender(
       <HeaderBrand
@@ -71,7 +70,8 @@ describe("Site Header", () => {
       />,
     );
 
-    expect(screen.queryByText("Temagami, Ontario · Est. 1975")).not.toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Northline" })).toBeInTheDocument();
+    expect(screen.queryByText("Northline")).not.toBeInTheDocument();
   });
 
   it("renders authored identity, interactive navigation, and safe actions", async () => {
@@ -81,7 +81,6 @@ describe("Site Header", () => {
     expect(screen.getByRole("banner")).toBeInTheDocument();
     expect(screen.getByRole("navigation", { name: "Main navigation" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Northline home page" })).toHaveAttribute("href", "/");
-    expect(screen.getAllByText("Temagami, Ontario · Est. 1975").length).toBeGreaterThan(0);
     expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/contact");
     await user.click(screen.getByRole("button", { name: "Services" }));
 

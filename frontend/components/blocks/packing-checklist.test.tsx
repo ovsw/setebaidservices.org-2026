@@ -117,7 +117,7 @@ describe("PackingChecklist", () => {
     expect(screen.getByRole("status")).toHaveTextContent("0 of 3 packed");
     expect(screen.getByRole("button", { name: "Clear ticks" })).toBeDisabled();
     expect(
-      Object.keys(window.localStorage).filter((key) => key.startsWith("cac:packing-checklist")),
+      Object.keys(window.localStorage).filter((key) => key.startsWith("setebaid:packing-checklist")),
     ).toHaveLength(0);
   });
 

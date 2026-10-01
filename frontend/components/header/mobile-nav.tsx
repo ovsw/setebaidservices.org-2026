@@ -19,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { siteName } from "@/lib/site-name";
 import { cn } from "@/lib/utils";
 import { CallDirectorsCard } from "./call-directors-card";
 import { HeaderLink } from "./header-link";
@@ -91,7 +92,7 @@ export function MobileNav({
           <div className="flex min-w-0 items-center">{brand}</div>
           <SheetTitle className="sr-only">Main navigation</SheetTitle>
           <SheetDescription className="sr-only">
-            Browse Canadian Adventure Camp pages and programs.
+            Browse {siteName} pages and programs.
           </SheetDescription>
           <SheetClose
             className={cn(

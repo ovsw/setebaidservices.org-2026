@@ -44,7 +44,7 @@ type PackingChecklistListProps = {
   sanity?: { groups?: string };
 };
 
-const STORAGE_PREFIX = "cac:packing-checklist";
+const STORAGE_PREFIX = "setebaid:packing-checklist";
 
 /**
  * Sanity keeps `_key` unique within one array, not across groups, so a tick

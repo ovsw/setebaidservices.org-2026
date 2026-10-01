@@ -1,4 +1,4 @@
-export const SITE_NAME = "Canadian Adventure Camp";
+export const SITE_NAME = "Setebaid Services";
 
 const IMPORTANT_TERMS = ["website", "company", "service"] as const;
 

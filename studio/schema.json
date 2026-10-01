@@ -6596,7 +6596,7 @@
         },
         "optional": true
       },
-      "yearsAtCac": {
+      "yearsAtCamp": {
         "type": "objectAttribute",
         "value": {
           "type": "number"

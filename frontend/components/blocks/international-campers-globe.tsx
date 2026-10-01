@@ -583,7 +583,7 @@ export default function InternationalCampersGlobe({
                       background on each line. */}
                   <span className="block text-center font-mono text-[14px] font-bold leading-[1.35] tracking-[.01em] [filter:drop-shadow(0_6px_18px_rgba(0,0,0,.4))]">
                     <span className="bg-campfire-amber px-[11px] py-1 text-pine-night [-webkit-box-decoration-break:clone] [box-decoration-break:clone]">
-                      ADVENTURE ISLAND<br />LAKE TEMAGAMI
+                      CAMP
                     </span>
                   </span>
                   <span className="h-[13px] w-[1.5px] bg-campfire-amber/75" />

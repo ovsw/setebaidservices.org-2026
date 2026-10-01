@@ -186,10 +186,10 @@ function TeamMemberRosterCard({
   const hasRole = Boolean(stegaClean(member.role)?.trim());
 
   const hasShortBio = Boolean(stegaClean(member.shortBio)?.trim());
-  const yearsAtCac = member.yearsAtCac;
-  const experience = yearsAtCac != null && yearsAtCac >= 1
-    ? `${yearsAtCac} ${yearsAtCac === 1 ? "year" : "years"} at CAC`
-    : "Years at CAC to confirm";
+  const yearsAtCamp = member.yearsAtCamp;
+  const experience = yearsAtCamp != null && yearsAtCamp >= 1
+    ? `${yearsAtCamp} ${yearsAtCamp === 1 ? "year" : "years"} at camp`
+    : "Years at camp to confirm";
 
   if (!(hasImage || hasName || hasRole || hasShortBio)) return null;
 
@@ -241,7 +241,7 @@ function TeamMemberRosterCard({
         ) : null}
         <p
           className="text-sm leading-snug font-medium text-foreground"
-          data-sanity={memberDataAttribute?.(member._id, "yearsAtCac")}
+          data-sanity={memberDataAttribute?.(member._id, "yearsAtCamp")}
         >
           {experience}
         </p>

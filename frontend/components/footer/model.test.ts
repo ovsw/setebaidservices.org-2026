@@ -10,14 +10,14 @@ const rawLink = (
 
 const rawFooter: RawFooter = {
   _id: "footer",
-  eyebrow: "Temagami, Ontario · Est. 1975",
+  eyebrow: "Example Town · Est. 2000",
   heading: "Until next summer,",
   accent: "see you on the island",
   actions: [rawLink("enroll", "Enroll", "https://example.com", true)],
   logos: [
     {
-      _key: "cac",
-      alt: "Canadian Adventure Camp",
+      _key: "site",
+      alt: "Setebaid Services",
       image: {
         asset: {
           _id: "image-4477c44717fcc82a76174b8fa4bc4dc323b05c6b-2182x1006-png",
@@ -62,7 +62,7 @@ describe("createFooterModel", () => {
         openInNewTab: false,
       },
     ]);
-    expect(model?.logos[0]?.alt).toBe("Canadian Adventure Camp");
+    expect(model?.logos[0]?.alt).toBe("Setebaid Services");
     expect(model?.contactLinks[0]?.link.label).toBe(
       "10 Main Street\nExample City",
     );

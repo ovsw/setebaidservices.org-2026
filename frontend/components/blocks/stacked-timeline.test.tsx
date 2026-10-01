@@ -42,7 +42,7 @@ const items: TimelineItem[] = [
   item("huntsville", "Huntsville", { meta: "12:15 pm" }),
   item("manito-landing", "Manito Landing"),
   item("water-taxi", "Water taxi"),
-  item("island", "Adventure Island"),
+  item("island", "Camp"),
 ];
 
 const block: ComponentProps<typeof StackedTimeline> = {

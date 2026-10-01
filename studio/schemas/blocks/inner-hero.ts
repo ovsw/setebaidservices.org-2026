@@ -49,7 +49,7 @@ export default defineType({
       name: "eyebrow",
       type: "string",
       description:
-        'Short amber label above the heading, e.g. "Lake Temagami · Since 1975".',
+        "Short amber label above the heading.",
     }),
     defineField({
       name: "title",

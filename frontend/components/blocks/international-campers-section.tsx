@@ -30,7 +30,10 @@ export const routes = [
   { code: "SYD", city: "Sydney", country: "Australia", lat: -33.95, lng: 151.18, km: 15534, pickup: false as const },
 ] as const;
 
-/** Adventure Island destination coordinates. */
+/**
+ * Destination coordinates. Carried over from the starting code base; set them
+ * to the camp's location before this section is used.
+ */
 export const destination = { lat: 46.94, lng: -80.05 } as const;
 
 /** Heading rich text: italic gets the handwritten amber accent. */

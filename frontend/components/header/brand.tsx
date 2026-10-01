@@ -28,12 +28,7 @@ export function HeaderBrand({ brand }: { brand: HeaderBrandModel }) {
       {logo ? (
         <Logo alt={brand.label} logo={logo} />
       ) : (
-        <>
-          <span>{brand.label}</span>
-          <span className="font-mono text-[14px] leading-tight font-medium tracking-[0.01em] opacity-75 max-[520px]:hidden">
-            Temagami, Ontario · Est. 1975
-          </span>
-        </>
+        <span>{brand.label}</span>
       )}
     </span>
   );

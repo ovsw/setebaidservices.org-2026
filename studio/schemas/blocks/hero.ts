@@ -26,7 +26,7 @@ export default defineType({
       name: "eyebrow",
       type: "string",
       description:
-        'Short amber label above the heading, e.g. "Adventure Island · Since 1975".',
+        "Short amber label above the heading.",
     }),
     defineField({
       name: "title",

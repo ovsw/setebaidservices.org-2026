@@ -42,14 +42,14 @@ describe("home page", () => {
       _id: "homePage",
       _type: "homePage",
       blocks: [{ _key: "intro", _type: "richText" }],
-      title: "Canadian Adventure Camp",
+      title: "Setebaid Services",
     } as never);
 
     const { container } = await renderIndexPage();
 
     expect(container.querySelector("header")).not.toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Canadian Adventure Camp", level: 1 }),
+      screen.getByRole("heading", { name: "Setebaid Services", level: 1 }),
     ).toBeInTheDocument();
     expect(screen.getByTestId("blocks")).toHaveTextContent("richText");
   });
@@ -59,13 +59,13 @@ describe("home page", () => {
       _id: "homePage",
       _type: "homePage",
       blocks: [{ _key: "hero", _type: "homeHero" }],
-      title: "Canadian Adventure Camp",
+      title: "Setebaid Services",
     } as never);
 
     await renderIndexPage();
 
     expect(
-      screen.queryByRole("heading", { name: "Canadian Adventure Camp", level: 1 }),
+      screen.queryByRole("heading", { name: "Setebaid Services", level: 1 }),
     ).not.toBeInTheDocument();
     expect(screen.getByTestId("blocks")).toHaveTextContent("homeHero");
   });

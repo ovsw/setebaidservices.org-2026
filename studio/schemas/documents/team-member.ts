@@ -28,11 +28,11 @@ export default defineType({
         "The team member's job title or public-facing responsibility.",
     }),
     defineField({
-      name: "yearsAtCac",
+      name: "yearsAtCamp",
       type: "number",
-      title: "Years at CAC",
+      title: "Years at camp",
       description:
-        "Years on the CAC team, including the season shown in the roster. Leave blank until confirmed; the card will say ‘Years at CAC to confirm’.",
+        "Years on the camp team, including the season shown in the roster. Leave blank until confirmed; the card will say ‘Years at camp to confirm’.",
       validation: (rule) => rule.integer().min(1),
     }),
     defineField({

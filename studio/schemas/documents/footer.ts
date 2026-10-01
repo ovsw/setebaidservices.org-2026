@@ -189,7 +189,7 @@ const footer = defineType({
       title: "Footer logos",
       type: "array",
       group: "content",
-      description: "The CAC crest and affiliated association marks.",
+      description: "The site logo and affiliated association marks.",
       of: [defineArrayMember({ type: "footerLogo" })],
       validation: (rule) => rule.required().min(1).unique(),
     }),

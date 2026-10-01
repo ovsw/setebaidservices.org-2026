@@ -324,7 +324,7 @@ describe("core Page Builder sections", () => {
           variant: "default",
         },
       ],
-      eyebrow: "Adventure Island",
+      eyebrow: "Summer camp",
       image: null,
       title: [
         {
