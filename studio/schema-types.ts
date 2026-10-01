@@ -54,14 +54,10 @@ import benefitCards from "./schemas/blocks/benefit-cards";
 import homeHero from "./schemas/blocks/home-hero";
 import imageCollageFeature from "./schemas/blocks/image-collage-feature";
 import featureCards from "./schemas/blocks/feature-cards";
-import activitySchedule from "./schemas/blocks/activity-schedule";
-import facilitiesMapSection from "./schemas/blocks/facilities-map-section";
-import datesRatesSection from "./schemas/blocks/dates-rates-section";
 import stackedFeatureRows from "./schemas/blocks/stacked-feature-rows";
 import innerHero from "./schemas/blocks/inner-hero";
 import journey from "./schemas/blocks/journey";
 import stackedTimeline from "./schemas/blocks/stacked-timeline";
-import activityCatalogue from "./schemas/blocks/activity-catalogue";
 import includedExtras from "./schemas/blocks/included-extras";
 import packingChecklist from "./schemas/blocks/packing-checklist";
 import bigImageList from "./schemas/blocks/big-image-list";
@@ -131,14 +127,10 @@ export const schemaTypes = [
   homeHero,
   imageCollageFeature,
   featureCards,
-  activitySchedule,
-  facilitiesMapSection,
-  datesRatesSection,
   stackedFeatureRows,
   innerHero,
   journey,
   stackedTimeline,
-  activityCatalogue,
   includedExtras,
   packingChecklist,
   bigImageList,

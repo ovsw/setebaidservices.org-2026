@@ -6,9 +6,6 @@ export const contentPageBuilderBlockTypes = [
   "storyFeature",
   "imageCollageFeature",
   "featureCards",
-  "activitySchedule",
-  "facilitiesMapSection",
-  "datesRatesSection",
   "stackedFeatureRows",
   "internationalCampersSection",
   "latestArticles",
@@ -17,7 +14,6 @@ export const contentPageBuilderBlockTypes = [
   "ctaBanner",
   "journey",
   "stackedTimeline",
-  "activityCatalogue",
   "includedExtras",
   "packingChecklist",
   "bigImageList",
@@ -71,9 +67,6 @@ const pageBuilderPreviewBlockTypes = new Set<PageBuilderBlockType>([
   "storyFeature",
   "imageCollageFeature",
   "featureCards",
-  "activitySchedule",
-  "facilitiesMapSection",
-  "datesRatesSection",
   "stackedFeatureRows",
   "internationalCampersSection",
   "journey",
@@ -82,7 +75,6 @@ const pageBuilderPreviewBlockTypes = new Set<PageBuilderBlockType>([
   "teamMembers",
   "ctaBanner",
   "stackedTimeline",
-  "activityCatalogue",
   "includedExtras",
   "packingChecklist",
   "bigImageList",
@@ -128,8 +120,8 @@ export function validateBlocks(
   if (teamCount > 1) return "Add no more than one Team Members section";
   const final = blocks?.at(-1);
   if (final?.background === "green") return "Choose White or Cream for the final section above the footer.";
-  if (["facilitiesMapSection", "internationalCampersSection"].includes(final?._type ?? "")) {
-    return "Add a White or Cream section after the map or globe, before the footer.";
+  if (final?._type === "internationalCampersSection") {
+    return "Add a White or Cream section after the globe, before the footer.";
   }
   return true;
 }
@@ -177,7 +169,6 @@ function createBlocksField(
         "bigImageList",
         "largeSlides",
         "latestArticles",
-        "activityCatalogue",
         "teamMembers",
         "directorCta",
       ],
@@ -207,10 +198,6 @@ function createBlocksField(
       name: "camp-info",
       title: "Camp Info",
       of: [
-        "activitySchedule",
-        "activityCatalogue",
-        "facilitiesMapSection",
-        "datesRatesSection",
         "internationalCampersSection",
         "includedExtras",
         "pricingSingleToggle",
