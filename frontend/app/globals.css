@@ -1,0 +1,503 @@
+@import "tailwindcss";
+
+/*
+ * Canadian Adventure Camp — Design System
+ *
+ * Tokens from DESIGN.md and .impeccable/design.json.
+ * Font families are loaded via next/font/google in layout.tsx and injected as
+ * CSS variables (--font-display, --font-body, --font-accent). The mono/label
+ * stack is a system font — no web font needed.
+ *
+ * Colour names follow the prototype palette (13 named colours + translucent
+ * derivatives). Only the named stops are registered — no 50-950 ramps.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Theme                                                               */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* ---- Colours ---- */
+  --color-campfire-amber: oklch(76.3% 0.141 73);
+  --color-navigation-yellow: oklch(84% 0.095 92);
+  --color-campfire-amber-deep: oklch(67.3% 0.135 71);
+
+  --color-cedar: oklch(50.7% 0.095 131);
+  --color-cedar-deep: oklch(40.7% 0.079 131);
+  --color-sunlit-moss: oklch(86.4% 0.096 122);
+  --color-moss: oklch(78% 0.118 123);
+
+  --color-pine-night: oklch(22.8% 0.034 133);
+  --color-forest-floor: oklch(37.7% 0.07 130);
+  --color-forest-panel: oklch(30% 0.047 134);
+  --color-birch-bark: oklch(95.2% 0.018 93);
+  --color-birch-bark-bright: oklch(97.6% 0.012 92);
+  --color-lake-night: oklch(20% 0.035 261);
+
+  /* Ink tiers — solid secondary text on cream. Pine Night's hue and chroma at
+     a raised lightness, so the value is the same on Birch Bark and on Birch
+     Bark Bright. Contrast on Birch Bark (the darker cream): ink-muted 5.1:1,
+     ink-soft 6.5:1. Text on cream never uses an alpha; see DESIGN.md. */
+  --color-ink-muted: oklch(50% 0.034 133);
+  --color-ink-soft: oklch(44.5% 0.034 133);
+
+  --color-ember-red: oklch(53.5% 0.154 38);
+
+  /* Semantic aliases used by components (home-hero, button, etc.) */
+  --color-cream: var(--color-birch-bark);
+  --color-accent: var(--color-campfire-amber);
+  --color-accent-hover: var(--color-campfire-amber-deep);
+  --color-forest-900: var(--color-forest-floor);
+
+  /* shadcn/ui semantic tokens — mapped to the camp palette */
+  --color-background: var(--color-birch-bark);
+  --color-foreground: var(--color-pine-night);
+  --color-primary: var(--color-campfire-amber);
+  --color-primary-foreground: var(--color-pine-night);
+  --color-secondary: var(--color-forest-panel);
+  --color-secondary-foreground: var(--color-birch-bark);
+  --color-muted: var(--color-birch-bark-bright);
+  --color-muted-foreground: var(--color-ink-muted);
+  --color-card: var(--color-birch-bark);
+  --color-card-foreground: var(--color-pine-night);
+  --color-destructive: var(--color-ember-red);
+
+  /* ---- Typography ---- */
+
+  /* Font families — CSS variables are set by next/font in layout.tsx. */
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-accent: "Caveat", var(--font-caveat), cursive;
+  --font-mono: ui-monospace, Menlo, "Cascadia Mono", "Segoe UI Mono",
+    "Liberation Mono", monospace;
+
+  /* ---- Border Radius ---- */
+  --radius-xs: 3px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 26px;
+  --radius-section: 44px;
+  --radius-pill: 999px;
+
+  /* ---- Spacing ---- */
+  /* No `--spacing-section` token: it would make Tailwind's built-in
+     `py-section` win over the `@utility py-section` below, and the seam
+     padding from section-boundaries.ts would never apply. */
+  --spacing-gutter: 56px;
+
+  /* ---- Shadows ---- */
+  --shadow-lift: 0 40px 70px -22px rgba(13, 18, 8, 0.65);
+  --shadow-media-rest: 0 36px 70px rgba(13, 18, 8, 0.45);
+  --shadow-globe-rest: 0 42px 84px rgba(0, 0, 0, 0.5);
+  --shadow-card-rest-cream: 0 22px 44px rgba(22, 32, 15, 0.12);
+  --shadow-stamp: 0 10px 24px rgba(13, 18, 8, 0.35);
+  --shadow-hero-cta: 0 12px 32px rgba(0, 0, 0, 0.35);
+
+  /* ---- Container ---- */
+  --container-content: 1320px;
+
+  /* ---- Breakpoints ---- */
+  --breakpoint-phone: 640px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+
+  /* ---- Easing ---- */
+  --ease-reveal: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-standard: ease;
+
+  /* ---- Animation ---- */
+  --animate-hero-rise: hero-rise 0.9s var(--ease-reveal) both;
+  --animate-rise-up: rise-up 0.9s var(--ease-reveal) both;
+  --animate-marquee-left: marquee-left 40s linear infinite;
+  --animate-stamp-in: stamp-in 0.4s var(--ease-overshoot) both;
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive layout custom properties                                 */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --gutter: 56px;
+  --section-pad: 120px;
+  --header-height: 80px;
+  /* Tuck overlap: how far a rounded-top section reaches up over the section
+     above. Equal to the section radius so the curve starts at the seam. */
+  --section-overlap: var(--radius-section);
+  /* Section boundary padding. Defaults are the full rhythm (an edge); the
+     mapping rule below halves a seam side and pads an edge before a tucker. */
+  --seam-factor: 0.5;
+  --section-pad-top: var(--section-pad);
+  --section-pad-bottom: var(--section-pad);
+  /* Dark band surface: a warm glow near the top, a shadow settling at the
+     bottom, and a grain over both. Tune here. */
+  --band-glow: color-mix(in oklch, var(--color-campfire-amber) 14%, transparent);
+  --band-shade: color-mix(in oklch, var(--color-pine-night) 45%, transparent);
+  --grain-size: 180px;
+  --grain-opacity: 0.45;
+  --grain-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+
+@media (max-width: 1023px) {
+  :root {
+    --gutter: 32px;
+    --section-pad: 96px;
+  }
+}
+
+@media (max-width: 639px) {
+  :root {
+    --gutter: 20px;
+    --section-pad: 72px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Overlay header                                                      */
+/* ------------------------------------------------------------------ */
+
+/* When the page opens with a full-bleed hero (marked data-header-overlay),
+   content slides under the nav and the bar is see-through at the top of the
+   page. The background returns once the user scrolls, which is also when the
+   hide-on-scroll behaviour takes over. */
+body:has([data-header-overlay]) header[data-site-header] {
+  margin-bottom: calc(var(--header-height) * -1);
+}
+
+body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+/* ------------------------------------------------------------------ */
+/* Section boundaries                                                  */
+/* ------------------------------------------------------------------ */
+
+/* The block dispatcher resolves each section's boundaries on the server and
+   marks the wrapper with boolean attributes (see section-boundaries.ts). This
+   rule turns them into the two padding properties that `py-section` reads.
+   Set on the wrapper, they inherit into the section. A seam is half the
+   rhythm; an edge is the full rhythm; an edge before a tucker adds the
+   overlap back so the tucker's curve does not eat the padding. */
+[data-seam-top] {
+  --section-pad-top: calc(var(--section-pad) * var(--seam-factor));
+}
+
+[data-seam-bottom] {
+  --section-pad-bottom: calc(var(--section-pad) * var(--seam-factor));
+}
+
+[data-tuck-below] {
+  --section-pad-bottom: calc(var(--section-pad) + var(--section-overlap));
+}
+
+/* Tuck geometry. The wrapper, not the section, pulls a tucker up over the
+   section above and stacks it on top. z-index 1 sits under the sticky header
+   (z-60) and the catalogue jump bar (z-40). No overflow clipping here: the
+   story feature and large slides pin sticky frames that stop working under a
+   clipping ancestor. */
+[data-tuck] {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--section-overlap));
+}
+
+/* The curve belongs to the tuck, not to the block. A tucker that meets a
+   matching background sits flush at a seam; rounding it there would cut
+   notches that show the page background. The radius goes on the section
+   element, so a section with overflow clipping still clips to the curve. */
+[data-tuck] > * {
+  border-top-left-radius: var(--radius-section);
+  border-top-right-radius: var(--radius-section);
+}
+
+/* Band surface. The dispatcher wraps each run of seam-joined sections in a
+   band (see resolveSectionBands). Dark bands carry one grain overlay that
+   spans the whole run, so the texture never restarts at a seam. The band
+   does not paint a background: sections keep their own colour, the overlay
+   sits above them and blends in. flow-root stops a leading tucker's
+   negative margin from collapsing through the band, so the band box starts
+   at the boundary and the tucker overflows above it; the overlay reaches
+   up by the same overlap and rounds its corners to the tucker's shape.
+   z-index 1 matches the tuck wrapper, so DOM order still decides which
+   neighbour paints on top. */
+[data-band="green"],
+[data-band="night"] {
+  display: flow-root;
+  position: relative;
+  z-index: 1;
+}
+
+[data-band="green"]::before,
+[data-band="night"]::before,
+[data-band="green"]::after,
+[data-band="night"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Tonal variation: two large warm glows, top-left and bottom-right, with a
+   shadow in the top-right corner between them. Sized to the band, so a long
+   run gets one slow sweep rather than a glow per section. */
+[data-band="green"]::before,
+[data-band="night"]::before {
+  background-image:
+    radial-gradient(170% 95% at 8% 0%, var(--band-glow), transparent 70%),
+    radial-gradient(170% 95% at 96% 100%, var(--band-glow), transparent 70%),
+    radial-gradient(120% 60% at 100% 0%, var(--band-shade), transparent 70%);
+}
+
+[data-band="green"]::after,
+[data-band="night"]::after {
+  background-image: var(--grain-image);
+  background-size: var(--grain-size);
+  mix-blend-mode: soft-light;
+  opacity: var(--grain-opacity);
+}
+
+[data-band-tuck]::before,
+[data-band-tuck]::after {
+  top: calc(-1 * var(--section-overlap));
+  border-top-left-radius: var(--radius-section);
+  border-top-right-radius: var(--radius-section);
+}
+
+/* ------------------------------------------------------------------ */
+/* Keyframes                                                           */
+/* ------------------------------------------------------------------ */
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+}
+
+@keyframes rise-up {
+  from {
+    opacity: 0;
+    transform: translateY(46px);
+  }
+}
+
+@keyframes marquee-left {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes stamp-in {
+  from {
+    opacity: 0;
+    transform: scale(1.7) rotate(-7deg);
+  }
+  to {
+    transform: scale(1) rotate(-7deg);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Utility classes                                                     */
+/* ------------------------------------------------------------------ */
+
+/* Content padding — maps to responsive --gutter */
+@utility px-content-x {
+  padding-inline: var(--gutter);
+}
+
+/* Section vertical padding, resolved per boundary by the block dispatcher */
+@utility py-section {
+  padding-block: var(--section-pad-top) var(--section-pad-bottom);
+}
+
+/* Content container */
+@utility container-content {
+  max-width: var(--container-content);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ------------------------------------------------------------------ */
+/* Typography utilities                                                */
+/* ------------------------------------------------------------------ */
+
+/* Display — hero headline only */
+@utility text-display-hero {
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.025em;
+  font-variation-settings: "opsz" 96;
+}
+
+/* Display, page-header scale — interior page openers */
+@utility text-display-page {
+  font-size: clamp(2.625rem, 6vw, 4.875rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  font-variation-settings: "opsz" 96;
+}
+
+/* Headline — section openers */
+@utility text-headline {
+  font-size: clamp(2.25rem, 5vw, 3.625rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+/* Title — cards, program titles, stat numbers */
+@utility text-title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* Larger title — row headings with room to wrap */
+@utility text-title-lg {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* Eyebrow — supporting context for a heading. Keep it readable in sentence case. */
+@utility text-eyebrow {
+  font-family: var(--font-body);
+  min-height: 1.35em;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+
+/* Label — chips, map markers, stamps, and metadata. It must remain legible at a glance. */
+@utility text-label {
+  font-family: var(--font-body);
+  min-height: 1.35em;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+/* ------------------------------------------------------------------ */
+/* Button / control utilities (consumed by components/ui/button.tsx)    */
+/* ------------------------------------------------------------------ */
+
+/* Step number above a stop's time in the day-list blocks ("01", "02"). */
+@utility text-step-number {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility rounded-control {
+  border-radius: var(--radius-pill);
+}
+
+@utility typo-button {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+@utility typo-button-lg {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion utilities                                                    */
+/* ------------------------------------------------------------------ */
+
+@utility motion-base {
+  transition-duration: 200ms;
+  transition-timing-function: var(--ease-standard);
+}
+
+@utility motion-fast {
+  transition-duration: 150ms;
+  transition-timing-function: var(--ease-standard);
+}
+
+/* ------------------------------------------------------------------ */
+/* Focus ring                                                          */
+/* ------------------------------------------------------------------ */
+
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-campfire-amber);
+    outline-offset: 3px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Shadow utilities                                                    */
+/* ------------------------------------------------------------------ */
+
+@utility shadow-interactive-lift {
+  box-shadow: var(--shadow-lift);
+}
+
+/* ------------------------------------------------------------------ */
+/* Border utilities                                                    */
+/* ------------------------------------------------------------------ */
+
+@utility border-strong {
+  border-color: rgba(22, 32, 15, 0.18);
+}
+
+@utility edge-on-dark-strong {
+  border-color: rgba(243, 239, 226, 0.22);
+}
+
+/* ------------------------------------------------------------------ */
+/* Control height / padding custom properties (used by button sizes)   */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --control-height: 48px;
+  --control-inline: 30px;
+  --control-height-hero: 56px;
+  --control-inline-hero: 34px;
+  --control-height-compact: 38px;
+  --control-inline-compact: 22px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base styles                                                         */
+/* ------------------------------------------------------------------ */
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-pine-night);
+  background-color: var(--color-birch-bark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ------------------------------------------------------------------ */
+/* Print isolation                                                     */
+/* ------------------------------------------------------------------ */
+
+/*
+ * A "Print this" control marks every sibling on the path from its section
+ * up to <body> with data-print-hidden, so only that section reaches paper.
+ * The control removes the attribute on afterprint. See
+ * components/blocks/packing-checklist-list.tsx.
+ */
+@media print {
+  [data-print-hidden] {
+    display: none !important;
+  }
+}

@@ -1,0 +1,491 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-21T07:32:17Z",
+  "title": "Design System: Canadian Adventure Camp",
+  "extensions": {
+    "colorMeta": {
+      "campfire-amber": {
+        "role": "primary",
+        "displayName": "Campfire Amber",
+        "canonical": "oklch(76.3% 0.141 73)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 73)",
+          "oklch(26.4% 0.107 73)",
+          "oklch(37.9% 0.132 73)",
+          "oklch(49.3% 0.141 73)",
+          "oklch(60.7% 0.141 73)",
+          "oklch(72.1% 0.141 73)",
+          "oklch(83.6% 0.129 73)",
+          "oklch(95.0% 0.104 73)"
+        ]
+      },
+      "campfire-amber-deep": {
+        "role": "primary",
+        "displayName": "Campfire Amber Deep",
+        "canonical": "oklch(67.3% 0.135 71)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 71)",
+          "oklch(26.4% 0.107 71)",
+          "oklch(37.9% 0.132 71)",
+          "oklch(49.3% 0.135 71)",
+          "oklch(60.7% 0.135 71)",
+          "oklch(72.1% 0.135 71)",
+          "oklch(83.6% 0.129 71)",
+          "oklch(95.0% 0.104 71)"
+        ]
+      },
+      "pine-night": {
+        "role": "neutral",
+        "displayName": "Pine Night",
+        "canonical": "oklch(22.8% 0.034 133)",
+        "tonalRamp": [
+          "oklch(15.0% 0.034 133)",
+          "oklch(26.4% 0.034 133)",
+          "oklch(37.9% 0.034 133)",
+          "oklch(49.3% 0.034 133)",
+          "oklch(60.7% 0.034 133)",
+          "oklch(72.1% 0.034 133)",
+          "oklch(83.6% 0.034 133)",
+          "oklch(95.0% 0.034 133)"
+        ]
+      },
+      "forest-floor": {
+        "role": "neutral",
+        "displayName": "Forest Floor",
+        "canonical": "oklch(37.7% 0.070 130)",
+        "tonalRamp": [
+          "oklch(15.0% 0.070 130)",
+          "oklch(26.4% 0.070 130)",
+          "oklch(37.9% 0.070 130)",
+          "oklch(49.3% 0.070 130)",
+          "oklch(60.7% 0.070 130)",
+          "oklch(72.1% 0.070 130)",
+          "oklch(83.6% 0.070 130)",
+          "oklch(95.0% 0.070 130)"
+        ]
+      },
+      "forest-panel": {
+        "role": "neutral",
+        "displayName": "Forest Panel",
+        "canonical": "oklch(30.0% 0.047 134)",
+        "tonalRamp": [
+          "oklch(15.0% 0.047 134)",
+          "oklch(26.4% 0.047 134)",
+          "oklch(37.9% 0.047 134)",
+          "oklch(49.3% 0.047 134)",
+          "oklch(60.7% 0.047 134)",
+          "oklch(72.1% 0.047 134)",
+          "oklch(83.6% 0.047 134)",
+          "oklch(95.0% 0.047 134)"
+        ]
+      },
+      "cedar": {
+        "role": "secondary",
+        "displayName": "Cedar",
+        "canonical": "oklch(50.7% 0.095 131)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 131)",
+          "oklch(26.4% 0.095 131)",
+          "oklch(37.9% 0.095 131)",
+          "oklch(49.3% 0.095 131)",
+          "oklch(60.7% 0.095 131)",
+          "oklch(72.1% 0.095 131)",
+          "oklch(83.6% 0.095 131)",
+          "oklch(95.0% 0.095 131)"
+        ]
+      },
+      "cedar-deep": {
+        "role": "secondary",
+        "displayName": "Cedar Deep",
+        "canonical": "oklch(40.7% 0.079 131)",
+        "tonalRamp": [
+          "oklch(15.0% 0.079 131)",
+          "oklch(26.4% 0.079 131)",
+          "oklch(37.9% 0.079 131)",
+          "oklch(49.3% 0.079 131)",
+          "oklch(60.7% 0.079 131)",
+          "oklch(72.1% 0.079 131)",
+          "oklch(83.6% 0.079 131)",
+          "oklch(95.0% 0.079 131)"
+        ]
+      },
+      "birch-bark": {
+        "role": "neutral",
+        "displayName": "Birch Bark",
+        "canonical": "oklch(95.2% 0.018 93)",
+        "tonalRamp": [
+          "oklch(15.0% 0.018 93)",
+          "oklch(26.4% 0.018 93)",
+          "oklch(37.9% 0.018 93)",
+          "oklch(49.3% 0.018 93)",
+          "oklch(60.7% 0.018 93)",
+          "oklch(72.1% 0.018 93)",
+          "oklch(83.6% 0.018 93)",
+          "oklch(95.0% 0.018 93)"
+        ]
+      },
+      "birch-bark-bright": {
+        "role": "neutral",
+        "displayName": "Birch Bark Bright",
+        "canonical": "oklch(97.6% 0.012 92)",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 92)",
+          "oklch(26.4% 0.012 92)",
+          "oklch(37.9% 0.012 92)",
+          "oklch(49.3% 0.012 92)",
+          "oklch(60.7% 0.012 92)",
+          "oklch(72.1% 0.012 92)",
+          "oklch(83.6% 0.012 92)",
+          "oklch(95.0% 0.012 92)"
+        ]
+      },
+      "sunlit-moss": {
+        "role": "secondary",
+        "displayName": "Sunlit Moss",
+        "canonical": "oklch(86.4% 0.096 122)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 122)",
+          "oklch(26.4% 0.096 122)",
+          "oklch(37.9% 0.096 122)",
+          "oklch(49.3% 0.096 122)",
+          "oklch(60.7% 0.096 122)",
+          "oklch(72.1% 0.096 122)",
+          "oklch(83.6% 0.096 122)",
+          "oklch(95.0% 0.096 122)"
+        ]
+      },
+      "moss": {
+        "role": "secondary",
+        "displayName": "Moss",
+        "canonical": "oklch(78.0% 0.118 123)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 123)",
+          "oklch(26.4% 0.107 123)",
+          "oklch(37.9% 0.118 123)",
+          "oklch(49.3% 0.118 123)",
+          "oklch(60.7% 0.118 123)",
+          "oklch(72.1% 0.118 123)",
+          "oklch(83.6% 0.118 123)",
+          "oklch(95.0% 0.104 123)"
+        ]
+      },
+      "lake-night": {
+        "role": "neutral",
+        "displayName": "Lake Night",
+        "canonical": "oklch(20.0% 0.035 261)",
+        "tonalRamp": [
+          "oklch(15.0% 0.035 261)",
+          "oklch(26.4% 0.035 261)",
+          "oklch(37.9% 0.035 261)",
+          "oklch(49.3% 0.035 261)",
+          "oklch(60.7% 0.035 261)",
+          "oklch(72.1% 0.035 261)",
+          "oklch(83.6% 0.035 261)",
+          "oklch(95.0% 0.035 261)"
+        ]
+      },
+      "ember-red": {
+        "role": "tertiary",
+        "displayName": "Ember Red",
+        "canonical": "oklch(53.5% 0.154 38)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 38)",
+          "oklch(26.4% 0.107 38)",
+          "oklch(37.9% 0.132 38)",
+          "oklch(49.3% 0.154 38)",
+          "oklch(60.7% 0.154 38)",
+          "oklch(72.1% 0.154 38)",
+          "oklch(83.6% 0.129 38)",
+          "oklch(95.0% 0.104 38)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline only; one phrase swapped to Script."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section openers."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card and program titles, stat numbers."
+      },
+      "script": {
+        "displayName": "Script",
+        "purpose": "One handwritten phrase per section, in the accent colour."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Paragraphs, 520-620px measure."
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "Secondary paragraphs at reduced alpha."
+      },
+      "eyebrow": {
+        "displayName": "Eyebrow",
+        "purpose": "Mono line above a headline."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Chips, markers, stamps, metadata."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift",
+        "value": "0 40px 70px -22px rgba(13,18,8,.65)",
+        "purpose": "Hover lift for tilting media cards."
+      },
+      {
+        "name": "media-rest",
+        "value": "0 36px 70px rgba(13,18,8,.45)",
+        "purpose": "Heavy media containers at rest on dark fields."
+      },
+      {
+        "name": "globe-rest",
+        "value": "0 42px 84px rgba(0,0,0,.5)",
+        "purpose": "The globe container."
+      },
+      {
+        "name": "card-rest-cream",
+        "value": "0 22px 44px rgba(22,32,15,.12)",
+        "purpose": "Light cards floating on cream (hover or portraits)."
+      },
+      {
+        "name": "stamp",
+        "value": "0 10px 24px rgba(13,18,8,.35)",
+        "purpose": "Amber stamps and floating chips."
+      },
+      {
+        "name": "hero-cta",
+        "value": "0 12px 32px rgba(0,0,0,.35)",
+        "purpose": "Primary button over hero media only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-reveal",
+        "value": "cubic-bezier(.2,.7,.2,1)",
+        "purpose": "Scroll reveals, hero rise, image scale."
+      },
+      {
+        "name": "ease-overshoot",
+        "value": "cubic-bezier(.34,1.56,.64,1)",
+        "purpose": "Arrows, dots, slide-in links."
+      },
+      {
+        "name": "ease-standard",
+        "value": "ease",
+        "purpose": "Button hover, .2s."
+      },
+      {
+        "name": "duration-hover",
+        "value": "200ms",
+        "purpose": "Button and border transitions."
+      },
+      {
+        "name": "duration-reveal",
+        "value": "900ms",
+        "purpose": "Hero rise."
+      },
+      {
+        "name": "duration-ticker",
+        "value": "40s",
+        "purpose": "Marquee loop, linear."
+      },
+      {
+        "name": "scroll-reveal",
+        "value": "animation-timeline: view(); animation-range: entry 0% entry 45%",
+        "purpose": "riseUp reveal driver."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "container",
+        "value": "1320px"
+      },
+      {
+        "name": "phone",
+        "value": "640px"
+      },
+      {
+        "name": "desktop",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Campfire Amber pill for Enroll and Request Info. Lifts and deepens on hover.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Enroll for 2027 <span aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-weight:700;border-radius:999px;text-decoration:none;border:none;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease;background:#E8A23B;color:#16200F;font-size:16px;padding:16px 30px}.ds-btn-primary:hover{background:#C9861F;transform:translateY(-2px)}.ds-btn-primary:focus-visible{outline:2px solid #E8A23B;outline-offset:3px}"
+    },
+    {
+      "name": "Ghost Button (dark field)",
+      "kind": "button",
+      "refersTo": "button-ghost-dark",
+      "description": "Secondary action beside the primary on green fields. Glass border.",
+      "html": "<div style=\"background:#35491F;padding:24px;display:inline-block\"><a class=\"ds-btn-ghost-dark\" href=\"#\">Watch the film</a></div>",
+      "css": ".ds-btn-ghost-dark{display:inline-flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-weight:700;border-radius:999px;text-decoration:none;border:none;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease;background:transparent;border:1.5px solid rgba(243,239,226,.5);color:#F3EFE2;font-weight:600;font-size:16px;padding:18px 30px;backdrop-filter:blur(6px)}.ds-btn-ghost-dark:hover{border-color:#F3EFE2;transform:translateY(-2px)}.ds-btn-ghost-dark:focus-visible{outline:2px solid #E8A23B;outline-offset:3px}"
+    },
+    {
+      "name": "Ghost Button (cream field)",
+      "kind": "button",
+      "refersTo": "button-ghost-light",
+      "description": "Secondary action on Birch Bark fields.",
+      "html": "<button class=\"ds-btn-ghost-light\">Download rates</button>",
+      "css": ".ds-btn-ghost-light{display:inline-flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-weight:700;border-radius:999px;text-decoration:none;border:none;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease;background:transparent;border:1.5px solid rgba(22,32,15,.25);color:#16200F;font-weight:600;font-size:14.5px;padding:12px 24px}.ds-btn-ghost-light:hover{border-color:#16200F;transform:translateY(-2px)}.ds-btn-ghost-light:focus-visible{outline:2px solid #527033;outline-offset:3px}.ds-input[aria-invalid=true]{border-color:#B4441F}"
+    },
+    {
+      "name": "Glass Label Chip",
+      "kind": "chip",
+      "refersTo": "chip-label",
+      "description": "Map-legend label over media. Monospace, uppercase, blurred pine fill.",
+      "html": "<div style=\"background:#24331A;padding:20px;display:inline-flex;gap:8px\"><span class=\"ds-chip-glass\">47°02′N · 79°47′W</span><span class=\"ds-chip-glass\">35 activities</span></div>",
+      "css": ".ds-chip-glass{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#F3EFE2;background:rgba(13,18,8,.55);backdrop-filter:blur(8px);border:1px solid rgba(243,239,226,.22);border-radius:999px;padding:7px 12px;white-space:nowrap}"
+    },
+    {
+      "name": "Outline Chip (cream)",
+      "kind": "chip",
+      "refersTo": "chip-label",
+      "description": "Filter or tag on Birch Bark. Border warms to amber on hover.",
+      "html": "<div style=\"display:inline-flex;gap:8px\"><span class=\"ds-chip-outline\">Gymnastics</span><span class=\"ds-chip-outline\">Waterski</span></div>",
+      "css": ".ds-chip-outline{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(22,32,15,.7);border:1px solid rgba(22,32,15,.18);border-radius:999px;padding:7px 13px;transition:border-color .3s ease,transform .2s ease;cursor:pointer}.ds-chip-outline:hover{border-color:rgba(232,162,59,.85);transform:translateY(-2px)}"
+    },
+    {
+      "name": "Amber Stamp",
+      "kind": "chip",
+      "refersTo": "chip-label",
+      "description": "Sold-out or status stamp. Rotated, pops in with a scale-down.",
+      "html": "<div style=\"position:relative;display:inline-block;padding:24px 40px\"><span class=\"ds-stamp\">Session 2 · Full</span></div>",
+      "css": "@keyframes ds-stampIn{from{opacity:0;transform:rotate(-16deg) scale(1.7)}to{opacity:1;transform:rotate(-7deg) scale(1)}}.ds-stamp{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#16200F;background:#E8A23B;border-radius:999px;padding:9px 14px;box-shadow:0 10px 24px rgba(13,18,8,.35);animation:ds-stampIn .4s cubic-bezier(.2,.7,.2,1) both}"
+    },
+    {
+      "name": "Light Card",
+      "kind": "card",
+      "refersTo": "card-light",
+      "description": "Pricing or feature card on cream. Flat at rest, lifts on hover.",
+      "html": "<div style=\"background:#FAF7EE;padding:24px\"><div class=\"ds-card-light\"><div class=\"ds-card-light__eyebrow\">Two weeks</div><div class=\"ds-card-light__title\">$4,250</div><p class=\"ds-card-light__body\">Cabin, meals, 35 activities, instruction and gear. Transport and taxes extra.</p></div></div>",
+      "css": ".ds-card-light{background:#F3EFE2;border:1px solid rgba(22,32,15,.1);border-radius:22px;padding:34px 30px;max-width:320px;transition:transform .25s ease,box-shadow .25s ease}.ds-card-light:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(22,32,15,.12)}.ds-card-light__eyebrow{font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#527033;margin-bottom:20px}.ds-card-light__title{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;letter-spacing:-.01em;color:#16200F;margin-bottom:10px}.ds-card-light__body{font-family:Archivo,sans-serif;font-size:15px;line-height:1.6;color:rgba(22,32,15,.7);margin:0}"
+    },
+    {
+      "name": "Dark Panel",
+      "kind": "card",
+      "refersTo": "card-dark",
+      "description": "Quote or detail panel on green fields. Tonal, hairline-bordered, no shadow.",
+      "html": "<div style=\"background:#35491F;padding:24px\"><blockquote class=\"ds-panel-dark\"><div class=\"ds-panel-dark__eyebrow\">A parent, Toronto</div><p class=\"ds-panel-dark__quote\">Phones stay home; friendships don't.</p><div class=\"ds-panel-dark__sig\">— Karen</div></blockquote></div>",
+      "css": ".ds-panel-dark{margin:0;background:#24331A;border:1px solid rgba(243,239,226,.12);border-radius:26px;padding:46px 46px 40px;max-width:420px}.ds-panel-dark__eyebrow{font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#E8A23B;margin-bottom:20px}.ds-panel-dark__quote{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;line-height:1.2;color:#F3EFE2;margin:0 0 18px}.ds-panel-dark__sig{font-family:Caveat,cursive;font-weight:600;font-size:34px;color:#E8A23B}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Request-info field. White on cream, Cedar focus.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field__label\">Camper age(s)</span><input class=\"ds-input\" type=\"text\" placeholder=\"e.g. 9 and 12\"></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:8px;max-width:360px}.ds-field__label{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(22,32,15,.7)}.ds-input{font-family:Archivo,sans-serif;font-size:16px;padding:15px 16px;border:1.5px solid rgba(22,32,15,.18);border-radius:14px;background:#fff;color:#16200F;outline:none;transition:border-color .2s ease,box-shadow .2s ease}.ds-input::placeholder{color:rgba(22,32,15,.45)}.ds-input:focus{border-color:#527033;box-shadow:0 0 0 3px rgba(82,112,51,.25)}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "button-primary-small",
+      "description": "Wordmark with mono sub-line, Archivo links, small amber Enroll pill. Sits over the hero.",
+      "html": "<nav class=\"ds-nav\"><div><div class=\"ds-nav__mark\">Canadian Adventure Camp</div><div class=\"ds-nav__sub\">Temagami, Ontario · Est. 1975</div></div><div class=\"ds-nav__links\"><a href=\"#\">The Island</a><a href=\"#\">Programs</a><a href=\"#\">Activities</a><a href=\"#\">Dates &amp; Rates</a><a class=\"ds-nav__cta\" href=\"#\">Enroll <span aria-hidden=\"true\">→</span></a></div></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:space-between;gap:32px;padding:26px 32px;background:#35491F}.ds-nav__mark{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;letter-spacing:.04em;color:#F3EFE2;text-transform:uppercase}.ds-nav__sub{font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(243,239,226,.6);margin-top:4px}.ds-nav__links{display:flex;align-items:center;gap:28px}.ds-nav__links a{font-family:Archivo,sans-serif;font-weight:500;font-size:15px;color:rgba(243,239,226,.85);text-decoration:none;transition:color .2s ease}.ds-nav__links a:hover{color:#F3EFE2}.ds-nav__cta{background:#E8A23B;color:#16200F!important;font-weight:700!important;font-size:14px!important;padding:11px 22px;border-radius:999px;transition:background .2s ease,transform .2s ease}.ds-nav__cta:hover{background:#C9861F;transform:translateY(-2px)}"
+    },
+    {
+      "name": "Eyebrow + Headline + Script",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "The section-opener triad. Mono eyebrow, Bricolage headline, one Caveat phrase in the accent.",
+      "html": "<div style=\"background:#35491F;padding:40px\"><div class=\"ds-eyebrow\">The Island</div><h2 class=\"ds-headline\">Their greatest summer<br>lives on <span class=\"ds-script\">an island.</span></h2></div>",
+      "css": ".ds-eyebrow{font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#E8A23B;margin-bottom:20px}.ds-headline{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:58px;line-height:1.02;letter-spacing:-.02em;color:#F3EFE2;margin:0;max-width:720px}.ds-script{font-family:Caveat,cursive;font-weight:600;font-size:67px;color:#E8A23B;letter-spacing:0}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Island Field Guide",
+    "overview": "**Creative North Star: \"The Island Field Guide\"**\n\nThe site reads like a trail map of Adventure Island that a parent can trust and a kid wants to read. Deep forest greens are the paper; small monospace labels are the map legend; a handwritten Campfire Amber script is the note scrawled in the margin by someone who has actually been there. Photos are the terrain. The voice is bold, warm, and confident: big type that says the thing plainly, then a wink in amber.\n\nDensity is high but never cramped. Sections are full-bleed colour fields (dark green, pine black, birch cream) that alternate like day and night on the lake, with content sitting on a wide 1320px measure. Inside those fields, information is packed tight: hairline-divided grids, pill chips, session bars, numbered programs. Every interactive thing moves a little when touched. Nothing is decorative for its own sake; the map legend, the stamp, the script all carry meaning.\n\nConfirmed rejections: no soft pastel \"summer camp\" palette, no rounded-bubbly kid branding, no stock-photo hero with a gradient overlay and centred text. The old site's logo and colours are not binding.",
+    "keyCharacteristics": [
+      "Forest-dark fields as the default canvas; cream fields for money, trust, and forms.",
+      "One accent, Campfire Amber, reserved for action, emphasis, and handwritten notes.",
+      "Three voices of type: Bricolage display, Archivo body, monospace legend, plus Caveat script for the human aside.",
+      "Pills everywhere (buttons, chips, stamps); large soft radii on media and cards; hairline borders in translucent cream.",
+      "Tonal layering for depth; shadows appear only on lift or under hero media.",
+      "Motion on scroll and hover is constant but short and eased; it reveals, never loops."
+    ],
+    "rules": [
+      {
+        "name": "The One Fire Rule",
+        "body": "Campfire Amber touches at most a few elements per viewport: one button, one script word, one label. Its scarcity is what makes it read as \"act here.\"",
+        "section": "colors"
+      },
+      {
+        "name": "The Dusk Alternation Rule",
+        "body": "Sections alternate dark field (Forest Floor or Pine Night) and cream field (Birch Bark). Two dark fields may touch; two cream fields never do.",
+        "section": "colors"
+      },
+      {
+        "name": "The Translucent Ink Rule",
+        "body": "Secondary text, borders, and dividers are never a new grey. They are the field's text colour at reduced alpha.",
+        "section": "colors"
+      },
+      {
+        "name": "The Legend Rule",
+        "body": "Anything that annotates (labels, metadata, coordinates, prices in tables, session dates) is set in the monospace at 10-12px, uppercase, wide-tracked. Never in Archivo.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Hand Rule",
+        "body": "Caveat appears at most once per section, as one phrase, never a full sentence and never for UI text.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-Until-Touched Rule",
+        "body": "Cards and tiles are flat at rest. The lift shadow is a response to hover or focus, never a resting state. Hairline-grid tiles never lift; they tint (5% cream) instead.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Stack, Don't Shrink Rule",
+        "body": "Below 1024px, layouts stack and type steps down one size; no section is removed, no interaction is removed.",
+        "section": "layout"
+      },
+      {
+        "name": "The Field Ring Rule",
+        "body": "Every focusable element shows a 2px solid ring with 3px offset on `:focus-visible`: Campfire Amber on dark fields, Cedar on cream fields. Inputs use the Cedar border plus soft ring above instead. Never remove outlines without replacing them; never use the browser default blue.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "**Do** open every section with the eyebrow, headline, script triad; it is the brand's signature.",
+      "**Do** keep Campfire Amber scarce: one button, one script phrase, one label per viewport (The One Fire Rule).",
+      "**Do** derive every secondary text, border, and divider from the field's text colour at reduced alpha (The Translucent Ink Rule).",
+      "**Do** set all annotation in the system monospace, 10-12px, uppercase, 0.1-0.24em (The Legend Rule).",
+      "**Do** use pills for anything tappable and 22-26px slabs for anything that frames media or content.",
+      "**Do** keep cards flat at rest and lift them only on hover or focus (The Flat-Until-Touched Rule).",
+      "**Do** alternate dark and cream fields section to section (The Dusk Alternation Rule); put money, trust, and forms on cream.",
+      "**Do** drive scroll reveals with `animation-timeline: view()` and provide a no-motion path under `prefers-reduced-motion`.",
+      "**Do** ship real island, Big Top, and camper photography; the terrain is the design.",
+      "**Do** stack below 1024px and keep every section and interaction (The Stack, Don't Shrink Rule).",
+      "**Do** show a 2px ring, 3px offset, amber on dark and cedar on cream, on every `:focus-visible` (The Field Ring Rule).",
+      "**Do** validate form fields on blur with a plain-English mono message in Ember Red."
+    ],
+    "donts": [
+      "**Don't** introduce a second accent or a new grey; the palette is thirteen named colours and their alphas.",
+      "**Don't** use Caveat for more than one phrase per section or for any UI text.",
+      "**Don't** set annotation, prices, dates, or chips in Archivo.",
+      "**Don't** place resting drop shadows on cards or tiles; only media frames and lifted states carry shadow.",
+      "**Don't** use solid grey borders, square corners on tappable elements, or radii between 3px and 14px except the 8px thumbnail.",
+      "**Don't** add looping animations beyond the ticker, globe, and map trail; no pulse, shimmer, or spinner loops.",
+      "**Don't** fall back to a centred-text-over-gradient hero; the hero is left-aligned type over media with the script aside.",
+      "**Don't** reintroduce the old site's logo or colours.",
+      "**Don't** hide the Enroll pill on any viewport or while the mobile menu is open.",
+      "**Don't** show form errors as a summary box or only on submit."
+    ]
+  }
+}

@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CAC testimonials wall concepts</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@600&family=Archivo:wght@400;500;600;700&display=swap');
+body{margin:0;background:#000;color:#fff;font:15px/1.5 Archivo,system-ui,sans-serif;padding:28px 20px 80px}
+h1{font:600 18px/1.2 Archivo,sans-serif;margin:0 0 6px}
+.lede{color:#bbb;margin:0 0 32px;max-width:760px}
+.v{margin:0 0 64px}
+.v h2{font:600 15px/1.2 Archivo,sans-serif;margin:0 0 4px}
+.v p.note{color:#bbb;margin:0 0 14px;font-size:13.5px;max-width:760px}
+.v p.note b{color:#fff;font-weight:600}
+.frame{overflow-x:auto;border:1px solid #333;border-radius:8px}
+.sec{width:1320px;min-width:1320px;background:#35491F;color:#F3EFE2;font-family:Archivo,sans-serif;position:relative;overflow:hidden}
+.eye{font:12px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color:#E8A23B;margin:0 0 18px}
+.h2{margin:0;font:800 58px/1.02 'Bricolage Grotesque',sans-serif;letter-spacing:-.02em;color:#F3EFE2}
+.h2 em{font:600 67px/1 Caveat,cursive;font-style:normal;color:#E8A23B}
+.more{font:700 15.5px/1 Archivo,sans-serif;color:#E8A23B;text-decoration:none;border-bottom:2px solid rgba(232,162,59,.4);padding-bottom:4px;white-space:nowrap}
+.card{background:#24331A;border:1px solid rgba(243,239,226,.12);border-radius:16px;padding:18px 20px 16px}
+.card p{margin:0 0 12px;font:500 14.5px/1.45 Archivo,sans-serif;color:#F3EFE2}
+.card footer{display:flex;align-items:center;gap:9px}
+.av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:700 11px/1 Archivo,sans-serif;color:#16200F;background:#E8A23B;flex:none}
+.av.g{background:#A9C46C}.av.l{background:#C7DD96}
+.who{font:600 17px/1 Caveat,cursive;color:rgba(243,239,226,.85)}
+.stars{color:#E8A23B;font-size:11px;letter-spacing:.1em;margin-left:auto}
+.tag{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:rgba(243,239,226,.45);margin-left:auto}
+
+/* A masonry */
+.a-head{display:flex;align-items:flex-end;padding:90px 56px 40px;max-width:1320px;box-sizing:border-box}
+.a-wall{columns:4;column-gap:14px;padding:0 56px;height:760px;overflow:hidden;position:relative}
+.a-wall .card{break-inside:avoid;margin:0 0 14px}
+.a-fade{position:absolute;left:0;right:0;bottom:0;height:340px;background:linear-gradient(to bottom,rgba(53,73,31,0),#35491F 78%);pointer-events:none}
+.a-foot{position:absolute;left:0;right:0;bottom:56px;text-align:center}
+.a-stamp{display:inline-block;font:600 54px/1 Caveat,cursive;color:#E8A23B;transform:rotate(-4deg)}
+.a-stamp small{display:block;font:12px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color:rgba(243,239,226,.55);transform:none;margin-top:10px}
+.a-wall .card:nth-child(5n+2) p{font-size:17px;font-weight:600}
+.a-wall .card:nth-child(7n+3){background:#E8A23B;border-color:#E8A23B}
+.a-wall .card:nth-child(7n+3) p,.a-wall .card:nth-child(7n+3) .who{color:#16200F}
+.a-wall .card:nth-child(7n+3) .av{background:#16200F;color:#E8A23B}
+.a-wall .card:nth-child(7n+3) .stars{color:#16200F}
+
+/* B rivers */
+.b{padding:90px 0 110px}
+.b-head{text-align:center;padding:0 56px 56px}
+.b-head .h2{font-size:72px}
+.b-head .h2 em{font-size:84px}
+.b-rivers{position:relative;display:flex;flex-direction:column;gap:14px}
+.b-rivers:before,.b-rivers:after{content:"";position:absolute;top:0;bottom:0;width:220px;z-index:2;pointer-events:none}
+.b-rivers:before{left:0;background:linear-gradient(to right,#35491F,rgba(53,73,31,0))}
+.b-rivers:after{right:0;background:linear-gradient(to left,#35491F,rgba(53,73,31,0))}
+.row{display:flex;gap:14px;width:max-content;animation:marq var(--d,60s) linear infinite}
+.row.rev{animation-direction:reverse}
+.b-rivers:hover .row{animation-play-state:paused}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.row .card{width:340px;flex:none}
+.row .card p{white-space:normal}
+.b-stat{display:flex;justify-content:center;gap:64px;margin-top:56px}
+.b-stat div{text-align:center}
+.b-stat b{display:block;font:800 44px/1 'Bricolage Grotesque',sans-serif;letter-spacing:-.03em;color:#F3EFE2}
+.b-stat span{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:rgba(243,239,226,.5);display:block;margin-top:10px}
+
+/* C flood */
+.c{padding:90px 56px 110px}
+.c-head{display:flex;align-items:flex-end;margin-bottom:56px}
+.flood{font:700 26px/1.38 'Bricolage Grotesque',sans-serif;letter-spacing:-.01em;color:rgba(243,239,226,.92);text-wrap:pretty}
+.flood q{quotes:"“" "”";}
+.flood q:before,.flood q:after{color:rgba(232,162,59,.55)}
+.flood q.big{font-size:44px;line-height:1.15;color:#F3EFE2}
+.flood q.dim{color:rgba(243,239,226,.58);font-weight:500;font-size:21px}
+.flood i{font:600 .92em/1 Caveat,cursive;font-style:normal;color:#E8A23B;margin:0 .55em 0 .25em;white-space:nowrap}
+.flood q:hover{background:#E8A23B;color:#16200F}
+.flood q:hover:before,.flood q:hover:after{color:#16200F}
+.c-count{margin-top:48px;display:flex;align-items:center;gap:24px;border-top:1px solid rgba(243,239,226,.14);padding-top:28px}
+.c-count b{font:800 64px/1 'Bricolage Grotesque',sans-serif;letter-spacing:-.04em;color:#E8A23B}
+.c-count span{font:12px/1.6 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:rgba(243,239,226,.55)}
+
+/* D ledger */
+.d{padding:90px 56px 110px;display:grid;grid-template-columns:380px 1fr;gap:56px;align-items:start}
+.d-side{position:sticky;top:0}
+.d-side .h2{font-size:54px}
+.d-side .h2 em{font-size:62px}
+.d-side p{margin:26px 0 30px;font:16px/1.6 Archivo,sans-serif;color:rgba(243,239,226,.7)}
+.d-nums{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(243,239,226,.16);border-radius:16px;overflow:hidden;margin:34px 0}
+.d-nums div{background:#35491F;padding:18px 20px}
+.d-nums b{font:800 34px/1 'Bricolage Grotesque',sans-serif;letter-spacing:-.03em;color:#F3EFE2;display:block}
+.d-nums span{font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:rgba(243,239,226,.5);display:block;margin-top:8px}
+.d-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(243,239,226,.16);border-radius:22px;overflow:hidden;position:relative;height:860px}
+.cell{background:#35491F;padding:22px 24px 20px;display:flex;flex-direction:column;min-height:150px;box-sizing:border-box;transition:background .3s}
+.cell:hover{background:rgba(243,239,226,.06)}
+.cell .n{font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:rgba(243,239,226,.4);margin-bottom:14px;display:flex}
+.cell .n span{margin-left:auto;color:#E8A23B}
+.cell p{margin:0 0 auto;font:500 15px/1.45 Archivo,sans-serif;color:#F3EFE2;padding-bottom:14px}
+.cell .who{font-size:18px}
+.cell.hero{grid-column:span 2}
+.cell.hero p{font:700 24px/1.25 'Bricolage Grotesque',sans-serif;letter-spacing:-.01em}
+.d-fade{position:absolute;left:0;right:0;bottom:0;height:260px;background:linear-gradient(to bottom,rgba(53,73,31,0),#35491F 85%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:32px}
+.d-fade a{display:inline-flex;align-items:center;gap:10px;background:#E8A23B;color:#16200F;font:700 15px/1 Archivo,sans-serif;padding:16px 28px;border-radius:999px;text-decoration:none}
+</style>
+</head>
+<body>
+<h1>Testimonials section: wall of love concepts</h1>
+<p class="lede">Four takes on the same goal: the viewer should feel buried in praise. All use the 32 real testimonials from the live site, the section's dark green palette, and existing type (Bricolage, Caveat, Archivo, mono eyebrows). Frames are 1320px wide, scroll sideways on small screens. Pick a letter.</p>
+
+<!-- ============ A ============ -->
+<section class="v">
+<h2>A. The pile</h2>
+<p class="note">A 4 column masonry of small cards that runs off the bottom and fades out, as if it never ends. A few cards are amber to break rhythm, a few get bigger type. Closes with a handwritten "and 1,000+ more". <b>Feel:</b> cork board in the camp office. <b>Risk:</b> cards are the one thing the rest of the page avoids, but here density makes them read as a texture, not chrome.</p>
+<div class="frame"><div class="sec">
+  <div class="a-head">
+    <div><p class="eye">06 · FAMILIES</p><h2 class="h2">Parents say it <em>best.</em></h2></div>
+    <a class="more" style="margin-left:auto">Read all 1,000+ →</a>
+  </div>
+  <div class="a-wall">
+    <div class="card"><p>Great first experience from both our sons who loved it... and want to come back.</p><footer><span class="av">V</span><span class="who">Vincent · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Camp has been the single greatest factor and experience in my life.</p><footer><span class="av g">J</span><span class="who">Jesse · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Best camp ever. Been there as a camper 30 years ago. Now my three daughters are going to CAC.</p><footer><span class="av">R</span><span class="who">Renaud · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>My 2 kids talk about CAC all year long. They LOVE it. Amazing place!!</p><footer><span class="av l">D</span><span class="who">David · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>CAC is my second home, have been coming for 7 years and plan to keep coming!</p><footer><span class="av g">L</span><span class="who">Laura · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Stories were all about how much our daughter loved her cabin life &amp; counsellor.</p><footer><span class="av">W</span><span class="who">Will · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>I was really glad to see my son's experience in CAC was, in his own words, "the best experience of my life".</p><footer><span class="av l">R</span><span class="who">Reynaldo · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>It was perfect. Camp allowed me to try water skiing for the first time.</p><footer><span class="av g">I</span><span class="who">Izzy · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Excellent facilities. More importantly, excellent staff. An excellent experience for our kids.</p><footer><span class="av">M</span><span class="who">Mark · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Julien was so happy with his 2 weeks at CAC that we are sending him back but this time 4 weeks.</p><footer><span class="av l">L</span><span class="who">Lea · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>I went to CAC this summer and I knew nobody but once you get there you make so many friends.</p><footer><span class="av g">H</span><span class="who">Hailey · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>CAC has allowed our daughter to gain independence and has helped her find the joy and excitement.</p><footer><span class="av">V</span><span class="who">Victoria · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Sofia's experience with CAC is entirely unique. We could not get this anywhere else!</p><footer><span class="av l">I</span><span class="who">Inga · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>All year round I wish I was there, yet it is only when I see the island slowly disappearing.</p><footer><span class="av g">L</span><span class="who">Lily · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>CAC is an amazing camp with caring staff. His self esteem and confidence grow every summer.</p><footer><span class="av">J</span><span class="who">Jane · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Canadian Adventure Camp is the best place you could go to for the summer!</p><footer><span class="av g">S</span><span class="who">Shira · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>I cannot say enough about this camp! My son said it was one of the best experiences.</p><footer><span class="av">K</span><span class="who">Karen · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>The girls were incredibly happy with the camp and are eager to return!</p><footer><span class="av l">L</span><span class="who">Linda · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>I wanted something new before my last few years of high school and I am forever grateful.</p><footer><span class="av g">G</span><span class="who">Gracey · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Lots of activities and fun for my daughter. She improves a lot in self-confidence, self-esteem, and English.</p><footer><span class="av">B</span><span class="who">Burlaud · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>CAC is an incredibly special camp where my daughter can be herself in a supportive environment.</p><footer><span class="av l">J</span><span class="who">Jo-Anne · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>I love camp so much and love everyone who made camp amazing especially all the staff.</p><footer><span class="av g">J</span><span class="who">Joey · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>The trees and Lake Temagami create a marvellous summertime backdrop for the kids to learn about each other.</p><footer><span class="av">P</span><span class="who">Peter · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Our daughter loves going to camp. It is an amazing experience for her.</p><footer><span class="av l">K</span><span class="who">Kristina · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>You learn how to socialise and make friends in a short amount of time.</p><footer><span class="av g">L</span><span class="who">Lily · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Truly excellent experience. Our kids love CAC for the specialized activities, meeting new friends.</p><footer><span class="av">D</span><span class="who">David · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>As much as I consider my daughter independent and self confident, part of this is probably a contribution to her many years at CAC.</p><footer><span class="av l">E</span><span class="who">Elise · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>My favourite specialty coaches were Keeley, Quinne, Jordan and Gaby because they always make camp fun.</p><footer><span class="av g">B</span><span class="who">Bianca · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>Very comprehensive for helping our son to communicate freely regardless of the language learning process.</p><footer><span class="av">J</span><span class="who">Jean · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>I love camp! It is like my second home! In my first year, I was homesick.</p><footer><span class="av g">L</span><span class="who">Laura · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>My daughter enjoyed her 2 weeks at CAC this summer and is wishing to go back for 4 weeks.</p><footer><span class="av">A</span><span class="who">Alice · parent</span><span class="stars">★★★★★</span></footer></div>
+    <div class="card"><p>There are specialty programs if you want to focus your camp experience on certain things.</p><footer><span class="av g">D</span><span class="who">Denis · camper</span><span class="stars">★★★★★</span></footer></div>
+    <div class="a-fade"></div>
+    <div class="a-foot"><span class="a-stamp">...and 1,000+ more<small>SINCE 1974 · PARENTS, CAMPERS, ALUMNI</small></span></div>
+  </div>
+</div></div>
+</section>
+
+<!-- ============ B ============ -->
+<section class="v">
+<h2>B. Rivers</h2>
+<p class="note">Three rows drifting sideways at different speeds, middle row in reverse. Hover pauses everything. Headline centered above, three big numbers below to back the feeling with facts. <b>Feel:</b> the praise never stops coming. <b>Note:</b> motion is transform only (compositor, no repaint), and it pauses for reduced-motion. Same card pattern as A so the two could share code.</p>
+<div class="frame"><div class="sec b">
+  <div class="b-head"><p class="eye">06 · FAMILIES</p><h2 class="h2">A thousand ways to say <em>thank you.</em></h2></div>
+  <div class="b-rivers">
+    <div class="row" style="--d:70s">
+      <div class="card"><p>My 2 kids talk about CAC all year long. They LOVE it. Amazing place!!</p><footer><span class="av">D</span><span class="who">David · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Camp has been the single greatest factor and experience in my life.</p><footer><span class="av g">J</span><span class="who">Jesse · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Best camp ever. Been there as a camper 30 years ago. Now my three daughters are going to CAC.</p><footer><span class="av">R</span><span class="who">Renaud · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>CAC is my second home, have been coming for 7 years and plan to keep coming!</p><footer><span class="av g">L</span><span class="who">Laura · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Excellent facilities. More importantly, excellent staff. An excellent experience for our kids.</p><footer><span class="av">M</span><span class="who">Mark · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>It was perfect. Camp allowed me to try water skiing for the first time.</p><footer><span class="av g">I</span><span class="who">Izzy · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>My 2 kids talk about CAC all year long. They LOVE it. Amazing place!!</p><footer><span class="av">D</span><span class="who">David · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Camp has been the single greatest factor and experience in my life.</p><footer><span class="av g">J</span><span class="who">Jesse · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Best camp ever. Been there as a camper 30 years ago. Now my three daughters are going to CAC.</p><footer><span class="av">R</span><span class="who">Renaud · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>CAC is my second home, have been coming for 7 years and plan to keep coming!</p><footer><span class="av g">L</span><span class="who">Laura · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Excellent facilities. More importantly, excellent staff. An excellent experience for our kids.</p><footer><span class="av">M</span><span class="who">Mark · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>It was perfect. Camp allowed me to try water skiing for the first time.</p><footer><span class="av g">I</span><span class="who">Izzy · camper</span><span class="stars">★★★★★</span></footer></div>
+    </div>
+    <div class="row rev" style="--d:90s">
+      <div class="card"><p>I went to CAC this summer and I knew nobody but once you get there you make so many friends.</p><footer><span class="av g">H</span><span class="who">Hailey · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Julien was so happy with his 2 weeks at CAC that we are sending him back but this time 4 weeks.</p><footer><span class="av">L</span><span class="who">Lea · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Canadian Adventure Camp is the best place you could go to for the summer!</p><footer><span class="av g">S</span><span class="who">Shira · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Sofia's experience with CAC is entirely unique. We could not get this anywhere else!</p><footer><span class="av">I</span><span class="who">Inga · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>I wanted something new before my last few years of high school and I am forever grateful.</p><footer><span class="av g">G</span><span class="who">Gracey · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>The girls were incredibly happy with the camp and are eager to return!</p><footer><span class="av">L</span><span class="who">Linda · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>I went to CAC this summer and I knew nobody but once you get there you make so many friends.</p><footer><span class="av g">H</span><span class="who">Hailey · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Julien was so happy with his 2 weeks at CAC that we are sending him back but this time 4 weeks.</p><footer><span class="av">L</span><span class="who">Lea · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Canadian Adventure Camp is the best place you could go to for the summer!</p><footer><span class="av g">S</span><span class="who">Shira · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>Sofia's experience with CAC is entirely unique. We could not get this anywhere else!</p><footer><span class="av">I</span><span class="who">Inga · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>I wanted something new before my last few years of high school and I am forever grateful.</p><footer><span class="av g">G</span><span class="who">Gracey · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>The girls were incredibly happy with the camp and are eager to return!</p><footer><span class="av">L</span><span class="who">Linda · parent</span><span class="stars">★★★★★</span></footer></div>
+    </div>
+    <div class="row" style="--d:80s">
+      <div class="card"><p>CAC is an amazing camp with caring staff. His self esteem and confidence grow every summer.</p><footer><span class="av">J</span><span class="who">Jane · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>All year round I wish I was there, yet it is only when I see the island slowly disappearing.</p><footer><span class="av g">L</span><span class="who">Lily · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>I cannot say enough about this camp! My son said it was one of the best experiences.</p><footer><span class="av">K</span><span class="who">Karen · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>I love camp so much and love everyone who made camp amazing especially all the staff.</p><footer><span class="av g">J</span><span class="who">Joey · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>CAC has allowed our daughter to gain independence and has helped her find the joy and excitement.</p><footer><span class="av">V</span><span class="who">Victoria · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>You learn how to socialise and make friends in a short amount of time.</p><footer><span class="av g">L</span><span class="who">Lily · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>CAC is an amazing camp with caring staff. His self esteem and confidence grow every summer.</p><footer><span class="av">J</span><span class="who">Jane · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>All year round I wish I was there, yet it is only when I see the island slowly disappearing.</p><footer><span class="av g">L</span><span class="who">Lily · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>I cannot say enough about this camp! My son said it was one of the best experiences.</p><footer><span class="av">K</span><span class="who">Karen · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>I love camp so much and love everyone who made camp amazing especially all the staff.</p><footer><span class="av g">J</span><span class="who">Joey · camper</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>CAC has allowed our daughter to gain independence and has helped her find the joy and excitement.</p><footer><span class="av">V</span><span class="who">Victoria · parent</span><span class="stars">★★★★★</span></footer></div>
+      <div class="card"><p>You learn how to socialise and make friends in a short amount of time.</p><footer><span class="av g">L</span><span class="who">Lily · camper</span><span class="stars">★★★★★</span></footer></div>
+    </div>
+  </div>
+  <div class="b-stat">
+    <div><b>50+</b><span>SUMMERS</span></div>
+    <div><b>1,000+</b><span>FAMILY REVIEWS</span></div>
+    <div><b>73%</b><span>CAMPERS COME BACK</span></div>
+    <div><b>3</b><span>GENERATIONS OF CAMPERS</span></div>
+  </div>
+</div></div>
+</section>
+
+<!-- ============ C ============ -->
+<section class="v">
+<h2>C. The flood</h2>
+<p class="note">No cards at all. Every quote runs into the next as one enormous block of type, big ones shouting, small ones murmuring, names handwritten in amber between them. Hover any quote and it highlights. Closes with the count. <b>Feel:</b> a chorus talking over each other. Most on-brand with the rest of the page (no chrome, pure typography). <b>Risk:</b> harder to skim than cards; that's the point.</p>
+<div class="frame"><div class="sec c">
+  <div class="c-head"><div><p class="eye">06 · FAMILIES</p><h2 class="h2">Don't take our word <em>for it.</em></h2></div><a class="more" style="margin-left:auto">Read all 1,000+ →</a></div>
+  <p class="flood">
+    <q class="big">Camp has been the single greatest factor and experience in my life.</q><i>Jesse, camper</i>
+    <q>My 2 kids talk about CAC all year long. They LOVE it.</q><i>David</i>
+    <q class="dim">Stories were all about how much our daughter loved her cabin life &amp; counsellor.</q><i>Will</i>
+    <q>Best camp ever. Been there as a camper 30 years ago. Now my three daughters are going to CAC.</q><i>Renaud</i>
+    <q class="dim">It was perfect. Camp allowed me to try water skiing for the first time.</q><i>Izzy, camper</i>
+    <q class="big">In his own words, "the best experience of my life".</q><i>Reynaldo</i>
+    <q>CAC is my second home, have been coming for 7 years and plan to keep coming!</q><i>Laura, camper</i>
+    <q class="dim">Excellent facilities. More importantly, excellent staff.</q><i>Mark</i>
+    <q>I knew nobody but once you get there you make so many friends.</q><i>Hailey, camper</i>
+    <q class="dim">Julien was so happy with his 2 weeks that we are sending him back for 4.</q><i>Lea</i>
+    <q>Sofia's experience with CAC is entirely unique. We could not get this anywhere else!</q><i>Inga</i>
+    <q class="big">All year round I wish I was there.</q><i>Lily, camper</i>
+    <q class="dim">His self esteem and confidence grow every summer.</q><i>Jane</i>
+    <q>Canadian Adventure Camp is the best place you could go to for the summer!</q><i>Shira, camper</i>
+    <q class="dim">The girls were incredibly happy with the camp and are eager to return!</q><i>Linda</i>
+    <q>I cannot say enough about this camp!</q><i>Karen</i>
+    <q class="dim">She improves a lot in self-confidence, self-esteem, and English.</q><i>Burlaud</i>
+    <q>A camp where my daughter can be herself in a supportive environment.</q><i>Jo-Anne</i>
+    <q class="dim">I wanted something new before my last few years of high school and I am forever grateful.</q><i>Gracey, camper</i>
+    <q>I love camp so much and love everyone who made camp amazing.</q><i>Joey, camper</i>
+    <q class="dim">The trees and Lake Temagami create a marvellous summertime backdrop.</q><i>Peter</i>
+    <q class="big">We could not get this anywhere else.</q><i>Inga</i>
+    <q class="dim">You learn how to socialise and make friends in a short amount of time.</q><i>Lily, camper</i>
+    <q>Great first experience from both our sons who loved it... and want to come back.</q><i>Vincent</i>
+  </p>
+  <div class="c-count"><b>1,000+</b><span>REVIEWS LIKE THESE<br>SINCE 1974</span><a class="more" style="margin-left:auto">Read them all →</a></div>
+</div></div>
+</section>
+
+<!-- ============ D ============ -->
+<section class="v">
+<h2>D. The ledger</h2>
+<p class="note">Borrows the hairline grid the Programs and Safety sections already use, so it looks like a sibling, not a new idea. Sticky headline and proof numbers on the left, a numbered 3 column ledger of quotes on the right that fades out into an "Read all" button. Cells are numbered like entries in a guestbook (#0847...). <b>Feel:</b> an archive, official and endless. Most consistent with the page system. Hover lifts a cell like the program tiles do.</p>
+<div class="frame"><div class="sec d">
+  <div class="d-side">
+    <p class="eye">06 · FAMILIES</p>
+    <h2 class="h2">Fifty summers of <em>thank you notes.</em></h2>
+    <p>Every season ends the same way: the inbox fills up. Here's a slice of it.</p>
+    <div class="d-nums">
+      <div><b>1,000+</b><span>REVIEWS</span></div>
+      <div><b>4.9</b><span>AVG RATING</span></div>
+      <div><b>73%</b><span>RETURN RATE</span></div>
+      <div><b>1974</b><span>FIRST SUMMER</span></div>
+    </div>
+    <a class="more">Read all testimonials →</a>
+  </div>
+  <div class="d-grid">
+    <div class="cell hero"><div class="n">#0912 · 2025<span>PARENT</span></div><p>Best camp ever. Been there as a camper 30 years ago. Now my three daughters are going to CAC.</p><span class="who">Renaud</span></div>
+    <div class="cell"><div class="n">#0911<span>CAMPER</span></div><p>Camp has been the single greatest factor and experience in my life.</p><span class="who">Jesse</span></div>
+    <div class="cell"><div class="n">#0910<span>PARENT</span></div><p>My 2 kids talk about CAC all year long. They LOVE it. Amazing place!!</p><span class="who">David</span></div>
+    <div class="cell"><div class="n">#0909<span>CAMPER</span></div><p>CAC is my second home, have been coming for 7 years and plan to keep coming!</p><span class="who">Laura</span></div>
+    <div class="cell"><div class="n">#0908<span>PARENT</span></div><p>Stories were all about how much our daughter loved her cabin life &amp; counsellor.</p><span class="who">Will</span></div>
+    <div class="cell"><div class="n">#0907<span>PARENT</span></div><p>Excellent facilities. More importantly, excellent staff. An excellent experience for our kids.</p><span class="who">Mark</span></div>
+    <div class="cell hero"><div class="n">#0906 · 2025<span>CAMPER</span></div><p>I went to CAC this summer and I knew nobody but once you get there you make so many friends.</p><span class="who">Hailey</span></div>
+    <div class="cell"><div class="n">#0905<span>PARENT</span></div><p>Julien was so happy with his 2 weeks at CAC that we are sending him back but this time 4 weeks.</p><span class="who">Lea</span></div>
+    <div class="cell"><div class="n">#0904<span>CAMPER</span></div><p>It was perfect. Camp allowed me to try water skiing for the first time.</p><span class="who">Izzy</span></div>
+    <div class="cell"><div class="n">#0903<span>PARENT</span></div><p>Sofia's experience with CAC is entirely unique. We could not get this anywhere else!</p><span class="who">Inga</span></div>
+    <div class="cell"><div class="n">#0902<span>CAMPER</span></div><p>All year round I wish I was there, yet it is only when I see the island slowly disappearing.</p><span class="who">Lily</span></div>
+    <div class="cell"><div class="n">#0901<span>PARENT</span></div><p>CAC is an amazing camp with caring staff. His self esteem and confidence grow every summer.</p><span class="who">Jane</span></div>
+    <div class="cell"><div class="n">#0900<span>PARENT</span></div><p>I cannot say enough about this camp! My son said it was one of the best experiences.</p><span class="who">Karen</span></div>
+    <div class="cell"><div class="n">#0899<span>CAMPER</span></div><p>Canadian Adventure Camp is the best place you could go to for the summer!</p><span class="who">Shira</span></div>
+    <div class="cell"><div class="n">#0898<span>PARENT</span></div><p>The girls were incredibly happy with the camp and are eager to return!</p><span class="who">Linda</span></div>
+    <div class="cell"><div class="n">#0897<span>CAMPER</span></div><p>I love camp so much and love everyone who made camp amazing especially all the staff.</p><span class="who">Joey</span></div>
+    <div class="cell"><div class="n">#0896<span>PARENT</span></div><p>CAC has allowed our daughter to gain independence and has helped her find the joy and excitement.</p><span class="who">Victoria</span></div>
+    <div class="cell"><div class="n">#0895<span>PARENT</span></div><p>Very comprehensive for helping our son to communicate freely regardless of the language.</p><span class="who">Jean</span></div>
+    <div class="d-fade"><a>Read all 1,000+ →</a></div>
+  </div>
+</div></div>
+</section>
+</body>
+</html>

@@ -1,0 +1,99 @@
+/* Globe container: positioned beside the copy on desktop, stacked on mobile. */
+.globeContainer {
+  --gw: min(620px, calc(100vw - 2 * var(--gutter, 24px)));
+}
+
+/* Scroll-driven entrance on desktop */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: international-campers-rise 1ms both;
+      animation-range: entry 0% entry 42%;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes international-campers-rise {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+}
+
+/* Route row: EN ROUTE label only visible on hover/focus by default,
+   always visible when the row is the active selection. */
+.routeRow[aria-pressed="true"] {
+  background: rgba(243, 239, 226, 0.06);
+}
+
+.routeRow[aria-pressed="true"] .enRouteLabel {
+  opacity: 1;
+}
+
+.routeRow[aria-pressed="true"] span:first-child {
+  border-color: rgba(232, 162, 59, 0.6);
+  background: rgba(232, 162, 59, 0.15);
+  color: #e8a23b;
+}
+
+/* Hide EN ROUTE label when list column is narrow (below xl). */
+@media (max-width: 1279px) {
+  .enRouteLabel {
+    display: none;
+  }
+}
+
+/* Mobile: tighter row spacing. */
+@media (max-width: 639px) {
+  .routeRow {
+    padding: 10px 12px !important;
+    margin: 0 -12px !important;
+    gap: 12px !important;
+  }
+}
+
+/* Tablet/mobile: globe scales to viewport width. */
+@media (max-width: 1023px) {
+  .globeContainer {
+    width: var(--gw);
+    justify-self: center;
+  }
+
+  .globeContainer > div:first-child {
+    /* The scale trick needs the box to stay a true 620px square; without this,
+       Tailwind's max-w-full squeezes it first and the globe distorts/clips. */
+    max-width: none;
+    transform: scale(calc(var(--gw) / 620px));
+    transform-origin: 0 0;
+    margin-right: calc(var(--gw) - 620px);
+    margin-bottom: calc(var(--gw) - 620px);
+  }
+
+  .globeContainer canvas {
+    touch-action: pan-y;
+  }
+
+  /* The island tag rides inside the scaled box, so counter-scale it back to
+     full size. Scaling from bottom center keeps the stem tip on the island. */
+  .islandTagScale {
+    scale: calc(620px / var(--gw));
+    transform-origin: 50% 100%;
+  }
+}
+
+/* Phone: globe bleeds into gutters for a larger visual. */
+@media (max-width: 639px) {
+  .globeContainer {
+    --gw: min(620px, 100vw);
+
+    margin: 0 calc(-1 * var(--gutter, 24px));
+  }
+
+  /* The label's line breaks are hard-coded, so it cannot reflow on its own.
+     Let it wrap as a last resort if the copy ever outgrows the narrow box. */
+  .islandTagScale > span:first-child {
+    max-width: 150px;
+    white-space: normal;
+  }
+}

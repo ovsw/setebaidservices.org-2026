@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CAC mobile hero mocks</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Caveat:wght@600&family=Archivo:wght@400;500;600&display=swap');
+body{margin:0;background:#000;color:#fff;font:15px/1.5 Archivo,system-ui,sans-serif;padding:28px 20px 60px}
+h1{font:600 18px/1.2 Archivo,sans-serif;margin:0 0 6px}
+.lede{color:#bbb;margin:0 0 28px;max-width:720px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(375px,1fr));gap:36px 28px;align-items:start}
+.v h2{font:600 14px/1.2 Archivo,sans-serif;margin:0 0 4px}
+.v p.note{color:#bbb;margin:0 0 14px;font-size:13.5px}
+.v p.note b{color:#fff;font-weight:600}
+.phone{width:375px;height:760px;overflow:hidden;border-radius:34px;border:1px solid #333;position:relative;background:#35491F;color:#F3EFE2;font-family:Archivo,sans-serif}
+.nav{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:16px 20px}
+.mark{font:700 12px/1.15 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;color:#F3EFE2;max-width:150px}
+.navr{display:flex;gap:10px;align-items:center}
+.pill{background:#E8A23B;color:#16200F;font:600 14px/1 Archivo,sans-serif;padding:13px 18px;border-radius:999px}
+.burger{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(243,239,226,.45);display:grid;place-items:center}
+.burger i{display:block;width:18px;height:2px;background:#F3EFE2;box-shadow:0 6px 0 #F3EFE2,0 -6px 0 #F3EFE2}
+.photo{position:absolute;inset:0;background:url(https://cdn.sanity.io/images/lwnx6aqb/production/103a90dbaf7572483990f72d06fe866f78f30ef5-2048x1365.jpg?w=1200&auto=format) center 30%/cover}
+.h{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.025em;line-height:.96;margin:0;color:#FAF7EE}
+.h em{font:600 1.15em/.9 Caveat,cursive;color:#E8A23B;letter-spacing:0}
+.eyebrow{font:500 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em;text-transform:uppercase;color:#E8A23B;margin:0 0 14px}
+.btn{display:block;text-align:center;background:#E8A23B;color:#16200F;font:600 16px/1 Archivo,sans-serif;padding:17px 20px;border-radius:999px}
+.ghost{display:inline-flex;align-items:center;gap:8px;color:#F3EFE2;font:500 15px/1 Archivo,sans-serif;padding:15px 20px;border:1.5px solid rgba(243,239,226,.4);border-radius:999px}
+.ghost:before{content:"";width:0;height:0;border-left:9px solid #F3EFE2;border-top:5.5px solid transparent;border-bottom:5.5px solid transparent}
+.stats{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(243,239,226,.18)}
+.stats div{padding:16px 0 14px;font:700 18px/1.1 'Bricolage Grotesque',sans-serif;color:#FAF7EE}
+.stats div:nth-child(2n){border-left:1px solid rgba(243,239,226,.18);padding-left:16px}
+.stats div:nth-child(n+3){border-top:1px solid rgba(243,239,226,.18)}
+.stats small{display:block;font:400 12px/1.3 Archivo,sans-serif;color:rgba(243,239,226,.65);margin-top:3px}
+.ticker{font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#16200F;background:#E8A23B;padding:12px 20px;white-space:nowrap;overflow:hidden}
+</style>
+</head>
+<body>
+<h1>Mobile hero, four directions</h1>
+<p class="lede">All four cut the hero to one job: headline, one primary action, one way to see the film. Body copy and stats leave the photo. Nav is the agreed wordmark + Enroll + menu. 375 x 760 frames; the photo is the current hero still.</p>
+
+<div class="grid">
+
+<!-- A -->
+<div class="v">
+<h2>A. Photo, headline, one button</h2>
+<p class="note"><b>Photo stays full-screen.</b> Text pinned to the bottom over a deep gradient so the kids' faces stay clear. Nothing else in the viewport. Stats become a 2x2 strip after the fold.</p>
+<div class="phone">
+  <div class="photo"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,32,15,.55) 0%,rgba(22,32,15,0) 22%,rgba(22,32,15,0) 42%,rgba(22,32,15,.92) 74%,#16200F 100%)"></div>
+  <div class="nav"><div class="mark">CANADIAN ADVENTURE CAMP</div><div class="navr"><span class="pill">Enroll</span><span class="burger"><i></i></span></div></div>
+  <div style="position:absolute;left:20px;right:20px;bottom:28px">
+    
+    <h3 class="h" style="font-size:46px">Their greatest summer lives on <em>an island.</em></h3>
+    <div style="display:grid;gap:10px;margin-top:26px">
+      <span class="btn">Request Info</span>
+      <span class="ghost" style="justify-content:center">Watch the film</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- B -->
+<div class="v">
+<h2>B. Poster on top, plate below</h2>
+<p class="note"><b>Photo is a poster, not a backdrop.</b> Top 52% is the image with only the film button on it. Everything textual sits on a solid Forest Floor plate underneath, so legibility is never a gamble. Headline and one line of copy, two actions.</p>
+<div class="phone">
+  <div class="photo" style="inset:0 0 auto 0;height:52%"></div>
+  <div style="position:absolute;left:0;right:0;top:0;height:52%;background:linear-gradient(180deg,rgba(22,32,15,.55),rgba(22,32,15,0) 40%)"></div>
+  <div class="nav"><div class="mark">CANADIAN ADVENTURE CAMP</div><div class="navr"><span class="pill">Enroll</span><span class="burger"><i></i></span></div></div>
+  <span class="ghost" style="position:absolute;left:20px;top:calc(52% - 62px);background:rgba(22,32,15,.55);backdrop-filter:blur(6px)">Watch the film</span>
+  <div style="position:absolute;left:0;right:0;top:52%;bottom:0;background:#35491F;padding:28px 20px 24px;display:flex;flex-direction:column">
+    <h3 class="h" style="font-size:46px">Their greatest summer lives on <em>an island.</em></h3>
+    <p style="margin:18px 0 0;font-size:16px;line-height:1.5;color:rgba(243,239,226,.85)">A private island in Temagami. 35 activities. Their pick, every day.</p>
+    <div style="margin-top:auto;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center">
+      <span class="btn">Request Info</span>
+      <span style="font:500 14px/1 Archivo,sans-serif;color:#C7DD96;padding:0 6px">Dates &amp; rates &rarr;</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- C -->
+<div class="v">
+<h2>C. Type first, photo second</h2>
+<p class="note"><b>No photo behind text at all.</b> Pine Night field, the headline at 54px is the hero. The photo arrives as a slab right under it with the play button. The page opens like a poster title card and the image is the payoff one thumb-flick later.</p>
+<div class="phone" style="background:#16200F">
+  <div class="nav"><div class="mark">CANADIAN ADVENTURE CAMP</div><div class="navr"><span class="pill">Enroll</span><span class="burger"><i></i></span></div></div>
+  <div style="padding:96px 20px 0">
+    <p class="eyebrow">Est. 1975 &middot; Lake Temagami</p>
+    <h3 class="h" style="font-size:54px">Their greatest summer lives on <em>an island.</em></h3>
+    <div style="display:flex;gap:10px;margin-top:26px;align-items:center">
+      <span class="btn" style="flex:1">Request Info</span>
+    </div>
+  </div>
+  <div style="margin:28px 20px 0;height:300px;border-radius:22px;overflow:hidden;position:relative;box-shadow:0 36px 70px rgba(13,18,8,.45)">
+    <div class="photo"></div>
+    <span class="ghost" style="position:absolute;left:14px;bottom:14px;background:rgba(22,32,15,.6);backdrop-filter:blur(6px)">Watch the film &middot; 1:48</span>
+  </div>
+</div>
+</div>
+
+<!-- D -->
+<div class="v">
+<h2>D. Short headline, film card, stats</h2>
+<p class="note"><b>The most "field guide" of the four.</b> Headline cut to four words, the photo is a tilted Polaroid-ish card with the play button, then the four stats as the first thing a parent reads. Denser, but every block is one idea.</p>
+<div class="phone">
+  <div class="nav"><div class="mark">CANADIAN ADVENTURE CAMP</div><div class="navr"><span class="pill">Enroll</span><span class="burger"><i></i></span></div></div>
+  <div style="padding:104px 20px 0">
+    <h3 class="h" style="font-size:56px">Summer on <em>an island.</em></h3>
+    <p style="margin:14px 0 0;font-size:16px;line-height:1.5;color:rgba(243,239,226,.85);max-width:300px">Canada's international overnight camp. Private island, 35 activities, their pick.</p>
+  </div>
+  <div style="margin:22px 20px 0;height:236px;border-radius:14px;overflow:hidden;position:relative;transform:rotate(-1.5deg);border:6px solid #FAF7EE;box-shadow:0 22px 44px rgba(13,18,8,.4)">
+    <div class="photo"></div>
+    <span style="position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:#E8A23B;display:grid;place-items:center"><i style="display:block;width:0;height:0;border-left:16px solid #16200F;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px"></i></span>
+  </div>
+  <div style="padding:26px 20px 0;display:grid;gap:10px">
+    <span class="btn">Request Info</span>
+  </div>
+  <div style="padding:22px 20px 0">
+    <div class="stats">
+      <div>Est. 1975<small>Family-run</small></div>
+      <div>1 island<small>All ours</small></div>
+      <div>35 activities<small>Their pick</small></div>
+      <div>Worldwide<small>Campers from 20+ countries</small></div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+
+<p class="lede" style="margin-top:40px">Below the fold in A, B, C: the same 2x2 stats strip from D on a Pine Night band, then the ticker and the island section as today. The announcement bar ("Now enrolling") is dropped on phone in all four; the Enroll pill in the nav does that job.</p>
+</body>
+</html>

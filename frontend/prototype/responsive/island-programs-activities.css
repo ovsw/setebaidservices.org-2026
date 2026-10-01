@@ -1,0 +1,137 @@
+/* island-programs-activities: phone and tablet overrides. See base.css for the why. */
+
+/* ---------- #activities breaks earlier than the others (<1400) ----------
+   Desktop is a 3-col grid: the 300px-type "35" measures ~422px, the card
+   340px, plus 2x60px gaps and 2x56px gutters = ~994px of fixed width.
+   Below ~1400 the text column starves, so the tablet arrangement (number
+   row on top, text + card below) takes over at 1399 instead of 1023. */
+@media (max-width: 1399px) {
+  #activities {
+    padding: 0 var(--gutter) var(--section-pad) !important;
+  }
+  #activities > div {
+    grid-template-columns: 1fr 320px !important;
+    gap: 40px !important;
+    padding-top: 72px !important; /* mirrors #programs' 72px bottom pad */
+    align-items: start !important;
+  }
+  #activities > div > div:first-child {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+  #activities > div > div:first-child > div:first-child {
+    font-size: 160px !important;
+    line-height: 1 !important;
+    min-width: 0 !important;
+    -webkit-text-stroke-width: 2.5px !important;
+  }
+  #activities > div > div:first-child > div:last-child {
+    margin-top: 0 !important;
+    font-size: 34px !important;
+  }
+  #activities > div > div:nth-child(2) p { max-width: none !important; }
+  #activities button { min-height: 44px !important; }
+  #activities > div > div:nth-child(2) > div:nth-of-type(1) { gap: 10px !important; }
+  #activities > div > div:last-child > div { transform: rotate(-1deg) !important; }
+}
+
+/* ---------- tablet and phone (<1024) ---------- */
+@media (max-width: 1023px) {
+
+  /* #island: text + photo collage */
+  #island {
+    padding: var(--section-pad) var(--gutter) !important;
+    gap: 56px !important;
+    /* a 2-col pair leaves the collage ~337px wide at 768 and the stamp eats it; stack instead */
+    grid-template-columns: 1fr !important;
+  }
+  #island h2 { font-size: 46px !important; }
+  #island h2 em { font-size: 53px !important; }
+  #island p { max-width: 560px !important; }
+  /* collage keeps its proportions from width instead of a fixed 640px height */
+  #island > div:last-child {
+    height: auto !important;
+    aspect-ratio: 4 / 3 !important;
+    width: 100%;
+  }
+
+  /* #programs */
+  /* programs -> activities share a field: 64px either side of the hairline */
+  #programs {
+    padding: var(--section-pad) var(--gutter) 64px !important;
+  }
+  #programs h2 { font-size: 46px !important; }
+  #programs h2 em { font-size: 53px !important; }
+  #programs > div > div:first-child { margin-bottom: 44px !important; }
+  #programs [data-pgrid] { grid-template-columns: repeat(2, 1fr) !important; }
+  #programs [data-pgrid][style*="1fr 1fr"] { grid-template-columns: 1fr !important; }
+  #programs [data-pgrid][style*="repeat(4"] { margin-bottom: 56px !important; }
+  /* no tilt, no hover-only reveals: chips sit at rest */
+  #programs [data-pc] { transform: none !important; }
+  #programs [data-pmeta] { opacity: 1 !important; transform: none !important; }
+  #programs [data-pmeta] span { letter-spacing: .08em !important; }
+  #programs [data-pglow] { display: none !important; }
+
+  /* programs -> activities: 64px either side of the hairline */
+  #activities > div { padding-top: 64px !important; }
+}
+
+/* ---------- phone (<640) ---------- */
+@media (max-width: 639px) {
+
+  /* programs -> activities: one hairline, 56px either side */
+  #programs { padding-bottom: 56px !important; }
+  #activities > div { padding-top: 56px !important; }
+
+  #island { gap: 44px !important; }
+  #island p { max-width: none !important; }
+  #island h2 { font-size: 36px !important; margin-bottom: 20px !important; }
+  #island h2 em { font-size: 42px !important; }
+  #island > div:last-child { aspect-ratio: 1 / 1.05 !important; }
+  /* spinning stamp shrinks so it does not swallow the small photo */
+  #island > div:last-child > div:last-child {
+    width: 108px !important;
+    height: 108px !important;
+    top: 56% !important;
+    right: 0 !important;
+  }
+  #island > div:last-child > div:last-child span { font-size: 9.5px !important; letter-spacing: .1em !important; }
+  #island > div:last-child > div:nth-child(2) { border-width: 6px !important; border-radius: 16px !important; }
+  #island > div:last-child > div:first-child { border-radius: 18px !important; }
+
+  #programs h2 { font-size: 36px !important; }
+  #programs h2 em { font-size: 42px !important; }
+  #programs h3 { font-size: 24px !important; }
+  #programs > div > div:first-child { margin-bottom: 36px !important; }
+  /* specialty tiles: one per row, photo gets room, chips sit in a row */
+  #programs [data-pgrid] { grid-template-columns: 1fr !important; }
+  #programs [data-pc] > div:first-child { height: 230px !important; }
+  #programs [data-pc] > div:nth-child(2) { padding: 22px 20px 24px !important; }
+  #programs [data-pc] > div:nth-child(2) > div:first-child { font-size: 24px !important; }
+  #programs [data-pc] > div:nth-child(2) > p { font-size: 16px !important; }
+  #programs [data-pmeta] { left: 14px !important; right: 14px !important; bottom: 14px !important; gap: 8px !important; }
+  /* General / YLP: one column, shorter media, smaller title */
+  #programs [data-pgrid][style*="1fr 1fr"] [data-pc] > div:first-child { height: 240px !important; }
+  #programs [data-pgrid][style*="1fr 1fr"] [data-pc] > div:nth-child(2) { padding: 22px 20px 24px !important; }
+  #programs [data-pgrid][style*="1fr 1fr"] [data-pc] > div:nth-child(2) > div:first-child { font-size: 30px !important; }
+  #programs [data-pgrid][style*="1fr 1fr"] [data-pmeta] span { letter-spacing: .08em !important; padding: 7px 12px !important; }
+
+  #activities > div {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  #activities > div > div:first-child > div:first-child {
+    font-size: 128px !important;
+    -webkit-text-stroke-width: 2px !important;
+  }
+  #activities > div > div:first-child > div:last-child { font-size: 28px !important; }
+  #activities > div > div:nth-child(2) p { margin-bottom: 24px !important; }
+  #activities button { padding: 11px 18px !important; }
+  #activities > div > div:nth-child(2) > div:last-child { margin-top: 20px !important; }
+  #activities > div > div:last-child > div { transform: none !important; margin-top: 4px; }
+  /* FULL DAY stamp stays inside the viewport on a full-width card */
+  #activities div[style*="top: -16px"] { right: 10px !important; }
+}

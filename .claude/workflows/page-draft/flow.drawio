@@ -1,0 +1,233 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="page-draft" name="page-draft">
+    <mxGraphModel dx="3027" dy="1185" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="P1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontColor=#868e96;fontSize=16;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=4;container=0;" value="1. Take the page" vertex="1">
+          <mxGeometry height="560" width="1240" x="-620" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="P3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3e8fb;strokeColor=#9c36b5;fontColor=#9c36b5;fontSize=16;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=4;container=0;" value=" " vertex="1">
+          <mxGeometry height="580" width="1700" x="-1080" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="P4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff1e6;strokeColor=#e8833a;fontColor=#e8833a;fontSize=16;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=4;container=0;" value=" " vertex="1">
+          <mxGeometry height="1600" width="1700" x="-620" y="1540" as="geometry" />
+        </mxCell>
+        <mxCell id="P5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6f7f2;strokeColor=#207868;fontColor=#207868;fontSize=16;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=4;container=0;" value="5. Hand over to Ovi" vertex="1">
+          <mxGeometry height="220" width="1240" x="-620" y="3180" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#788896;strokeColor=#1e1e1e;fontColor=#fff;fontSize=13;" value="Start: Ovi names a page" vertex="1">
+          <mxGeometry height="52" width="280" x="-140" as="geometry" />
+        </mxCell>
+        <mxCell id="claim" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: take the page (sonnet)&lt;/b&gt;&lt;br&gt;Find the page&#39;s Basecamp card. If nobody else has it, mark it in progress with this branch name" vertex="1">
+          <mxGeometry height="115.21052631578947" width="320" x="-160" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="q1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;fontSize=13;" value="SCRIPT checks: did we get the page?" vertex="1">
+          <mxGeometry height="150" width="300" x="-150" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="stop" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;fontSize=13;" value="Stop. Touch nothing." vertex="1">
+          <mxGeometry height="52" width="280" x="-560" y="309" as="geometry" />
+        </mxCell>
+        <mxCell id="q2" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;fontSize=13;" value="SCRIPT checks:&amp;nbsp;&lt;div&gt;has the plan for this&amp;nbsp;&lt;/div&gt;&lt;div&gt;page already been written?&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="300" x="-150" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="readPlan" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: read the plan&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;(sonnet)&lt;/b&gt;&lt;br&gt;Reads the plan that is already written&lt;/div&gt;" vertex="1">
+          <mxGeometry height="88.21052631578948" width="320" x="-980" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="writePlan" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: write the plan&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;(session model)&lt;/b&gt;&lt;br&gt;Write the plan as a GitHub&amp;nbsp;&lt;/div&gt;&lt;div&gt;issue and link it on the card&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100.52631578947368" width="320" x="-160" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="secondReader" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: second reader&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;(session model, high effort)&lt;/b&gt;&lt;br&gt;&amp;nbsp;- Reads the plan as the parent it is written for,&amp;nbsp;&lt;/div&gt;&lt;div&gt;- lists the problems&lt;/div&gt;" vertex="1">
+          <mxGeometry height="112.84210526315789" width="320" x="-160" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="q3" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;fontSize=13;" value="SCRIPT checks:&amp;nbsp;&lt;div&gt;found problems? Up to 3 rounds&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="300" x="-150" y="1300" as="geometry" />
+        </mxCell>
+        <mxCell id="fixPlan" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: fix the plan&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;(session model)&lt;/b&gt;&lt;br&gt;Applies the fixes to the issue&lt;/div&gt;" vertex="1">
+          <mxGeometry height="87.26315789473685" width="320" x="280" y="1132.79" as="geometry" />
+        </mxCell>
+        <mxCell id="getReady" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: get ready (sonnet)&lt;/b&gt;&lt;br&gt;Get the latest code, check nobody else is editing the same sections, back up the content database" vertex="1">
+          <mxGeometry height="114.26315789473684" width="320" x="-160" y="1600" as="geometry" />
+        </mxCell>
+        <mxCell id="q4" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;SCRIPT &lt;/b&gt;checks:&amp;nbsp;&lt;br&gt;1. What&#39;s the latest code?&lt;div&gt;&lt;div&gt;2.&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));&quot;&gt;Who else is editing?&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));&quot;&gt;3.&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;Is the database backed up?&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="300" x="-150" y="1750" as="geometry" />
+        </mxCell>
+        <mxCell id="buildSection" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: build one section&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;(session model)&lt;/b&gt;&lt;br&gt;One agent per new or redesigned section, one after the other&lt;/div&gt;" vertex="1">
+          <mxGeometry height="103.84210526315789" width="320" x="-160" y="1960" as="geometry" />
+        </mxCell>
+        <mxCell id="writeText" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: write the page text (session model)&lt;/b&gt;&lt;br&gt;Write the text and save it as a draft in Sanity" vertex="1">
+          <mxGeometry height="98.63157894736841" width="320" x="-160" y="2120" as="geometry" />
+        </mxCell>
+        <mxCell id="proofread" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: proofread&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;(session model, high effort)&lt;/b&gt;&lt;br&gt;Voice, banned words, unconfirmed facts,&amp;nbsp;&lt;/div&gt;&lt;div&gt;colours alternate, buttons in place&lt;/div&gt;" vertex="1">
+          <mxGeometry height="113.3157894736842" width="320" x="-160" y="2280" as="geometry" />
+        </mxCell>
+        <mxCell id="q5" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;SCRIPT checks:&amp;nbsp;&lt;/b&gt;&lt;div&gt;found problems? Up to 3 rounds&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="300" x="-150" y="2470" as="geometry" />
+        </mxCell>
+        <mxCell id="fix" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: fix (session model)&lt;/b&gt;&lt;br&gt;Fix them and save again" vertex="1">
+          <mxGeometry height="79.6842105263158" width="320" x="320" y="2296.82" as="geometry" />
+        </mxCell>
+        <mxCell id="loadPage" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: load the page&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;(sonnet, low effort)&lt;/b&gt;&lt;br&gt;Load the page on the dev server&amp;nbsp;&lt;/div&gt;&lt;div&gt;and check every section shows up&lt;/div&gt;" vertex="1">
+          <mxGeometry height="106.21052631578947" width="320" x="-160" y="2670" as="geometry" />
+        </mxCell>
+        <mxCell id="q6" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;SCRIPT checks:&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;page loads?&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="300" x="-150" y="2823" as="geometry" />
+        </mxCell>
+        <mxCell id="fixLoad" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1e1e1e;fontColor=#1e1e1e;fontSize=13;" value="&lt;b&gt;AGENT: fix (session model)&lt;/b&gt;&lt;br&gt;Fix it, one try" vertex="1">
+          <mxGeometry height="75.89473684210526" width="320" x="340" y="2685.16" as="geometry" />
+        </mxCell>
+        <mxCell id="push" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: push the code (sonnet)&lt;/b&gt;&lt;br&gt;Final checks, then push" vertex="1">
+          <mxGeometry height="81.10526315789474" width="320" x="-160" y="3020" as="geometry" />
+        </mxCell>
+        <mxCell id="giveUp" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d3455b;strokeColor=#a02a3c;fontColor=#fff;fontSize=13;" value="&lt;b&gt;AGENT: give up (haiku)&lt;/b&gt;&lt;br&gt;Writes what went wrong on the card and leaves it marked in progress" vertex="1">
+          <mxGeometry height="98.63157894736841" width="320" x="720" y="2300" as="geometry" />
+        </mxCell>
+        <mxCell id="handOver" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: hand over (sonnet)&lt;/b&gt;&lt;br&gt;Move the card to Ovi Polish. Write on the card what to look at, what was guessed, what to ask the camp. Make the to-do list of things the camp must supply" vertex="1">
+          <mxGeometry height="141.26315789473682" width="320" x="-160" y="3220" as="geometry" />
+        </mxCell>
+        <mxCell id="done" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#207868;strokeColor=#1e1e1e;fontColor=#fff;fontSize=13;" value=" " vertex="1">
+          <mxGeometry height="52" width="280" x="-140" y="3440" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-start-claim" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="claim" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-claim-q1" edge="1" parent="1" source="claim" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="q1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-q1-stop" edge="1" parent="1" source="q1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;fillColor=#a20025;strokeColor=#6F0000;" target="stop" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;NO&lt;/font&gt;&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-q1-q2" edge="1" parent="1" source="q1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;fillColor=#60a917;strokeColor=#2D7600;" target="q2" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;YES&lt;/b&gt;&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-q2-P2" edge="1" parent="1" source="q2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=4;fontSize=12;fontColor=#495057;" target="P2" value="&lt;b&gt;NO&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.0069" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-P2-writePlan" edge="1" parent="1" source="P2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="writePlan" value="NOTES">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-q2-readPlan" edge="1" parent="1" source="q2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="readPlan" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;YES&lt;/font&gt;&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-readPlan-getReady" edge="1" parent="1" source="readPlan" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="getReady" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-writePlan-secondReader" edge="1" parent="1" source="writePlan" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="secondReader" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-secondReader-q3" edge="1" parent="1" source="secondReader" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="q3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TZFUbcEMbmXJc8ZYQIQD-3" connectable="0" parent="arrow-secondReader-q3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;b&gt;ANY FOUND PROBLEMS&lt;/b&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0669" as="geometry">
+            <mxPoint y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-q3-fixPlan" edge="1" parent="1" source="q3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="fixPlan" value="&lt;b&gt;YES&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-fixPlan-secondReader" edge="1" parent="1" source="fixPlan" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="secondReader" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TZFUbcEMbmXJc8ZYQIQD-4" connectable="0" parent="arrow-fixPlan-secondReader" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;b&gt;UPDATED&lt;br&gt;PLAN&lt;/b&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0333" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-q3-getReady" edge="1" parent="1" source="q3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="getReady" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-getReady-q4" edge="1" parent="1" source="getReady" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="q4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-q4-buildSection" edge="1" parent="1" source="q4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="buildSection" value="&lt;b&gt;YES&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-q4-giveUp" edge="1" parent="1" source="q4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="giveUp" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px; color: light-dark(rgb(0, 0, 0), rgb(255, 0, 0));&quot;&gt;NO&lt;/font&gt;&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-buildSection-writeText" edge="1" parent="1" source="buildSection" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="writeText" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-buildSection-giveUp" edge="1" parent="1" source="buildSection" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1;dashed=1;fontSize=12;fontColor=#495057;" target="giveUp" value="&lt;font style=&quot;font-size: 15px; color: light-dark(rgb(0, 0, 0), rgb(255, 0, 0));&quot;&gt;code will not compile&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-writeText-proofread" edge="1" parent="1" source="writeText" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="proofread" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-writeText-giveUp" edge="1" parent="1" source="writeText" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1;dashed=1;fontSize=12;fontColor=#495057;" target="giveUp" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 0, 0));&quot;&gt;draft will not save&lt;/b&gt;&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-proofread-q5" edge="1" parent="1" source="proofread" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="q5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-q5-fix" edge="1" parent="1" source="q5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="fix" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px; color: light-dark(rgb(0, 0, 0), rgb(255, 0, 0));&quot;&gt;YES&lt;/font&gt;&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.4784" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-fix-proofread" edge="1" parent="1" source="fix" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="proofread" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TZFUbcEMbmXJc8ZYQIQD-5" connectable="0" parent="arrow-fix-proofread" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;b&gt;UPDATED&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;SECTION&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;BUILD&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0563" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-q5-loadPage" edge="1" parent="1" source="q5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="loadPage" value="&lt;b&gt;NO&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-loadPage-q6" edge="1" parent="1" source="loadPage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="q6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-q6-fixLoad" edge="1" parent="1" source="q6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="fixLoad" value="&lt;b&gt;NO&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.3018" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-fixLoad-loadPage" edge="1" parent="1" source="fixLoad" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="loadPage" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-q6-push" edge="1" parent="1" source="q6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="push" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-push-giveUp" edge="1" parent="1" source="push" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1;dashed=1;fontSize=12;fontColor=#495057;" target="giveUp" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 0, 0));&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;PUSH FAILS&lt;/b&gt;&lt;/font&gt;&lt;/span&gt;">
+          <mxGeometry relative="1" x="-0.5803" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-push-handOver" edge="1" parent="1" source="push" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="handOver" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-handOver-done" edge="1" parent="1" source="handOver" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;fontColor=#495057;" target="done" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TZFUbcEMbmXJc8ZYQIQD-2" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="180" width="1480" x="-740" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="P2" parent="TZFUbcEMbmXJc8ZYQIQD-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e7f0fb;strokeColor=#2c88d9;fontColor=#2c88d9;fontSize=16;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=4;container=0;" value="2. Research: 5 agents at once (all sonnet)" vertex="1">
+          <mxGeometry height="180" width="1480" as="geometry" />
+        </mxCell>
+        <mxCell id="gA" parent="TZFUbcEMbmXJc8ZYQIQD-2" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: research A&lt;/b&gt;&lt;br&gt;Who the page is for, and the writing rules" vertex="1">
+          <mxGeometry height="84.42105263157895" width="260" x="30" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gB" parent="TZFUbcEMbmXJc8ZYQIQD-2" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: research B&lt;/b&gt;&lt;br&gt;What the old page says" vertex="1">
+          <mxGeometry height="74.94736842105263" width="260" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gC" parent="TZFUbcEMbmXJc8ZYQIQD-2" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: research C&lt;/b&gt;&lt;br&gt;Related blog posts, and the pages next to it in the menu" vertex="1">
+          <mxGeometry height="91.05263157894737" width="260" x="610" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gD" parent="TZFUbcEMbmXJc8ZYQIQD-2" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: research D&lt;/b&gt;&lt;br&gt;Which page sections exist, and the design rules" vertex="1">
+          <mxGeometry height="86.78947368421052" width="260" x="900" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gE" parent="TZFUbcEMbmXJc8ZYQIQD-2" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;fontSize=13;" value="&lt;b&gt;AGENT: research E&lt;/b&gt;&lt;br&gt;Which photos exist" vertex="1">
+          <mxGeometry height="73.05263157894737" width="260" x="1190" y="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
