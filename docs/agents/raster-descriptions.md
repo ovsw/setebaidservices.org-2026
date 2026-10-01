@@ -14,7 +14,7 @@ source. Nothing links the two after the sync. Match is by file name.
 
 ```
 RASTER_API_KEY=<key from raster.app, Settings > API keys>
-RASTER_ORG_ID=cac
+RASTER_ORG_ID=<organization id from raster.app>
 ```
 
 Do not use the `SANITY_STUDIO_` prefix for these names. Sanity inlines every
@@ -69,8 +69,9 @@ existing ones, for example after re-describing a batch in Raster.
 
 ## Refusals and safety
 
-- The script refuses to run against any project or dataset except
-  `bf76qlx9/production`. See `studio/scripts/assert-cac-production-target.mjs`.
+- The script refuses to run against any project or dataset except this
+  repository's production target, `o36mi5w4/production`. A shared guard in
+  `studio/scripts/` enforces it.
 - It writes one field, `description`, on `sanity.imageAsset` documents. It
   never creates, deletes, or re-uploads assets, and never touches tags.
 - Patches go in transactions of 50. A failed transaction leaves earlier ones
@@ -79,9 +80,7 @@ existing ones, for example after re-describing a batch in Raster.
 ## Related
 
 - `studio/scripts/sync-raster-descriptions.mjs` is the script.
-- `studio/scripts/import-raster-assets.mjs` is the original 2026-08 bulk import
-  of the `old` library into Sanity. It is not part of this workflow.
 - Media plugin tags are reserved for hand-made collections. Do not import
-  Raster's AI tags. See the tags decision in the 2026-09-14 cleanup.
+  Raster's AI tags.
 - To replace an image everywhere, use the media plugin's Replace button: tick
   one image card in the Media tab. It re-points all references.

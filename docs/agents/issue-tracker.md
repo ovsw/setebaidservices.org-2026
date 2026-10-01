@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues and PRDs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
+Issues and PRDs for this repo live as GitHub issues in `ovsw/setebaidservices.org-2026`. Use the `gh` CLI for all operations.
 
 ## Conventions
 
