@@ -1,0 +1,66 @@
+/* request-footer: phone and tablet overrides. See base.css for the why. */
+
+/* ---------- tablet and below ---------- */
+@media (max-width: 1023px) {
+  #request {
+    padding: calc(var(--section-pad) + 20px) var(--gutter) var(--section-pad) !important;
+  }
+  /* text + form stack; form card can't hold two columns of inputs next to 460px copy */
+  #request > div {
+    grid-template-columns: 1fr !important;
+    gap: 56px !important;
+  }
+  #request h2 { font-size: 46px !important; }
+  #request h2 em { font-size: 54px !important; }
+  #request input, #request textarea {
+    min-height: 48px !important;
+    font-size: 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  #request button[type="submit"] { width: 100% !important; min-height: 48px !important; }
+  /* Field Ring Rule: Cedar border plus soft ring (runtime only sets border) */
+  #request input:focus, #request textarea:focus {
+    border-color: #527033 !important;
+    box-shadow: 0 0 0 3px rgba(82,112,51,.25) !important;
+  }
+
+  footer[data-screen-label="Footer"] {
+    padding: var(--section-pad) var(--gutter) 40px !important;
+  }
+  /* wordmark on its own row, three link columns beneath (each ~230px at 768) */
+  footer [data-r="cols"] {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 48px 32px !important;
+  }
+  /* wordmark column spans the full top row */
+  footer [data-r="cols"] > div:first-child { grid-column: 1 / -1 !important; }
+  footer [data-r="cols"] a { min-height: 28px !important; display: flex !important; align-items: center !important; }
+  footer [data-r="legal"] { flex-wrap: wrap !important; gap: 10px 26px !important; }
+}
+
+/* ---------- phone ---------- */
+@media (max-width: 639px) {
+  #request {
+    padding: calc(var(--section-pad) + 16px) var(--gutter) var(--section-pad) !important;
+  }
+  #request > div { gap: 44px !important; }
+  #request h2 { font-size: 36px !important; }
+  #request h2 em { font-size: 42px !important; }
+  /* form card */
+  #request > div > div:last-child { padding: 28px 20px !important; border-radius: 20px !important; }
+  #request form > div:first-child { font-size: 22px !important; }
+  #request [data-r="fields"] { grid-template-columns: 1fr !important; }
+  /* three steps: tighter gap, number badge stays 40px */
+  #request > div > div:first-child > div[style*="flex-direction: column"] { gap: 22px !important; }
+  #request > div > div:first-child > div[style*="flex-direction: column"] > div { gap: 16px !important; }
+
+  /* mono contact lines: 12px so "email · phone" does not break mid-number */
+  #request > div > div:first-child > div:last-child,
+  footer [data-r="cols"] > div:first-child > div:last-child { font-size: 12px !important; letter-spacing: 0 !important; }
+  footer [data-r="cols"] { grid-template-columns: 1fr 1fr !important; gap: 40px 24px !important; }
+  footer [data-r="legal"] span { flex-basis: 100% !important; }
+  footer [data-r="legal"] a { margin-left: 0 !important; }
+  footer [data-r="cols"] img[alt="Canadian Adventure Camp logo"] { height: 48px !important; }
+  footer [data-r="legal"] { gap: 8px 20px !important; }
+}

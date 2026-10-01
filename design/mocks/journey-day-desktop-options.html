@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Journey block · desktop layout options for “One full day”</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Caveat:wght@600;700&family=Archivo:wght@400;500;600;700&display=swap');
+
+/* ---- Tokens copied from frontend/app/globals.css ---- */
+:root{
+  --amber: oklch(76.3% 0.141 73);
+  --amber-deep: oklch(67.3% 0.135 71);
+  --cedar: oklch(50.7% 0.095 131);
+  --cedar-deep: oklch(40.7% 0.079 131);
+  --sunlit-moss: oklch(86.4% 0.096 122);
+  --moss: oklch(78% 0.118 123);
+  --pine: oklch(22.8% 0.034 133);
+  --forest: oklch(37.7% 0.07 130);
+  --panel: oklch(30% 0.047 134);
+  --birch: oklch(95.2% 0.018 93);
+  --birch-bright: oklch(97.6% 0.012 92);
+  --dusk: oklch(72% 0.07 261);
+
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-body: Archivo, ui-sans-serif, system-ui, sans-serif;
+  --font-accent: Caveat, cursive;
+  --font-mono: ui-monospace, Menlo, "Cascadia Mono", "Segoe UI Mono", "Liberation Mono", monospace;
+
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 22px; --radius-xl: 26px; --radius-pill: 999px;
+  --shadow-lift: 0 40px 70px -22px rgba(13,18,8,.65);
+  --shadow-media: 0 36px 70px rgba(13,18,8,.45);
+  --shadow-stamp: 0 10px 24px rgba(13,18,8,.35);
+  --gutter: 56px; --section-pad: 120px; --container: 1320px;
+}
+*{box-sizing:border-box}
+html{background:#0b0f08}
+body{margin:0;color:#ddd;font:15px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
+::selection{background:var(--amber);color:var(--pine)}
+img{display:block}
+
+/* ---- Mock chrome (not part of the design) ---- */
+.mock{width:1440px;margin:0 auto;padding:40px 0 120px}
+.mock-head{padding:0 60px 24px}
+.mock-head h1{font:800 22px/1.2 var(--font-display);color:#fff;margin:0 0 8px}
+.mock-head p{margin:0;color:#9a9a9a;max-width:70ch}
+.mock-label{display:flex;align-items:baseline;gap:18px;padding:64px 60px 14px}
+.mock-label b{font:700 12px/1 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--amber)}
+.mock-label span{color:#9a9a9a;max-width:80ch}
+.frame{width:1440px;overflow:hidden}
+
+/* ---- Section chrome shared by the three options (mirrors the journey block) ---- */
+.section{background:var(--forest);color:var(--birch);padding:var(--section-pad) 0}
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+.eyebrow{font:400 12px/1 var(--font-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--amber);margin:0 0 20px}
+.headline{font:800 clamp(2.25rem,5vw,3.625rem)/1.02 var(--font-display);letter-spacing:-.02em;margin:0;text-wrap:balance;font-variation-settings:"opsz" 96}
+.headline em{font:600 1.06em/1 var(--font-accent);font-style:normal;color:var(--amber)}
+.intro{margin:24px 0 0;max-width:38rem;font-size:17px;line-height:1.6;color:color-mix(in oklab,var(--birch) 72%,transparent);text-wrap:pretty}
+.label{font:400 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase}
+.muted{color:color-mix(in oklab,var(--birch) 60%,transparent)}
+.title{font:700 24px/1.1 var(--font-display);letter-spacing:-.01em;margin:0}
+.line{margin:10px 0 0;font-size:15px;line-height:1.55;color:color-mix(in oklab,var(--birch) 72%,transparent);text-wrap:pretty}
+.photo{position:relative;overflow:hidden;background:var(--panel);border:1px solid color-mix(in oklab,var(--birch) 12%,transparent)}
+.photo img{width:100%;height:100%;object-fit:cover}
+.pill{position:absolute;left:18px;top:18px;padding:7px 11px;border-radius:var(--radius-pill);background:color-mix(in oklab,var(--pine) 80%,transparent);color:var(--birch);font:400 11px/1 var(--font-mono);letter-spacing:.2em;text-transform:uppercase}
+
+/* =====================================================================
+   A · Along the rail — the horizontal path stays, cards get twice the room
+   ===================================================================== */
+.a-path{
+  --gap:24px;
+  --col:calc((100% - 6*var(--gap))/7);
+  --rail:64px;
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:auto var(--rail) auto;column-gap:var(--gap);
+  margin-top:72px;list-style:none;padding:0;
+}
+.a-card{position:relative;display:flex;flex-direction:column}
+.a-card.up{grid-row:1;padding-bottom:22px}
+.a-card.down{grid-row:3;padding-top:22px}
+.a-card:nth-child(1){grid-column:1/3}
+.a-card:nth-child(3){grid-column:3/5}
+.a-card:nth-child(5){grid-column:5/7}
+.a-card:nth-child(2){grid-column:2/4}
+.a-card:nth-child(4){grid-column:4/6}
+.a-card:nth-child(6){grid-column:6/8}
+.a-card .photo{aspect-ratio:3/2;border-radius:var(--radius-lg);box-shadow:var(--shadow-media)}
+.a-card .title{margin-top:18px}
+/* the dashed day line: sunrise amber → noon moss → dusk blue */
+.a-rail{grid-row:2;grid-column:1/8;position:relative;pointer-events:none}
+.a-rail::before{
+  content:"";position:absolute;top:50%;height:2px;margin-top:-1px;
+  left:calc(var(--col) + var(--gap)/2);right:calc(var(--col) + var(--gap)/2);
+  background:linear-gradient(90deg,var(--amber) 0%,var(--sunlit-moss) 42%,var(--birch) 68%,var(--dusk) 100%);
+  -webkit-mask:repeating-linear-gradient(90deg,#000 0 9px,transparent 9px 16px);mask:repeating-linear-gradient(90deg,#000 0 9px,transparent 9px 16px);
+  opacity:.75;
+}
+/* connector tick + diamond node + time chip, owned by each card */
+.a-node{position:absolute;left:50%;width:0;pointer-events:none;z-index:1}
+.a-card.up .a-node{bottom:0;height:calc(var(--rail)/2 + 22px)}
+.a-card.down .a-node{top:0;height:calc(var(--rail)/2 + 22px)}
+.a-card.up .a-node{transform:translate(-50%,calc(var(--rail)/2))}
+.a-card.down .a-node{transform:translate(-50%,calc(-1*var(--rail)/2))}
+.a-node::before{content:"";position:absolute;left:-1px;width:2px;background:color-mix(in oklab,var(--birch) 28%,transparent)}
+.a-card.up .a-node::before{top:0;bottom:6px}
+.a-card.down .a-node::before{top:6px;bottom:0}
+.a-node i{position:absolute;left:-7px;width:14px;height:14px;background:var(--amber);transform:rotate(45deg);border-radius:2px;box-shadow:0 0 0 5px var(--forest)}
+.a-card.up .a-node i{bottom:-7px}
+.a-card.down .a-node i{top:-7px}
+.a-node b{position:absolute;left:18px;white-space:nowrap;padding:8px 12px;border-radius:var(--radius-pill);background:var(--forest);border:1px solid color-mix(in oklab,var(--birch) 22%,transparent);color:var(--birch);font:400 11px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase}
+.a-card.up .a-node b{bottom:-14px}
+.a-card.down .a-node b{top:-14px}
+
+/* =====================================================================
+   B · The ledger — schedule rows with big outline times, like the “35” on the home page
+   ===================================================================== */
+.b-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:end}
+.b-head .intro{margin:0 0 6px}
+.b-rows{list-style:none;padding:0;margin:56px 0 0;border-top:1px solid color-mix(in oklab,var(--birch) 15%,transparent)}
+.b-row{display:grid;align-items:center;border-bottom:1px solid color-mix(in oklab,var(--birch) 15%,transparent)}
+.b-time{display:flex;flex-direction:column;gap:12px}
+.b-time .num{font:800 64px/.86 var(--font-display);letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:var(--amber);white-space:nowrap}
+.b-time .num small{font-size:.42em;letter-spacing:0;margin-left:.15em;font-weight:800}
+.b-body{max-width:34rem}
+.b-body .title{font-size:26px}
+.b-row .photo{border-radius:var(--radius-md);box-shadow:0 22px 44px -18px rgba(13,18,8,.7)}
+.b-foot{display:flex;justify-content:space-between;align-items:center;margin-top:28px;font:400 11px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:color-mix(in oklab,var(--birch) 55%,transparent)}
+.b-foot a{color:var(--amber);text-decoration:none;border-bottom:1px solid color-mix(in oklab,var(--amber) 45%,transparent);padding-bottom:3px;font-family:var(--font-body);font-size:15px;font-weight:700;letter-spacing:0;text-transform:none}
+/* B1 · compact: time | story | photo */
+.b1 .b-row{grid-template-columns:200px minmax(0,1fr) 400px;column-gap:40px;padding:20px 0}
+.b1 .b-row .photo{aspect-ratio:16/9}
+/* B2 · stacked: time + story in one column, big photo */
+.b2 .b-row{grid-template-columns:minmax(0,1fr) 620px;column-gap:64px;padding:32px 0}
+.b2 .b-time{gap:14px;margin-bottom:26px}
+.b2 .b-time .num{font-size:88px}
+.b2 .b-body{max-width:30rem}
+.b2 .b-body .title{font-size:30px}
+.b2 .b-row .photo{aspect-ratio:3/2}
+
+/* =====================================================================
+   C · The planner — cream day-planner card beside one big photo, one stop at a time
+   ===================================================================== */
+.c-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:stretch;margin-top:64px}
+.planner{position:relative;background:var(--birch-bright);color:var(--pine);border-radius:var(--radius-lg);padding:30px 32px 18px;box-shadow:var(--shadow-lift);display:flex;flex-direction:column}
+.planner .p-eyebrow{display:flex;align-items:center;gap:10px;font:400 11px/1 var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:color-mix(in oklab,var(--pine) 55%,transparent);margin:0}
+.planner .p-eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.planner .p-script{font:600 34px/1.05 var(--font-accent);color:var(--cedar);margin:10px 0 6px}
+.planner ol{list-style:none;margin:8px 0 0;padding:0;flex:1;display:flex;flex-direction:column}
+.planner li{display:grid;grid-template-columns:76px minmax(0,1fr) auto;column-gap:16px;align-items:baseline;padding:15px 0;border-bottom:1px dashed color-mix(in oklab,var(--pine) 18%,transparent)}
+.planner li:last-child{border-bottom:0}
+.planner .t{font:400 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:color-mix(in oklab,var(--pine) 55%,transparent)}
+.planner .n{font:700 19px/1.15 var(--font-display);letter-spacing:-.01em;color:color-mix(in oklab,var(--pine) 78%,transparent)}
+.planner .k{font:400 11px/1 var(--font-mono);letter-spacing:.12em;color:color-mix(in oklab,var(--pine) 38%,transparent)}
+.planner li.active{padding:18px 0 20px}
+.planner li.active .n{color:var(--pine);font-size:21px;position:relative}
+.planner li.active .n::before{content:"";position:absolute;left:-18px;top:.42em;width:9px;height:9px;background:var(--amber);transform:rotate(45deg);border-radius:1px}
+.planner li.active .k{color:var(--cedar)}
+.planner .x{grid-column:2/4;margin:8px 0 0;font-size:15px;line-height:1.55;color:color-mix(in oklab,var(--pine) 70%,transparent);max-width:32rem;text-wrap:pretty}
+.planner .p-foot{margin-top:14px;padding-top:12px;border-top:1px solid color-mix(in oklab,var(--pine) 12%,transparent);font:400 10px/1.6 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:color-mix(in oklab,var(--pine) 45%,transparent)}
+.stage{position:relative;border-radius:var(--radius-xl);overflow:hidden;background:var(--panel);border:1px solid color-mix(in oklab,var(--birch) 12%,transparent);box-shadow:var(--shadow-media);min-height:560px}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage .pill{left:22px;top:22px}
+.stage .cap{position:absolute;left:22px;right:120px;bottom:22px;display:flex;flex-direction:column;gap:6px}
+.stage .cap .t{font:400 11px/1 var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+.stage .cap .c{font:600 30px/1 var(--font-accent);color:var(--birch);text-shadow:0 2px 14px rgba(13,18,8,.6)}
+.stage::after{content:"";position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(180deg,transparent,rgba(13,18,8,.62));pointer-events:none}
+.stage .cap,.stage .nav{z-index:1}
+.stage .nav{position:absolute;right:22px;bottom:22px;display:flex;gap:10px}
+.stage .nav span{width:46px;height:46px;border-radius:50%;background:color-mix(in oklab,var(--pine) 82%,transparent);border:1px solid color-mix(in oklab,var(--birch) 22%,transparent);display:grid;place-items:center;color:var(--birch)}
+.stage .nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<div class="mock">
+  <div class="mock-head">
+    <h1>“One full day” on the Experience page: three desktop layouts</h1>
+    <p>Same block, same six stops, same copy and photos from Sanity. Only the desktop composition changes. Phones keep the current vertical timeline in every option.</p>
+  </div>
+
+  <!-- ============================================================ A -->
+  <div class="mock-label"><b>A · Along the rail</b><span>The horizontal path stays, but the six stops zigzag above and below the line, so every card is twice as wide as today. The dashed line runs from sunrise amber to dusk blue, and each time sits on the line as a chip.</span></div>
+  <div class="frame"><section class="section">
+    <div class="container">
+      <header style="max-width:48rem">
+        <p class="eyebrow">03 · One full day</p>
+        <h2 class="headline">No fixed timetable. <em>Her pick, every period.</em></h2>
+        <p class="intro">Eight activity periods a day, and campers choose each one with their counsellor. Here is the rhythm, from the morning dip to lights out. The full schedule is on the General Program page.</p>
+      </header>
+      <ol class="a-path">
+        <li class="a-card up">
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/c60ead98084dee829101264790f3bef52182de4a-1200x677.jpg?w=900&h=600&fit=crop&auto=format&q=80" alt="A big group of junior campers in the lake"><span class="pill">01</span></figure>
+          <h3 class="title">Morning dip, then breakfast</h3>
+          <p class="line">Yes, a swim before breakfast. Cold for ten seconds, then the most awake she has ever been. Breakfast at 8:15.</p>
+          <span class="a-node"><i></i><b>7:15 am</b></span>
+        </li>
+        <li class="a-card down">
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/6c4d395eeb6a6ed90a113acd368e81c2eeced7a1-2400x1600.jpg?w=900&h=600&fit=crop&auto=format&q=80" alt="Campers playing basketball on the court"><span class="pill">02</span></figure>
+          <h3 class="title">Four periods, her pick</h3>
+          <p class="line">Say, waterski, then archery, then trampoline, then arts and crafts. Or all four on the lake. Her call, every morning.</p>
+          <span class="a-node"><i></i><b>9:00 am</b></span>
+        </li>
+        <li class="a-card up">
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/899420ba3f19979b11c7cb2a2ccd4e2033179bb6-2048x1365.jpg?w=900&h=600&fit=crop&auto=format&q=80" alt="Campers eating lunch together in the dining hall"><span class="pill">03</span></figure>
+          <h3 class="title">Musical lunch, then rest hour</h3>
+          <p class="line">Lunch gets loud: table songs and clapping games. Then an hour in the cabin to read, write a letter, or nap.</p>
+          <span class="a-node"><i></i><b>12:00 pm</b></span>
+        </li>
+        <li class="a-card down">
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/17e1a9c946c51915a417e5ab98f8f5bf80332e47-2400x1600.jpg?w=900&h=600&fit=crop&auto=format&q=80" alt="Campers smiling while tubing behind a boat"><span class="pill">04</span></figure>
+          <h3 class="title">Three more periods, and tuck</h3>
+          <p class="line">Afternoon activities, with a stop at tuck, the camp store, at 3:15 for a treat from her tuck deposit.</p>
+          <span class="a-node"><i></i><b>2:00 pm</b></span>
+        </li>
+        <li class="a-card up">
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/0616edde9fd2724bedf8aa3935a730e8c1ee7f93-2400x1588.jpg?w=900&h=600&fit=crop&auto=format&q=80" alt="A counsellor and a camper canoeing on the lake in the evening"><span class="pill">05</span></figure>
+          <h3 class="title">Dinner, then one more period</h3>
+          <p class="line">Dinner with the cabin, then period eight. Evening canoes and a warm gym are the popular picks.</p>
+          <span class="a-node"><i></i><b>5:30 pm</b></span>
+        </li>
+        <li class="a-card down">
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/945e43e3c946aa350d5d9ae8dfa5470f0689bb23-2400x1600.jpg?w=900&h=600&fit=crop&auto=format&q=80" alt="Staff and campers playing a game together"><span class="pill">06</span></figure>
+          <h3 class="title">Evening program, then bed</h3>
+          <p class="line">The whole camp, a cabin, or an age group plays together. Snack at 8:45, then bed, at a time set by age.</p>
+          <span class="a-node"><i></i><b>7:45 pm</b></span>
+        </li>
+        <li class="a-rail" aria-hidden="true"></li>
+      </ol>
+    </div>
+  </section></div>
+
+  <!-- ============================================================ B1 -->
+  <div class="mock-label"><b>B1 · The ledger, compact</b><span>Six hairline rows. Filled amber time, story in the middle, 16:9 photo at the right. Rows trimmed to about 250px each.</span></div>
+  <div class="frame"><section class="section b1">
+    <div class="container">
+      <header class="b-head">
+        <div>
+          <p class="eyebrow">03 · One full day</p>
+          <h2 class="headline">No fixed timetable. <em>Her pick, every period.</em></h2>
+        </div>
+        <p class="intro">Eight activity periods a day, and campers choose each one with their counsellor. Here is the rhythm, from the morning dip to lights out. The full schedule is on the General Program page.</p>
+      </header>
+      <ol class="b-rows">
+        <li class="b-row">
+          <div class="b-time"><span class="label muted">01</span><span class="num">7:15<small>am</small></span></div>
+          <div class="b-body"><h3 class="title">Morning dip, then breakfast</h3><p class="line">Yes, a swim before breakfast. Cold for ten seconds, then the most awake she has ever been. Breakfast at 8:15.</p></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/c60ead98084dee829101264790f3bef52182de4a-1200x677.jpg?w=960&h=540&fit=crop&auto=format&q=80" alt="A big group of junior campers in the lake"></figure>
+        </li>
+        <li class="b-row">
+          <div class="b-time"><span class="label muted">02</span><span class="num">9:00<small>am</small></span></div>
+          <div class="b-body"><h3 class="title">Four periods, her pick</h3><p class="line">Say, waterski, then archery, then trampoline, then arts and crafts. Or all four on the lake. Her call, every morning.</p></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/6c4d395eeb6a6ed90a113acd368e81c2eeced7a1-2400x1600.jpg?w=960&h=540&fit=crop&auto=format&q=80" alt="Campers playing basketball on the court"></figure>
+        </li>
+        <li class="b-row">
+          <div class="b-time"><span class="label muted">03</span><span class="num">12:00<small>pm</small></span></div>
+          <div class="b-body"><h3 class="title">Musical lunch, then rest hour</h3><p class="line">Lunch gets loud: table songs and clapping games. Then an hour in the cabin to read, write a letter, or nap.</p></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/899420ba3f19979b11c7cb2a2ccd4e2033179bb6-2048x1365.jpg?w=960&h=540&fit=crop&auto=format&q=80" alt="Campers eating lunch together in the dining hall"></figure>
+        </li>
+        <li class="b-row">
+          <div class="b-time"><span class="label muted">04</span><span class="num">2:00<small>pm</small></span></div>
+          <div class="b-body"><h3 class="title">Three more periods, and tuck</h3><p class="line">Afternoon activities, with a stop at tuck, the camp store, at 3:15 for a treat from her tuck deposit.</p></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/17e1a9c946c51915a417e5ab98f8f5bf80332e47-2400x1600.jpg?w=960&h=540&fit=crop&auto=format&q=80" alt="Campers smiling while tubing behind a boat"></figure>
+        </li>
+        <li class="b-row">
+          <div class="b-time"><span class="label muted">05</span><span class="num">5:30<small>pm</small></span></div>
+          <div class="b-body"><h3 class="title">Dinner, then one more period</h3><p class="line">Dinner with the cabin, then period eight. Evening canoes and a warm gym are the popular picks.</p></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/0616edde9fd2724bedf8aa3935a730e8c1ee7f93-2400x1588.jpg?w=960&h=540&fit=crop&auto=format&q=80" alt="A counsellor and a camper canoeing on the lake in the evening"></figure>
+        </li>
+        <li class="b-row">
+          <div class="b-time"><span class="label muted">06</span><span class="num">7:45<small>pm</small></span></div>
+          <div class="b-body"><h3 class="title">Evening program, then bed</h3><p class="line">The whole camp, a cabin, or an age group plays together. Snack at 8:45, then bed, at a time set by age.</p></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/945e43e3c946aa350d5d9ae8dfa5470f0689bb23-2400x1600.jpg?w=960&h=540&fit=crop&auto=format&q=80" alt="Staff and campers playing a game together"></figure>
+        </li>
+      </ol>
+      <div class="b-foot"><span>Lights out · set by age</span><a href="#">See the full General Program day →</a></div>
+    </div>
+  </section></div>
+
+  <!-- ============================================================ B2 -->
+  <div class="mock-label"><b>B2 · The ledger, stacked</b><span>Time and story stacked in one column, so the photo takes the other half at 3:2. Taller rows, bigger pictures.</span></div>
+  <div class="frame"><section class="section b2">
+    <div class="container">
+      <header class="b-head">
+        <div>
+          <p class="eyebrow">03 · One full day</p>
+          <h2 class="headline">No fixed timetable. <em>Her pick, every period.</em></h2>
+        </div>
+        <p class="intro">Eight activity periods a day, and campers choose each one with their counsellor. Here is the rhythm, from the morning dip to lights out. The full schedule is on the General Program page.</p>
+      </header>
+      <ol class="b-rows">
+        <li class="b-row">
+          <div><div class="b-time"><span class="label muted">01</span><span class="num">7:15<small>am</small></span></div><div class="b-body"><h3 class="title">Morning dip, then breakfast</h3><p class="line">Yes, a swim before breakfast. Cold for ten seconds, then the most awake she has ever been. Breakfast at 8:15.</p></div></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/c60ead98084dee829101264790f3bef52182de4a-1200x677.jpg?w=1240&h=827&fit=crop&auto=format&q=80" alt="A big group of junior campers in the lake"></figure>
+        </li>
+        <li class="b-row">
+          <div><div class="b-time"><span class="label muted">02</span><span class="num">9:00<small>am</small></span></div><div class="b-body"><h3 class="title">Four periods, her pick</h3><p class="line">Say, waterski, then archery, then trampoline, then arts and crafts. Or all four on the lake. Her call, every morning.</p></div></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/6c4d395eeb6a6ed90a113acd368e81c2eeced7a1-2400x1600.jpg?w=1240&h=827&fit=crop&auto=format&q=80" alt="Campers playing basketball on the court"></figure>
+        </li>
+        <li class="b-row">
+          <div><div class="b-time"><span class="label muted">03</span><span class="num">12:00<small>pm</small></span></div><div class="b-body"><h3 class="title">Musical lunch, then rest hour</h3><p class="line">Lunch gets loud: table songs and clapping games. Then an hour in the cabin to read, write a letter, or nap.</p></div></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/899420ba3f19979b11c7cb2a2ccd4e2033179bb6-2048x1365.jpg?w=1240&h=827&fit=crop&auto=format&q=80" alt="Campers eating lunch together in the dining hall"></figure>
+        </li>
+        <li class="b-row">
+          <div><div class="b-time"><span class="label muted">04</span><span class="num">2:00<small>pm</small></span></div><div class="b-body"><h3 class="title">Three more periods, and tuck</h3><p class="line">Afternoon activities, with a stop at tuck, the camp store, at 3:15 for a treat from her tuck deposit.</p></div></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/17e1a9c946c51915a417e5ab98f8f5bf80332e47-2400x1600.jpg?w=1240&h=827&fit=crop&auto=format&q=80" alt="Campers smiling while tubing behind a boat"></figure>
+        </li>
+        <li class="b-row">
+          <div><div class="b-time"><span class="label muted">05</span><span class="num">5:30<small>pm</small></span></div><div class="b-body"><h3 class="title">Dinner, then one more period</h3><p class="line">Dinner with the cabin, then period eight. Evening canoes and a warm gym are the popular picks.</p></div></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/0616edde9fd2724bedf8aa3935a730e8c1ee7f93-2400x1588.jpg?w=1240&h=827&fit=crop&auto=format&q=80" alt="A counsellor and a camper canoeing on the lake in the evening"></figure>
+        </li>
+        <li class="b-row">
+          <div><div class="b-time"><span class="label muted">06</span><span class="num">7:45<small>pm</small></span></div><div class="b-body"><h3 class="title">Evening program, then bed</h3><p class="line">The whole camp, a cabin, or an age group plays together. Snack at 8:45, then bed, at a time set by age.</p></div></div>
+          <figure class="photo"><img src="https://cdn.sanity.io/images/bf76qlx9/production/945e43e3c946aa350d5d9ae8dfa5470f0689bb23-2400x1600.jpg?w=1240&h=827&fit=crop&auto=format&q=80" alt="Staff and campers playing a game together"></figure>
+        </li>
+      </ol>
+      <div class="b-foot"><span>Lights out · set by age</span><a href="#">See the full General Program day →</a></div>
+    </div>
+  </section></div>
+
+  <!-- ============================================================ C -->
+  <div class="mock-label"><b>C · The planner</b><span>The home page’s cream “Maya’s Tuesday” card becomes her day planner: six stops as a list, the open stop shows its line. One big photo beside it swaps as you move through the day. Compact, photo-led, interactive.</span></div>
+  <div class="frame"><section class="section">
+    <div class="container">
+      <header style="max-width:48rem">
+        <p class="eyebrow">03 · One full day</p>
+        <h2 class="headline">No fixed timetable. <em>Her pick, every period.</em></h2>
+        <p class="intro">Eight activity periods a day, and campers choose each one with their counsellor. Here is the rhythm, from the morning dip to lights out. The full schedule is on the General Program page.</p>
+      </header>
+      <div class="c-grid">
+        <div class="planner">
+          <p class="p-eyebrow">Her day · six stops</p>
+          <p class="p-script">Any Tuesday, say.</p>
+          <ol>
+            <li><span class="t">7:15 am</span><span class="n">Morning dip, then breakfast</span><span class="k">01</span></li>
+            <li class="active"><span class="t">9:00 am</span><span class="n">Four periods, her pick</span><span class="k">02</span><p class="x">Say, waterski, then archery, then trampoline, then arts and crafts. Or all four on the lake. Her call, every morning.</p></li>
+            <li><span class="t">12:00 pm</span><span class="n">Musical lunch, then rest hour</span><span class="k">03</span></li>
+            <li><span class="t">2:00 pm</span><span class="n">Three more periods, and tuck</span><span class="k">04</span></li>
+            <li><span class="t">5:30 pm</span><span class="n">Dinner, then one more period</span><span class="k">05</span></li>
+            <li><span class="t">7:45 pm</span><span class="n">Evening program, then bed</span><span class="k">06</span></li>
+          </ol>
+          <p class="p-foot">Rebuilt fresh every morning · with her counsellor</p>
+        </div>
+        <figure class="stage">
+          <img src="https://cdn.sanity.io/images/bf76qlx9/production/6c4d395eeb6a6ed90a113acd368e81c2eeced7a1-2400x1600.jpg?w=1400&h=1050&fit=crop&auto=format&q=80" alt="Campers playing basketball on the court">
+          <span class="pill">02 / 06</span>
+          <figcaption class="cap"><span class="t">9:00 am · period one</span><span class="c">Her call, every morning.</span></figcaption>
+          <div class="nav">
+            <span><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span>
+            <span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section></div>
+</div>
+</body>
+</html>

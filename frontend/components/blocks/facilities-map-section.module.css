@@ -1,0 +1,755 @@
+/* Tuck geometry and padding come from the dispatcher wrapper and the
+   `py-section` / `px-content-x` utilities in the renderer. `position` only
+   anchors the absolute glow. */
+.section {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-pine-night);
+  color: var(--color-birch-bark);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    760px circle at 16% 10%,
+    rgb(82 112 51 / 26%),
+    rgb(82 112 51 / 0%) 70%
+  );
+}
+
+.inner {
+  position: relative;
+  width: min(100%, var(--container-content));
+  margin-inline: auto;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-end;
+  gap: 40px;
+  margin-bottom: 76px;
+}
+
+.eyebrow {
+  margin-bottom: 20px;
+  color: var(--color-campfire-amber);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-birch-bark);
+  font-family: var(--font-display), sans-serif;
+  font-size: 58px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  white-space: pre-line;
+}
+
+.title em,
+.mapHeading em {
+  color: var(--color-campfire-amber);
+  font-family: var(--font-accent), cursive;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.title em {
+  font-size: 67px;
+}
+
+.introduction {
+  max-width: 400px;
+  margin: 0 0 6px auto;
+  color: rgb(243 239 226 / 72%);
+  font-size: 16.5px;
+  line-height: 1.6;
+}
+
+.bigTop {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: 80px;
+  margin-bottom: 45px;
+}
+
+.bigTopWithoutGallery {
+  grid-template-columns: 1fr;
+}
+
+.carousel {
+  position: relative;
+  height: 560px;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: var(--color-forest-panel);
+  box-shadow: 0 36px 70px rgb(0 0 0 / 50%);
+}
+
+.carouselSlide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.035);
+  transition:
+    opacity 0.9s ease,
+    transform 6s ease;
+}
+
+.carouselSlideActive {
+  z-index: 1;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.carouselImage,
+.mapImage,
+.facilityImage {
+  object-fit: cover;
+}
+
+.carouselShade {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(0deg, rgb(13 18 8 / 74%), rgb(13 18 8 / 0%) 40%);
+}
+
+/* Markers and captions are chips, not buttons: a mark or a word on the
+   photo, with no border, fill, or radius (The Pill Is a Button Rule). The
+   shade gradients below carry their legibility. */
+.carouselCaption,
+.mapChip,
+.coordinateChip {
+  color: var(--color-birch-bark);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.carouselCaption {
+  position: absolute;
+  z-index: 3;
+  bottom: 18px;
+  left: 18px;
+  letter-spacing: 0.14em;
+}
+
+.carouselButton {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  padding: 0 0 3px;
+  transform: translateY(-50%);
+  border: 1px solid rgb(243 239 226 / 28%);
+  border-radius: 50%;
+  background: rgb(13 18 8 / 70%);
+  color: var(--color-birch-bark);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.carouselButton:hover,
+.carouselButton:focus-visible {
+  border-color: var(--color-campfire-amber);
+  background: rgb(13 18 8 / 75%);
+}
+
+.carouselPrevious {
+  left: 14px;
+}
+
+.carouselNext {
+  right: 14px;
+}
+
+.carouselDots {
+  position: absolute;
+  z-index: 4;
+  right: 16px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.carouselDot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(243 239 226 / 42%);
+  cursor: pointer;
+  transition: width 0.4s ease;
+}
+
+.carouselDotActive {
+  width: 27px;
+  background: var(--color-campfire-amber);
+}
+
+.bigTopHeading {
+  margin: 0 0 20px;
+  font-size: 46px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+.metric {
+  margin-bottom: 26px;
+}
+
+.metricRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.metricNumber {
+  color: transparent;
+  font-size: 124px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  -webkit-text-stroke: 2.5px var(--color-campfire-amber);
+}
+
+.metricUnit {
+  padding-bottom: 8px;
+  color: var(--color-campfire-amber);
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+.metricTagline {
+  display: block;
+  margin-top: 6px;
+  color: var(--color-birch-bark);
+  font-family: var(--font-accent), cursive;
+  font-size: 29px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.bigTopBody {
+  max-width: 520px;
+  color: rgb(243 239 226 / 75%);
+  font-size: 17px;
+  line-height: 1.62;
+}
+
+.bigTopBody p {
+  margin: 0;
+}
+
+.mapSection {
+  margin-top: 45px;
+  padding-top: 50px;
+}
+
+.mapHeading {
+  margin: 0 0 50px;
+  color: var(--color-birch-bark);
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+}
+
+.mapHeading em {
+  margin-left: 10px;
+  font-size: 47px;
+}
+
+.mapArea {
+  position: relative;
+}
+
+.mapScroller {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: var(--color-campfire-amber) var(--color-pine-night);
+}
+
+.mapViewport {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  /* Fallback only; the component sets the uploaded image's real ratio inline. */
+  aspect-ratio: 1320 / 766;
+  border: 1px solid rgb(243 239 226 / 14%);
+  border-radius: var(--radius-xl);
+  background: var(--color-lake-night);
+  box-shadow: 0 42px 84px rgb(0 0 0 / 50%);
+}
+
+.mapInner {
+  position: absolute;
+  inset: 0;
+}
+
+.mapShade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgb(13 18 8 / 56%),
+      rgb(13 18 8 / 4%) 26%,
+      rgb(13 18 8 / 4%) 58%,
+      rgb(13 18 8 / 50%)
+    ),
+    radial-gradient(circle, transparent 44%, rgb(13 18 8 / 48%));
+}
+
+.mapPath {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.mapPathShadow,
+.mapPathDashed,
+.mapPathGlow,
+.mapPathProgress {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.mapPathShadow {
+  stroke: rgb(13 18 8 / 50%);
+  stroke-width: 10;
+}
+
+.mapPathDashed {
+  stroke: rgb(243 239 226 / 70%);
+  stroke-width: 3;
+  stroke-dasharray: 8 14;
+}
+
+.mapPathGlow {
+  stroke: rgb(232 162 59 / 28%);
+  stroke-width: 16;
+}
+
+.mapPathProgress {
+  stroke: var(--color-campfire-amber);
+  stroke-width: 6;
+}
+
+/* Overlay sizes were originally authored inside a 1.5385x-zoomed map;
+   the zoom is gone, so these values carry that factor themselves now. */
+.stop {
+  position: absolute;
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.stopDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border: 2px solid rgb(13 18 8 / 60%);
+  border-radius: 4px;
+  background: var(--color-birch-bark);
+}
+
+.stopProminent .stopDot {
+  width: 20px;
+  height: 20px;
+}
+
+.stopActive .stopDot {
+  background: var(--color-campfire-amber);
+}
+
+.stopActive::before {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--color-campfire-amber);
+  border-radius: 50%;
+  content: "";
+  opacity: 0.65;
+  transform: scale(1.45);
+}
+
+.stopLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max-content;
+  /* The 0.13em tracking makes each character ~1.2ch wide, so the cap
+     budgets 15ch of glyphs plus padding; long single words stay inside. */
+  max-width: calc(15ch + 24px);
+  color: var(--color-birch-bark);
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  /* Line advance tuned so the cloned per-line strips meet edge to edge:
+     one continuous shape, no double-painted translucent overlap. */
+  line-height: 1.55;
+  pointer-events: none;
+  text-align: center;
+  text-wrap: balance;
+  transition:
+    color 0.25s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Multi-line padded text (css-tricks.com/multi-line-padded-text): cloned
+   per-line strips, square corners, line advance matching strip height, so
+   wrapped lines fuse into one continuous shape. */
+.stopLabelText {
+  padding: 3px 11px;
+  background: rgb(13 18 8 / 74%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* The active stop's own label becomes the headline: amber text, amber
+   outline, scaled up. The outline is a stack of offset drop-shadows, which
+   trace the silhouette of the fused strips as one shape - a border or
+   box-shadow would ring each line separately. Needs an opaque strip
+   background so the shadow copies don't show through. */
+.stopActive {
+  z-index: 4;
+}
+
+.stopActive .stopLabel {
+  color: var(--color-campfire-amber);
+  filter: drop-shadow(1.5px 0 0 var(--color-campfire-amber))
+    drop-shadow(-1.5px 0 0 var(--color-campfire-amber))
+    drop-shadow(0 1.5px 0 var(--color-campfire-amber))
+    drop-shadow(0 -1.5px 0 var(--color-campfire-amber));
+}
+
+.stopActive .stopLabelText {
+  background: rgb(13 18 8);
+}
+
+/* transform-origin sits on the marker-facing edge so the label grows away
+   from the marker and the gap between them stays put. */
+.labelAbove,
+.labelAuto {
+  transform: translate(-50%, calc(-100% - 15px));
+  transform-origin: 50% 100%;
+}
+
+.labelBelow {
+  transform: translate(-50%, 15px);
+  transform-origin: 50% 0%;
+}
+
+/* Side placements: align text toward the marker so the box's spare width
+   (from the wrap cap) hangs outward instead of pushing the text away. */
+.labelLeft {
+  transform: translate(calc(-100% - 15px), -50%);
+  transform-origin: 100% 50%;
+  text-align: right;
+}
+
+.labelRight {
+  transform: translate(15px, -50%);
+  transform-origin: 0% 50%;
+  text-align: left;
+}
+
+.stopActive .labelAbove,
+.stopActive .labelAuto {
+  transform: translate(-50%, calc(-100% - 15px)) scale(1.25);
+}
+
+.stopActive .labelBelow {
+  transform: translate(-50%, 15px) scale(1.25);
+}
+
+.stopActive .labelLeft {
+  transform: translate(calc(-100% - 15px), -50%) scale(1.25);
+}
+
+.stopActive .labelRight {
+  transform: translate(15px, -50%) scale(1.25);
+}
+
+.walker {
+  position: absolute;
+  z-index: 4;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.walkerDot {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  border: 3px solid var(--color-pine-night);
+  border-radius: 50%;
+  background: var(--color-campfire-amber);
+  box-shadow: 0 0 0 8px rgb(232 162 59 / 25%), 0 0 34px rgb(232 162 59 / 65%);
+}
+
+.mapTopBar {
+  position: absolute;
+  z-index: 5;
+  top: 20px;
+  left: 22px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  pointer-events: none;
+}
+
+.mapChip,
+.coordinateChip {
+  letter-spacing: 0.16em;
+}
+
+.coordinateChip {
+  color: rgb(243 239 226 / 75%);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+}
+
+.compass {
+  position: absolute;
+  z-index: 5;
+  right: 22px;
+  bottom: 22px;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgb(243 239 226 / 22%);
+  border-radius: 50%;
+  background: rgb(13 18 8 / 72%);
+  color: var(--color-birch-bark);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.compassArrow {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--color-campfire-amber);
+  font-size: 14px;
+}
+
+.facilityCard {
+  position: absolute;
+  z-index: 5;
+  bottom: 22px;
+  left: 22px;
+  width: 318px;
+  padding: 22px 26px;
+  border: 1px solid rgb(243 239 226 / 18%);
+  border-radius: 20px;
+  background: rgb(13 18 8 / 80%);
+}
+
+.facilityCardMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: rgb(243 239 226 / 55%);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.facilityNumber {
+  color: var(--color-campfire-amber);
+  font-variant-numeric: tabular-nums;
+}
+
+.facilityRule {
+  flex: 1;
+  height: 1px;
+  background: rgb(243 239 226 / 18%);
+}
+
+.tourControl {
+  position: absolute;
+  bottom: 0;
+  left: calc(100% + 14px);
+  display: inline-flex;
+  min-width: max-content;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 17px;
+  border: 1px solid rgb(243 239 226 / 28%);
+  border-radius: 999px;
+  background: rgb(13 18 8 / 82%);
+  color: var(--color-birch-bark);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.tourControl:hover {
+  border-color: var(--color-campfire-amber);
+  color: var(--color-campfire-amber);
+}
+
+.tourControl:active {
+  background: rgb(13 18 8 / 95%);
+}
+
+.tourControl:focus-visible {
+  outline: 2px solid var(--color-campfire-amber);
+  outline-offset: 3px;
+}
+
+.facilityName {
+  color: var(--color-campfire-amber);
+  font-family: var(--font-accent), cursive;
+  font-size: 35px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.facilityDescription {
+  margin: 9px 0 0;
+  color: rgb(243 239 226 / 78%);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.facilityPhoto {
+  position: absolute;
+  z-index: 6;
+  width: 264px;
+  margin: 0;
+  padding: 10px 10px 0;
+  transform: rotate(3deg);
+  border-radius: 8px;
+  background: var(--color-birch-bark-bright);
+  box-shadow: 0 30px 60px rgb(0 0 0 / 55%);
+  transition: transform 0.35s ease;
+}
+
+.facilityPhoto:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+
+.facilityPhotoImage {
+  position: relative;
+  width: 244px;
+  height: 184px;
+  overflow: hidden;
+}
+
+.facilityPhoto figcaption {
+  padding: 11px 4px;
+  color: rgb(22 32 15 / 65%);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 1023px) {
+  .sectionHeader { align-items: flex-start; flex-direction: column; gap: 22px; margin-bottom: 48px; }
+  .introduction { max-width: 520px; margin: 0; }
+  .title { font-size: 46px; }
+  .title em { font-size: 54px; }
+  .bigTop { grid-template-columns: 1fr; gap: 40px; }
+  .carousel { height: auto; aspect-ratio: 4 / 3; }
+  .carouselButton { width: 44px; height: 44px; }
+  .metricNumber { font-size: 92px; }
+  .mapScroller { margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+  .mapViewport { width: 1120px; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+  .facilityCard {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    margin: 0;
+    border-top: 0;
+    border-radius: 0 0 20px 20px;
+  }
+  .tourControl {
+    position: static;
+    margin-left: auto;
+  }
+  .facilityPhoto { position: relative; margin: 28px 0 0 auto; }
+}
+
+@media (max-width: 639px) {
+  .title { font-size: 36px; line-height: 1.08; }
+  .title em { font-size: 42px; }
+  .carousel { aspect-ratio: 1; }
+  .carouselDots { top: 18px; bottom: auto; }
+  .carouselCaption { max-width: calc(100% - 36px); overflow: hidden; text-overflow: ellipsis; }
+  .bigTopHeading { font-size: 38px; }
+  .metricNumber { font-size: 64px; }
+  .metricUnit { font-size: 34px; }
+  .mapHeading { font-size: 32px; }
+  .mapHeading em { display: block; margin: 5px 0 0; font-size: 40px; }
+  .mapScroller { margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+  .mapViewport { width: 800px; }
+  .stop { width: 44px; height: 44px; }
+  /* Small screens: only the active stop announces its name on the map. */
+  .stop:not(.stopActive) .stopLabel { display: none; }
+  .facilityCard { width: 100%; padding: 18px 20px; }
+  .facilityName { font-size: 30px; }
+  .mapTopBar { top: 14px; left: 14px; }
+  .coordinateChip { display: none; }
+  .compass { right: 14px; bottom: 14px; }
+  /* No room for the stop photo alongside the card on small screens. */
+  .facilityPhoto { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carouselSlide,
+  .carouselDot,
+  .stopLabel,
+  .facilityPhoto { transition: none; }
+}

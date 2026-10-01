@@ -1,0 +1,172 @@
+/*
+ * Packing checklist.
+ *
+ * Screen: custom checkbox in the field guide's ink; checked boxes fill with
+ * Sunlit Moss (a small positive signal, not the amber accent) and the label
+ * strikes through. Cards rise into view on scroll.
+ *
+ * Print: the list alone, black on white, two columns, every box empty. The
+ * page is isolated by the client component (siblings get data-print-hidden,
+ * see globals.css); this file only restyles the section itself.
+ */
+
+.box {
+  appearance: none;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border: 1.5px solid color-mix(in oklch, currentColor 80%, transparent);
+  border-radius: var(--radius-xs);
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 14px;
+  cursor: pointer;
+  transition:
+    background-color 150ms var(--ease-standard),
+    border-color 150ms var(--ease-standard);
+}
+
+.box:hover {
+  border-color: color-mix(in oklch, currentColor 90%, transparent);
+}
+
+.box:checked {
+  border-color: var(--section-accent, var(--color-sunlit-moss));
+  background-color: var(--section-accent, var(--color-sunlit-moss));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316200F' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+}
+
+.box:checked + label .text {
+  color: rgba(243, 239, 226, 0.55);
+  text-decoration: line-through;
+  text-decoration-color: rgba(243, 239, 226, 0.35);
+}
+
+.summary::marker,
+.summary::-webkit-details-marker {
+  display: none;
+  content: "";
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .card {
+      animation: packing-checklist-rise 1ms both;
+      animation-range: entry 0% entry 35%;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes packing-checklist-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+}
+
+@media print {
+  .section {
+    padding: 0;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .inner {
+    max-width: none;
+    padding: 0;
+  }
+
+  .toolbar,
+  .aside,
+  .pdf,
+  .chevron {
+    display: none !important;
+  }
+
+  /* The heading alone survives, as the page's title line. */
+  .header {
+    display: block;
+  }
+
+  .header > :not(header),
+  .header header > :not(h2) {
+    display: none !important;
+  }
+
+  .heading {
+    font-size: 18pt;
+    line-height: 1.1;
+    color: #000;
+  }
+
+  .heading em {
+    color: #000 !important;
+    font-family: inherit;
+    font-style: italic;
+  }
+
+  .grid {
+    display: block;
+    margin-top: 10pt;
+    column-count: 2;
+    column-gap: 18pt;
+  }
+
+  .card {
+    display: block;
+    margin: 0 0 10pt;
+    border: 1px solid #000;
+    border-radius: 0;
+    background: none !important;
+    color: #000;
+    break-inside: avoid;
+    animation: none;
+  }
+
+  .summary {
+    padding: 6pt 8pt 2pt;
+    color: #000;
+    font-size: 10.5pt;
+  }
+
+  .summary * {
+    color: #000 !important;
+  }
+
+  .summary h3 {
+    font-size: 11pt;
+  }
+
+  .items {
+    padding: 0 8pt 6pt;
+  }
+
+  .item,
+  .stay {
+    padding: 2pt 0;
+    font-size: 9.5pt;
+    line-height: 1.3;
+  }
+
+  .item *,
+  .stay * {
+    color: #000 !important;
+  }
+
+  .box {
+    width: 11pt;
+    height: 11pt;
+    margin-top: 1pt;
+    border: 1px solid #000 !important;
+    background: none !important;
+    print-color-adjust: exact;
+  }
+
+  .box:checked + label .text {
+    color: #000;
+    text-decoration: none;
+  }
+}

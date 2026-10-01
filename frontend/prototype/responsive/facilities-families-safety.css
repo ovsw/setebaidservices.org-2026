@@ -1,0 +1,193 @@
+/* facilities-families-safety: phone and tablet overrides. See base.css for the why. */
+
+/* ============ tablet and phone (<1024) ============ */
+@media (max-width: 1023px) {
+  #facilities, #families {
+    padding: var(--section-pad) var(--gutter) !important;
+  }
+  /* safety -> testimonials share a field: 64px either side of the hairline */
+  #safety { padding: var(--section-pad) var(--gutter) 64px !important; }
+  [data-r="testimonials"] { padding: 0 0 var(--section-pad) !important; }
+  [data-r="testimonials"] > div:first-child { padding: 64px var(--gutter) 0 !important; margin-bottom: 40px !important; }
+
+  /* headline triad: 58/67 -> 46/54 */
+  #facilities h2, #families h2, #safety h2, [data-r="testimonials"] h2 { font-size: 46px !important; }
+  #facilities h2 em, #families h2 em, #safety h2 em, [data-r="testimonials"] h2 em { font-size: 54px !important; }
+
+  /* ---- #facilities ---- */
+  #facilities > div:last-child > div:first-child {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 22px !important;
+    margin-bottom: 48px !important;
+  }
+  #facilities > div:last-child > div:first-child > p { margin: 0 !important; max-width: 520px !important; }
+
+  /* Big Top: stack, carousel full width at 4:3, controls 44px */
+  [data-r="bigtop"] { grid-template-columns: 1fr !important; gap: 40px !important; }
+  [data-r="bigtop"] > div:first-child { height: auto !important; aspect-ratio: 4 / 3; }
+  [data-r="bigtop"] button[aria-label="Previous photo"],
+  [data-r="bigtop"] button[aria-label="Next photo"] { width: 44px !important; height: 44px !important; }
+  /* dots stay 8px tall visually; an invisible 44px halo is the tap target */
+  [data-r="bigtop"] button[aria-label^="Show photo"] { position: relative; }
+  [data-r="bigtop"] button[aria-label^="Show photo"]::after { content: ""; position: absolute; inset: -18px -5px; border-radius: 999px; }
+  [data-r="bigtop"] span[style*="124px"] { font-size: 92px !important; }
+  [data-r="bigtop"] span[style*="52px"] { font-size: 40px !important; }
+
+  /* "a wander away" header */
+  [data-r="walk"] { margin-top: 0; }
+  #facilities > div:last-child > div:nth-child(3) > div:first-child { margin-bottom: 32px !important; margin-top: 40px !important; }
+
+  /* Island walk: keep the 1320-wide map at a readable size and let it scroll
+     sideways inside its own slab. Scaling to fit would shrink the 9.5px stop
+     labels below legibility; scrolling keeps every stop tappable and readable. */
+  [data-r="walk"] { overflow-x: auto !important; overflow-y: hidden !important; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  [data-r="walk"]::-webkit-scrollbar { display: none; }
+  /* padding-top % resolves against the slab, not the 1120px area, so the 58% ratio is set in px.
+     The map layer is pinned to that height so the stop card below does not stretch it. */
+  [data-r="walk"] > div { width: 1120px !important; padding-top: 650px !important; cursor: default !important; }
+  [data-r="walk"] > div > div:first-child { bottom: auto !important; height: 650px !important; }
+  [data-r="walk"] [data-stoplbl] { font-size: 11px !important; }
+  [data-r="walk"] [data-stop] { padding: 12px !important; margin: -6px; }
+  /* stop card becomes a footer panel that stays pinned while the map scrolls */
+  [data-r="walkcard"] {
+    position: sticky !important; left: 0 !important; bottom: auto !important;
+    width: calc(100vw - 2 * var(--gutter) - 2px) !important;
+    border-radius: 0 !important; border: 0 !important;
+    border-top: 1px solid rgba(243,239,226,.18) !important;
+    background: rgba(13,18,8,.82) !important;
+    padding: 20px 22px 22px !important;
+  }
+  [data-r="walkcard"] > div:nth-child(2) { font-size: 30px !important; }
+  /* walker name chip is heavy on a small map */
+  [data-r="walk"] span[style*="font-size: 29px"] { font-size: 22px !important; }
+  /* Polaroid drops out of the corner and sits below the map */
+  [data-r="walkphoto"] { position: static !important; margin: 36px 0 0 12px !important; display: inline-block; }
+
+  /* ---- #families ---- */
+  [data-r="cards"] { grid-template-columns: 1fr 1fr !important; }
+  [data-r="strip"] {
+    justify-content: flex-start !important;
+    gap: 24px !important;
+    margin: 64px calc(-1 * var(--gutter)) 0 !important;
+    padding: 24px var(--gutter) 40px !important;
+    overflow-x: auto !important;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--gutter);
+    scrollbar-width: none;
+  }
+  [data-r="strip"]::-webkit-scrollbar { display: none; }
+  [data-r="strip"] > figure { flex: none; scroll-snap-align: start; }
+  [data-r="strip"] > figure:nth-child(2) { margin-top: 0 !important; }
+
+  /* ---- #safety ---- */
+  [data-r="intro"] { grid-template-columns: 1fr !important; gap: 48px !important; margin-bottom: 56px !important; }
+  [data-r="intro"] > figure { justify-self: start !important; max-width: 100%; min-width: 0; }
+  [data-r="intro"] > * { min-width: 0; }
+  [data-r="intro"] > figure > div { width: 100% !important; max-width: 430px; }
+  [data-r="intro"] > figure .sc-host-x { width: 100% !important; height: auto !important; aspect-ratio: 402 / 266; }
+
+  #safety [data-pgrid] { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+  #safety [data-pgrid] > div { min-width: 0; }
+  #safety [data-pmeta] { opacity: 1; transform: none; }
+  #safety [data-pc] > div:first-child { height: auto !important; aspect-ratio: 4 / 3; }
+  #safety [data-pc] > div:nth-child(2) { padding: 22px 22px 26px !important; }
+  /* three directors in two columns: the third spans the row, photo beside text, so no empty cell */
+  #safety [data-pgrid] > div:nth-child(3) { grid-column: 1 / -1; }
+  #safety [data-pgrid] > div:nth-child(3) [data-pc] { flex-direction: row !important; }
+  #safety [data-pgrid] > div:nth-child(3) [data-pc] > div:first-child { flex: 1 1 0; min-width: 0; aspect-ratio: auto; min-height: 280px; }
+  #safety [data-pgrid] > div:nth-child(3) [data-pc] > div:nth-child(2) { flex: 1 1 0; min-width: 0; justify-content: center; }
+
+  #safety [data-r="proof"] { display: grid !important; grid-template-columns: 1fr 1fr !important; margin: 56px 0 !important; }
+  #safety [data-r="proof"] > div { padding: 24px 20px 0 0 !important; border-left: 0 !important; }
+  #safety [data-r="proof"] > div:nth-child(even) { padding-left: 24px !important; border-left: 1px solid rgba(243,239,226,.18) !important; }
+  #safety [data-r="proof"] > div:nth-child(n+3) { border-top: 1px solid rgba(243,239,226,.18); margin-top: 24px; }
+  #safety [data-r="proof"] > div > span:first-child { font-size: 48px !important; }
+
+  [data-r="pillars"] { grid-template-columns: 1fr !important; gap: 40px !important; }
+  /* pillar descriptions open at rest: there is no hover to reveal them */
+  [data-r="pillars"] > div:first-child > div[style*="cursor: pointer"] > div:last-child { height: auto !important; opacity: 1 !important; }
+  [data-r="pillars"] > div:first-child > div[style*="cursor: pointer"] > div:first-child > span:nth-child(2) { font-size: 24px !important; }
+  [data-r="pillars"] > div:last-child { min-height: 0 !important; }
+  [data-r="pillars"] > div:last-child > div { height: auto !important; min-height: 0 !important; aspect-ratio: 4 / 3; }
+  /* the "hover a pillar" hint describes a mouse; nothing to hover on touch */
+  [data-r="pillars"] a + span { display: none !important; }
+
+  /* ---- testimonials: rivers stay full-bleed, edge fades narrow, stats wrap ---- */
+  [data-r="rivers"] > div[aria-hidden] { width: 96px !important; }
+  [data-r="tstats"] { flex-wrap: wrap; gap: 32px 48px !important; padding: 0 var(--gutter) !important; }
+  [data-r="tstats"] b { font-size: 36px !important; }
+}
+
+/* ============ phone (<640) ============ */
+@media (max-width: 639px) {
+  #facilities h2, #families h2, #safety h2, [data-r="testimonials"] h2 { font-size: 36px !important; }
+  #facilities h2 em, #families h2 em, #safety h2 em, [data-r="testimonials"] h2 em { font-size: 42px !important; }
+
+  /* Big Top */
+  [data-r="bigtop"] > div:first-child { aspect-ratio: 1 / 1; }
+  /* caption and dots share the bottom edge on desktop; at 375 the dots move to the top corner */
+  [data-r="bigtop"] div[style*="gap: 7px"] { bottom: auto !important; top: 18px !important; }
+  [data-r="bigtop"] h3 { font-size: 36px !important; }
+  [data-r="bigtop"] span[style*="124px"] { font-size: 64px !important; -webkit-text-stroke-width: 2px !important; }
+  [data-r="bigtop"] span[style*="52px"] { font-size: 28px !important; padding-bottom: 4px !important; }
+  [data-r="bigtop"] span[style*="Caveat"] { font-size: 24px !important; }
+  [data-r="bigtop"] p { font-size: 16px !important; }
+
+  /* wander header */
+  #facilities > div:last-child > div:nth-child(3) h3 { font-size: 30px !important; }
+  #facilities > div:last-child > div:nth-child(3) h3 + span { font-size: 38px !important; }
+
+  /* map: coordinate chip is the one piece that does not earn its space at 375 */
+  [data-r="walk"] > div { width: 800px !important; padding-top: 464px !important; }
+  [data-r="walk"] > div > div:first-child { height: 464px !important; }
+  /* 16 labels cannot fit a phone-width island without piling up. The diamonds stay
+     (44px targets), the amber walker chip names the active stop, the card below explains it. */
+  [data-r="walk"] [data-stoplbl] { visibility: hidden; }
+  [data-r="walk"] [data-stop] { padding: 16px !important; margin: -10px; }
+  [data-r="walkcard"] > div:nth-child(2) { font-size: 27px !important; }
+  [data-r="walkcard"] > p { font-size: 13px !important; }
+  [data-r="walkphoto"] { margin: 32px 0 0 8px !important; }
+
+  /* families: left-aligned, one column */
+  #families > div > div:first-child { text-align: left !important; margin-bottom: 40px !important; }
+  #families h2 { margin: 0 !important; }
+  [data-r="cards"] { grid-template-columns: 1fr !important; gap: 14px !important; }
+  [data-r="cards"] > div { padding: 28px 24px !important; }
+  [data-r="strip"] { gap: 18px !important; margin-top: 48px !important; }
+  [data-r="strip"] > figure > div { width: 290px !important; height: auto !important; }
+  [data-r="strip"] .sc-host-x { width: 266px !important; height: 166px !important; }
+
+  /* safety */
+  [data-r="intro"] { gap: 36px !important; margin-bottom: 44px !important; }
+  #safety [data-pgrid] { grid-template-columns: minmax(0, 1fr) !important; }
+  #safety [data-pgrid] > div:nth-child(3) { grid-column: auto; }
+  #safety [data-pgrid] > div:nth-child(3) [data-pc] { flex-direction: column !important; }
+  #safety [data-pgrid] > div:nth-child(3) [data-pc] > div:first-child { aspect-ratio: 3 / 2; }
+  #safety [data-pc] > div:first-child { aspect-ratio: 3 / 2; }
+  #safety [data-pc] > div:nth-child(2) { padding: 22px 20px 26px !important; }
+  #safety [data-r="proof"] { margin: 48px 0 !important; }
+  #safety [data-r="proof"] > div > span:first-child { font-size: 42px !important; }
+  #safety [data-r="proof"] > div > span:last-child { font-size: 13px !important; }
+  [data-r="pillars"] > div:first-child > div[style*="cursor: pointer"] > div:first-child > span:nth-child(2) { font-size: 22px !important; }
+  [data-r="pillars"] > div:first-child > div[style*="cursor: pointer"] p { font-size: 15px !important; }
+  [data-r="pillars"] > div:last-child > div { aspect-ratio: 3 / 4; }
+
+  /* testimonials: the rivers are the phone-friendly part. They run edge to edge
+     past the gutter, cards shrink to 260 so 1.4 show at once, rows tighten, and
+     the loop speeds up (same distance, shorter cards). Hover-pause does not exist
+     on touch; the rows are passive texture, the link below is the tap target.
+     Stats become a 2x2 grid. */
+  [data-r="testimonials"] > div:first-child { text-align: left !important; padding-top: 56px !important; }
+  #safety { padding-bottom: 56px !important; }
+  [data-r="rivers"] { gap: 10px !important; }
+  [data-r="rivers"] > div[aria-hidden] { width: 40px !important; }
+  [data-triver] { gap: 10px !important; animation-duration: 48s !important; }
+  [data-triver]:nth-child(odd) { animation-duration: 60s !important; }
+  [data-tcard] { width: 260px !important; padding: 14px 16px 12px !important; border-radius: 14px !important; }
+  [data-tcard] > p { font-size: 13.5px !important; margin-bottom: 10px !important; }
+  [data-tcard] footer > span:last-child { display: none !important; }
+  [data-r="tstats"] { display: grid !important; grid-template-columns: 1fr 1fr; gap: 28px 16px !important; margin-top: 40px !important; }
+  [data-r="tstats"] b { font-size: 32px !important; }
+}

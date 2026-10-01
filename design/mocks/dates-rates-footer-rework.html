@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dates &amp; Rates card footer rework</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Caveat:wght@600&family=Archivo:wght@400;600&display=swap');
+:root{
+  --amber:#E8A23B; --pine:#16200F; --cedar:#527033; --birch:#F3EFE2; --birch-bright:#FAF7EE;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#000;color:#fff;font:15px/1.55 Archivo,system-ui,sans-serif;padding:32px 20px 80px}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:22px;margin:0 0 6px}
+p.note{color:#aaa;margin:0 0 28px;max-width:640px}
+h2.variant{font-size:16px;margin:56px 0 10px;color:var(--amber);font-family:ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase}
+p.desc{color:#aaa;margin:0 0 14px;max-width:640px}
+
+/* card replica */
+.card{background:var(--birch-bright);color:var(--pine);border-radius:28px;padding:28px;border:1px solid rgba(22,32,15,.1)}
+.label{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(22,32,15,.5)}
+.top{display:grid;grid-template-columns:280px 1fr;gap:40px}
+@media(max-width:760px){.top{grid-template-columns:1fr}}
+.price{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:62px;line-height:1}
+.tax{font-family:ui-monospace,Menlo,monospace;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:rgba(22,32,15,.55)}
+.script{font-family:Caveat,cursive;font-weight:600;font-size:28px;line-height:1.1;color:var(--cedar);margin-top:10px}
+.timeline{align-self:center}
+.track{position:relative;height:40px;background:rgba(22,32,15,.05);border-radius:999px;margin-top:26px}
+.bar{position:absolute;inset:4px 8%;background:#4c6b2f;border-radius:999px}
+
+/* conditions row */
+.condrow{margin-top:26px;font-size:13px;line-height:1.7;color:rgba(22,32,15,.62)}
+.condrow b{color:rgba(22,32,15,.85);font-weight:600}
+.dot{color:var(--cedar);font-size:15px;padding:0 9px;vertical-align:-1px}
+.dot.amber{color:var(--amber)}
+
+.divider{border-top:1px dashed rgba(22,32,15,.16);margin-top:22px;padding-top:24px}
+
+/* variant A includes */
+.incA{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:16px}
+@media(max-width:760px){.incA{grid-template-columns:repeat(2,1fr)}}
+.incA .item{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:19px;line-height:1.15}
+.incA .item .chk{display:block;color:var(--cedar);font-size:16px;margin-bottom:6px}
+
+/* variant B includes */
+.incB{display:flex;flex-wrap:wrap;gap:12px 34px;margin-top:14px;align-items:baseline}
+.incB .item{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:26px;letter-spacing:-.01em}
+.incB .chk{color:var(--cedar);font-size:20px;margin-right:9px}
+@media(max-width:760px){.incB .item{font-size:20px}}
+
+/* variant C includes */
+.incC{display:grid;grid-template-columns:auto 1fr;gap:28px;margin-top:0;align-items:baseline}
+@media(max-width:760px){.incC{grid-template-columns:1fr}}
+.incC ul{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,auto);gap:14px 40px;justify-content:start}
+@media(max-width:760px){.incC ul{grid-template-columns:1fr 1fr}}
+.incC li{font-size:17px;font-weight:600;display:flex;gap:10px;align-items:baseline}
+.incC .chk{color:var(--cedar);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Dates &amp; rates card: footer rework</h1>
+<p class="note">All variants do the same two moves: the deposit / sibling / transport-and-tax mentions collapse into one bullet-separated row at the bottom of the upper section, above the dashed line. Below the dashed line, "Every session includes" takes the full width, bigger. Pick A, B, or C.</p>
+
+<!-- ===================== A ===================== -->
+<h2 class="variant">A · Stat-style includes</h2>
+<p class="desc">Includes become five short column stats, check on top, bold Bricolage. Reads like the site's stat rows. Conditions row in small type with cedar bullets.</p>
+<div class="card">
+  <div class="top">
+    <div>
+      <div class="label">Per camper · all-inclusive</div>
+      <div class="price">$11,900<span class="tax"> +tax</span></div>
+      <div class="script">the whole summer, start to finish</div>
+    </div>
+    <div class="timeline">
+      <div class="label">Session dates</div>
+      <div class="track"><div class="bar"></div></div>
+    </div>
+  </div>
+  <p class="condrow">
+    Deposits <b>fully refundable until March 31, 2026</b>, balances due April 1<span class="dot">&#9679;</span>Siblings save: <b>5% off the 2nd camper, 10% off the 3rd</b>, applied automatically<span class="dot">&#9679;</span>Transportation and taxes extra<span class="dot">&#9679;</span>$150 tuck-shop deposit per camper, unused funds refunded
+  </p>
+  <div class="divider">
+    <div class="label">Every session includes</div>
+    <div class="incA">
+      <div class="item"><span class="chk">&#10003;</span>Cabin on the island</div>
+      <div class="item"><span class="chk">&#10003;</span>All meals &amp; snacks</div>
+      <div class="item"><span class="chk">&#10003;</span>All 35 activities</div>
+      <div class="item"><span class="chk">&#10003;</span>Expert instruction</div>
+      <div class="item"><span class="chk">&#10003;</span>Top-of-the-line gear</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== B ===================== -->
+<h2 class="variant">B · One loud line</h2>
+<p class="desc">Includes as one big wrapping headline-weight line, checks between items. Maximum emphasis, most confident.</p>
+<div class="card">
+  <div class="top">
+    <div>
+      <div class="label">Per camper · all-inclusive</div>
+      <div class="price">$11,900<span class="tax"> +tax</span></div>
+      <div class="script">the whole summer, start to finish</div>
+    </div>
+    <div class="timeline">
+      <div class="label">Session dates</div>
+      <div class="track"><div class="bar"></div></div>
+    </div>
+  </div>
+  <p class="condrow">
+    Deposits <b>fully refundable until March 31, 2026</b>, balances due April 1<span class="dot amber">&#9679;</span>Siblings save: <b>5% off the 2nd camper, 10% off the 3rd</b><span class="dot amber">&#9679;</span>Transportation and taxes extra<span class="dot amber">&#9679;</span>$150 tuck-shop deposit, unused funds refunded
+  </p>
+  <div class="divider">
+    <div class="label">Every session includes</div>
+    <div class="incB">
+      <span class="item"><span class="chk">&#10003;</span>Cabin on the island</span>
+      <span class="item"><span class="chk">&#10003;</span>All meals &amp; snacks</span>
+      <span class="item"><span class="chk">&#10003;</span>All 35 activities</span>
+      <span class="item"><span class="chk">&#10003;</span>Expert instruction</span>
+      <span class="item"><span class="chk">&#10003;</span>Top-of-the-line gear</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== C ===================== -->
+<h2 class="variant">C · Label left, grid right</h2>
+<p class="desc">Includes at 17px semibold in a three-column grid beside the label. Denser, quieter step up from today; less shouty than A/B.</p>
+<div class="card">
+  <div class="top">
+    <div>
+      <div class="label">Per camper · all-inclusive</div>
+      <div class="price">$11,900<span class="tax"> +tax</span></div>
+      <div class="script">the whole summer, start to finish</div>
+    </div>
+    <div class="timeline">
+      <div class="label">Session dates</div>
+      <div class="track"><div class="bar"></div></div>
+    </div>
+  </div>
+  <p class="condrow">
+    Deposits <b>fully refundable until March 31, 2026</b>, balances due April 1<span class="dot">&#9679;</span>Siblings save: <b>5% off the 2nd camper, 10% off the 3rd</b><span class="dot">&#9679;</span>Transportation and taxes extra<span class="dot">&#9679;</span>$150 tuck-shop deposit, unused funds refunded
+  </p>
+  <div class="divider">
+    <div class="incC">
+      <div class="label" style="white-space:nowrap">Every session includes</div>
+      <ul>
+        <li><span class="chk">&#10003;</span>Cabin on the island</li>
+        <li><span class="chk">&#10003;</span>All meals &amp; snacks</li>
+        <li><span class="chk">&#10003;</span>All 35 activities</li>
+        <li><span class="chk">&#10003;</span>Expert instruction</li>
+        <li><span class="chk">&#10003;</span>Top-of-the-line gear</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+/* rates-world: phone and tablet overrides. See base.css for the why. */
+
+/* ---------- #rates (tablet + phone) ---------- */
+@media (max-width: 1023px) {
+  #rates { padding: var(--section-pad) var(--gutter) !important; }
+
+  /* Section head: title + blurb stack */
+  #rates > div > div:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 28px !important; margin-bottom: 40px !important; }
+  #rates > div > div:first-child > div:last-child { margin-left: 0 !important; }
+  #rates h2 { font-size: 46px !important; }
+  #rates h2 em { font-size: 53px !important; }
+
+  /* Pricing card */
+  #rates [data-r="card"] { padding: 32px 26px 28px !important; }
+  #rates [data-r="card"] > div:first-child { margin-bottom: 28px !important; }
+  #rates [data-r="toggle"] { flex-wrap: wrap !important; }
+  #rates [data-r="toggle"] button { min-height: 44px !important; }
+
+  /* Tablet rows stay rows with tighter side columns. The track leaves 84px on its right so the
+     Enroll label (hover-only on desktop) sits beside the bar at rest, never under it. */
+  #rates [data-srow], #rates [data-r="calhead"] { grid-template-columns: 118px 1fr 128px !important; gap: 14px !important; }
+  #rates [data-srow] > span:nth-child(2), #rates [data-r="calhead"] > span:nth-child(2) { margin-right: 84px; }
+  #rates [data-r="calhead"] > span:nth-child(2) > span { letter-spacing: .06em !important; }
+  #rates [data-srow] [data-senroll] { right: -84px !important; width: 72px; justify-content: flex-end; }
+  #rates [data-srow="open"] [data-senroll] { opacity: 1 !important; transform: none !important; }
+
+  /* Price block under the calendar */
+  #rates [data-r="pricing"] { grid-template-columns: 1fr !important; gap: 40px !important; }
+  #rates [data-r="pricing"] > div:last-child { order: -1; }
+  #rates [data-r="pricing"] > div:first-child { padding-top: 34px; border-top: 1px dashed rgba(22,32,15,.16); }
+
+  /* Tablet: the price block goes horizontal (number left, CTA and notes right) */
+  #rates [data-r="price"] { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 40px; align-items: start; }
+  #rates [data-r="price"] > div:nth-child(1) { grid-column: 1; }
+  #rates [data-r="price"] > div:nth-child(2) { grid-column: 1; }
+  #rates [data-r="price"] > div:nth-child(3) { grid-column: 1; margin: 14px 0 0 !important; }
+  #rates [data-r="price"] > a { grid-column: 2; grid-row: 1 / span 2; justify-self: start; }
+  #rates [data-r="price"] > div:nth-child(5) { grid-column: 2; grid-row: 3; margin-top: 0 !important; }
+}
+
+@media (max-width: 639px) {
+  #rates h2 { font-size: 36px !important; }
+  #rates h2 em { font-size: 42px !important; }
+  #rates [data-r="card"] { padding: 26px 18px 24px !important; border-radius: 22px !important; }
+  #rates [data-r="card"] > div:first-child { gap: 16px !important; margin-bottom: 22px !important; }
+  #rates [data-r="card"] > div:first-child > div:last-child { margin-left: 0 !important; flex-basis: 100%; }
+  #rates [data-r="toggle"] { gap: 8px !important; }
+  #rates [data-r="toggle"] button { padding: 10px 16px !important; }
+
+  /* Price block: back to a single column */
+  #rates [data-r="price"] { display: block; }
+  #rates [data-r="price"] > div:nth-child(3) { margin: 14px 0 24px !important; }
+  #rates [data-r="price"] > a { min-height: 44px; box-sizing: border-box; }
+  #rates [data-r="price"] > div:nth-child(5) { margin-top: 24px !important; }
+  #rates [data-r="price"] span[style*="font-size: 74px"] { font-size: 58px !important; }
+  #rates [data-r="price"] div[style*="Caveat"] { font-size: 26px !important; }
+
+  /* Calendar header: labels on one line, month ticks on the next */
+  #rates [data-r="calhead"] { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+  #rates [data-r="calhead"] > span:nth-child(2) { grid-column: 1 / -1; order: 1; }
+  /* Only three month ticks fit over a 200px track */
+  #rates [data-r="calhead"] > span:nth-child(2) > span:nth-child(2), #rates [data-r="calhead"] > span:nth-child(2) > span:nth-child(4) { display: none !important; }
+
+  /* Session rows become stacked cards: dates + chip on top, bar below */
+  #rates [data-srow] { grid-template-columns: 1fr auto !important; gap: 10px 12px !important; padding: 12px 0 !important; }
+  #rates [data-srow] [data-sdates] { font-size: 12px !important; }
+  #rates [data-srow] > span:nth-child(2) { grid-column: 1 / -1; order: 1; height: 44px !important; }
+  #rates [data-srow] > span:nth-child(3) { justify-self: end; }
+  /* Open rows are taller than the inline 64px cap. Hidden rows keep 0. */
+  #rates div[style*="max-height: 64px"] { max-height: none !important; }
+  #rates [data-r="calendar"] > div:last-child { margin-top: 12px !important; line-height: 1.6; }
+
+  #rates [data-r="includes"] { margin-top: 26px !important; padding-top: 22px !important; }
+  #rates [data-r="includes"] > span:first-child { flex-basis: 100%; margin: 0 0 4px !important; }
+}
+
+/* ---------- #world (tablet + phone) ---------- */
+@media (max-width: 1023px) {
+  #world {
+    --gw: min(620px, calc(100vw - 2 * var(--gutter)));
+    --gwn: tan(atan2(var(--gw), 1px)); /* --gw as a plain number of px */
+    padding: var(--section-pad) var(--gutter) !important;
+  }
+  #world > div:nth-child(2) { grid-template-columns: 1fr !important; gap: 48px !important; }
+  #world h2 { font-size: 46px !important; }
+  #world h2 em { font-size: 53px !important; }
+  #world p { max-width: 560px !important; }
+
+  /* Globe first, centred; the 620 box is scaled down to --gw and its
+     layout footprint pulled in with negative margins so nothing below jumps. */
+  #world [data-r="globe"] { order: -1; justify-self: center !important; width: var(--gw); }
+  #world [data-r="globe"] > div:first-child {
+    transform: scale(calc(var(--gwn) / 620));
+    transform-origin: 0 0;
+    margin-right: calc(var(--gw) - 620px);
+    margin-bottom: calc(var(--gw) - 620px);
+  }
+  #world [data-r="globe"] canvas { touch-action: pan-y; }
+  /* The island tag rides inside the scaled box; counter-scale it so the label stays legible.
+     Scale the inner wrapper only, from its bottom center, so the stem tip stays pinned
+     to the island point while the anchoring translate on its parent is untouched. */
+  #world [data-r="globe"] [data-tagscale] { scale: calc(620 / var(--gwn)); }
+}
+
+@media (max-width: 639px) {
+  #world h2 { font-size: 36px !important; }
+  #world h2 em { font-size: 42px !important; }
+  #world > div:nth-child(2) { gap: 40px !important; }
+  #world p { margin-bottom: 32px !important; }
+
+  /* Arrivals rows: code, city with country wrapping under it, km. EN ROUTE is hover feedback; drop it. */
+  #world [data-r="routes"] > div[onclick], #world [data-r="routes"] > div[style*="cursor: pointer"] { grid-template-columns: 50px 1fr auto !important; gap: 12px !important; padding: 10px 12px !important; margin: 0 -12px !important; }
+  #world [data-r="routes"] > div > span:nth-child(1) { font-size: 11px !important; letter-spacing: .06em !important; }
+  #world [data-r="routes"] > div > span:nth-child(2) { flex-wrap: wrap !important; gap: 2px 8px !important; }
+  #world [data-r="routes"] > div > span:nth-child(2) > span:first-child { font-size: 17px !important; }
+  #world [data-r="routes"] > div > span:nth-child(3) > span:first-child { display: none !important; }
+  #world [data-r="routes"] > div > span:nth-child(3) > span:last-child { font-size: 11.5px !important; }
+  /* The sphere fills only the inner 80% of its canvas (the rest is glow), so on phone the
+     box bleeds into the gutters and the sphere itself lands at roughly 300px */
+  #world { --gw: min(620px, 100vw); }
+  #world [data-r="globe"] { margin: 0 calc(-1 * var(--gutter)); }
+  #world [data-r="globe"] > div:last-child { margin-top: 0 !important; padding: 0 var(--gutter); font-size: 11px !important; letter-spacing: .14em !important; line-height: 1.6; }
+  /* The label's line breaks are hard-coded, so it cannot reflow on its own.
+     Let it wrap as a last resort if the copy ever outgrows the narrow globe box. */
+  #world [data-r="globe"] [data-tagscale] > span:first-child { white-space: normal !important; max-width: 150px; }
+}
