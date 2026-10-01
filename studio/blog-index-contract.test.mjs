@@ -94,8 +94,6 @@ test("blogIndex uses the singleton configuration", () => {
   assert.equal(blogIndexPageBuilderBlockTypes.includes("homeHero"), false);
   assert.equal(blogIndexPageBuilderBlockTypes.includes("faqHub"), false);
   assert.equal(singletonDocumentTypes.has("blogIndex"), true);
-  assert.equal(singletonDocumentTypes.has("facilitiesMap"), true);
-  assert.equal(singletonDocumentTypes.has("seasonsConfig"), true);
   assert.equal(singletonDocumentActions.has("duplicate"), false);
   assert.equal(singletonDocumentActions.has("delete"), false);
 });

@@ -18,11 +18,6 @@ import blogPostSettings from "./schemas/documents/blog-post-settings";
 import homePage from "./schemas/documents/home-page";
 import footer, { footerSchemaTypes } from "./schemas/documents/footer";
 import redirect from "./schemas/documents/redirect";
-import activity from "./schemas/documents/activity";
-import facility from "./schemas/documents/facility";
-import facilitiesMap from "./schemas/documents/facilities-map";
-import season from "./schemas/documents/season";
-import seasonsConfig from "./schemas/documents/seasons-config";
 
 // Schema UI shared objects
 import blockContent from "./schemas/blocks/shared/block-content";
@@ -69,8 +64,6 @@ import pricingSingleToggle from "./schemas/blocks/pricing-single-toggle";
 import faqHub from "./schemas/blocks/faq-hub";
 // page-builder-generator:block-imports
 import { internationalCampersSection } from "./schemas/blocks/international-campers-section";
-import facilityMapPlacement from "./schemas/objects/facility-map-placement";
-import seasonSession from "./schemas/objects/season-session";
 
 export const schemaTypes = [
   // documents
@@ -91,11 +84,6 @@ export const schemaTypes = [
   homePage,
   footer,
   redirect,
-  activity,
-  facility,
-  facilitiesMap,
-  season,
-  seasonsConfig,
   ...footerSchemaTypes,
   // shared objects
   blockContent,
@@ -112,8 +100,6 @@ export const schemaTypes = [
   minimalRichText,
   blogPostSidebarAction,
   blogPostSidebar,
-  facilityMapPlacement,
-  seasonSession,
   // blocks
   hero,
   hero1,

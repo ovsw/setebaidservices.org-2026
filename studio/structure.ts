@@ -15,11 +15,6 @@ import {
   House,
   TrendingUpDown,
   PanelRight,
-  CircleDot,
-  MapPinned,
-  MapPin,
-  CalendarRange,
-  CalendarCog,
 } from "lucide-react";
 import type { StructureResolver } from "sanity/structure";
 
@@ -102,71 +97,6 @@ export const structure: StructureResolver = (S) =>
                     .defaultOrdering([{ field: "name", direction: "asc" }])
                 ),
             ])
-        ),
-      S.listItem()
-        .title("Facilities")
-        .icon(MapPinned)
-        .child(
-          S.list()
-            .title("Facilities")
-            .items([
-              S.listItem()
-                .title("Facilities Map")
-                .icon(MapPinned)
-                .child(
-                  S.editor()
-                    .id("facilitiesMap")
-                    .schemaType("facilitiesMap")
-                    .documentId("facilitiesMap")
-                ),
-              S.listItem()
-                .title("Facilities")
-                .icon(MapPin)
-                .schemaType("facility")
-                .child(
-                  S.documentTypeList("facility")
-                    .title("Facilities")
-                    .defaultOrdering([{ field: "name", direction: "asc" }])
-                ),
-            ])
-        ),
-      S.listItem()
-        .title("Seasons")
-        .icon(CalendarRange)
-        .child(
-          S.list()
-            .title("Seasons")
-            .items([
-              S.listItem()
-                .title("Seasons Config")
-                .icon(CalendarCog)
-                .child(
-                  S.editor()
-                    .id("seasonsConfig")
-                    .schemaType("seasonsConfig")
-                    .documentId("seasonsConfig")
-                ),
-              S.listItem()
-                .title("Seasons List")
-                .icon(CalendarRange)
-                .schemaType("season")
-                .child(
-                  S.documentTypeList("season")
-                    .title("Seasons List")
-                    .defaultOrdering([
-                      { field: "startDate", direction: "asc" },
-                    ])
-                ),
-            ])
-        ),
-      S.listItem()
-        .title("Activities")
-        .icon(CircleDot)
-        .schemaType("activity")
-        .child(
-          S.documentTypeList("activity")
-            .title("Activities")
-            .defaultOrdering([{ field: "title", direction: "asc" }])
         ),
       S.listItem()
         .title("FAQs")
