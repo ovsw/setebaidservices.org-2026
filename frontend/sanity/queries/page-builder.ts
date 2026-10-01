@@ -9,14 +9,10 @@ import { heroQuery } from "./hero";
 import { homeHeroQuery } from "./home-hero";
 import { imageCollageFeatureQuery } from "./image-collage-feature";
 import { featureCardsQuery } from "./feature-cards";
-import { activityScheduleQuery } from "./activity-schedule";
-import { facilitiesMapSectionQuery } from "./facilities-map-section";
-import { datesRatesSectionQuery } from "./dates-rates-section";
 import { stackedFeatureRowsQuery } from "./stacked-feature-rows";
 import { innerHeroQuery } from "./inner-hero";
 import { journeyQuery } from "./journey";
 import { stackedTimelineQuery } from "./stacked-timeline";
-import { activityCatalogueQuery } from "./activity-catalogue";
 import { includedExtrasQuery } from "./included-extras";
 import { packingChecklistQuery } from "./packing-checklist";
 import { bigImageListQuery } from "./big-image-list";
@@ -33,7 +29,7 @@ export const pageBuilderQuery = `
   blocks[]{
     _key,
     _type,
-    !(_type in ["hero", "homeHero", "innerHero", "facilitiesMapSection", "internationalCampersSection"]) => {background},
+    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},
     ${latestArticlesQuery},
     ${faqAccordionQuery},
     ${storyFeatureQuery},
@@ -45,14 +41,10 @@ export const pageBuilderQuery = `
     ${homeHeroQuery},
     ${imageCollageFeatureQuery},
     ${featureCardsQuery},
-    ${activityScheduleQuery},
-    ${facilitiesMapSectionQuery},
-    ${datesRatesSectionQuery},
     ${stackedFeatureRowsQuery},
     ${innerHeroQuery},
     ${journeyQuery},
     ${stackedTimelineQuery},
-    ${activityCatalogueQuery},
     ${includedExtrasQuery},
     ${packingChecklistQuery},
     ${bigImageListQuery},

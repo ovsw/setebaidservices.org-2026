@@ -73,7 +73,7 @@ describe("resolveSectionBoundaries", () => {
   });
 
   it("puts an edge after a hero and lets the tucker tuck", () => {
-    expect(booleans([block("innerHero"), block("datesRatesSection", "cream")])).toEqual([
+    expect(booleans([block("innerHero"), block("directorCta", "cream")])).toEqual([
       { seamTop: false, seamBottom: false, tuck: false, tuckBelow: true },
       { seamTop: false, seamBottom: false, tuck: true, tuckBelow: true },
     ]);
@@ -100,8 +100,8 @@ describe("resolveSectionBoundaries", () => {
 
   it("compares a fixed-background section by its trait, not the editor field", () => {
     const result = resolveSectionBoundaries([
-      block("facilitiesMapSection"),
       block("internationalCampersSection"),
+      { ...block("internationalCampersSection"), _key: "internationalCampersSection-second" } as Block,
     ]);
     expect(result[0].background).toBe("night");
     expect(result[1].background).toBe("night");

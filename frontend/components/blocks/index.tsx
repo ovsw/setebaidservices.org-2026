@@ -18,14 +18,10 @@ import Hero from "@/components/blocks/hero";
 import HomeHero from "@/components/blocks/home-hero";
 import ImageCollageFeature from "@/components/blocks/image-collage-feature";
 import FeatureCards from "@/components/blocks/feature-cards";
-import ActivitySchedule from "@/components/blocks/activity-schedule";
-import FacilitiesMapSection from "@/components/blocks/facilities-map-section";
-import DatesRatesSection from "@/components/blocks/dates-rates-section";
 import StackedFeatureRows from "@/components/blocks/stacked-feature-rows";
 import InnerHero from "@/components/blocks/inner-hero";
 import Journey from "@/components/blocks/journey";
 import StackedTimeline from "@/components/blocks/stacked-timeline";
-import ActivityCatalogue from "@/components/blocks/activity-catalogue";
 import IncludedExtras from "@/components/blocks/included-extras";
 import PackingChecklist from "@/components/blocks/packing-checklist";
 import BigImageList from "@/components/blocks/big-image-list";
@@ -43,19 +39,6 @@ import type { BlogListing } from "@/lib/blog-index";
 type BlockEditingProps = {
   dataAttribute?: (path: string) => string | undefined;
   memberDataAttribute?: (
-    documentId: string,
-    path: string,
-  ) => string | undefined;
-  activityDataAttribute?: (
-    documentId: string,
-    path: string,
-  ) => string | undefined;
-  facilityDataAttribute?: (
-    documentId: string,
-    path: string,
-  ) => string | undefined;
-  mapDataAttribute?: (path: string) => string | undefined;
-  seasonDataAttribute?: (
     documentId: string,
     path: string,
   ) => string | undefined;
@@ -82,14 +65,10 @@ const serverFieldEditingBlockTypes = new Set<Block["_type"]>([
   "homeHero",
   "imageCollageFeature",
   "featureCards",
-  "activitySchedule",
-  "facilitiesMapSection",
-  "datesRatesSection",
   "stackedFeatureRows",
   "innerHero",
   "journey",
   "stackedTimeline",
-  "activityCatalogue",
   "includedExtras",
   "packingChecklist",
   "bigImageList",
@@ -119,14 +98,10 @@ const componentMap: Partial<{
   homeHero: HomeHero,
   imageCollageFeature: ImageCollageFeature,
   featureCards: FeatureCards,
-  activitySchedule: ActivitySchedule,
-  facilitiesMapSection: FacilitiesMapSection,
-  datesRatesSection: DatesRatesSection,
   stackedFeatureRows: StackedFeatureRows,
   innerHero: InnerHero,
   journey: Journey,
   stackedTimeline: StackedTimeline,
-  activityCatalogue: ActivityCatalogue,
   includedExtras: IncludedExtras,
   packingChecklist: PackingChecklist,
   bigImageList: BigImageList,
@@ -215,71 +190,6 @@ export default function Blocks({
                         }).toString()
                     : undefined,
                 }
-              : block._type === "activitySchedule" ||
-                  block._type === "activityCatalogue"
-                ? {
-                    dataAttribute,
-                    activityDataAttribute: stega
-                      ? (activityId: string, path: string) =>
-                          createDataAttribute({
-                            baseUrl:
-                              process.env.NEXT_PUBLIC_STUDIO_URL ||
-                              "http://localhost:3333",
-                            dataset,
-                            id: activityId,
-                            path,
-                            projectId,
-                            type: "activity",
-                          }).toString()
-                      : undefined,
-                  }
-                : block._type === "facilitiesMapSection"
-                  ? {
-                      dataAttribute,
-                      facilityDataAttribute: stega
-                        ? (facilityId: string, path: string) =>
-                            createDataAttribute({
-                              baseUrl:
-                                process.env.NEXT_PUBLIC_STUDIO_URL ||
-                                "http://localhost:3333",
-                              dataset,
-                              id: facilityId,
-                              path,
-                              projectId,
-                              type: "facility",
-                            }).toString()
-                        : undefined,
-                      mapDataAttribute: stega
-                        ? (path: string) =>
-                            createDataAttribute({
-                              baseUrl:
-                                process.env.NEXT_PUBLIC_STUDIO_URL ||
-                                "http://localhost:3333",
-                              dataset,
-                              id: "facilitiesMap",
-                              path,
-                              projectId,
-                              type: "facilitiesMap",
-                            }).toString()
-                        : undefined,
-                    }
-                : block._type === "datesRatesSection"
-                  ? {
-                      dataAttribute,
-                      seasonDataAttribute: stega
-                        ? (seasonId: string, path: string) =>
-                            createDataAttribute({
-                              baseUrl:
-                                process.env.NEXT_PUBLIC_STUDIO_URL ||
-                                "http://localhost:3333",
-                              dataset,
-                              id: seasonId,
-                              path,
-                              projectId,
-                              type: "season",
-                            }).toString()
-                        : undefined,
-                    }
                 : block._type === "quoteWall"
                   ? {
                       dataAttribute,

@@ -53,14 +53,10 @@ export type SectionTrait = {
  * value never changes a boundary; `photo` records what the design intends.
  */
 export const sectionTraits: Record<Block["_type"], SectionTrait> = {
-  activityCatalogue: {},
-  activitySchedule: {},
   benefitCards: {},
   bigImageList: {},
   ctaBanner: { tuck: true },
-  datesRatesSection: { tuck: true },
   directorCta: { tuck: true },
-  facilitiesMapSection: { background: "night", tuck: true },
   faqAccordion: {},
   faqHub: {},
   pricingSingleToggle: {},
@@ -108,7 +104,6 @@ type FixedBackgroundType =
   | "hero"
   | "homeHero"
   | "innerHero"
-  | "facilitiesMapSection"
   | "internationalCampersSection";
 
 /** Blocks whose GROQ projection carries the editor `background` field. */
@@ -155,8 +150,6 @@ export function resolveEditorBackground(block: Block, isFinal: boolean): EditorB
               ? "white"
               : "green"
             : [
-                  "activitySchedule",
-                  "activityCatalogue",
                   "bigImageList",
                   "directorCta",
                   "journey",
@@ -165,7 +158,6 @@ export function resolveEditorBackground(block: Block, isFinal: boolean): EditorB
                 ].includes(block._type)
               ? "green"
               : [
-                    "datesRatesSection",
                     "imageCollageFeature",
                     "includedExtras",
                     "stackedFeatureRows",
