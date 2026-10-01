@@ -14,7 +14,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "test:smoke": "playwright test e2e/cac.spec.ts",
+    "test:smoke": "playwright test e2e/site.spec.ts",
     "shot": "node scripts/shot.mjs"
   },
   "dependencies": {

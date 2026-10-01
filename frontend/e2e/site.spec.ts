@@ -32,9 +32,14 @@ async function gotoRoute(page: Page, path: string) {
 async function expectAccessibleRoute(page: Page) {
   await expect(page.locator("main")).toHaveCount(1);
   await expect(page.locator("h1")).toHaveCount(1);
-  await expect(
-    page.getByRole("navigation", { name: "Main navigation" }),
-  ).toBeVisible();
+  const mainNavigation = page.getByRole("navigation", {
+    name: "Main navigation",
+  });
+  await expect(mainNavigation).toHaveCount(1);
+  // An empty menu has no size; it must show once the navigation has items.
+  if (await mainNavigation.locator("a, button").count()) {
+    await expect(mainNavigation).toBeVisible();
+  }
   await expect(page.getByRole("contentinfo")).toBeVisible();
   await expect(
     page.getByRole("button", {
@@ -88,9 +93,10 @@ function motionViolations(page: Page) {
 test.describe("every prebuilt route", () => {
   test.use({ contextOptions: { reducedMotion: "reduce" }, viewport: desktop });
 
-  // The sitemap lists well over a hundred routes. Walking them in one test
-  // took 67 s of the release gate, so the walk is split into fixed shards
-  // that Playwright runs in parallel workers against the same server.
+  // A full site lists over a hundred routes. Walking them in one test took
+  // 67 s of the release gate, so the walk is split into fixed shards that
+  // Playwright runs in parallel workers against the same server. A shard
+  // with no routes passes.
   const routeShards = 4;
 
   for (let shard = 0; shard < routeShards; shard += 1) {
@@ -123,29 +129,24 @@ test.describe("every prebuilt route", () => {
     });
   }
 
-  // One route per template. Scanning every content document turns editor
-  // mistakes (skipped heading levels in old posts) into red PRs, and the
-  // route loop above already covers every document for the cheap rules.
-  // /summer-camp-activities is the published page with a testimonial
-  // carousel, whose dimmed slides are the one place color-contrast can drift.
-  // /canadian-adventure-camp-experience is the one page where a Big Image
-  // List sits beside Large Slides that share its title; it guards the
-  // landmark-unique fix from #150.
+  // One route per template that has published content. Scanning every
+  // content document turns editor mistakes (skipped heading levels in old
+  // posts) into red PRs, and the route loop above already covers every
+  // document for the cheap rules. The home page always exists; the other
+  // templates join the scan once the sitemap lists a route for them.
   test("passes an axe accessibility scan on each template", async ({
     page,
     request,
   }) => {
     const routes = await sitemapRoutes(request);
+    expect(routes, "sitemap should list the home page").toContain("/");
     const templates = [
       "/",
-      "/contact",
-      "/blog",
-      "/summer-camp-activities",
-      "/canadian-adventure-camp-experience",
+      routes.find((route) => route !== "/" && !/^\/blog(?:\/|$)/.test(route)),
+      routes.find((route) => route === "/blog"),
       routes.find((route) => /^\/blog\/(?!category\/)[^/]+$/.test(route)),
       routes.find((route) => /^\/blog\/category\/[^/]+$/.test(route)),
     ].filter((route): route is string => Boolean(route));
-    expect(templates).toHaveLength(7);
     const violations: string[] = [];
 
     for (const route of templates) {
@@ -177,7 +178,7 @@ test("serves the page card image at request time", async ({ page, request }) => 
   expect(response.headers()["content-type"]).toMatch(/^image\//);
 });
 
-test("supports keyboard access on CAC routes", async ({ page }) => {
+test("reaches the skip link and the home link by keyboard", async ({ page }) => {
   await page.goto("/", { waitUntil: "domcontentloaded" });
 
   await page.keyboard.press("Tab");
@@ -193,16 +194,33 @@ test("supports keyboard access on CAC routes", async ({ page }) => {
   ).toBeFocused();
 });
 
-test("keeps the home and contact pages free of horizontal overflow at every width", async ({
+test("shows the Setebaid site name on the home page and no CAC text", async ({
   page,
 }) => {
+  await gotoRoute(page, "/");
+
+  await expect(page).toHaveTitle(/Setebaid Services/);
+  await expect(page.locator("body")).toContainText("Setebaid Services");
+  // The whole document, so meta tags, alt text and accessible names count.
+  expect(await page.content()).not.toMatch(/canadian adventure camp/i);
+});
+
+// The contact page joins this check once it is published.
+test("keeps the home and contact pages free of horizontal overflow at every width", async ({
+  page,
+  request,
+}) => {
+  const routes = await sitemapRoutes(request);
+  const pages = ["/", "/contact"].filter((route) => routes.includes(route));
+  expect(pages, "sitemap should list the home page").toContain("/");
+
   for (const viewport of [
     mobile,
     { height: 1024, width: 768 },
     { height: 1000, width: 1440 },
   ]) {
     await page.setViewportSize(viewport);
-    for (const route of ["/", "/contact"]) {
+    for (const route of pages) {
       await gotoRoute(page, route);
       expect(await horizontalOverflow(page), `${route} at ${viewport.width}px`).toBe(0);
     }
