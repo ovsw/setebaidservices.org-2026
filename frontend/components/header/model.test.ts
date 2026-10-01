@@ -1,9 +1,19 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   createHeaderBrandModel,
   createHeaderNavigationModel,
 } from "./model";
 import { siteName } from "@/lib/site-name";
+
+// A configured directors call, so the model's de-duplication is covered.
+vi.mock("./call-directors", () => ({
+  CALL_DIRECTORS: {
+    href: "tel:+16025550123",
+    label: "Call the office",
+    phone: "602-555-0123",
+    portrait: "/images/example.jpg",
+  },
+}));
 
 const testSvg =
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 22h18"></path></svg>';
@@ -37,9 +47,9 @@ describe("createHeaderNavigationModel", () => {
       actions: [
         {
           _key: "legacy-call",
-          label: "Call Justin",
+          label: "Call the office",
           destination: {
-            href: "tel:+19058861406",
+            href: "tel:+16025550123",
             openInNewTab: false,
           },
         },
@@ -101,8 +111,8 @@ describe("createHeaderNavigationModel", () => {
       actions: [
         {
           _key: "call",
-          label: "Call Justin",
-          destination: { href: "tel:+19058861406" },
+          label: "Call the office",
+          destination: { href: "tel:+16025550123" },
         },
         {
           _key: "enroll",

@@ -2,11 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { MouseEventHandler } from "react";
 import { cn } from "@/lib/utils";
-import {
-  CALL_DIRECTORS_HREF,
-  CALL_DIRECTORS_LABEL,
-  CALL_DIRECTORS_PHONE,
-} from "./call-directors";
+import { CALL_DIRECTORS } from "./call-directors";
 import type { HeaderTheme } from "./theme";
 
 export function CallDirectorsAction({
@@ -18,11 +14,13 @@ export function CallDirectorsAction({
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   theme: HeaderTheme;
 }) {
+  if (!CALL_DIRECTORS) return null;
+  const { href, label, phone, portrait } = CALL_DIRECTORS;
   const dark = theme === "dark";
 
   return (
     <Link
-      aria-label={`${CALL_DIRECTORS_LABEL} at ${CALL_DIRECTORS_PHONE}`}
+      aria-label={`${label} at ${phone}`}
       className={cn(
         "group relative isolate grid min-h-11 grid-cols-[auto_1fr] items-center gap-2 rounded-control px-2 py-1 focus-ring",
         // Hover pill lives on a pseudo-element so it can extend past the
@@ -31,14 +29,14 @@ export function CallDirectorsAction({
         dark ? "before:bg-birch-bark/8" : "before:bg-cedar/10",
         className,
       )}
-      href={CALL_DIRECTORS_HREF}
+      href={href}
       onClick={onClick}
     >
       <Image
         alt=""
         className="size-10 rounded-full border-2 border-campfire-amber object-cover transition-transform motion-base group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
         height={40}
-        src="/images/justin-anna-gerson-thumbnail.jpg"
+        src={portrait}
         width={40}
       />
       <span className="grid gap-1.5 text-left">
@@ -53,7 +51,7 @@ export function CallDirectorsAction({
             dark ? "text-birch-bark/85" : "text-ink-soft",
           )}
         >
-          {CALL_DIRECTORS_LABEL}
+          {label}
         </strong>
         <span
           className={cn(
@@ -63,7 +61,7 @@ export function CallDirectorsAction({
               : "text-pine-night group-hover:text-cedar",
           )}
         >
-          {CALL_DIRECTORS_PHONE}
+          {phone}
         </span>
       </span>
     </Link>

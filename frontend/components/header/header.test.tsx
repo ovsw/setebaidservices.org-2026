@@ -96,9 +96,8 @@ describe("Site Header", () => {
     expect(action).toHaveAttribute("href", "https://example.com/book");
     expect(action).toHaveAttribute("rel", "noopener noreferrer");
     expect(action).toHaveAttribute("target", "_blank");
-    expect(
-      screen.getByRole("link", { name: "Call Justin & Anna at 905-886-1406" }),
-    ).toHaveAttribute("href", "tel:+19058861406");
+    // No directors call is set for this site yet, so none renders.
+    expect(screen.queryByRole("link", { name: /^Call / })).not.toBeInTheDocument();
     expect(document.querySelector('a[href="#"]')).not.toBeInTheDocument();
   });
 
