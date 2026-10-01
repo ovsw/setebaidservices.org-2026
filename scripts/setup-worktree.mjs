@@ -47,8 +47,8 @@ async function checkoutInfo(candidate, label) {
   const topLevel = await realpath(topLevelOutput.trim());
   if (topLevel !== root) throw new Error(`${label} is not a Git worktree root: ${root}`);
   const packageJson = JSON.parse(packageSource);
-  if (packageJson.name !== "canadian-adventure-camp") {
-    throw new Error(`${label} is not the Canadian Adventure Camp repository: ${root}`);
+  if (packageJson.name !== "setebaid-services") {
+    throw new Error(`${label} is not the Setebaid Services repository: ${root}`);
   }
   return {
     root,

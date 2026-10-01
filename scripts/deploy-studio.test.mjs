@@ -13,12 +13,12 @@ import path from "node:path";
 import test from "node:test";
 
 function deploy(t, { production, local, inherited, args = [], exitCode = 0 } = {}) {
-  const root = mkdtempSync(path.join(tmpdir(), "cac-deploy-test-"));
+  const root = mkdtempSync(path.join(tmpdir(), "setebaid-deploy-test-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   for (const directory of ["scripts", "studio", "bin"]) mkdirSync(path.join(root, directory));
   copyFileSync(new URL("./deploy-studio.mjs", import.meta.url), path.join(root, "scripts/deploy-studio.mjs"));
   writeFileSync(path.join(root, "studio/.env.local"), local ?? "SANITY_AUTH_TOKEN=test-token\nSANITY_STUDIO_PREVIEW_URL=http://localhost:3006\nSANITY_STUDIO_APP_ID=local-app\n");
-  writeFileSync(path.join(root, "studio/.env.production"), production ?? "SANITY_STUDIO_PREVIEW_URL=https://cacweb-2026.vercel.app\nSANITY_STUDIO_APP_ID=production-app\n");
+  writeFileSync(path.join(root, "studio/.env.production"), production ?? "SANITY_STUDIO_PREVIEW_URL=https://setebaid-2026.vercel.app\nSANITY_STUDIO_APP_ID=production-app\n");
   const pnpm = path.join(root, "bin/pnpm");
   writeFileSync(pnpm, `#!${process.execPath}
 console.log(JSON.stringify({
@@ -57,7 +57,7 @@ test("deployment uses production settings even when the terminal has local overr
   assert.deepEqual(JSON.parse(result.stdout.trim().split("\n").at(-1)), {
     args: ["exec", "sanity", "deploy"],
     cwd: path.join(result.root, "studio"),
-    preview: "https://cacweb-2026.vercel.app",
+    preview: "https://setebaid-2026.vercel.app",
     appId: "production-app",
     token: "test-token",
     mode: "production",

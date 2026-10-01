@@ -15,7 +15,7 @@ import {
 } from "./worktree-config.mjs";
 
 async function temporaryWorktree() {
-  return mkdtemp(path.join(tmpdir(), "cac-worktree-test-"));
+  return mkdtemp(path.join(tmpdir(), "setebaid-worktree-test-"));
 }
 
 function reservationRootFor(worktreeRoot) {
@@ -246,7 +246,7 @@ test("manual overrides must be complete, paired, and allowlisted", () => {
 });
 
 test("Sanity origins cover local services, hosted Studio, and the production preview", () => {
-  const productionOrigin = "https://cacweb-2026.vercel.app";
+  const productionOrigin = "https://setebaid-2026.vercel.app";
   const origins = desiredSanityOrigins({ productionOrigin });
   assert.equal(origins.length, SLOT_COUNT * 2 + 2);
   assert.equal(new Set(origins.map(({ origin }) => origin)).size, SLOT_COUNT * 2 + 2);
@@ -261,7 +261,7 @@ test("Sanity origins cover local services, hosted Studio, and the production pre
     });
   }
   assert.deepEqual(origins.at(-2), {
-    origin: "https://cac-2026.sanity.studio",
+    origin: "https://setebaid.sanity.studio",
     credentials: true,
   });
   assert.deepEqual(origins.at(-1), {
@@ -272,7 +272,7 @@ test("Sanity origins cover local services, hosted Studio, and the production pre
   const originsWithoutProduction = desiredSanityOrigins();
   assert.equal(originsWithoutProduction.length, SLOT_COUNT * 2 + 1);
   assert.deepEqual(originsWithoutProduction.at(-1), {
-    origin: "https://cac-2026.sanity.studio",
+    origin: "https://setebaid.sanity.studio",
     credentials: true,
   });
 });

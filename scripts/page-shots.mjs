@@ -29,7 +29,7 @@ if (!slug) {
 }
 // The default folder name comes from the slug, so keep it to one safe path segment.
 const safeSlug = slug.replace(/[^a-zA-Z0-9-]+/g, "_").replace(/^_+|_+$/g, "") || "page";
-const outRoot = path.resolve(flag("--out") ?? `/tmp/cac-page-shots/${safeSlug}`);
+const outRoot = path.resolve(flag("--out") ?? `/tmp/setebaid-page-shots/${safeSlug}`);
 const only = flag("--only");
 const token = process.env.SANITY_AUTH_TOKEN;
 if (!token) {
