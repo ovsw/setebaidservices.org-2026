@@ -7,9 +7,7 @@ export default defineConfig([
   ...nextTypeScript,
   globalIgnores([
     ".next/**",
-    "legacy-donor-prototype/**",
     "out/**",
-    "prototype/support.js",
     "build/**",
     "next-env.d.ts",
     "sanity.types.ts",

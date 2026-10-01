@@ -71,5 +71,4 @@ src/plugins/impeccable-live.client.ts
 !.env.example
 !.env*.example
 
-prototype/videos/*
 shots/
