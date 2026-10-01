@@ -25,6 +25,7 @@ To read documents, skip the CLI: `pnpm sanity:query '<groq>' ['<json params>']` 
 ## Notes
 
 - This repository's Sanity project is `o36mi5w4`, dataset `production`.
+- The Sanity MCP server (`.mcp.json`) authenticates with the API token, not OAuth: `scripts/sanity-mcp-headers.mjs` reads `SANITY_AUTH_TOKEN` from `studio/.env.local` (or the main checkout's copy, in a worktree without one) and sends it as the `Authorization` header. The first session in a folder asks you to approve the project's MCP servers.
 - Tokens are project-scoped. If the project ID changes, generate a new token at `https://www.sanity.io/manage/project/<projectId>/api#tokens` and update `studio/.env.local`.
 - Required draft content writes have standing permission under AGENTS.md.
   Verify the target and backup before writing. Use Sanity MCP for content
