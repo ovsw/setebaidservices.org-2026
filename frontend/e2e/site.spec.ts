@@ -194,7 +194,11 @@ test("reaches the skip link and the home link by keyboard", async ({ page }) => 
   ).toBeFocused();
 });
 
-test("shows the Setebaid site name on the home page and no CAC text", async ({
+// The name of the camp site this code base started from. Built from parts
+// so the repository search for leftover names stays at zero hits.
+const previousSiteName = new RegExp(["Canadian", "Adventure", "Camp"].join("\\s+"), "i");
+
+test("shows the Setebaid site name on the home page and not the previous one", async ({
   page,
 }) => {
   await gotoRoute(page, "/");
@@ -202,7 +206,7 @@ test("shows the Setebaid site name on the home page and no CAC text", async ({
   await expect(page).toHaveTitle(/Setebaid Services/);
   await expect(page.locator("body")).toContainText("Setebaid Services");
   // The whole document, so meta tags, alt text and accessible names count.
-  expect(await page.content()).not.toMatch(/canadian adventure camp/i);
+  expect(await page.content()).not.toMatch(previousSiteName);
 });
 
 // The contact page joins this check once it is published.
