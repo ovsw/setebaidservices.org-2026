@@ -17,7 +17,7 @@
 //   node --env-file=.env.local scripts/sync-raster-descriptions.mjs
 //   node --env-file=.env.local scripts/sync-raster-descriptions.mjs --library old --apply
 import { createClient } from "@sanity/client";
-import { assertCacProductionTarget } from "./assert-cac-production-target.mjs";
+import { assertSetebaidProductionTarget } from "./assert-setebaid-production-target.mjs";
 
 const RASTER_API_VERSION = "2026-05-20";
 const PAGE_SIZE = 50;
@@ -46,7 +46,7 @@ const projectId = process.env.SANITY_STUDIO_PROJECT_ID.trim();
 const dataset = process.env.SANITY_STUDIO_DATASET.trim();
 const rasterOrgId = process.env.RASTER_ORG_ID.trim();
 const rasterApiKey = process.env.RASTER_API_KEY.trim();
-assertCacProductionTarget({ dataset, projectId });
+assertSetebaidProductionTarget({ dataset, projectId });
 
 const sanity = createClient({
   apiVersion: "2026-03-23",

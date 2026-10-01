@@ -1,18 +1,18 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { assertCacProductionTarget } from "./assert-cac-production-target.mjs";
+import { assertSetebaidProductionTarget } from "./assert-setebaid-production-target.mjs";
 
-test("accepts only the CAC production target", () => {
+test("accepts only the Setebaid production target", () => {
   assert.doesNotThrow(() =>
-    assertCacProductionTarget({
+    assertSetebaidProductionTarget({
       dataset: "production",
-      projectId: "bf76qlx9",
+      projectId: "o36mi5w4",
     }),
   );
 
   assert.throws(
     () =>
-      assertCacProductionTarget({
+      assertSetebaidProductionTarget({
         dataset: "production",
         projectId: "another-project",
       }),
@@ -21,10 +21,10 @@ test("accepts only the CAC production target", () => {
 
   assert.throws(
     () =>
-      assertCacProductionTarget({
+      assertSetebaidProductionTarget({
         dataset: "development",
-        projectId: "bf76qlx9",
+        projectId: "o36mi5w4",
       }),
-    /Refusing to run against bf76qlx9\/development/,
+    /Refusing to run against o36mi5w4\/development/,
   );
 });
