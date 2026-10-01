@@ -147,9 +147,9 @@ const navigation = defineType({
       title: "Calls to action",
       type: "array",
       description:
-        "One configurable link shown beside the fixed Call Justin & Anna action.",
+        "Up to two buttons shown at the right of the header, for example Register and Donate.",
       of: [defineArrayMember({ type: "navigationAction" })],
-      validation: (rule) => rule.unique().max(1),
+      validation: (rule) => rule.unique().max(2),
     }),
   ],
   preview: { prepare: () => ({ title: "Site Navigation" }) },

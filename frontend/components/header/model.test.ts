@@ -104,7 +104,7 @@ describe("createHeaderNavigationModel", () => {
     });
   });
 
-  it("keeps one configurable action and ignores the fixed directors call", () => {
+  it("keeps up to two configurable actions and ignores the fixed directors call", () => {
     const model = createHeaderNavigationModel({
       _id: "navigation",
       items: [],
@@ -136,7 +136,29 @@ describe("createHeaderNavigationModel", () => {
           openInNewTab: false,
         },
       },
+      {
+        key: "extra",
+        link: {
+          href: "/extra",
+          label: "Extra",
+          openInNewTab: false,
+        },
+      },
     ]);
+  });
+
+  it("drops actions after the second one", () => {
+    const model = createHeaderNavigationModel({
+      _id: "navigation",
+      items: [],
+      actions: ["register", "donate", "volunteer"].map((key) => ({
+        _key: key,
+        label: key,
+        destination: { href: `/${key}` },
+      })),
+    });
+
+    expect(model.actions.map((action) => action.key)).toEqual(["register", "donate"]);
   });
 
   it("omits invalid destinations and structurally empty groups", () => {

@@ -5,6 +5,9 @@ import type { SETTINGS_QUERY_RESULT } from "@/sanity.types";
 import { CALL_DIRECTORS } from "./call-directors";
 import type { NavigationIconModel } from "./navigation-icon";
 
+/** The header shows at most two calls to action, for example Register and Donate. */
+export const MAX_HEADER_ACTIONS = 2;
+
 export type HeaderLinkModel = {
   href: string;
   label: string;
@@ -189,7 +192,7 @@ export function createHeaderNavigationModel(
       return key && link ? [{ key, link }] : [];
     })
     .filter((action) => action.link.href !== CALL_DIRECTORS?.href)
-    .slice(0, 1);
+    .slice(0, MAX_HEADER_ACTIONS);
 
   return { items, actions };
 }
