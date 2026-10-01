@@ -18,11 +18,6 @@ import blogPostSettings from "./schemas/documents/blog-post-settings";
 import homePage from "./schemas/documents/home-page";
 import footer, { footerSchemaTypes } from "./schemas/documents/footer";
 import redirect from "./schemas/documents/redirect";
-import activity from "./schemas/documents/activity";
-import facility from "./schemas/documents/facility";
-import facilitiesMap from "./schemas/documents/facilities-map";
-import season from "./schemas/documents/season";
-import seasonsConfig from "./schemas/documents/seasons-config";
 
 // Schema UI shared objects
 import blockContent from "./schemas/blocks/shared/block-content";
@@ -54,14 +49,10 @@ import benefitCards from "./schemas/blocks/benefit-cards";
 import homeHero from "./schemas/blocks/home-hero";
 import imageCollageFeature from "./schemas/blocks/image-collage-feature";
 import featureCards from "./schemas/blocks/feature-cards";
-import activitySchedule from "./schemas/blocks/activity-schedule";
-import facilitiesMapSection from "./schemas/blocks/facilities-map-section";
-import datesRatesSection from "./schemas/blocks/dates-rates-section";
 import stackedFeatureRows from "./schemas/blocks/stacked-feature-rows";
 import innerHero from "./schemas/blocks/inner-hero";
 import journey from "./schemas/blocks/journey";
 import stackedTimeline from "./schemas/blocks/stacked-timeline";
-import activityCatalogue from "./schemas/blocks/activity-catalogue";
 import includedExtras from "./schemas/blocks/included-extras";
 import packingChecklist from "./schemas/blocks/packing-checklist";
 import bigImageList from "./schemas/blocks/big-image-list";
@@ -73,8 +64,6 @@ import pricingSingleToggle from "./schemas/blocks/pricing-single-toggle";
 import faqHub from "./schemas/blocks/faq-hub";
 // page-builder-generator:block-imports
 import { internationalCampersSection } from "./schemas/blocks/international-campers-section";
-import facilityMapPlacement from "./schemas/objects/facility-map-placement";
-import seasonSession from "./schemas/objects/season-session";
 
 export const schemaTypes = [
   // documents
@@ -95,11 +84,6 @@ export const schemaTypes = [
   homePage,
   footer,
   redirect,
-  activity,
-  facility,
-  facilitiesMap,
-  season,
-  seasonsConfig,
   ...footerSchemaTypes,
   // shared objects
   blockContent,
@@ -116,8 +100,6 @@ export const schemaTypes = [
   minimalRichText,
   blogPostSidebarAction,
   blogPostSidebar,
-  facilityMapPlacement,
-  seasonSession,
   // blocks
   hero,
   hero1,
@@ -131,14 +113,10 @@ export const schemaTypes = [
   homeHero,
   imageCollageFeature,
   featureCards,
-  activitySchedule,
-  facilitiesMapSection,
-  datesRatesSection,
   stackedFeatureRows,
   innerHero,
   journey,
   stackedTimeline,
-  activityCatalogue,
   includedExtras,
   packingChecklist,
   bigImageList,

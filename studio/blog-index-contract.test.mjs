@@ -30,9 +30,6 @@ test("the shared blocks field exactly matches its authoritative inventory", () =
     "storyFeature",
     "imageCollageFeature",
     "featureCards",
-    "activitySchedule",
-    "facilitiesMapSection",
-    "datesRatesSection",
     "stackedFeatureRows",
     "internationalCampersSection",
     "latestArticles",
@@ -41,7 +38,6 @@ test("the shared blocks field exactly matches its authoritative inventory", () =
     "ctaBanner",
     "journey",
     "stackedTimeline",
-    "activityCatalogue",
     "includedExtras",
     "packingChecklist",
     "bigImageList",
@@ -74,10 +70,6 @@ test("the blocks insert menu offers list and grid views with known previews", ()
     "/static/images/preview/featureCards.jpg",
   );
   assert.equal(
-    getPageBuilderPreviewImageUrl("activitySchedule"),
-    "/static/images/preview/activitySchedule.jpg",
-  );
-  assert.equal(
     getPageBuilderPreviewImageUrl("stackedFeatureRows"),
     "/static/images/preview/stackedFeatureRows.jpg",
   );
@@ -102,8 +94,6 @@ test("blogIndex uses the singleton configuration", () => {
   assert.equal(blogIndexPageBuilderBlockTypes.includes("homeHero"), false);
   assert.equal(blogIndexPageBuilderBlockTypes.includes("faqHub"), false);
   assert.equal(singletonDocumentTypes.has("blogIndex"), true);
-  assert.equal(singletonDocumentTypes.has("facilitiesMap"), true);
-  assert.equal(singletonDocumentTypes.has("seasonsConfig"), true);
   assert.equal(singletonDocumentActions.has("duplicate"), false);
   assert.equal(singletonDocumentActions.has("delete"), false);
 });

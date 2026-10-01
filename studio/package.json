@@ -14,7 +14,6 @@
     "test:presentation": "node --test presentation/presentation.test.mjs",
     "typegen": "rm -f schema.json && sanity schema extract; test -f schema.json && sanity typegen generate",
     "typecheck": "tsc --noEmit",
-    "migrate:activity-schedule-headings": "node --env-file=.env.local scripts/migrate-activity-schedule-headings.mjs",
     "migrate:faq-categories": "node --env-file=.env.local scripts/migrate-faq-categories.mjs",
     "migrate:remove-page-header-image": "node --env-file=.env.local scripts/migrate-remove-page-header-image.mjs",
     "migrate:included-extras-prices": "node --env-file=.env.local scripts/migrate-included-extras-prices.mjs",
