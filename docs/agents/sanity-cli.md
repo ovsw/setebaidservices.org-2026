@@ -24,8 +24,9 @@ To read documents, skip the CLI: `pnpm sanity:query '<groq>' ['<json params>']` 
 
 ## Notes
 
+- This repository's Sanity project is `o36mi5w4`, dataset `production`.
 - Tokens are project-scoped. If the project ID changes, generate a new token at `https://www.sanity.io/manage/project/<projectId>/api#tokens` and update `studio/.env.local`.
 - Required draft content writes have standing permission under AGENTS.md.
-  Verify the target and backup before writing. Page drafting uses Sanity MCP
-  for content mutations; the CLI supplies the verified recovery export.
+  Verify the target and backup before writing. Use Sanity MCP for content
+  mutations; the CLI supplies the verified recovery export.
   Dataset deletion, access changes, and unrelated cleanup require approval.

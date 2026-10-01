@@ -2,9 +2,16 @@
 
 The Website and Studio are separate applications.
 
+| Part | Where |
+| --- | --- |
+| Website | Vercel project `setebaid-2026` on the Studio ROVST team, preview address `setebaid-2026.vercel.app` |
+| Studio | `setebaid.sanity.studio` |
+| Content | Sanity project `o36mi5w4`, dataset `production` |
+| Code | GitHub `ovsw/setebaidservices.org-2026`, production branch `main` |
+
 ## Website on Vercel
 
-1. Import the GitHub repository into Vercel.
+1. Import the GitHub repository into Vercel as the project `setebaid-2026`.
 2. Set the project root directory to `frontend`.
 3. Add the variables from `frontend/.env.local.example`. Set
    `NEXT_PUBLIC_SITE_ENV=production` in Vercel's Production environment so the
@@ -46,4 +53,4 @@ Studio deployment remains manual. Vercel deployment uses the existing project co
   Sanity project's CORS settings.
 - Confirm the Vercel root directory is `frontend`.
 - Confirm the GitHub `Release gate` check is required on `main`.
-- Confirm the Studio hostname is correct.
+- Confirm the Studio hostname is `setebaid`.

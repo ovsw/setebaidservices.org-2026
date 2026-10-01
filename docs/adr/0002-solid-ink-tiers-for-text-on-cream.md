@@ -4,7 +4,9 @@ Date: 2026-09-17
 
 ## Status
 
-Accepted
+Accepted. Made in the copied code base before this repository existed. It
+still holds for the current palette, which stays until the Setebaid design
+prototype replaces it; review this record when the palette changes.
 
 ## Context
 
@@ -70,11 +72,9 @@ background behind ink.
   `cream-muted` only when a dark-surface text actually fails.
 - Restoring alpha text as a "cleanup" would re-break AA. That is the reason
   this record exists.
-- The e2e axe scan can turn `color-contrast` back on once the carousel and the
-  table-of-contents link are fixed too (issue #163).
+- The e2e axe scan can keep `color-contrast` on only while every text colour
+  on cream stays at or above the bar.
 
 ## References
 
-- Spec: ovsw/canadianadventurecamp.com-2026#161
-- Ticket: ovsw/canadianadventurecamp.com-2026#162
 - `frontend/DESIGN.md`, Colors → Ink tiers, and the Named Rules below it.

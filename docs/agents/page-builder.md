@@ -2,12 +2,12 @@
 
 Read this guide before adding or changing a section in a page's `blocks` array.
 
-For page content drafting, use existing types and fields only. General
-sections describe presentation layouts, not content topics; specialized
-sections such as a facilities map retain their specific purpose. Preserve
-the complete copy with the closest existing layout and record any proposed
-schema or layout change on the Basecamp card. The development instructions
-below apply only to a separately authorized section-development task.
+For page content work, use existing types and fields only. Sections
+describe presentation layouts, not content topics, even where a name comes
+from the copied code base. Preserve the complete copy with the closest
+existing layout and propose any schema or layout change to Ovi instead of
+making it. The development instructions below apply only to a separately
+authorized section-development task.
 
 ## How a section reaches the page
 

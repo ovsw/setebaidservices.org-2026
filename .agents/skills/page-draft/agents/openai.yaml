@@ -1,4 +1,0 @@
-interface:
-  display_name: "Page Draft"
-  short_description: "Write one CAC content draft in Sanity"
-  default_prompt: "Use $page-draft for the requested page and continue until the draft is ready for Ovi."

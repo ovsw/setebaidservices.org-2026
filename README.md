@@ -1,6 +1,18 @@
-# Canadian Adventure Camp
+# Setebaid Services
 
-The production website and Sanity Studio for Canadian Adventure Camp.
+The website and Sanity Studio for Setebaid Services (setebaidservices.org).
+Setebaid Services is a Pennsylvania not-for-profit that runs Camp Setebaid, a
+summer camp for children and teens with diabetes.
+
+- Website: Next.js, in `frontend/`, hosted on Vercel.
+- Studio: Sanity Studio, in `studio/`, deployed at
+  [setebaid.sanity.studio](https://setebaid.sanity.studio).
+- Sanity project `o36mi5w4`, dataset `production`.
+
+The code base was copied from the Canadian Adventure Camp 2026 code base (see
+issue #1). The styles, logo files and photos are still the copied ones until
+the Setebaid design prototype replaces them. The material from before the
+code bootstrap is in `pre-bootstrap/`; it is not live code.
 
 ## Local development
 
@@ -8,10 +20,9 @@ Requirements:
 
 - Node.js 24.19.0
 - pnpm 11.10.0
-- The Canadian Adventure Camp Sanity project ID
+- Access to the Sanity project `o36mi5w4`
 - A Sanity API read token
 - A Sanity auth token
-- An available Studio hostname
 
 Create local environment files, then add the required credentials:
 
@@ -47,10 +58,8 @@ pnpm dev:stop
 pnpm deploy:studio
 pnpm setup:sanity-cors
 pnpm page-builder:new <name>
-pnpm legacy:page <slug>
 pnpm page:text <slug>
 pnpm sanity:query '<groq>' ['<json params>']
-pnpm page:seed <seed.mjs> [--apply]
 pnpm sync:main
 pnpm merge:refs <ref>...
 pnpm verify
@@ -72,11 +81,8 @@ Run `pnpm verify` before opening a pull request. It checks generated Sanity type
 GROQ projection, and React renderer. Use `--scope content|general|home`,
 `--title "Studio title"`, `--preview ./preview.jpg`, or `--dry-run` as needed.
 
-`$page-draft` in ChatGPT/Codex and `/page-draft` in Claude Code write page
-content directly through Sanity MCP and update the page's Basecamp card.
-They reuse existing layouts and propose code changes for separate work.
-See `docs/agents/page-workflow.md`. The legacy read and seed commands remain
-available for other tasks; seeds are not part of page drafting.
+`pnpm page:text <slug>` prints a page's text, and `pnpm sanity:query` prints
+the result of a GROQ query as JSON, drafts included.
 
 `pnpm sync:main` and `pnpm merge:refs` support code development and regenerate
 Sanity types while merging branches. Content-only work needs neither.
@@ -87,7 +93,7 @@ Use plain pnpm commands from the repository root. Add workspace dependencies wit
 
 The Website and Studio deploy separately.
 
-The Vercel project uses `frontend` as its root directory. Keep its environment values in sync with `frontend/.env.local.example`.
+The Vercel project `setebaid-2026` uses `frontend` as its root directory. Keep its environment values in sync with `frontend/.env.local.example`.
 
 Deploy the Studio manually after confirming that `SANITY_STUDIO_PREVIEW_URL`
 in `studio/.env.production` contains the deployed Website origin:
@@ -110,7 +116,8 @@ See `docs/deployment.md` for the production gate and complete deployment checkli
 - `frontend/`: Next.js Website
 - `studio/`: Sanity Studio, schemas, and functions
 - `shared/`: code shared by both workspaces
-- `docs/agents/`: repository workflow guidance
+- `docs/`: deployment, content model, ADRs, and agent workflow guidance
+- `pre-bootstrap/`: material from before the code bootstrap (reference only)
 
 Read `docs/content-model.md` for the model map and `docs/agents/page-builder.md` before changing Page Builder sections.
 

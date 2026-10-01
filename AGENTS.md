@@ -6,6 +6,23 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 <!-- END:nextjs-agent-rules -->
 
+## This repository
+
+`ovsw/setebaidservices.org-2026` holds the Website and Studio for Setebaid
+Services (setebaidservices.org), the Pennsylvania not-for-profit that runs Camp
+Setebaid for children and teens with diabetes.
+
+- Website: Next.js in `frontend/`. Vercel project `setebaid-2026`.
+- Studio: Sanity Studio in `studio/`, deployed at `setebaid.sanity.studio`.
+- Sanity project `o36mi5w4`, dataset `production`. Default branch `main`.
+- The styles, logo files and photos are placeholders from the copied code
+  base. Do not restyle them; the Setebaid design prototype replaces them.
+- `pre-bootstrap/` holds material from before the code bootstrap. It is
+  reference only; do not edit it. `PRODUCT.md` and `.impeccable/` at the root
+  belong to the Impeccable design tool.
+- This repository is public. Never commit prices, contract terms, payments,
+  personal contact details, or secrets.
+
 ## Dev Server rules
 
 Before starting a development server, inspect the required port. If the exact server you need is already running there, reuse it.
@@ -134,22 +151,6 @@ Use the canonical labels `needs-triage`, `needs-info`, `ready-for-agent`, `ready
 ### Domain docs
 
 This repository uses a single-context domain-doc layout. See `docs/agents/domain.md`.
-
-### Page rethink
-
-`/page-draft <slug>` in Claude Code and `$page-draft` in ChatGPT/Codex
-share `docs/agents/page-workflow.md`. Read it before drafting a page.
-One writer creates content directly in Sanity, with proposed claims marked
-and a client checklist on the Basecamp card. Ovi is the reviewer. Content
-comes before layout; use existing sections and record development proposals
-on the card. No schema/frontend work, GitHub plan, dedicated worktree, seed
-file, or review agent belongs to content drafting. Code development is a
-separate task. Avatars live in `docs/avatars.md`.
-
-`/page-polish <slug>` and `$page-polish` share `docs/agents/page-polish.md`.
-Read it before polishing a page in the Polish column: it publishes the
-baseline, judges every section's fit with screenshots, fixes what the Page
-Builder can fix, and reports layout proposals in chat only.
 
 ### Build flow
 
