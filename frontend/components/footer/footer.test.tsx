@@ -11,20 +11,20 @@ const link = (
 ) => ({ key, label, href, openInNewTab });
 
 const model: FooterModel = {
-  eyebrow: "Temagami, Ontario · Est. 1975",
+  eyebrow: "Example Town · Est. 2000",
   heading: "Until next summer,",
   accent: "see you on the island",
   actions: [link("enroll", "Enroll", "https://example.com", true)],
   logos: [
     {
-      key: "cac",
-      alt: "Canadian Adventure Camp logo",
+      key: "site",
+      alt: "Setebaid Services logo",
       image: {
         src: "https://cdn.sanity.io/images/test-project/test/logo.png",
         width: 200,
         height: 100,
       },
-      link: link("cac", "Canadian Adventure Camp logo", "/"),
+      link: link("site", "Setebaid Services logo", "/"),
     },
   ],
   contactLinks: [
@@ -69,7 +69,7 @@ describe("SiteFooter", () => {
     ).toHaveAttribute("id", "site-footer-heading");
     expect(
       within(footer).getByRole("img", {
-        name: "Canadian Adventure Camp logo",
+        name: "Setebaid Services logo",
       }),
     ).toBeInTheDocument();
     expect(
@@ -109,7 +109,7 @@ describe("SiteFooter", () => {
 
     expect(
       document.querySelector('[data-sanity="field:eyebrow"]'),
-    ).toHaveTextContent("Temagami");
+    ).toHaveTextContent("Example Town");
     expect(
       document.querySelector('[data-sanity="field:copyrightStartYear"]'),
     ).toHaveTextContent("2024-2026");

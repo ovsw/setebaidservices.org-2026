@@ -70,7 +70,7 @@ describe("page OG image URLs", () => {
   it("removes a redundant brand suffix from the card title", () => {
     expect(
       getPageOgImageTitle(
-        "Example services | Canadian Adventure Camp",
+        "Example services | Setebaid Services",
       ),
     ).toBe("Example services");
     expect(getPageOgImageTitle("Service Planning")).toBe(

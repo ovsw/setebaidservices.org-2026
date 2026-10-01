@@ -2,7 +2,7 @@ import { stegaClean } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { siteName } from "@/lib/site-name";
 import type { SETTINGS_QUERY_RESULT } from "@/sanity.types";
-import { CALL_DIRECTORS_HREF } from "./call-directors";
+import { CALL_DIRECTORS } from "./call-directors";
 import type { NavigationIconModel } from "./navigation-icon";
 
 export type HeaderLinkModel = {
@@ -188,7 +188,7 @@ export function createHeaderNavigationModel(
       const link = normalizeLink(action.label, action.destination);
       return key && link ? [{ key, link }] : [];
     })
-    .filter((action) => action.link.href !== CALL_DIRECTORS_HREF)
+    .filter((action) => action.link.href !== CALL_DIRECTORS?.href)
     .slice(0, 1);
 
   return { items, actions };

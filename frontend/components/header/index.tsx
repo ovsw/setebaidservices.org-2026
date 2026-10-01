@@ -1,4 +1,5 @@
 import { createHeaderBrandModel, createHeaderNavigationModel } from "./model";
+import { siteName } from "@/lib/site-name";
 import { Header } from "./site-header";
 import type { HeaderNavigationModel } from "./model";
 import { fetchSanityNavigation, fetchSanitySettings } from "@/sanity/lib/fetch";
@@ -17,7 +18,7 @@ function HeaderUnavailable({
   return (
     <Header
       model={{
-        brand: { dark: null, label: "Canadian Adventure Camp", light: null },
+        brand: { dark: null, label: siteName, light: null },
         navigation,
       }}
       theme={theme}

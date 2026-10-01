@@ -49,7 +49,11 @@ describe("root content metadata", () => {
       data: [{ slug: { current: "blog/first-post" } }],
     });
 
-    await expect(generateStaticParams()).resolves.toEqual([]);
+    // Only the not-found sentinel remains, because Cache Components rejects
+    // an empty list.
+    await expect(generateStaticParams()).resolves.toEqual([
+      { slug: ["__missing-page__"] },
+    ]);
   });
 
   it("does not turn a draft-only route into a 404", async () => {

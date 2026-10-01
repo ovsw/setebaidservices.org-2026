@@ -1,6 +1,6 @@
 "use client";
 
-import { CALL_DIRECTORS_HREF, CALL_DIRECTORS_PHONE } from "@/components/header/call-directors";
+import { CALL_DIRECTORS } from "@/components/header/call-directors";
 import { Accordion } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { filterFaqHub, type FaqHubItem } from "@/lib/faq-hub-filter";
@@ -189,19 +189,21 @@ export default function FaqHubBrowser({
             >
               {emptyState}
             </p>
-            <p className={cn("mt-4 text-[17px] leading-[1.6]", muted)}>
-              Call the office at{" "}
-              <a
-                className={cn(
-                  "focus-ring font-semibold underline underline-offset-4",
-                  cream ? "text-cedar hover:text-cedar-deep" : "text-campfire-amber",
-                )}
-                href={CALL_DIRECTORS_HREF}
-              >
-                {CALL_DIRECTORS_PHONE}
-              </a>{" "}
-              and we will answer it directly.
-            </p>
+            {CALL_DIRECTORS ? (
+              <p className={cn("mt-4 text-[17px] leading-[1.6]", muted)}>
+                Call the office at{" "}
+                <a
+                  className={cn(
+                    "focus-ring font-semibold underline underline-offset-4",
+                    cream ? "text-cedar hover:text-cedar-deep" : "text-campfire-amber",
+                  )}
+                  href={CALL_DIRECTORS.href}
+                >
+                  {CALL_DIRECTORS.phone}
+                </a>{" "}
+                and we will answer it directly.
+              </p>
+            ) : null}
           </div>
         )}
       </div>

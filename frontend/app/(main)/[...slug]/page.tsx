@@ -22,6 +22,8 @@ import { notFound } from "next/navigation";
 
 export const instant = false;
 
+const PAGE_STATIC_PARAM_SENTINEL = "__missing-page__";
+
 function readPageSlug(segments: string[]) {
   if (!segments.length || !segments.every(isRouteSlug)) return null;
   const slug = segments.join("/");
@@ -34,11 +36,14 @@ export async function generateStaticParams() {
     query: PAGES_SLUGS_QUERY,
   })) as { data: PAGES_SLUGS_QUERY_RESULT };
 
-  return pages.flatMap((page) => {
+  const params = pages.flatMap((page) => {
     const slug = page.slug?.current?.replace(/^\/+|\/+$/g, "");
     const segments = slug?.split("/") ?? [];
     return slug && readPageSlug(segments) ? [{ slug: segments }] : [];
   });
+  // Cache Components rejects an empty list. Before the first page is
+  // published, prerender one invalid slug that resolves to notFound().
+  return params.length ? params : [{ slug: [PAGE_STATIC_PARAM_SENTINEL] }];
 }
 
 export async function generateMetadata(props: {

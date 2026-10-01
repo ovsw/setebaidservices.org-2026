@@ -33,6 +33,8 @@ type Props = { params: Promise<{ page: string }> };
 
 export const instant = false;
 
+const BLOG_STATIC_PARAM_SENTINEL = "__missing-post__";
+
 function readPostSlug(segment: string) {
   const path = postPath(segment);
   return isRouteSlug(segment) && path && !isApplicationPath(path)
@@ -59,7 +61,10 @@ export async function generateStaticParams() {
     if (slug && readPostSlug(slug)) params.push({ page: slug });
   }
 
-  return params;
+  // Cache Components rejects an empty list. Before the second index page or
+  // the first post exists, prerender one invalid segment that resolves to
+  // notFound().
+  return params.length ? params : [{ page: BLOG_STATIC_PARAM_SENTINEL }];
 }
 
 export async function generateMetadata({ params }: Props) {

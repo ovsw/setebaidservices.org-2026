@@ -3,11 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { MouseEventHandler } from "react";
 import { cn } from "@/lib/utils";
-import {
-  CALL_DIRECTORS_HREF,
-  CALL_DIRECTORS_LABEL,
-  CALL_DIRECTORS_PHONE,
-} from "./call-directors";
+import { CALL_DIRECTORS } from "./call-directors";
 import type { HeaderTheme } from "./theme";
 
 /*
@@ -24,11 +20,13 @@ export function CallDirectorsCard({
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   theme: HeaderTheme;
 }) {
+  if (!CALL_DIRECTORS) return null;
+  const { href, label, phone, portrait } = CALL_DIRECTORS;
   const dark = theme === "dark";
 
   return (
     <Link
-      aria-label={`${CALL_DIRECTORS_LABEL} at ${CALL_DIRECTORS_PHONE}`}
+      aria-label={`${label} at ${phone}`}
       className={cn(
         "group grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-[var(--radius-lg)] border p-4 transition-[background-color,border-color,translate] motion-base hover:-translate-y-0.5 active:translate-y-0 focus-ring motion-reduce:transition-none motion-reduce:hover:translate-y-0",
         dark
@@ -36,7 +34,7 @@ export function CallDirectorsCard({
           : "border-pine-night/10 bg-birch-bark-bright hover:border-cedar/45",
         className,
       )}
-      href={CALL_DIRECTORS_HREF}
+      href={href}
       onClick={onClick}
     >
       <Image
@@ -46,12 +44,12 @@ export function CallDirectorsCard({
           dark ? "border-birch-bark/25" : "border-pine-night/15",
         )}
         height={56}
-        src="/images/justin-anna-gerson-thumbnail.jpg"
+        src={portrait}
         width={56}
       />
       <span className="grid min-w-0 gap-1 text-left">
         <strong className="text-base leading-tight font-bold">
-          {CALL_DIRECTORS_LABEL}
+          {label}
         </strong>
         <span
           className={cn(
@@ -59,7 +57,7 @@ export function CallDirectorsCard({
             dark ? "text-campfire-amber" : "text-cedar",
           )}
         >
-          {CALL_DIRECTORS_PHONE}
+          {phone}
         </span>
         <span
           className={cn(

@@ -1,6 +1,6 @@
 ---
-name: Canadian Adventure Camp
-description: A field guide to a private island camp. Dark forest greens, map-legend labels, campfire-amber handwriting.
+name: Setebaid Services
+description: A field guide to a camp. Dark forest greens, map-legend labels, campfire-amber handwriting.
 colors:
   campfire-amber: "#E8A23B"
   campfire-amber-deep: "#C9861F"
@@ -129,13 +129,13 @@ components:
     padding: "15px 16px"
 ---
 
-# Design System: Canadian Adventure Camp
+# Design System: Setebaid Services
 
 ## Overview
 
 **Creative North Star: "The Island Field Guide"**
 
-The site reads like a trail map of Adventure Island that a parent can trust and a kid wants to read. Deep forest greens are the paper; readable annotations are the map legend; a handwritten Campfire Amber script is the note scrawled in the margin by someone who has actually been there. Photos are the terrain. The voice is bold, warm, and confident: big type that says the thing plainly, then a wink in amber.
+The site reads like a trail map of the camp that a parent can trust and a kid wants to read. Deep forest greens are the paper; readable annotations are the map legend; a handwritten Campfire Amber script is the note scrawled in the margin by someone who has actually been there. Photos are the terrain. The voice is bold, warm, and confident: big type that says the thing plainly, then a wink in amber.
 
 Density is high but never cramped. Sections are full-bleed colour fields (dark green, pine black, birch cream) that alternate like day and night on the lake, with content sitting on a wide 1320px measure. Inside those fields, information is packed tight: hairline-divided grids, marked chips, session bars, numbered programs. Every interactive thing moves a little when touched. Nothing is decorative for its own sake; the map legend, the stamp, the script all carry meaning.
 
@@ -313,7 +313,7 @@ Tactile and confident. Everything that can be touched answers: pills lift, arrow
 **The Field Ring Rule.** Every focusable element shows a 2px solid ring with 3px offset on `:focus-visible`: Campfire Amber on dark fields, Cedar on cream fields. Inputs use the Cedar border plus soft ring above instead. Never remove outlines without replacing them; never use the browser default blue.
 
 ### Navigation
-- **Style:** absolute over the hero, 26px 56px padding, wordmark in Bricolage 700 15px +0.04em with a mono 10px sub-line ("Temagami, Ontario · Est. 1975"). Links in Archivo 500 15px, Birch Bark at 85%, hover to 100%. Trailing small primary Enroll pill.
+- **Style:** absolute over the hero, 26px 56px padding, wordmark in Bricolage 700 15px +0.04em with a mono 10px sub-line (place · founding year). Links in Archivo 500 15px, Birch Bark at 85%, hover to 100%. Trailing small primary Enroll pill.
 - **Ticker:** 34px Campfire Amber marquee above the nav, Archivo 600 13px, Pine Night, with a dot and an arrowed Enroll link; slides down on load.
 - **Mobile (below 1024px):** wordmark (sub-line hidden below 640px), small primary Enroll pill, then a 44px circle menu button with a two-line icon. Menu opens a full-screen Forest Floor sheet sliding down (.35s ease-reveal): links in Bricolage 700 at 32px, Birch Bark, 18px apart; Programs expands inline; at the bottom a mono label row with the phone number and a ghost Request Info pill. Enroll stays visible in the header while the sheet is open. Body scroll locks; Escape and the close circle dismiss.
 
@@ -344,7 +344,7 @@ Every section opens the same way: Archivo eyebrow (14px, 600 weight, amber or ce
 - **Do** keep cards flat at rest and lift them only on hover or focus (The Flat-Until-Touched Rule).
 - **Do** choose white, cream, or green per section for clear separation, and end with a light section before the footer.
 - **Do** drive scroll reveals with `animation-timeline: view()` and provide a no-motion path under `prefers-reduced-motion`.
-- **Do** ship real island, Big Top, and camper photography; the terrain is the design.
+- **Do** ship real camp and camper photography; the terrain is the design.
 - **Do** stack below 1024px and keep every section and interaction (The Stack, Don't Shrink Rule).
 - **Do** show a 2px ring, 3px offset, amber on dark and cedar on cream, on every `:focus-visible` (The Field Ring Rule).
 - **Do** validate form fields on blur with a plain-English mono message in Ember Red.

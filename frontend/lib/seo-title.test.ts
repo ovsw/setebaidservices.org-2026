@@ -6,14 +6,14 @@ import {
 } from "../../shared/seo-title";
 
 describe("resolveSeoTitle", () => {
-  it("uses a page override with the camp name suffix", () => {
+  it("uses a page override with the site name suffix", () => {
     expect(
       resolveSeoTitle({
         fallbackTitle: "Services",
         overrideTitle: "Custom services",
       }),
     ).toMatchObject({
-      finalTitle: "Custom services | Canadian Adventure Camp",
+      finalTitle: "Custom services | Setebaid Services",
       metadataTitle: "Custom services",
       pageTitle: "Custom services",
     });
@@ -28,16 +28,16 @@ describe("resolveSeoTitle", () => {
     });
   });
 
-  it("returns the camp name when no page title exists", () => {
+  it("returns the site name when no page title exists", () => {
     expect(resolveSeoTitle({}).metadataTitle).toEqual({
-      absolute: "Canadian Adventure Camp",
+      absolute: "Setebaid Services",
     });
   });
 
-  it("removes a repeated camp name suffix", () => {
+  it("removes a repeated site name suffix", () => {
     expect(
       stripLegacySeoTitleSuffix(
-        "About | Canadian Adventure Camp | Canadian Adventure Camp",
+        "About | Setebaid Services | Setebaid Services",
       ),
     ).toBe("About");
   });
@@ -53,7 +53,7 @@ describe("getSeoTitleWarnings", () => {
 
     expect(warnings).toEqual([
       "Review the repeated term “website” for readability.",
-      "The final 94-character title may be shortened in search results.",
+      "The final 88-character title may be shortened in search results.",
     ]);
   });
 });

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { siteName } from "@/lib/site-name";
 import { FooterLink } from "./footer-link";
 import { FooterIcon, socialIconFor } from "./icons";
 import type {
@@ -120,7 +121,7 @@ export function SiteFooter({
             columns stay together until they pair up below tablet width. */}
         <div className="grid grid-cols-2 gap-x-6 gap-y-11 border-y border-birch-bark/15 py-[60px] tablet:grid-cols-4 min-[1280px]:grid-cols-[1.5fr_repeat(4,1fr)] min-[1280px]:gap-12">
           <section
-            aria-label="Canadian Adventure Camp contact information"
+            aria-label={`${siteName} contact information`}
             className="col-span-full min-[1280px]:col-span-1"
           >
             <div className="mb-[26px] flex items-center gap-3">

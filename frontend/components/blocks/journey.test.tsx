@@ -40,7 +40,7 @@ const stops: JourneyStop[] = [
   stop("huntsville", "Huntsville", { time: "12:15 pm" }),
   stop("manito-landing", "Manito Landing"),
   stop("water-taxi", "Water taxi"),
-  stop("island", "Adventure Island"),
+  stop("island", "Camp"),
 ];
 
 const block: ComponentProps<typeof Journey> = {

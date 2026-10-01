@@ -20,7 +20,7 @@ export const internationalCampersSection = defineType({
   type: "object",
   icon: Globe,
   description:
-    "Globe and city-route list showing where campers travel from to reach Adventure Island.",
+    "Globe and city-route list showing where campers travel from to reach camp.",
   initialValue: {
     eyebrow: "08 · FROM EVERYWHERE",
     heading: [

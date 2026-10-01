@@ -53,7 +53,7 @@ const fact = defineArrayMember({
     defineField({
       name: "label",
       type: "string",
-      description: 'What the price includes, e.g. "CAC staff on board, there and back".',
+      description: 'What the price includes, e.g. "Staff on board, there and back".',
       validation: (rule) => rule.required(),
     }),
     defineField({

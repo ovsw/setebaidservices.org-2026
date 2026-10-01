@@ -32,7 +32,7 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { getCliClient } from "sanity/cli";
-import { assertCacProductionTarget } from "./assert-cac-production-target.mjs";
+import { assertSetebaidProductionTarget } from "./assert-setebaid-production-target.mjs";
 
 const API_VERSION = "2026-03-23";
 
@@ -100,7 +100,7 @@ async function main() {
   const seed = await loadSeed(file);
   const client = getCliClient({ apiVersion: API_VERSION });
   const { dataset, projectId } = client.config();
-  assertCacProductionTarget({ dataset, projectId });
+  assertSetebaidProductionTarget({ dataset, projectId });
 
   const { _id: pageId, slug, ...pageFields } = seed.page;
   const draftId = `drafts.${pageId}`;
