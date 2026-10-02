@@ -1,366 +1,408 @@
 ---
 name: Setebaid Services
-description: A field guide to a camp. Dark forest greens, map-legend labels, campfire-amber handwriting.
+description: Sunlit Camp. Warm cream ground, camp green, a marigold sun and lake sky, with a handwritten note in the margin.
 colors:
-  campfire-amber: "#E8A23B"
-  campfire-amber-deep: "#C9861F"
-  pine-night: "#16200F"
-  forest-floor: "#35491F"
-  forest-panel: "#24331A"
-  cedar: "#527033"
-  cedar-deep: "#3A5222"
-  birch-bark: "#F3EFE2"
-  birch-bark-bright: "#FAF7EE"
-  sunlit-moss: "#C7DD96"
-  moss: "#A9C46C"
-  lake-night: "#0D1626"
-  ember-red: "#B4441F"
+  cream: "#FBF7EC"
+  white: "#FFFFFF"
+  sand: "#F1E7CE"
+  ink: "#1C3B2C"
+  ink-soft: "#3E5A4B"
+  mist: "#CFD9D0"
+  camp-green: "#1A7F52"
+  camp-green-deep: "#14653F"
+  logo-green: "#1A8B5A"
+  marigold: "#F2B93D"
+  marigold-deep: "#E0A529"
+  marigold-ink: "#86580A"
+  lake-sky: "#7CBBDD"
+  lake-ink: "#2C6587"
+  error: "#A93A23"
+  line: "rgb(28 59 44 / 0.14)"
+  line-on-dark: "rgb(251 247 236 / 0.15)"
 typography:
   display:
-    fontFamily: "Bricolage Grotesque, sans-serif"
-    fontSize: "clamp(3rem, 8vw, 6.5rem)"
+    fontFamily: "Work Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(3rem, 1.6rem + 5vw, 5.25rem)"
     fontWeight: 800
     lineHeight: 0.96
-    letterSpacing: "-0.025em"
-    fontVariation: "'opsz' 96"
+    letterSpacing: "-0.03em"
   headline:
-    fontFamily: "Bricolage Grotesque, sans-serif"
-    fontSize: "clamp(2.25rem, 5vw, 3.625rem)"
+    fontFamily: "Work Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(2.25rem, 1.5rem + 2.2vw, 3.125rem)"
     fontWeight: 800
-    lineHeight: 1.02
+    lineHeight: 1.04
     letterSpacing: "-0.02em"
-  title:
-    fontFamily: "Bricolage Grotesque, sans-serif"
-    fontSize: "22px"
-    fontWeight: 700
+  title-lg:
+    fontFamily: "Work Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(1.625rem, 1.25rem + 1vw, 2rem)"
+    fontWeight: 800
     lineHeight: 1.1
+    letterSpacing: "-0.015em"
+  title:
+    fontFamily: "Work Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.375rem"
+    fontWeight: 800
+    lineHeight: 1.2
     letterSpacing: "-0.01em"
-  script:
-    fontFamily: "Caveat, cursive"
-    fontSize: "1.15em"
-    fontWeight: 600
-    lineHeight: 1
-    letterSpacing: "0"
-  body:
-    fontFamily: "Archivo, sans-serif"
-    fontSize: "16px"
+  statement:
+    fontFamily: "Work Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(1.25rem, 0.9rem + 1vw, 1.625rem)"
+    fontWeight: 800
+    lineHeight: 1.15
+    letterSpacing: "-0.015em"
+  quote:
+    fontFamily: "Work Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.125rem"
+    fontWeight: 700
+    lineHeight: 1.4
+  lead:
+    fontFamily: "Merriweather, Georgia, serif"
+    fontSize: "clamp(1.125rem, 1rem + 0.4vw, 1.25rem)"
     fontWeight: 400
     lineHeight: 1.6
-    letterSpacing: "normal"
-  body-small:
-    fontFamily: "Archivo, sans-serif"
-    fontSize: "15px"
+  body:
+    fontFamily: "Merriweather, Georgia, serif"
+    fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.55
-    letterSpacing: "normal"
-  label:
-    fontFamily: "ui-monospace, Menlo, monospace"
-    fontSize: "14px"
-    fontWeight: 500
-    lineHeight: 1.35
-    letterSpacing: "0.01em"
+    lineHeight: 1.7
+  small:
+    fontFamily: "Merriweather, Georgia, serif"
+    fontSize: "0.9375rem"
+    fontWeight: 400
+    lineHeight: 1.6
   eyebrow:
-    fontFamily: "ui-monospace, Menlo, monospace"
-    fontSize: "14px"
+    fontFamily: "Work Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.875rem"
     fontWeight: 600
     lineHeight: 1.35
-    letterSpacing: "0.02em"
+    letterSpacing: "0.08em"
+  label:
+    fontFamily: "Work Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.875rem"
+    fontWeight: 600
+    lineHeight: 1.35
+  note:
+    fontFamily: "Caveat, cursive"
+    fontSize: "1.75rem"
+    fontWeight: 600
+    lineHeight: 1.1
 rounded:
-  xs: "3px"
+  xs: "2px"
   sm: "8px"
-  md: "14px"
-  lg: "22px"
-  xl: "26px"
+  md: "12px"
   pill: "999px"
 spacing:
-  xs: "8px"
-  sm: "14px"
-  md: "26px"
-  lg: "34px"
-  xl: "46px"
-  section: "120px"
-  gutter: "56px"
+  "1": "4px"
+  "2": "8px"
+  "3": "12px"
+  "4": "16px"
+  "5": "20px"
+  "6": "24px"
+  "7": "28px"
+  "8": "32px"
+  "10": "40px"
+  "12": "48px"
+  "16": "64px"
+  "24": "96px"
+  "30": "120px"
+  gutter: "clamp(20px, 5vw, 32px)"
+  section: "clamp(64px, 9vw, 96px)"
 components:
   button-primary:
-    backgroundColor: "{colors.campfire-amber}"
-    textColor: "{colors.pine-night}"
-    typography: "{typography.body}"
-    rounded: "{rounded.pill}"
-    padding: "16px 30px"
+    backgroundColor: "{colors.camp-green}"
+    textColor: "{colors.white}"
+    rounded: "{rounded.sm}"
+    padding: "12px 20px"
+    height: "44px"
   button-primary-hover:
-    backgroundColor: "{colors.campfire-amber-deep}"
-    textColor: "{colors.pine-night}"
-  button-primary-small:
-    backgroundColor: "{colors.campfire-amber}"
-    textColor: "{colors.pine-night}"
-    rounded: "{rounded.pill}"
-    padding: "11px 22px"
-  button-ghost-dark:
-    backgroundColor: "transparent"
-    textColor: "{colors.birch-bark}"
-    rounded: "{rounded.pill}"
-    padding: "18px 30px"
-  button-ghost-light:
-    backgroundColor: "transparent"
-    textColor: "{colors.pine-night}"
-    rounded: "{rounded.pill}"
-    padding: "12px 24px"
-  chip-label:
-    backgroundColor: "transparent"
-    textColor: "{colors.birch-bark}"
-    typography: "{typography.label}"
-    rounded: "0"
-    padding: "0"
+    backgroundColor: "{colors.camp-green-deep}"
+  button-highlight:
+    backgroundColor: "{colors.marigold}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.sm}"
+    padding: "12px 20px"
+    height: "44px"
+  button-highlight-hover:
+    backgroundColor: "{colors.marigold-deep}"
+  button-outline:
+    textColor: "{colors.ink}"
+    rounded: "{rounded.sm}"
+    padding: "12px 20px"
+    height: "44px"
+  button-hero:
+    padding: "16px 28px"
+    height: "52px"
   card-light:
-    backgroundColor: "{colors.birch-bark}"
-    textColor: "{colors.pine-night}"
-    rounded: "{rounded.lg}"
-    padding: "34px 30px"
-  card-dark:
-    backgroundColor: "{colors.forest-panel}"
-    textColor: "{colors.birch-bark}"
-    rounded: "{rounded.xl}"
-    padding: "46px 46px 40px"
-  input:
-    backgroundColor: "#FFFFFF"
-    textColor: "{colors.pine-night}"
-    typography: "{typography.body}"
+    backgroundColor: "{colors.white}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.md}"
-    padding: "15px 16px"
+    padding: "32px"
+  card-tint:
+    backgroundColor: "{colors.sand}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.md}"
+    padding: "28px"
+  card-dark:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.md}"
+    padding: "28px"
+  date-badge:
+    backgroundColor: "{colors.marigold}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.md}"
+    padding: "12px 16px"
 ---
 
 # Design System: Setebaid Services
 
 ## Overview
 
-**Creative North Star: "The Island Field Guide"**
+**Creative North Star: "Sunlit Camp"**
 
-The site reads like a trail map of the camp that a parent can trust and a kid wants to read. Deep forest greens are the paper; readable annotations are the map legend; a handwritten Campfire Amber script is the note scrawled in the margin by someone who has actually been there. Photos are the terrain. The voice is bold, warm, and confident: big type that says the thing plainly, then a wink in amber.
+The site feels like a bright afternoon at camp: a warm cream ground, deep camp green, and one marigold sun. Lake sky shows up as the cool shade, and a counselor's handwritten note sits in the margin. It is warm and plain-spoken, and the photographs of children at camp carry it. Parents read calm, sturdy type. Kids see the energy in the photos, the tilted frames and the scribbled arrows.
 
-Density is high but never cramped. Sections are full-bleed colour fields (dark green, pine black, birch cream) that alternate like day and night on the lake, with content sitting on a wide 1320px measure. Inside those fields, information is packed tight: hairline-divided grids, marked chips, session bars, numbered programs. Every interactive thing moves a little when touched. Nothing is decorative for its own sake; the map legend, the stamp, the script all carry meaning.
+The system grew from the Claude Design prototype (`frontend/prototype/Home-Page-Prototype.html`). It takes the colours of direction 1A "Sunlit camp" and the type of direction 1C "Warm nonprofit". Earlier versions of the prototype are in `frontend/prototype/exports/SetebaidServices.org/`.
 
-Confirmed rejections: no soft pastel "summer camp" palette, no rounded-bubbly kid branding, no stock-photo hero with a gradient overlay and centred text. The old site's logo and colours are not binding.
+Density is moderate. Sections are full-width fields of cream, sand or dark forest green, with soft glows pooling in the corners and a fine grain over them. Content sits on a 1240px measure. Cards are flat and lightly outlined. Depth comes from tone and glow, and shadows appear only under things that lift off the page.
+
+Confirmed rejections (from PRODUCT.md and the homepage brief): no clinic or hospital look, no generic stock summer camp, no wall of text at the top, and cost and campership are never hidden.
 
 **Key Characteristics:**
-- Forest-dark fields as the default canvas; cream fields for money, trust, and forms.
-- One accent, Campfire Amber, reserved for action, emphasis, and handwritten notes.
-- Three voices of type: Bricolage display, Archivo body, optional monospace for data, plus Caveat script for the human aside.
-- Pills are reserved for buttons and nothing else; a label is a mark and a word, with no container; large soft radii belong to media and cards; hairline borders use translucent cream.
-- Tonal layering for depth; shadows appear only on lift or under hero media.
-- Motion on scroll and hover is constant but short and eased; it reveals, never loops.
+- Cream ground, camp green for action, marigold for warmth and giving, lake sky as the cool second colour.
+- Work Sans 800 for headlines, Merriweather for every sentence, Caveat for the handwritten note.
+- One accent phrase per headline, set in the `emphasis` colour: logo green on Cream, camp green deep on Sand, marigold on Forest.
+- 8px buttons, 12px cards, circles for portraits and the photo ring.
+- Glow and grain on the fields; flat cards with hairline outlines.
 
 ## Colors
 
-A forest at dusk, lit by one fire.
+A summer afternoon: cream paper, deep greens, one marigold sun, and a lake.
+
+Colour has two layers, both in `frontend/app/globals.css`:
+
+1. **Brand colours** (`--brand-*` in `:root`). This is the palette described below and in the frontmatter. It sits outside Tailwind's `@theme`, so Tailwind makes no classes for it, and component code cannot use it.
+2. **Job tokens** (`--color-*` in `@theme`). Each one says what a colour is for (background, foreground, primary, link…) and points at a brand colour. Tailwind makes classes for them (`bg-primary`, `text-link`, `border-border`). Component code uses only these.
 
 ### Primary
-- **Campfire Amber** (`{colors.campfire-amber}`): the only accent. Primary buttons, the handwritten script word in a headline, eyebrow labels on dark fields, hover fills on arrows and bars, "sold out" stamps, text selection. **Campfire Amber Deep** (`{colors.campfire-amber-deep}`) is its pressed/hover state.
+- **Camp Green** (#1A7F52): the main action colour: Register buttons, links, small labels on cream and white. White text on it passes AA (5.0:1). **Camp Green Deep** (#14653F) is its hover, and it replaces camp green for small text on sand.
+- **Logo Green** (#1A8B5A): the green of the logo. Use it for the photo rings, thick rules, the brand mark, and the accent phrase in a headline. It is under 4.5:1 on cream, so never use it for small text.
 
 ### Secondary
-- **Cedar** (`{colors.cedar}`): links on light fields, eyebrow labels on cream, focus borders on inputs, the script word when it sits on cream, hover tint on cabin bunks. **Cedar Deep** (`{colors.cedar-deep}`) is link hover.
-- **Sunlit Moss** (`{colors.sunlit-moss}`) and **Moss** (`{colors.moss}`): small positive signals on dark fields (open session markers, availability dots, map trails). Never large areas.
+- **Marigold** (#F2B93D): the warm accent. Donate and other giving buttons, the date badge, highlight fills, links and the accent phrase on the dark field, decorative dots. Always set ink on top of it (6.9:1). **Marigold Deep** (#E0A529) is its hover. **Marigold Ink** (#86580A) is marigold as small text on light.
+
+### Tertiary
+- **Lake Sky** (#7CBBDD): the cool second colour. Quote and event card fills, rules, the Tier IV campership strip tint. Ink on top (5.9:1). **Lake Ink** (#2C6587) is lake sky as small text on light.
 
 ### Neutral
-- **Pine Night** (`{colors.pine-night}`): body text on cream; the darkest section field (facilities, world globe); text on amber.
-- **Forest Floor** (`{colors.forest-floor}`): the default dark section field (hero, programs, activities, safety).
-- **Forest Panel** (`{colors.forest-panel}`): cards and panels sitting on Forest Floor or Pine Night.
-- **Birch Bark** (`{colors.birch-bark}`): page background, text on dark fields, light cards. **Birch Bark Bright** (`{colors.birch-bark-bright}`) for the testimonial field.
-- **Lake Night** (`{colors.lake-night}`): the globe container only; near-black blue.
-- **Ember Red** (`{colors.ember-red}`): one use, the "Full" session marker. Error red if ever needed.
+- **Cream** (#FBF7EC): the page ground and the default field. Text colour on the dark field.
+- **White** (#FFFFFF): cards, the pricing panel, inputs, popovers.
+- **Sand** (#F1E7CE): the second light field and quiet fills; photo placeholders.
+- **Ink** (#1C3B2C): headings and primary text, and the dark field ("Forest").
+- **Ink Soft** (#3E5A4B): body and secondary text on light fields (7.1:1 on cream).
+- **Mist** (#CFD9D0): secondary text on the dark field (8.5:1 on ink).
+- **Line** (ink at 14%): hairlines and button outlines on light. **Line on Dark** (cream at 15%) on the dark field.
+- **Error** (#A93A23): errors and destructive actions only.
 
-### Ink tiers (secondary text on cream)
+### Job tokens
 
-Secondary text on cream is a solid ink tier, never Pine Night at reduced alpha.
-Each tier keeps Pine Night's hue and chroma and raises the lightness, so it
-reads the same on Birch Bark and on Birch Bark Bright.
+**Field tokens.** These follow the section's field (see Fields below). The `@theme` defaults are the Cream values.
+- `background`: the section ground.
+- `foreground`: headings and primary text.
+- `muted`: a quiet fill for placeholders and table stripes.
+- `muted-foreground`: body and secondary text.
+- `card`, `card-foreground`: cards and panels on the field, and their text.
+- `popover`, `popover-foreground`: menus and popovers. White with ink text on every field.
+- `border`: hairlines, outlines and dividers.
+- `input`: form field borders.
+- `ring`: focus rings (the `focus-ring` utility).
+- `link`: links, eyebrows and small accent text.
+- `emphasis`: the accent phrase in a headline. Heading sizes only.
+- `accent`, `accent-foreground`: the shadcn meaning, a quiet hover or selected background. It is not marigold.
+- `secondary`, `secondary-foreground`: the shadcn subtle fill.
 
-| Tier | Value | On Birch Bark | Use |
+**Action tokens.** These are the same on every field.
+- `primary`, `primary-foreground`, `primary-hover`: camp green with white text, camp green deep on hover. The main action, such as Register.
+- `highlight`, `highlight-foreground`, `highlight-hover`: marigold with ink text, marigold deep on hover. Giving actions, badges and text selection.
+- `destructive`, `destructive-foreground`: error red with white text.
+- `mark`: logo green. Brand marks, photo rings and thick rules.
+
+**Card fills.** These are the same on every field: decorative fills for rows of cards. Make a coloured card with a `card-*` utility, which paints the fill and re-points the text tokens inside it (`foreground`, `muted-foreground`, `link`, `emphasis`, `border`, `ring`), so the card reads correctly on any field. The bare `fill-*` tokens are for bars, dots and rules.
+- `card-quiet` (`fill-quiet`): sand with ink text; links and emphasis in camp green deep.
+- `card-warm` (`fill-warm`): marigold with ink text; links, emphasis and secondary text all ink (only ink passes on marigold).
+- `card-cool` (`fill-cool`): lake sky with ink text; links, emphasis and secondary text all ink.
+- `card-deep` (`fill-deep`): ink with cream text, mist secondary text, marigold links and emphasis.
+- `card-bold` (`fill-bold`): camp green with white text throughout.
+- `warm-text`, `cool-text`: marigold ink and lake ink, for small warm or cool text on a light background.
+
+**Deprecated CAC aliases.** `pine-night`, `birch-bark`, `birch-bark-bright`, `campfire-amber`, `cedar`, `forest-floor`, `forest-panel`, `forest-900`, `lake-night`, `moss`, `sunlit-moss`, `navigation-yellow`, `ember-red`, `cream`, `ink-soft`, `ink-muted` and their `-deep` forms point at fixed brand colours, because CAC code used them as literal colours. They do not follow the field. Never use them in new code; delete each one when the last block that uses it is rebuilt. The same applies to `--section-accent` and `--section-surface`, which CAC blocks still read.
+
+### Fields
+
+A field is a section background. Editors pick Cream, Sand or Forest for each section in Studio; the stored values are `white`, `cream` and `green`. `sectionThemeClass()` in `frontend/components/blocks/section-theme.ts` maps them to the utilities `field-cream`, `field-sand` and `field-forest`. Each utility paints the ground and re-points the field tokens for everything inside the section, so the same markup is correct on all three fields with no "on dark" variants. The last section before the dark footer cannot be Forest.
+
+| Token | Cream | Sand | Forest |
 | --- | --- | --- | --- |
-| **Ink** (`{colors.pine-night}`) | `oklch(22.8% 0.034 133)` | 14.6:1 | body text, headings, anything primary |
-| **Ink Soft** (`ink-soft`) | `oklch(44.5% 0.034 133)` | 6.5:1 | prices, dates, check items, near-primary supporting text |
-| **Ink Muted** (`ink-muted`) | `oklch(50% 0.034 133)` | 5.1:1 | card descriptions, labels, captions, nav sub-lines, FAQ answers |
-
-`--color-muted-foreground` is Ink Muted, so shadcn-derived components (card
-descriptions, placeholders, breadcrumbs, dialog descriptions) land on a tier
-without per-component edits.
-
-**Contrast margin.** Every piece of text on cream reaches at least 5:1 against
-Birch Bark, the darker of the two creams. WCAG 2.2 AA asks for 4.5:1; the extra
-margin means a small change to a cream or to an ink tier cannot quietly drop the
-site below the bar. Birch Bark Bright is lighter, so it always clears the same
-text by more.
-
-Translucent neutrals still do the quiet work everywhere text is not involved:
-hairlines are Birch Bark at 12-22% on dark and Pine Night at 10-18% on cream.
-Text on dark fields stays Birch Bark at 66-75%; it passes at those values.
+| `background` | cream | sand | ink |
+| `foreground` | ink | ink | cream |
+| `muted-foreground` | ink soft | ink soft | mist |
+| `card` | white | white | cream 7% over ink |
+| `border`, `input` | line | line | line on dark |
+| `ring` | camp green | camp green deep | marigold |
+| `link` | camp green | camp green deep | marigold |
+| `emphasis` | logo green | camp green deep | marigold |
+| `muted`, `accent`, `secondary` | sand | cream | cream 8 to 10% over ink |
 
 ### Named Rules
-**The One Fire Rule.** Campfire Amber touches at most a few elements per viewport: one button, one script word, one label. Its scarcity is what makes it read as "act here."
+**The Job Token Rule.** Component code uses only job tokens (`bg-primary`, `text-link`, `card-warm`…). Brand colours exist only in `globals.css`, and Tailwind generates no classes for them. A rebrand changes one file.
 
-**Section backgrounds.** Editors choose White (Birch Bark Bright), Cream (Birch Bark), or Green (Forest Floor) with a compact select. Use adjacent backgrounds to separate content where needed. The final section above the dark footer must be White or Cream. Maps, globes, and media heroes keep their fixed backgrounds; maps and globes must be followed by a light section.
+**The Ink-on-Colour Rule.** Marigold, lake sky and sand always carry ink text: use `highlight-foreground` and the `card-*` utilities. Only camp green, camp green deep, error and ink (the Forest field and `fill-deep`) carry light text.
 
-**The Translucent Ink Rule.** Borders, hairlines, and dividers are never a new
-grey. They are the field's text colour at reduced alpha. Text is not: secondary
-text on cream picks an ink tier from the table above, and secondary text on dark
-fields is Birch Bark at reduced alpha. Alpha on cream text depends on whatever
-sits behind it, which is how the site drifted below AA; see
-`docs/adr/0002-solid-ink-tiers-for-text-on-cream.md`.
+**The Big Green Rule.** Logo green (`mark`, and `emphasis` on Cream) is for marks, rings, rules and heading-size words. Small green text uses `text-link`, which is camp green on Cream and camp green deep on Sand. Never use `text-emphasis` or `text-mark` for small text.
 
-**The Amber-Is-Not-Text Rule.** Campfire Amber, either tint, is never text below
-large size (24px, or 19px bold) on cream. It may be a marker, an underline, a
-border, or a background with ink on top. Large amber headings on cream stay
-amber where they reach 3:1.
+**The Sun Rule.** Marigold is the sun: one or two `highlight` or `card-warm` elements per screen (a Donate button, a badge, a dot). A page where everything is marigold has no sun.
 
 ## Typography
 
-**Display Font:** Bricolage Grotesque (variable, opsz 12-96, wght 300-800; fallback sans-serif)
-**Body Font:** Archivo (400-700; fallback sans-serif)
-**Label/Mono Font:** ui-monospace, Menlo, monospace (system; no webfont)
-**Script Font:** Caveat (500, 600; fallback cursive)
+**Display Font:** Work Sans (variable; fallback system sans)
+**Body Font:** Merriweather (variable with optical size; fallback Georgia)
+**Note Font:** Caveat 600 (fallback cursive)
 
-**Character:** Bricolage at 800 with tight tracking is loud and a little quirky, like a hand-painted camp sign. Archivo underneath is plain and legible, the parent-facing voice. Annotations stay readable and sentence case; system monospace is reserved for data where it improves scanning. Caveat is one human hand writing over all of it.
+**Character:** Work Sans at 800 is plain, strong and friendly, with no decoration. Merriweather is built for long reading on screens and gives sentences a calm, established voice. Caveat is the counselor's hand.
 
 ### Hierarchy
-- **Display** (800, clamp 3rem to 6.5rem, line-height 0.96, tracking -0.025em): hero headline only. One word or phrase of it is swapped to Script in Campfire Amber.
-- **Headline** (800, 58px desktop, line-height 1.02, tracking -0.02em): section openers. Pine Night on cream, Birch Bark on dark.
-- **Title** (700, 19-30px, line-height 1-1.1): card and program titles, stat numbers, nav wordmark at 15px with +0.04em tracking. Use `text-title` at 22px, or `text-title-lg` at 28px for row headings that can wrap. Both tokens use line-height 1.1 and tracking -0.01em.
-- **Script** (Caveat 600, roughly 1.15x the surrounding headline size, up to 118px in the hero): the aside inside a headline, a pull quote signature, a margin note. Always Campfire Amber on dark, Cedar on cream.
-- **Body** (Archivo 400, 16-17px, line-height 1.6): paragraphs, max 520-620px wide. Secondary body at 15px / 1.55 in `ink-muted` on cream, or Birch Bark at reduced alpha on dark.
-- **Eyebrow** (Archivo, 14px, 600 weight, tracking 0.02em): supporting context above a headline, Campfire Amber on dark, Cedar on cream, 20px below it.
-- **Label** (Archivo, 14px, 500 weight, tracking 0.01em): chips, map markers, stamps, metadata, and nav sub-lines.
+- **Display** (800, clamp 48px to 84px, line-height 0.96, -0.03em): the hero headline and the name-story words. Utility `text-display-hero`.
+- **Headline** (800, clamp 36px to 50px, 1.04, -0.02em): section openers. One phrase may switch to the emphasis colour (`text-emphasis`). Utility `text-headline`.
+- **Title Large** (800, clamp 26px to 32px, 1.1, -0.015em): camp names, the featured news title, prices. Utility `text-title-lg`.
+- **Title** (800, 22px, 1.2, -0.01em): card, event and news titles. Utility `text-title`.
+- **Figure** (800, 40px, 1, tabular numbers): a date that anchors a card. Utility `text-figure`.
+- **Statement** (800, clamp 20px to 26px, 1.15) and **Statement Small** (700, clamp 18px to 22px, 1.3): short claims inside a card. Utilities `text-statement`, `text-statement-sm`.
+- **Quote** (700, 18px, 1.4): testimonial text, in Work Sans. Utility `text-quote`.
+- **Lead** (Merriweather 400, clamp 18px to 20px, 1.6): the paragraph under a hero or section headline, 40 to 64ch wide. Utility `text-lead`.
+- **Body** (Merriweather 400, 16px, 1.7): running text, at most about 65ch. Utility `text-body`.
+- **Small** (Merriweather 400, 15px, 1.6): card blurbs and notes under a table. Utility `text-small`.
+- **Eyebrow** (Work Sans 600, 14px, 0.08em, uppercase): a short label of one to three words above a heading or at the top of a card. Utility `text-eyebrow`.
+- **Label** (Work Sans 600, 14px, sentence case): dates, places, roles, chips. Utility `text-label`.
+- **Note** (Caveat 600, 28px, or 24px for `text-note-sm`): captions, signatures, margin notes, often rotated 2 to 3 degrees. Utilities `text-note`, `text-note-sm`.
+
+Buttons use Work Sans 600 at 15px (`typo-button`) or 17px (`typo-button-lg`).
 
 ### Named Rules
-**The Annotation Rule.** Supporting text stays at least 14px, uses normal case and modest tracking, and keeps enough contrast against its field. Use monospace only for coordinates, codes, and other data where alignment helps.
+**The Sentence Rule.** Every sentence is Merriweather; every heading, label, button and link is Work Sans. The base stylesheet sets `p` to Merriweather; a paragraph that is really interface text opts out with `font-ui`.
 
-**The One Hand Rule.** Caveat appears at most once per section, as one phrase, never a full sentence and never for UI text.
+**The One Hand Rule.** Caveat appears once or twice per section, as a short note of a few words, never as a heading and never for interface text.
+
+**The Short Caps Rule.** Uppercase is for eyebrows of one to three words only. Status lines and sentences stay in sentence case.
 
 ## Layout
 
-Content sits on a 1320px max-width measure with 56px side gutters; the hero nav and hero text share the same left edge. Sections are full-bleed colour fields with roughly 120px vertical padding; the hero is a full-viewport media field with the nav absolutely positioned over it and a 34px marquee ticker above the nav.
+Content sits on a 1240px container with a fluid gutter (`container-content`): 20px on a phone, 32px on a desktop. Sections are full-width fields. The block dispatcher sets section padding from `--section-pad` (64px on a phone, 96px on a desktop) and halves it at a seam between two sections on the same field.
 
-Internal grids are explicit and asymmetric where the content is asymmetric: 1fr 1fr for text/media pairs, 1fr 620px when media must hold a fixed width, 330px 1fr for sidebar-plus-content, repeat(4, 1fr) for program and safety tiles, 150px 1fr 138px for session rows (dates, bar, CTA). Tile grids use 1px gaps over a translucent cream background so the gaps themselves draw hairlines (The Hairline Grid).
+**Spacing scale.** A 4px base, written as Tailwind steps: 1 (4px), 2 (8px), 3 (12px), 4 (16px), 5 (20px), 6 (24px), 7 (28px), 8 (32px), 10 (40px), 12 (48px), 16 (64px), 24 (96px), 30 (120px). Do not use other values.
 
-Spacing steps observed: 8, 14, 26, 34, 46px inside components; 20px between eyebrow and headline; 120px between sections. Text measures cap at 520-620px.
+**Rhythm.**
+- 40px between a section's heading block and its content.
+- 16px between an eyebrow and its headline.
+- 24px between a headline and its lead.
+- 16px gaps in photo mosaics and quote rows, 20px in card grids, 32px between feature columns.
+- 28px inside small cards, 32px inside large cards and panels.
 
-### Responsive
-Three breakpoints: phone below 640px, tablet 640-1023px, desktop 1024px and up. The drama survives on phones; it stacks, it does not shrink away.
+**Grids from the prototype.** Text and media pairs at 11fr/9fr or 5fr/7fr. Card rows in two, three or four equal columns. A bento of 4 columns and 2 rows for staff and news. Pricing rows at 170px / 1fr / 260px. Photo strips at 5fr 4fr 6fr 4fr 5fr with alternate photos dropped 40px.
 
-- **Phone:** gutters 20px; section padding 72px; every grid one column; hairline-grid tiles two columns; Display 48px, Headline 36px, Script scales with them; body stays 16px; text measures go full width. Session rows become a stacked card per session (dates, bar, CTA). Tilting cards lose the tilt and keep the image scale and metadata on tap. The globe and island walk keep working by touch.
-- **Tablet:** gutters 32px; section padding 96px; two-column pairs stay two columns where the media side can hold 320px, else stack; tiles two columns; Display 72px, Headline 46px.
-- **Desktop:** as specified above.
-
-**The Stack, Don't Shrink Rule.** Below 1024px, layouts stack and type steps down one size; no section is removed, no interaction is removed.
-
-**The Mirror Rule.** Neighbouring sections of one photo-and-copy type form a run, and odd positions in that run flip on desktop: photo on the far side, copy on the near side. No editor control decides this; the page order does. A bleeding photo in such a section rounds its copy-side corner only where that boundary is a seam and stays square at an edge (see Shapes).
+**Responsive.** The prototype is desktop only; each section decides its own small-screen layout when it is built. Breakpoints the content needed in a trial: 640px (two-up cards), 768px (two-column text and media), 900px (pricing rows, news and footer grids), 960px (hero two columns), 1024px (four-up cards, staff grid), 1080px (full header navigation; below it, a menu button). Wide rows of cards or photos become horizontal swipe rows on phones.
 
 ## Elevation & Depth
 
-Depth is tonal. Forest Panel sits on Forest Floor; Forest Floor sits on Pine Night; Birch Bark cards sit on Birch Bark Bright. Hairlines (translucent cream or translucent pine) separate rather than shadows. Shadows exist for two reasons only: something is media-heavy and meant to feel physical (the island map, the globe, the hero video frame), or something has been lifted by the cursor.
+The system is flat with tonal layering. Fields change colour; cards sit on the field with a white fill or a hairline. Glows give the fields light and warmth, and a fine grain sits over them.
+
+**Glows.** Soft radial light in the corners of a field, at 90% strength (`--glow-intensity`). The dark field uses marigold at the top right, a green glow rising from the bottom left, and a shade at the bottom (`--band-glow`, `--band-glow-green`, `--band-shade`); the section system paints these over each dark band. Light fields use sun (`--glow-sun`), peach (`--glow-peach`) and daylight (`--glow-daylight`), placed differently in each section so the page does not repeat. Light-field glows belong to each section's own background when the section is built.
+
+**Grain.** A fine noise over the glows (`--grain-image`), soft-light on dark fields.
 
 ### Shadow Vocabulary
-- **Lift** (`box-shadow: 0 40px 70px -22px rgba(13,18,8,.65)`): hover state for tilting program and activity cards, paired with a -8px translateY and 1.06 image scale.
-- **Media rest** (`box-shadow: 0 36px 70px rgba(13,18,8,.45)`): heavy media containers at rest on dark fields (island walk, globe uses `0 42px 84px rgba(0,0,0,.5)`).
-- **Card rest, cream** (`box-shadow: 0 22px 44px rgba(22,32,15,.12)`): light cards that float on the cream field (pricing, testimonial portraits).
-- **Stamp** (`box-shadow: 0 10px 24px rgba(13,18,8,.35)`): small amber stamps and floating chips.
-- **Glass chips** use `backdrop-filter: blur(6-8px)` over a 45-55% Pine Night fill instead of a shadow.
+- **Card** (`--shadow-card`: `0 1px 2px rgb(20 40 30 / .06), 0 14px 30px -18px rgb(20 40 30 / .35)`): cards that sit above a field, such as the staff card and photo tiles.
+- **Badge** (`--shadow-badge`: `0 8px 24px rgb(28 42 34 / .18)`): the date badge that overlaps a photo.
+- **Lift** (`--shadow-lift`): a button on hover.
+- **CTA** (`--shadow-cta`): the one emphasised primary action on a page.
+- **Highlight** (`--shadow-highlight`): the same emphasis for a highlight (giving) button.
+
+Shadows mix brand colours (`color-mix` with `--brand-ink`, `--brand-camp-green`, `--brand-marigold`), so a palette change carries into them.
 
 ### Named Rules
-**The Flat-Until-Touched Rule.** Cards and tiles are flat at rest. The lift shadow is a response to hover or focus, never a resting state. Hairline-grid tiles never lift; they tint (5% cream) instead.
+**The Flat-at-Rest Rule.** Cards are flat with a hairline or a fill. A shadow appears only under an element that overlaps another (badge, staff card over the field) or on hover.
 
 ## Shapes
 
-Two silhouettes: the pill and the soft slab. Every button is a full pill (999px). Every media frame, card, and panel is a soft slab at 22-26px, with 14px for inputs and 8px for small inner thumbnails, 3px for bars and ticks. Circles (50%) are reserved for dots, avatars, and icon buttons. The footer and the final CTA band round only their top corners at 44px, like the page being tucked into an envelope.
+Gentle corners and full circles. Buttons, inputs and small fills are 8px (`rounded-sm`, `rounded-control`). Cards, photos and panels are 12px (`rounded-md`). Portraits, the play button, dots and the photo ring are circles. Bars and rules are 2px.
 
-**The Pill Is a Button Rule.** The pill silhouette means "press me". A chip, label, tag, marker, or badge is never a pill and never carries a border or a fill, because a bordered pill of text is indistinguishable from a ghost button. A label is a small mark (a dot, a check, a number) followed by a word in the label face. Decided 2026-09-15 and retrofitted across the site the same day. Pressable things keep the pill: links styled as ghost buttons, the sample-day activity toggles, the dates-and-rates tabs, the tour control.
+**The photo ring.** A round photo inside a thick logo-green ring (`mark`) that is open on one side (the left quarter is transparent), turned to a different angle each time. It echoes the turning arrow of "turn diabetes around". Large faint rings in the background repeat it.
 
-A slab is a rectangle with soft corners that sits on a field, so its corners have a surface to rest against. A field is a full-bleed colour or photo that runs to the viewport edge; it has no corners of its own. A photo that bleeds to a section boundary is a field at that boundary and stays square there; it may round a corner only where the boundary is a seam, because the same colour continues past it.
+**Tilt.** Feature photos tilt 1.5 degrees, alternating left and right. Notes tilt 2 to 3 degrees.
 
-Borders are 1px (1.5px on buttons and inputs) and always translucent: cream at 12-22% on dark, pine at 10-18% on cream. No solid grey borders. Media is always clipped to its slab; images inside a slab may scale on hover but never escape it.
+**The ticket edge.** The Tier IV campership row is cut off from the panel by a dashed line with two half-circle notches, like a ticket stub.
 
 ## Components
 
-Tactile and confident. Everything that can be touched answers: pills lift, arrows rotate, bars slide, stamps pop.
-
 ### Buttons
-- **Shape:** full pill (999px), Archivo 700, 14-17px, inline-flex with 10px gap for an arrow.
-- **Primary:** Campfire Amber fill, Pine Night text, 16px 30px padding (18px 34px in the hero with `0 12px 32px rgba(0,0,0,.35)` shadow; 11px 22px for the small nav/ticker variant).
-- **Hover:** background to Campfire Amber Deep and -2px translateY over .2s ease.
-- **Focus:** see The Field Ring Rule below.
-- **Ghost on dark:** transparent, 1.5px Birch Bark at 50%, Birch Bark text, 600 weight, 18px 30px, blur(6px) backdrop; hover brightens the border.
-- **Ghost on cream:** transparent, 1.5px Pine Night at 25%, Pine Night text, 600 weight, 12px 24px.
-- **Arrow trailing:** "Enroll →" style arrows are text glyphs; in cards the arrow is a 26px circle outline that fills amber and rotates -45deg on hover.
+Clear, solid and friendly. The variants are in `frontend/components/ui/button.tsx`.
+- **Shape:** 8px corners (`rounded-control`).
+- **Primary** (`primary`; the CMS calls it `default`): `bg-primary` with `text-primary-foreground`, 44px tall, 20px side padding, Work Sans 600 15px. Hover: `bg-primary-hover`. Used for Register and the main action of a section.
+- **Highlight** (`highlight`; stored `copper` renders the same): `bg-highlight` with `text-highlight-foreground`. Hover: `bg-highlight-hover`. Used for Donate and giving actions. This variant was called "accent" before.
+- **Outline** (`outline`; the CMS calls it `secondary`): transparent, with a 1.5px `border-border` edge and `text-foreground`. Hover: `bg-card` and a half-strength `link` border. The tokens follow the field, so the outline is correct on Forest with no extra flag.
+- **Ghost:** `text-foreground`, with a `bg-accent` hover.
+- **Link:** `text-link`, underlined on hover.
+- **Destructive:** `bg-destructive` with `text-destructive-foreground`.
+- **On a photograph:** a photograph is not a field, so the outline and ghost variants take `onDark` there to get a light edge and white text. Do not use `onDark` on the Forest field.
+- **Hero size:** 52px tall, 28px side padding, 17px text. Use it for the main action in a hero or the donate band.
+- **Focus:** the `focus-ring` utility: a 2px ring, 3px offset, in `ring` (camp green on Cream, camp green deep on Sand, marigold on Forest).
+- **Arrows:** a trailing "→" after the label for actions that go somewhere ("Register →").
 
-### Chips / Labels
-- **Style:** a mark then a word. Archivo 14px, normal case, modest tracking, no container, no border, no fill, no radius. The mark is a 6-8px dot, a 16px check, or a mono number, in the field's accent (Campfire Amber on dark, Cedar on cream); the word is the field's text colour at 70-85%. Chips in a row sit 20px apart with no dividers.
-- **On media:** the same, set over a soft Pine Night gradient at the image edge rather than inside a glass capsule.
-- **Legacy pill chips** (bordered, 7px 12px, 999px) are retired; see The Pill Is a Button Rule.
-- **Stamp:** Campfire Amber fill, Pine Night text, 700 weight, 0.14em, rotated -7deg, pops in with a scale-down from 1.7.
+### Eyebrow + Headline (signature)
+An optional eyebrow (uppercase, `text-link`), 16px, then a headline in `text-foreground`. One phrase of the headline is an `<em>` with `heading-emphasis text-emphasis` ("Two camps, *one week*, same woods."): same font and weight as the headline, colour only, never Caveat and never italic. On a photo or a fixed dark ground, use `heading-emphasis text-highlight`. The field sets both colours. The headline never carries more than one accent phrase.
+
+### Handwritten note (signature)
+Caveat 600 at 24 to 28px, rotated 2 to 3 degrees, in `text-muted-foreground`, or white on photos. It can carry a hand-drawn arrow (2px stroke, round caps) that points at what it describes. Used for photo captions, quote signatures and margin asides ("watch a week at camp").
 
 ### Cards / Containers
-- **Light card:** Birch Bark, 1px Pine Night at 10% border, 22px radius, 34px 30px padding; on hover lifts with the cream rest shadow.
-- **Dark panel:** Forest Panel, 1px Birch Bark at 12% border, 26px radius, 46px 46px 40px padding; used for quotes and pricing on dark fields.
-- **Media card (tilting):** 26px radius, overflow hidden, 3D tilt up to a few degrees following the cursor, cursor-tracked warm radial glow, a sheen sweep, and metadata chips that rise from the bottom on hover. Image desaturated to .94 at rest, 1.12 on hover.
-- **Hairline-grid tile:** no radius, no border; 1px gaps over Birch Bark at 16% draw the grid. Hover tints the tile 5% cream. Program number badge fills amber on hover.
+- **Light card:** `bg-card` with `text-card-foreground`, 12px corners, 32px padding, with the card shadow or a 1.5px `border-border` outline.
+- **Fill cards:** `card-quiet`, `card-warm`, `card-cool`, `card-deep` or `card-bold`, 28px padding and no border. Inside, use the ordinary job tokens (`text-foreground`, `text-muted-foreground`, `text-link`); the card utility makes them right for its fill. In a row, the fills alternate so no two neighbours match.
+- **Photo tile:** 12px corners, the photo covers the tile, a dark gradient at the bottom carries a white note.
 
-### Inputs / Fields
-- **Style:** white fill, 1.5px Pine Night at 18% border, 14px radius, 15px 16px padding, Archivo 16px, Pine Night text.
-- **Focus:** border to Cedar plus a 3px Cedar at 25% outer ring.
-- **Submit:** full-width primary button, 18px padding, 17px text.
-- **Error:** validated on blur, one field at a time. Border to Ember Red, label stays, and a mono 11px Ember Red message appears 8px below in the site's voice ("We need an email to reply to", not "Invalid input"). The message is linked with `aria-describedby`; the field gets `aria-invalid`. Submit re-checks every field and moves focus to the first error. Success replaces the form with a Forest Panel thank-you and the phone number.
-- **Disabled:** 45% alpha, no hover.
+### Date badge
+A `bg-highlight` tile with `text-highlight-foreground` (or `bg-primary` with `text-primary-foreground`), 12px corners, a small uppercase month (eyebrow) and a large day range (Title Large), overlapping the bottom edge of a photo by 24px with the badge shadow.
 
-### Focus
-**The Field Ring Rule.** Every focusable element shows a 2px solid ring with 3px offset on `:focus-visible`: Campfire Amber on dark fields, Cedar on cream fields. Inputs use the Cedar border plus soft ring above instead. Never remove outlines without replacing them; never use the browser default blue.
+### Pricing tiers (signature)
+A `bg-card` panel with rows of: tier eyebrow and name, a 44px bar that shows what the family pays (`fill-bold`) and what donors cover (diagonal `fill-warm` stripes on `card`), then the price (Title Large, tabular numbers) and a button. The campership tier sits below a dashed ticket edge on a `fill-cool` tint. Prices and the donor share are always visible.
+
+### Flip card (signature)
+A card that turns over on click (0.8s, `--ease-flip`). The front is a fill card with a "worry" statement and a Caveat "turn it around" note with the turn icon. The back is a solid fill with the camp answer. When the row first scrolls into view, the cards peek open in sequence, unless the visitor prefers reduced motion.
+
+### Quote cards
+Fill cards with a large quote mark (Work Sans 800, 56px, `text-mark` on `fill-quiet`, otherwise the fill's foreground), the quote in the Quote role, and a Caveat signature over a Label role line. One featured quote per row is a larger light card with a round portrait.
+
+### Inputs / Fields (provisional; not in the prototype)
+`bg-card` fill, 1.5px `border-input` border, 8px corners, Work Sans 16px `text-card-foreground`. Focus: border and 2px ring in `ring`. Error: border and message in `destructive`, linked with `aria-describedby`.
 
 ### Navigation
-- **Style:** absolute over the hero, 26px 56px padding, wordmark in Bricolage 700 15px +0.04em with a mono 10px sub-line (place · founding year). Links in Archivo 500 15px, Birch Bark at 85%, hover to 100%. Trailing small primary Enroll pill.
-- **Ticker:** 34px Campfire Amber marquee above the nav, Archivo 600 13px, Pine Night, with a dot and an arrowed Enroll link; slides down on load.
-- **Mobile (below 1024px):** wordmark (sub-line hidden below 640px), small primary Enroll pill, then a 44px circle menu button with a two-line icon. Menu opens a full-screen Forest Floor sheet sliding down (.35s ease-reveal): links in Bricolage 700 at 32px, Birch Bark, 18px apart; Programs expands inline; at the bottom a mono label row with the phone number and a ghost Request Info pill. Enroll stays visible in the header while the sheet is open. Body scroll locks; Escape and the close circle dismiss.
-
-### Session Rows (signature)
-A horizontal calendar: 150px date column in mono, a 1fr track with a positioned bar (3px radius) per session, and a 138px CTA column. Open sessions carry a Moss bar that turns amber on hover while a hidden Enroll link slides in from the left (overshoot ease). Full sessions carry an Ember Red marker and an amber "FULL" stamp. Availability copy comes from the CMS.
-
-### CTA Banner (handoff)
-Two weights of one block. **Closing band:** an editor-selected field with the 44px tucked top corners, headline left on an 8/4 grid, actions right: one amber primary with a trailing arrow, one ghost. **Nudge:** a Light card on the cream field, title-sized heading, actions inline on desktop. Buttons stack full-width below 640px in both weights.
-
-### Eyebrow + Headline + Script (signature)
-Every section opens the same way: Archivo eyebrow (14px, 600 weight, amber or cedar), 20px, Bricolage 800 headline at 58px, with one phrase swapped into Caveat in the accent colour. This is the most recognisable pattern on the site; reuse it on every inner page.
-
-### Motion grammar
-- **Reveal:** `riseUp` (46px translate, fade) driven by `animation-timeline: view()` over entry 0-45%; hero uses `heroRise` (34px) with .9s `cubic-bezier(.2,.7,.2,1)` and staggered delays.
-- **Hover:** .2s ease for buttons; .35s `cubic-bezier(.34,1.56,.64,1)` (overshoot) for arrows, dots, and slide-ins; 1s `cubic-bezier(.2,.7,.2,1)` for image scale.
-- **Ambient:** marquee ticker (40s linear loop), slow globe spin, map trail dash, and map ping are the only looping animations; they are `transform`/`stroke-dashoffset` only and must pause under `prefers-reduced-motion`.
-- **Parallax:** hero media drifts ±6.5% on scroll.
+The logo at 42px tall on the left, six links in Work Sans 600 16px, then Donate (highlight) and Register (primary) buttons. Below 1080px the links move into a menu button; Register stays visible.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** open every section with the eyebrow, headline, script triad; it is the brand's signature.
-- **Do** keep Campfire Amber scarce: one button, one script phrase, one label per viewport (The One Fire Rule).
-- **Do** derive every border, hairline, and divider from the field's text colour at reduced alpha (The Translucent Ink Rule).
-- **Do** pick `ink-muted` or `ink-soft` for secondary text on cream, and keep every cream text at 5:1 or better.
-- **Do** set annotations at 14px or larger, in normal case with modest tracking and clear contrast (The Annotation Rule).
-- **Do** use pills for buttons only, marks-plus-words for labels, and 22-26px slabs for anything that frames media or content.
-- **Do** keep cards flat at rest and lift them only on hover or focus (The Flat-Until-Touched Rule).
-- **Do** choose white, cream, or green per section for clear separation, and end with a light section before the footer.
-- **Do** drive scroll reveals with `animation-timeline: view()` and provide a no-motion path under `prefers-reduced-motion`.
-- **Do** ship real camp and camper photography; the terrain is the design.
-- **Do** stack below 1024px and keep every section and interaction (The Stack, Don't Shrink Rule).
-- **Do** show a 2px ring, 3px offset, amber on dark and cedar on cream, on every `:focus-visible` (The Field Ring Rule).
-- **Do** validate form fields on blur with a plain-English mono message in Ember Red.
+- **Do** use job tokens (`bg-background`, `text-foreground`, `text-muted-foreground`, `text-link`, `text-emphasis`, `bg-primary`, `bg-highlight`, `card-warm`…) and the role utilities (`text-headline`, `text-lead`, `text-eyebrow`, `text-note`…).
+- **Do** set a section's background with its field, through `sectionThemeClass()`, and let the field tokens adapt the content.
+- **Do** put the matching `-foreground` text on every fill: ink on marigold, lake sky and sand, and white on camp green.
+- **Do** set every sentence in Merriweather and every interface word in Work Sans.
+- **Do** take spacing from the 4px scale, and section padding from the section system.
+- **Do** lead with big photographs of children at camp.
+- **Do** show cost, the donor share and the campership tier openly.
 
 ### Don't:
-- **Don't** introduce a second accent or a new grey; the palette is thirteen named colours, the two ink tiers derived from Pine Night, and their alphas.
-- **Don't** set cream text with an alpha (`text-pine-night/70` and friends); pick an ink tier instead.
-- **Don't** colour small text with Campfire Amber on cream (The Amber-Is-Not-Text Rule).
-- **Don't** use Caveat for more than one phrase per section or for any UI text.
-- **Don't** drop annotation, prices, dates, or chips below 14px or into uppercase wide tracking.
-- **Don't** place resting drop shadows on cards or tiles; only media frames and lifted states carry shadow.
-- **Don't** use solid grey borders, square corners on tappable elements, or radii between 3px and 14px except the 8px thumbnail.
-- **Don't** add looping animations beyond the ticker, globe, and map trail; no pulse, shimmer, or spinner loops.
-- **Don't** fall back to a centred-text-over-gradient hero; the hero is left-aligned type over media with the script aside.
-- **Don't** reintroduce the old site's logo or colours.
-- **Don't** hide the Enroll pill on any viewport or while the mobile menu is open.
-- **Don't** show form errors as a summary box or only on submit.
-
-Activity catalogue navigation uses solid Navigation Yellow (`oklch(84% 0.095 92)`, a muted straw yellow) with normal 16px text links and a 14px "Activity Categories" legend. It is a rounded slab at rest; while stuck under the header it squares its top corners and grows to the viewport edges. This is a specific navigation accent, not the main button colour.
+- **Don't** use brand colour names in component code. If a job is missing, add a job token in `globals.css`.
+- **Don't** use the deprecated CAC names (`pine-night`, `birch-bark`, `campfire-amber`, `cedar`, `forest-floor`, `forest-panel`, `moss`, `ink-muted`…) in new code. They are aliases that will be deleted.
+- **Don't** add "on dark" variants for the Forest field; the field tokens already handle it.
+- **Don't** use `text-emphasis`, `text-mark` or marigold for small text on light fields.
+- **Don't** add a second accent phrase to a headline or a second handwritten note to a small section.
+- **Don't** use pill-shaped buttons; buttons are 8px.
+- **Don't** set a status line or sentence in uppercase.
+- **Don't** make it look like a clinic: no clinical blues, no stock photos, no icon-card rows as the page structure.

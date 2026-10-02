@@ -24,7 +24,7 @@ const headingComponents: PortableTextComponents = {
   marks: {
     strong: ({ children }) => <strong>{children}</strong>,
     em: ({ children }) => (
-      <em className="font-accent text-campfire-amber not-italic">{children}</em>
+      <em className="heading-emphasis text-emphasis">{children}</em>
     ),
   },
 };

@@ -9,6 +9,10 @@ describe("cn", () => {
     expect(cn("text-label", "text-pine-night/60")).toBe(
       "text-label text-pine-night/60",
     );
+    expect(cn("text-lead", "text-muted-foreground")).toBe(
+      "text-lead text-muted-foreground",
+    );
+    expect(cn("text-note", "text-link")).toBe("text-note text-link");
   });
 
   it("still lets a later typography utility replace an earlier one", () => {

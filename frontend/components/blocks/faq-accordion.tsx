@@ -53,10 +53,7 @@ export default function FaqAccordion({
       strong: ({ children }) => <strong>{children}</strong>,
       em: ({ children }) => (
         <em
-          className={cn(
-            "font-accent not-italic",
-            cream ? "text-cedar" : "text-campfire-amber",
-          )}
+          className="heading-emphasis text-emphasis"
         >
           {children}
         </em>
