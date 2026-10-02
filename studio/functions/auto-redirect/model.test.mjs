@@ -309,7 +309,7 @@ test("blocks inactive-source conflicts, live routes, and redirect cycles", () =>
 test("rejects reserved, unsafe, unsupported, and first-publish events", () => {
   for (const event of [
     {
-      beforeSlug: "blog",
+      beforeSlug: "stories",
       documentId: "page-id",
       documentType: "page",
       slug: "new",
