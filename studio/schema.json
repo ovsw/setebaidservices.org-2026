@@ -5675,7 +5675,7 @@
         },
         {
           "type": "string",
-          "value": "destructive"
+          "value": "highlight"
         },
         {
           "type": "string",
@@ -5692,6 +5692,10 @@
         {
           "type": "string",
           "value": "link"
+        },
+        {
+          "type": "string",
+          "value": "destructive"
         }
       ]
     }

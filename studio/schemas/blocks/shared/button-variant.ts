@@ -1,12 +1,13 @@
 import { defineType } from "sanity";
 
 export const BUTTON_VARIANTS = [
-  { title: "Default", value: "default" },
-  { title: "Destructive", value: "destructive" },
+  { title: "Primary (green)", value: "default" },
+  { title: "Highlight (marigold, for giving)", value: "highlight" },
   { title: "Outline", value: "outline" },
-  { title: "Secondary", value: "secondary" },
+  { title: "Secondary (outline)", value: "secondary" },
   { title: "Ghost", value: "ghost" },
   { title: "Link", value: "link" },
+  { title: "Destructive", value: "destructive" },
 ];
 
 export const buttonVariant = defineType({

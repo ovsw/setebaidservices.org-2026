@@ -124,7 +124,7 @@ function TeamMemberProfile({
       {hasImage && member.image ? (
         <div
           className={cn(
-            "aspect-[4/5] w-full max-w-[26.25rem] overflow-hidden rounded-card bg-muted shadow-ambient-feature",
+            "aspect-[4/5] w-full max-w-[26.25rem] overflow-hidden rounded-card bg-muted shadow-card",
             reverse && "md:order-2 md:justify-self-end",
           )}
         >

@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 /*
  * Button roles — see DESIGN.md § Components → Buttons.
  *
- * Four variants (primary, outline, copper, ghost/link) and three sizes
- * (default, compact, hero). Buttons are flat at rest and lift on hover; the
- * teal action shadow is an opt-in emphasis flag, not a default.
+ * Roles: primary (camp green, the main action), highlight (marigold, giving),
+ * outline, ghost and link; three sizes (default, compact, hero). Buttons are
+ * flat at rest and lift on hover; the green action shadow is an opt-in
+ * emphasis flag, not a default.
  * Call sites should not override height, padding, or radius.
  */
 const buttonVariants = cva(
@@ -20,18 +21,25 @@ const buttonVariants = cva(
         /* `default` is the CMS's name for the primary role; both are kept so
            stored Sanity documents keep resolving. See BUTTON_VARIANTS. */
         default:
-          "bg-primary text-primary-foreground hover:bg-accent-hover hover:text-primary-foreground",
+          "bg-primary text-primary-foreground hover:bg-primary-hover hover:text-primary-foreground",
         primary:
-          "bg-primary text-primary-foreground hover:bg-accent-hover hover:text-primary-foreground",
-        /* `secondary` is the CMS's name for the outline role. */
+          "bg-primary text-primary-foreground hover:bg-primary-hover hover:text-primary-foreground",
+        /* Marigold with ink: Donate and other giving actions. */
+        highlight:
+          "bg-highlight text-highlight-foreground hover:bg-highlight-hover hover:text-highlight-foreground",
+        /* `copper` is a CAC name some stored documents may carry; it renders
+           as the highlight role. */
+        copper:
+          "bg-highlight text-highlight-foreground hover:bg-highlight-hover hover:text-highlight-foreground",
+        /* `secondary` is the CMS's name for the outline role. The border and
+           text follow the field, so the outline is right on Forest too. */
         secondary:
-          "border border-border-strong bg-transparent text-foreground hover:border-primary/30 hover:bg-card hover:text-foreground",
+          "border-[1.5px] border-border bg-transparent text-foreground hover:border-link/50 hover:bg-card hover:text-card-foreground",
         outline:
-          "border border-border-strong bg-transparent text-foreground hover:border-primary/30 hover:bg-card hover:text-foreground",
-        copper: "bg-copper-600 text-white hover:brightness-110",
-        ghost: "hover:bg-secondary hover:text-secondary-foreground hover:shadow-none",
-        link: "text-primary underline-offset-4 hover:underline hover:shadow-none hover:translate-y-0",
-        destructive: "bg-destructive text-primary-foreground hover:brightness-110",
+          "border-[1.5px] border-border bg-transparent text-foreground hover:border-link/50 hover:bg-card hover:text-card-foreground",
+        ghost: "text-foreground hover:bg-accent hover:text-accent-foreground hover:shadow-none",
+        link: "text-link underline-offset-4 hover:underline hover:shadow-none hover:translate-y-0",
+        destructive: "bg-destructive text-destructive-foreground hover:brightness-110",
       },
       size: {
         /* Rare. The one action in a section built around a monumental
@@ -46,19 +54,21 @@ const buttonVariants = cva(
           "typo-button h-(--control-height-compact) px-(--control-inline-compact) has-[>svg]:px-4",
         icon: "typo-button size-11",
       },
-      /* On dark or photographic surfaces the outline variant needs a light edge. */
+      /* On a photograph, which is not a field, the outline and ghost
+         variants need a light edge. On the Forest field they need nothing:
+         the field tokens already turn them light. */
       onDark: {
         true: "",
         false: "",
       },
       /* Rare. Reserved for the one primary action a page is built around. */
       emphasis: {
-        true: "shadow-teal-action hover:shadow-teal-action",
+        true: "shadow-cta hover:shadow-cta",
         false: "",
       },
       lift: {
         true:
-          "hover:shadow-interactive-lift hover:[--focus-ring-keep:var(--shadow-interactive-lift)]",
+          "hover:shadow-interactive-lift hover:[--focus-ring-keep:var(--shadow-lift)]",
         false: "hover:shadow-none",
       },
     },
@@ -67,7 +77,7 @@ const buttonVariants = cva(
         variant: ["outline", "secondary"],
         onDark: true,
         class:
-          "border-edge-on-dark-strong text-white hover:border-white/45 hover:bg-white/10 hover:text-white",
+          "border-white/25 text-white hover:border-white/45 hover:bg-white/10 hover:text-white",
       },
       {
         variant: "ghost",
@@ -75,10 +85,10 @@ const buttonVariants = cva(
         class: "text-white hover:bg-white/10 hover:text-white",
       },
       {
-        variant: "copper",
+        variant: ["highlight", "copper"],
         emphasis: true,
         class:
-          "shadow-[0_14px_40px_-12px_rgb(171_88_45_/_0.35)] hover:shadow-[0_14px_40px_-12px_rgb(171_88_45_/_0.35)]",
+          "shadow-highlight hover:shadow-highlight",
       },
     ],
     defaultVariants: {

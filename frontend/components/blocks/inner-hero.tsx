@@ -37,7 +37,7 @@ const headingComponents: PortableTextComponents = {
   marks: {
     strong: ({ children }) => <strong>{children}</strong>,
     em: ({ children }) => (
-      <em className="font-accent not-italic text-accent">{children}</em>
+      <em className="heading-emphasis text-highlight">{children}</em>
     ),
   },
 };
@@ -124,7 +124,7 @@ export default function InnerHero({
         <div className="lg:pb-12">
           {stegaClean(eyebrow)?.trim() ? (
             <p
-              className="text-eyebrow mb-5 animate-hero-rise text-accent motion-reduce:animate-none"
+              className="text-eyebrow mb-5 animate-hero-rise text-highlight motion-reduce:animate-none"
               data-sanity={dataAttribute?.("eyebrow")}
             >
               {eyebrow}

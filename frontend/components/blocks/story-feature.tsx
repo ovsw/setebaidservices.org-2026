@@ -78,7 +78,7 @@ function headingComponents(field: Field): PortableTextComponents {
     marks: {
       strong: ({ children }) => <strong>{children}</strong>,
       em: ({ children }) => (
-        <em className={cn("font-accent not-italic", field.accent)}>{children}</em>
+        <em className="heading-emphasis text-emphasis">{children}</em>
       ),
     },
   };

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Archivo, Caveat } from "next/font/google";
+import { Work_Sans, Merriweather, Caveat } from "next/font/google";
 import { siteUrl } from "@/lib/site-url";
 import { siteName } from "@/lib/site-name";
 import { Toaster } from "@/components/ui/sonner";
@@ -9,28 +9,31 @@ import "./globals.css";
 const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 
 /**
- * Display font — headlines, hero, section openers.
- * Variable font with optical-size axis for sharper rendering at large sizes.
+ * Headline and interface font — headings, buttons, navigation, labels.
+ * See DESIGN.md § Typography.
  */
-const bricolage = Bricolage_Grotesque({
+const workSans = Work_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-bricolage",
+  variable: "--font-work-sans",
+});
+
+/**
+ * Sentence font — every paragraph. The optical-size axis keeps 15–20px text
+ * sturdy.
+ */
+const merriweather = Merriweather({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-merriweather",
   axes: ["opsz"],
 });
 
-/** Body font — paragraphs, buttons, navigation links. */
-const archivo = Archivo({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-archivo",
-});
-
-/** Script/accent font — the handwritten aside in headlines. */
+/** Handwritten notes — captions, signatures, margin asides. */
 const caveat = Caveat({
   subsets: ["latin"],
   display: "swap",
-  weight: ["500", "600"],
+  weight: ["600"],
   variable: "--font-caveat",
 });
 
@@ -62,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${archivo.variable} ${caveat.variable}`}
+      className={`${workSans.variable} ${merriweather.variable} ${caveat.variable}`}
     >
       <link rel="icon" href="/favicon.ico" />
       <body>

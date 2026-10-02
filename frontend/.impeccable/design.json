@@ -1,0 +1,724 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-02T04:30:08+00:00",
+  "title": "Design System: Setebaid Services",
+  "extensions": {
+    "colorMeta": {
+      "cream": {
+        "role": "neutral",
+        "displayName": "Cream",
+        "canonical": "#FBF7EC",
+        "tonalRamp": [
+          "#0C0B09",
+          "#262523",
+          "#43423F",
+          "#62615D",
+          "#84827D",
+          "#A7A59E",
+          "#CCC9C0",
+          "#F2EEE4"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "sand": {
+        "role": "neutral",
+        "displayName": "Sand",
+        "canonical": "#F1E7CE",
+        "tonalRamp": [
+          "#0D0B07",
+          "#272520",
+          "#44423B",
+          "#656157",
+          "#878274",
+          "#ACA593",
+          "#D1C9B3",
+          "#F8EED5"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#1C3B2C",
+        "tonalRamp": [
+          "#001006",
+          "#0F2B1E",
+          "#2C493B",
+          "#4F685B",
+          "#73887C",
+          "#99AAA0",
+          "#C0CDC5",
+          "#E8F1EC"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "canonical": "#3E5A4B",
+        "tonalRamp": [
+          "#020F07",
+          "#162A20",
+          "#2F493B",
+          "#4E685A",
+          "#71897C",
+          "#97AB9F",
+          "#BECEC4",
+          "#E6F2EB"
+        ]
+      },
+      "mist": {
+        "role": "neutral",
+        "displayName": "Mist",
+        "canonical": "#CFD9D0",
+        "tonalRamp": [
+          "#0A0C0A",
+          "#242624",
+          "#404340",
+          "#5E635E",
+          "#7E847F",
+          "#A0A7A0",
+          "#C3CCC4",
+          "#E8F1E9"
+        ]
+      },
+      "camp-green": {
+        "role": "primary",
+        "displayName": "Camp Green",
+        "canonical": "#1A7F52",
+        "tonalRamp": [
+          "#001203",
+          "#003016",
+          "#00502E",
+          "#117349",
+          "#44956B",
+          "#74B690",
+          "#A2D8B8",
+          "#D0FBE1"
+        ]
+      },
+      "camp-green-deep": {
+        "role": "primary",
+        "displayName": "Camp Green Deep",
+        "canonical": "#14653F",
+        "tonalRamp": [
+          "#001202",
+          "#002F15",
+          "#00502E",
+          "#2A714C",
+          "#589170",
+          "#83B295",
+          "#AED4BC",
+          "#DAF7E4"
+        ]
+      },
+      "logo-green": {
+        "role": "primary",
+        "displayName": "Logo Green",
+        "canonical": "#1A8B5A",
+        "tonalRamp": [
+          "#001203",
+          "#003016",
+          "#00512E",
+          "#067449",
+          "#369768",
+          "#6BB88E",
+          "#9BDAB5",
+          "#CAFDDE"
+        ]
+      },
+      "marigold": {
+        "role": "secondary",
+        "displayName": "Marigold",
+        "canonical": "#F2B93D",
+        "tonalRamp": [
+          "#130900",
+          "#312204",
+          "#543E0C",
+          "#7A5C18",
+          "#A37B25",
+          "#CD9C32",
+          "#F7BF49",
+          "#FFE789"
+        ]
+      },
+      "marigold-deep": {
+        "role": "secondary",
+        "displayName": "Marigold Deep",
+        "canonical": "#E0A529",
+        "tonalRamp": [
+          "#130900",
+          "#342100",
+          "#583C00",
+          "#7E5A07",
+          "#A77916",
+          "#D29A24",
+          "#F6BF5B",
+          "#FFE795"
+        ]
+      },
+      "marigold-ink": {
+        "role": "secondary",
+        "displayName": "Marigold Ink",
+        "canonical": "#86580A",
+        "tonalRamp": [
+          "#190500",
+          "#3A1D00",
+          "#5E3900",
+          "#845608",
+          "#A37942",
+          "#C29E70",
+          "#E2C49E",
+          "#FFEACD"
+        ]
+      },
+      "lake-sky": {
+        "role": "tertiary",
+        "displayName": "Lake Sky",
+        "canonical": "#7CBBDD",
+        "tonalRamp": [
+          "#030D13",
+          "#142832",
+          "#294656",
+          "#40677B",
+          "#5989A4",
+          "#73AECE",
+          "#99D2F2",
+          "#C5F7FF"
+        ]
+      },
+      "lake-ink": {
+        "role": "tertiary",
+        "displayName": "Lake Ink",
+        "canonical": "#2C6587",
+        "tonalRamp": [
+          "#000D1D",
+          "#00283E",
+          "#154763",
+          "#2F6789",
+          "#5A89A7",
+          "#83ABC5",
+          "#AECEE4",
+          "#D9F3FF"
+        ]
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Error",
+        "canonical": "#A93A23",
+        "tonalRamp": [
+          "#250000",
+          "#4D0200",
+          "#771D09",
+          "#A43721",
+          "#C4614C",
+          "#E28A77",
+          "#FEB4A3",
+          "#FFDED0"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "rgb(28 59 44 / 0.14)"
+      },
+      "line-on-dark": {
+        "role": "neutral",
+        "displayName": "Line on Dark",
+        "canonical": "rgb(251 247 236 / 0.15)"
+      }
+    },
+    "jobTokens": [
+      {
+        "name": "--color-background",
+        "purpose": "Field: the section ground.",
+        "cream": "cream",
+        "sand": "sand",
+        "forest": "ink"
+      },
+      {
+        "name": "--color-foreground",
+        "purpose": "Field: headings and primary text.",
+        "cream": "ink",
+        "sand": "ink",
+        "forest": "cream"
+      },
+      {
+        "name": "--color-muted",
+        "purpose": "Field: quiet fill for placeholders and table stripes.",
+        "cream": "sand",
+        "sand": "cream",
+        "forest": "cream 8% over ink"
+      },
+      {
+        "name": "--color-muted-foreground",
+        "purpose": "Field: body and secondary text.",
+        "cream": "ink-soft",
+        "sand": "ink-soft",
+        "forest": "mist"
+      },
+      {
+        "name": "--color-card",
+        "purpose": "Field: cards and panels on the field.",
+        "cream": "white",
+        "sand": "white",
+        "forest": "cream 7% over ink"
+      },
+      {
+        "name": "--color-card-foreground",
+        "purpose": "Field: text on cards.",
+        "cream": "ink",
+        "sand": "ink",
+        "forest": "cream"
+      },
+      {
+        "name": "--color-popover",
+        "purpose": "Field: menus and popovers.",
+        "cream": "white",
+        "sand": "white",
+        "forest": "white"
+      },
+      {
+        "name": "--color-popover-foreground",
+        "purpose": "Field: text in menus and popovers.",
+        "cream": "ink",
+        "sand": "ink",
+        "forest": "ink"
+      },
+      {
+        "name": "--color-border",
+        "purpose": "Field: hairlines, outlines and dividers.",
+        "cream": "line",
+        "sand": "line",
+        "forest": "line-on-dark"
+      },
+      {
+        "name": "--color-input",
+        "purpose": "Field: form field borders.",
+        "cream": "line",
+        "sand": "line",
+        "forest": "line-on-dark"
+      },
+      {
+        "name": "--color-ring",
+        "purpose": "Field: focus rings.",
+        "cream": "camp-green",
+        "sand": "camp-green-deep",
+        "forest": "marigold"
+      },
+      {
+        "name": "--color-link",
+        "purpose": "Field: links, eyebrows and small accent text.",
+        "cream": "camp-green",
+        "sand": "camp-green-deep",
+        "forest": "marigold"
+      },
+      {
+        "name": "--color-emphasis",
+        "purpose": "Field: the accent phrase in a headline; heading sizes only.",
+        "cream": "logo-green",
+        "sand": "camp-green-deep",
+        "forest": "marigold"
+      },
+      {
+        "name": "--color-accent",
+        "purpose": "Field: shadcn quiet hover or selected background; not marigold.",
+        "cream": "sand",
+        "sand": "cream",
+        "forest": "cream 10% over ink"
+      },
+      {
+        "name": "--color-accent-foreground",
+        "purpose": "Field: text on the accent background.",
+        "cream": "ink",
+        "sand": "ink",
+        "forest": "cream"
+      },
+      {
+        "name": "--color-secondary",
+        "purpose": "Field: shadcn subtle fill.",
+        "cream": "sand",
+        "sand": "cream",
+        "forest": "cream 10% over ink"
+      },
+      {
+        "name": "--color-secondary-foreground",
+        "purpose": "Field: text on the secondary fill.",
+        "cream": "ink",
+        "sand": "ink",
+        "forest": "cream"
+      },
+      {
+        "name": "--color-primary",
+        "purpose": "Action: the main action, such as Register.",
+        "value": "camp-green"
+      },
+      {
+        "name": "--color-primary-foreground",
+        "purpose": "Action: text on primary.",
+        "value": "white"
+      },
+      {
+        "name": "--color-primary-hover",
+        "purpose": "Action: primary on hover.",
+        "value": "camp-green-deep"
+      },
+      {
+        "name": "--color-highlight",
+        "purpose": "Action: giving actions, badges and text selection.",
+        "value": "marigold"
+      },
+      {
+        "name": "--color-highlight-foreground",
+        "purpose": "Action: text on highlight.",
+        "value": "ink"
+      },
+      {
+        "name": "--color-highlight-hover",
+        "purpose": "Action: highlight on hover.",
+        "value": "marigold-deep"
+      },
+      {
+        "name": "--color-destructive",
+        "purpose": "Action: errors and destructive actions.",
+        "value": "error"
+      },
+      {
+        "name": "--color-destructive-foreground",
+        "purpose": "Action: text on destructive.",
+        "value": "white"
+      },
+      {
+        "name": "--color-mark",
+        "purpose": "Action: brand marks, photo rings and thick rules.",
+        "value": "logo-green"
+      },
+      {
+        "name": "--color-fill-quiet",
+        "purpose": "Card fill: quiet. Use the card-quiet utility for a card; it also re-points the text tokens inside.",
+        "value": "sand"
+      },
+      {
+        "name": "--color-fill-quiet-foreground",
+        "purpose": "Card fill: text on fill-quiet.",
+        "value": "ink"
+      },
+      {
+        "name": "--color-fill-warm",
+        "purpose": "Card fill: warm. Use the card-warm utility for a card; it also re-points the text tokens inside.",
+        "value": "marigold"
+      },
+      {
+        "name": "--color-fill-warm-foreground",
+        "purpose": "Card fill: text on fill-warm.",
+        "value": "ink"
+      },
+      {
+        "name": "--color-fill-cool",
+        "purpose": "Card fill: cool. Use the card-cool utility for a card; it also re-points the text tokens inside.",
+        "value": "lake-sky"
+      },
+      {
+        "name": "--color-fill-cool-foreground",
+        "purpose": "Card fill: text on fill-cool.",
+        "value": "ink"
+      },
+      {
+        "name": "--color-fill-deep",
+        "purpose": "Card fill: deep. Use the card-deep utility for a card; it also re-points the text tokens inside.",
+        "value": "ink"
+      },
+      {
+        "name": "--color-fill-deep-foreground",
+        "purpose": "Card fill: text on fill-deep.",
+        "value": "cream"
+      },
+      {
+        "name": "--color-fill-bold",
+        "purpose": "Card fill: bold. Use the card-bold utility for a card; it also re-points the text tokens inside.",
+        "value": "camp-green"
+      },
+      {
+        "name": "--color-fill-bold-foreground",
+        "purpose": "Card fill: text on fill-bold.",
+        "value": "white"
+      },
+      {
+        "name": "--color-warm-text",
+        "purpose": "Small warm text on a light background.",
+        "value": "marigold-ink"
+      },
+      {
+        "name": "--color-cool-text",
+        "purpose": "Small cool text on a light background.",
+        "value": "lake-ink"
+      }
+    ],
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The hero headline and the name-story words."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section openers; one phrase may take the accent colour."
+      },
+      "title-lg": {
+        "displayName": "Title Lg",
+        "purpose": "Camp names, the featured news title, prices."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card, event and news titles."
+      },
+      "statement": {
+        "displayName": "Statement",
+        "purpose": "Short claims inside a card (flip cards)."
+      },
+      "quote": {
+        "displayName": "Quote",
+        "purpose": "Testimonial text."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "The paragraph under a hero or section headline."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, at most about 65ch."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Card blurbs and notes under a table."
+      },
+      "eyebrow": {
+        "displayName": "Eyebrow",
+        "purpose": "One to three uppercase words above a heading or atop a card."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Dates, places, roles and chips, in sentence case."
+      },
+      "note": {
+        "displayName": "Note",
+        "purpose": "Caveat captions, signatures and margin notes."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 1px 2px rgb(20 40 30 / 0.06), 0 14px 30px -18px rgb(20 40 30 / 0.35)",
+        "purpose": "Cards and photo tiles that sit above a field."
+      },
+      {
+        "name": "badge",
+        "value": "0 8px 24px rgb(28 42 34 / 0.18)",
+        "purpose": "The date badge that overlaps a photo."
+      },
+      {
+        "name": "lift",
+        "value": "0 14px 28px -14px rgb(20 40 30 / 0.45)",
+        "purpose": "A button on hover."
+      },
+      {
+        "name": "cta",
+        "value": "0 14px 36px -12px rgb(26 127 82 / 0.45)",
+        "purpose": "The one emphasised primary action on a page."
+      },
+      {
+        "name": "highlight",
+        "value": "0 14px 36px -12px color-mix(in oklab, var(--brand-marigold) 50%, transparent)",
+        "purpose": "Emphasis for a highlight (giving) button."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "ease",
+        "purpose": "Button and link state changes, 200ms."
+      },
+      {
+        "name": "ease-flip",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "The flip card turn, 0.8s."
+      },
+      {
+        "name": "ease-reveal",
+        "value": "cubic-bezier(0.2, 0.7, 0.2, 1)",
+        "purpose": "Entrances that rise into place."
+      },
+      {
+        "name": "ease-overshoot",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "purpose": "Small playful pops: the badge, the play button."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "640px"
+      },
+      {
+        "name": "tablet",
+        "value": "768px"
+      },
+      {
+        "name": "pricing",
+        "value": "900px"
+      },
+      {
+        "name": "hero",
+        "value": "960px"
+      },
+      {
+        "name": "desktop",
+        "value": "1024px"
+      },
+      {
+        "name": "nav",
+        "value": "1080px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main action: Register and section CTAs.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Register on CampBrain →</a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:8px;border:0;font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;transition:background-color .2s ease,transform .2s ease,box-shadow .2s ease;background:var(--color-primary,#1A7F52);color:var(--color-primary-foreground,#FFFFFF)} .ds-btn-primary:hover{background:var(--color-primary-hover,#14653F);transform:translateY(-2px);box-shadow:0 14px 28px -14px rgb(20 40 30 / .45)} .ds-btn-primary:focus-visible{outline:2px solid var(--color-ring,#1A7F52);outline-offset:3px;}"
+    },
+    {
+      "name": "Highlight Button",
+      "kind": "button",
+      "refersTo": "button-highlight",
+      "description": "Giving actions: Donate, Give to the Campership Fund.",
+      "html": "<a class=\"ds-btn-highlight\" href=\"#\">Donate</a>",
+      "css": ".ds-btn-highlight{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:8px;border:0;font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;transition:background-color .2s ease,transform .2s ease,box-shadow .2s ease;background:var(--color-highlight,#F2B93D);color:var(--color-highlight-foreground,#1C3B2C)} .ds-btn-highlight:hover{background:var(--color-highlight-hover,#E0A529);transform:translateY(-2px)} .ds-btn-highlight:focus-visible{outline:2px solid var(--color-ring,#1A7F52);outline-offset:3px;}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "The second action beside a primary one.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">About HDYC</a>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:8px;border:0;font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;transition:background-color .2s ease,transform .2s ease,box-shadow .2s ease;background:transparent;color:var(--color-foreground,#1C3B2C);box-shadow:inset 0 0 0 1.5px var(--color-border,rgb(28 59 44 / .14))} .ds-btn-outline:hover{background:var(--color-card,#FFFFFF);color:var(--color-card-foreground,#1C3B2C);box-shadow:inset 0 0 0 1.5px color-mix(in oklab, var(--color-link,#1A7F52) 50%, transparent)} .ds-btn-outline:focus-visible{outline:2px solid var(--color-ring,#1A7F52);outline-offset:3px;}"
+    },
+    {
+      "name": "Section Opener",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "Eyebrow, headline with one accent phrase, and a lead.",
+      "html": "<div class=\"ds-opener\"><div class=\"ds-eyebrow\">2027 rates</div><h2 class=\"ds-headline\">Pay what your family can. Every child gets <span>the same camp.</span></h2><p class=\"ds-lead\">Tier I is what a week of camp really costs. Donors cover the difference for every other tier.</p></div>",
+      "css": ".ds-opener{display:flex;flex-direction:column;gap:16px;max-width:620px;color:var(--color-foreground,#1C3B2C)} .ds-eyebrow{font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--color-link,#1A7F52)} .ds-headline{margin:0;font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);font-weight:800;font-size:clamp(2.25rem,1.5rem + 2.2vw,3.125rem);line-height:1.04;letter-spacing:-.02em;text-wrap:balance} .ds-headline span{color:var(--color-emphasis,#1A8B5A)} .ds-lead{margin:8px 0 0;font-family:var(--font-body, Merriweather, Georgia, serif);font-size:clamp(1.125rem,1rem + .4vw,1.25rem);line-height:1.6;color:var(--color-muted-foreground,#3E5A4B)}"
+    },
+    {
+      "name": "Quote Card",
+      "kind": "card",
+      "refersTo": "card-tint",
+      "description": "A fill card with a quote and a handwritten signature.",
+      "html": "<figure class=\"ds-quote\"><div class=\"ds-quote-mark\" aria-hidden=\"true\">“</div><blockquote>It was the first place nobody asked me what the beeping was.</blockquote><figcaption><span class=\"ds-sig\">Theo W.</span><span class=\"ds-role\">Camper, age 12</span></figcaption></figure>",
+      "css": ".ds-quote{margin:0;max-width:300px;background:var(--color-fill-quiet,#F1E7CE);color:var(--color-fill-quiet-foreground,#1C3B2C);border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:16px} .ds-quote-mark{font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);font-weight:800;font-size:56px;line-height:.6;height:22px;overflow:hidden;color:var(--color-mark,#1A8B5A)} .ds-quote blockquote{margin:0;font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);font-weight:700;font-size:18px;line-height:1.4} .ds-quote figcaption{display:flex;flex-direction:column;gap:4px} .ds-sig{font-family:var(--font-accent, Caveat, cursive);font-weight:600;font-size:24px;line-height:1;transform:rotate(-2deg);transform-origin:left center} .ds-role{font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);font-size:14px;font-weight:600}"
+    },
+    {
+      "name": "Event Card",
+      "kind": "card",
+      "refersTo": "card-tint",
+      "description": "A cool fill card anchored by a large date.",
+      "html": "<a class=\"ds-event\" href=\"#\"><div class=\"ds-event-date\">Apr 24</div><div class=\"ds-event-meta\">Saturday · Harrisburg, PA</div><div class=\"ds-event-title\">Setebaid Walk</div><p>Walk, sponsor a camper, or bring a team.</p><span class=\"ds-event-link\">Event details →</span></a>",
+      "css": ".ds-event{display:flex;flex-direction:column;gap:16px;max-width:360px;padding:28px;border-radius:12px;background:var(--color-fill-cool,#7CBBDD);color:var(--color-fill-cool-foreground,#1C3B2C);text-decoration:none;font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif)} .ds-event-date{font-weight:800;font-size:40px;line-height:1;letter-spacing:-.02em} .ds-event-meta{font-size:14px;font-weight:600;opacity:.85} .ds-event-title{font-weight:800;font-size:22px;line-height:1.2;margin-top:8px} .ds-event p{margin:0;font-family:var(--font-body, Merriweather, Georgia, serif);font-size:15px;line-height:1.6} .ds-event-link{font-size:15px;font-weight:600;text-decoration:underline;text-underline-offset:.22em} .ds-event:hover .ds-event-link{text-decoration-thickness:2px} .ds-event:focus-visible{outline:2px solid var(--color-ring,#1A7F52);outline-offset:3px;}"
+    },
+    {
+      "name": "Date Badge",
+      "kind": "chip",
+      "refersTo": "date-badge",
+      "description": "Month and day range overlapping a camp photo.",
+      "html": "<div class=\"ds-badge\"><span class=\"ds-badge-m\">JUL</span><span class=\"ds-badge-d\">11–17</span></div>",
+      "css": ".ds-badge{display:inline-flex;align-items:baseline;gap:8px;padding:12px 16px;border-radius:12px;background:var(--color-highlight,#F2B93D);color:var(--color-highlight-foreground,#1C3B2C);box-shadow:0 8px 24px rgb(28 42 34 / .18);font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);line-height:1} .ds-badge-m{font-size:14px;font-weight:600;letter-spacing:.08em} .ds-badge-d{font-size:32px;font-weight:800;letter-spacing:-.02em}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Sunlit Camp",
+    "overview": "The site feels like a bright afternoon at camp: a warm cream ground, deep camp green, and one marigold sun, with lake sky as the cool shade and a counselor's handwritten note in the margin. It is warm and plain-spoken, and the photographs of children at camp carry it. Sections are full-width fields of cream, sand or dark forest green with soft glows in the corners and a fine grain; cards are flat and lightly outlined.",
+    "keyCharacteristics": [
+      "Cream ground, camp green for action, marigold for warmth and giving, lake sky as the cool second colour.",
+      "Work Sans 800 headlines, Merriweather sentences, Caveat notes.",
+      "One accent phrase per headline, in the emphasis colour of the field.",
+      "8px buttons, 12px cards, circles for portraits and the photo ring.",
+      "Glow and grain on the fields; flat cards with hairlines."
+    ],
+    "rules": [
+      {
+        "name": "The Job Token Rule",
+        "body": "Component code uses only job tokens (bg-primary, text-link, card-warm…). Brand colours exist only in globals.css and Tailwind generates no classes for them; a rebrand changes one file.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink-on-Colour Rule",
+        "body": "Marigold, lake sky and sand always carry ink text (highlight-foreground and the card-* utilities); only camp green, camp green deep, error and ink (the Forest field and fill-deep) carry light text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Big Green Rule",
+        "body": "Logo green (mark, and emphasis on Cream) is for marks, rings, rules and heading-size words; small green text uses text-link, which is camp green on Cream and camp green deep on Sand.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sun Rule",
+        "body": "One or two highlight or fill-warm (marigold) elements per screen.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sentence Rule",
+        "body": "Every sentence is Merriweather; every heading, label, button and link is Work Sans.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Hand Rule",
+        "body": "Caveat appears once or twice per section as a short note, never as a heading or interface text.",
+        "section": "typography"
+      },
+      {
+        "name": "The Short Caps Rule",
+        "body": "Uppercase is for eyebrows of one to three words only.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-at-Rest Rule",
+        "body": "Cards are flat; a shadow appears only under an overlapping element or on hover.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use job tokens (bg-background, text-foreground, text-link, text-emphasis, bg-primary, bg-highlight, card-warm…) and the role utilities.",
+      "Do set a section's background with its field and let the field tokens adapt the content.",
+      "Do put the matching -foreground text on every fill: ink on marigold, lake sky and sand, and white on camp green.",
+      "Do take spacing from the 4px scale.",
+      "Do lead with big photographs of children at camp.",
+      "Do show cost, the donor share and the campership tier openly."
+    ],
+    "donts": [
+      "Don't use brand colour names in component code; if a job is missing, add a job token in globals.css.",
+      "Don't use the deprecated CAC names in new code.",
+      "Don't add \"on dark\" variants for the Forest field; the field tokens already handle it.",
+      "Don't use text-emphasis, text-mark or marigold for small text on light fields.",
+      "Don't add a second accent phrase to a headline.",
+      "Don't use pill-shaped buttons.",
+      "Don't set a status line or sentence in uppercase.",
+      "Don't make it look like a clinic."
+    ]
+  }
+}

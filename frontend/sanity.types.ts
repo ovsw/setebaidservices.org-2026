@@ -921,7 +921,13 @@ export type CustomUrl = {
 };
 
 export type ButtonVariant =
-  "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+  | "default"
+  | "highlight"
+  | "outline"
+  | "secondary"
+  | "ghost"
+  | "link"
+  | "destructive";
 
 export type SectionBackground = "white" | "cream" | "green";
 

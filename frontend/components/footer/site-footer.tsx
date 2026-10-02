@@ -99,7 +99,7 @@ export function SiteFooter({
               <span data-sanity={dataAttribute?.("heading")}>{model.heading}</span>
               <br />
               <span
-                className="font-accent text-[1.15em] font-semibold text-campfire-amber"
+                className="heading-emphasis text-highlight"
                 data-sanity={dataAttribute?.("accent")}
               >
                 {model.accent}
