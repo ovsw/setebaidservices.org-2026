@@ -143,6 +143,66 @@ Every plan and every draft uses these exact words. Do not invent variants.
   information: no ad tracking on form pages or /go pages, and no form
   answers sent to analytics.
 
+## Sections (Ovi, 2026-10-02)
+
+Read this part before you choose sections for a page. Where it differs
+from the section catalogue in the shared page skills, this part wins.
+
+The section library comes from the copied CAC code base. Its sections
+already use the Setebaid design system, and the MVP reuses them. The
+design source is the home page prototype,
+`frontend/prototype/Home-Page-Prototype.html`. Each of its sections has a
+`data-screen-label`. Only the home page has a prototype; inner pages use
+the reused sections.
+
+**Use freely:** `innerHero`, `storyFeature`, `featureCards`,
+`benefitCards`, `stackedFeatureRows`, `stackedTimeline`,
+`imageCollageFeature`, `headingImage`, `largeSlides`, `bigImageList`,
+`quoteWall`, `teamMembers`, `faqAccordion`, `ctaBanner`, `directorCta`.
+
+**Use only for their named job:** `faqHub` on /parents/faqs.
+`packingChecklist` for the packing list on /parents/before-camp.
+`richTextBlock` for the legal and policy pages (/privacy-policy,
+/terms-of-use, /cookie-policy, /accessibility, /refund-policy); on other
+pages, choose a designed section.
+
+**Do not use:**
+
+- `pricingSingleToggle`: the CAC price panel. The new Pricing section
+  replaces it.
+- `includedExtras`: made for one fee with priced extras. Setebaid prices
+  are tiers.
+- `internationalCampersSection` and `journey`: CAC topics (international
+  campers, the bus trip). For ordered steps, use `stackedTimeline`.
+- `latestArticles`: a starter section, and the MVP has no news.
+
+**New: Pricing** (prototype "Pricing"). Tier cards (tier name, label,
+short description, price, "Register" button) and the honor-system note.
+It is being built. Look for it in `studio/schemas/blocks/page-builder.ts`.
+Until it is there, put the price content in a `richTextBlock` and write
+"Move to the Pricing section" in the Draft notes. Prices are content in
+Sanity only, never in code: this repository is public.
+
+**Prototype section → section to use** when a page needs the same job:
+
+- Hero → `homeHero` on the home page, `innerHero` on all other pages.
+- Camps → `featureCards`.
+- Why Setebaid → `benefitCards`.
+- Voices → `quoteWall` (it shows Testimonial documents).
+- Staff → `imageCollageFeature`.
+- Donate → `ctaBanner` (no photo; the photo band is a proposal).
+- Events → `stackedTimeline`, with the date as the item's meta.
+- Name story, Turn it around, Photo strip: no match yet. They are home
+  page sections. On other pages, use the closest section above and record
+  a proposal.
+- News: not in the MVP.
+
+**Photos.** The camp photos are still being processed. If no fitting photo
+is in Sanity, keep the section, leave the photo empty, and write the photo
+the slot needs in the Draft notes (for example "counselor helping a camper
+check blood sugar"). An empty required photo field is an expected gap: do
+not fill it with a photo that does not fit. A later photo pass fills it.
+
 ## Sanity
 
 Project `o36mi5w4`, dataset `production` (see `docs/agents/sanity-cli.md`).
