@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
+import { urlFor } from "@/sanity/lib/image";
 import type { HOME_PAGE_QUERY_RESULT, PAGE_QUERY_RESULT } from "@/sanity.types";
 import { stegaClean } from "next-sanity";
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import {
@@ -23,7 +25,8 @@ type StackedTimelineProps = Extract<PageBlock, { _type: "stackedTimeline" }> & {
 /*
  * Timeline, date cards layout (prototype "Events"): up to three coloured
  * cards that lead with the item's small label set large, usually a date.
- * Fills rotate camp green, marigold and lake. The first section button shows
+ * A card with a photo shows it across its top, flush with the card's top
+ * and side edges. Fills rotate camp green, marigold and lake. The first section button shows
  * as a text link beside the heading. A faint open brand ring and a marigold
  * dot sit behind the cards.
  */
@@ -112,26 +115,45 @@ export default function StackedTimelineDateCards({
         >
           {cards.map((card, index) => {
             const cardLink = resolveButton(card.link);
+            const itemPath = `items[_key=="${card._key}"]`;
             return (
               <li className="flex" key={card._key}>
                 <CardShell
                   className={cn(
-                    "flex w-full flex-col gap-4 rounded-card p-7 font-ui no-underline",
+                    "flex w-full flex-col overflow-hidden rounded-card font-ui no-underline",
                     FILLS[index % FILLS.length],
                   )}
-                  dataSanity={dataAttribute?.(`items[_key=="${card._key}"]`)}
+                  dataSanity={dataAttribute?.(itemPath)}
                   link={cardLink}
                 >
-                  {hasText(card.meta) ? <span className="text-figure">{card.meta}</span> : null}
-                  <span className="mt-2 text-title">{card.title}</span>
-                  {hasText(card.text) ? (
-                    <span className="text-small">{card.text}</span>
-                  ) : null}
-                  {cardLink ? (
-                    <span className="mt-auto pt-3 typo-button underline underline-offset-[0.22em]">
-                      {cardLink.label}&nbsp;→
+                  {card.image?.asset?._id ? (
+                    <span
+                      className="relative block aspect-[16/10] w-full"
+                      data-sanity={dataAttribute?.(`${itemPath}.image`)}
+                    >
+                      <Image
+                        alt={stegaClean(card.image.alt)?.trim() ?? ""}
+                        blurDataURL={card.image.asset.metadata?.lqip || undefined}
+                        className="object-cover"
+                        fill
+                        placeholder={card.image.asset.metadata?.lqip ? "blur" : undefined}
+                        sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                        src={urlFor(card.image).width(800).height(500).url()}
+                      />
                     </span>
                   ) : null}
+                  <span className="flex flex-1 flex-col gap-4 p-7">
+                    {hasText(card.meta) ? <span className="text-figure">{card.meta}</span> : null}
+                    <span className="mt-2 text-title">{card.title}</span>
+                    {hasText(card.text) ? (
+                      <span className="text-small">{card.text}</span>
+                    ) : null}
+                    {cardLink ? (
+                      <span className="mt-auto pt-3 typo-button underline underline-offset-[0.22em]">
+                        {cardLink.label}&nbsp;→
+                      </span>
+                    ) : null}
+                  </span>
                 </CardShell>
               </li>
             );

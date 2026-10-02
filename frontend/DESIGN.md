@@ -160,11 +160,11 @@ components:
 
 **Creative North Star: "Sunlit Camp"**
 
-The site feels like a bright afternoon at camp: a warm cream ground, deep camp green, and one marigold sun. Lake sky shows up as the cool shade, and a counselor's handwritten note sits in the margin. It is warm and plain-spoken, and the photographs of children at camp carry it. Parents read calm, sturdy type. Kids see the energy in the photos, the tilted frames and the scribbled arrows.
+The site feels like a bright afternoon at camp: a warm cream ground, deep camp green, and one marigold sun. Lake sky shows up as the cool shade, and a counselor's handwritten note sits in the margin. It is warm and plain-spoken, and the photographs of children at camp carry it. Parents read calm, sturdy type. Kids see the energy in the photos, the handwritten notes and the scribbled arrows.
 
 The system grew from the Claude Design prototype (`frontend/prototype/Home-Page-Prototype.html`). It takes the colours of direction 1A "Sunlit camp" and the type of direction 1C "Warm nonprofit". Earlier versions of the prototype are in `frontend/prototype/exports/SetebaidServices.org/`.
 
-Density is moderate. Sections are full-width fields of cream, sand or dark forest green, with soft glows pooling in the corners and a fine grain over them. Content sits on a 1240px measure. Cards are flat and lightly outlined. Depth comes from tone and glow, and shadows appear only under things that lift off the page.
+Density is moderate. Sections are full-width fields of cream, sand or dark forest green, with soft glows pooling in the corners and a fine grain over them. Content sits on a 1240px measure. Cards are flat fills with no outline. Depth comes from tone and glow, and shadows appear only under things that float over another layer.
 
 Confirmed rejections (from PRODUCT.md and the homepage brief): no clinic or hospital look, no generic stock summer camp, no wall of text at the top, and cost and campership are never hidden.
 
@@ -173,7 +173,7 @@ Confirmed rejections (from PRODUCT.md and the homepage brief): no clinic or hosp
 - Work Sans 800 for headlines, Merriweather for every sentence, Caveat for the handwritten note.
 - One accent phrase per headline, set in the `emphasis` colour: logo green on Cream, camp green deep on Sand, marigold on Forest.
 - 8px buttons, 12px cards, circles for portraits and the photo ring.
-- Glow and grain on the fields; flat cards with hairline outlines.
+- Glow and grain on the fields; flat fill cards; four elevation levels, and shadows only on the top two.
 
 ## Colors
 
@@ -313,23 +313,30 @@ Content sits on a 1240px container with a fluid gutter (`container-content`): 20
 
 ## Elevation & Depth
 
-The system is flat with tonal layering. Fields change colour; cards sit on the field with a white fill or a hairline. Glows give the fields light and warmth, and a fine grain sits over them.
+The system is flat with tonal layering. Fields change colour; cards sit on the field as flat fills. Glows give the fields light and warmth, and a fine grain sits over them. Shadows belong only to the two upper levels below.
 
 **Glows.** Soft radial light in the corners of a field, at 90% strength (`--glow-intensity`). The dark field uses marigold at the top right, a green glow rising from the bottom left, and a shade at the bottom (`--band-glow`, `--band-glow-green`, `--band-shade`); the section system paints these over each dark band. Light fields use sun (`--glow-sun`), peach (`--glow-peach`) and daylight (`--glow-daylight`), placed differently in each section so the page does not repeat. Light-field glows belong to each section's own background when the section is built.
 
 **Grain.** A fine noise over the glows (`--grain-image`), soft-light on dark fields.
 
+### Elevation Levels
+- **0, Page:** the fields and the section edges. No shadow. Sections that overlap at a tuck or a smile stay at this level; the shape carries the overlap.
+- **1, Resting:** cards on a field: fill cards, light cards, flip cards, quote cards, pricing panels, inputs and badges. No shadow and no outline; the fill separates them from the field. A light card on a light field may take a 1.5px `border-border` edge when the fill alone does not show.
+- **2, Raised** (`shadow-raised`): an element that floats over another layer: the floating nav, the date badge over a photo, photo tiles, the staff card. A cut-out image (the director portrait) takes `drop-shadow-raised`, which follows its outline; on a dark field it takes `drop-shadow-raised/55`, because a shadow reads less on dark.
+- **3, Overlay** (`shadow-overlay`): a short-lived layer above the page: the nav menus, dropdowns, dialogs, sheets, toasts and the video lightbox.
+
 ### Shadow Vocabulary
-- **Card** (`--shadow-card`: `0 1px 2px rgb(20 40 30 / .06), 0 14px 30px -18px rgb(20 40 30 / .35)`): cards that sit above a field, such as the staff card and photo tiles.
-- **Badge** (`--shadow-badge`: `0 8px 24px rgb(28 42 34 / .18)`): the date badge that overlaps a photo.
-- **Lift** (`--shadow-lift`): a button on hover.
+- **Raised** (`--shadow-raised`: `0 1px 2px` ink 8%, `0 12px 28px -12px` ink 32%): level 2.
+- **Overlay** (`--shadow-overlay`: `0 2px 6px` ink 8%, `0 24px 56px -16px` ink 40%): level 3.
+- **Raised drop** (`--drop-shadow-raised`: `0 28px 34px rgb(13 18 8 / .22)`): level 2 for a cut-out image.
+- **Lift** (`--shadow-lift`): a button or a linked card on hover. An interaction, not a level.
 - **CTA** (`--shadow-cta`): the one emphasised primary action on a page.
 - **Highlight** (`--shadow-highlight`): the same emphasis for a highlight (giving) button.
 
-Shadows mix brand colours (`color-mix` with `--brand-ink`, `--brand-camp-green`, `--brand-marigold`), so a palette change carries into them.
+Shadows mix brand colours (`color-mix` with `--brand-ink`, `--brand-camp-green`, `--brand-marigold`), so a palette change carries into them. Use only these tokens: no stock `shadow-sm` to `shadow-2xl`, and no one-off shadow values.
 
 ### Named Rules
-**The Flat-at-Rest Rule.** Cards are flat with a hairline or a fill. A shadow appears only under an element that overlaps another (badge, staff card over the field) or on hover.
+**The Flat-at-Rest Rule.** Levels 0 and 1 have no shadow. A shadow appears only on an element that floats over another layer (level 2), on a short-lived layer (level 3), or on hover.
 
 ## Shapes
 
@@ -337,7 +344,7 @@ Gentle corners and full circles. Buttons, inputs and small fills are 8px (`round
 
 **The photo ring.** A round photo inside a thick logo-green ring (`mark`) that is open on one side (the left quarter is transparent), turned to a different angle each time. It echoes the turning arrow of "turn diabetes around". Large faint rings in the background repeat it.
 
-**Tilt.** Feature photos tilt 1.5 degrees, alternating left and right. Notes tilt 2 to 3 degrees.
+**The Straight Photo Rule.** Photos are never tilted, skewed or set at an angle, in any section. They sit square, so the page feels steady for parents making a decision; the children in the photos carry the energy. Only the handwritten notes tilt, 2 to 3 degrees.
 
 **The ticket edge.** The Tier IV campership row is cut off from the panel by a dashed line with two half-circle notches, like a ticket stub.
 
@@ -364,12 +371,12 @@ An optional eyebrow (uppercase, `text-link`), 16px, then a headline in `text-for
 Caveat 600 at 24 to 28px, rotated 2 to 3 degrees, in `text-muted-foreground`, or white on photos. It can carry a hand-drawn arrow (2px stroke, round caps) that points at what it describes. Used for photo captions, quote signatures and margin asides ("watch a week at camp").
 
 ### Cards / Containers
-- **Light card:** `bg-card` with `text-card-foreground`, 12px corners, 32px padding, with the card shadow or a 1.5px `border-border` outline.
+- **Light card:** `bg-card` with `text-card-foreground`, 12px corners, 32px padding. Flat at rest (level 1); it takes `shadow-raised` only when it floats over another layer, as in the image collage.
 - **Fill cards:** `card-quiet`, `card-warm`, `card-cool`, `card-deep` or `card-bold`, 28px padding and no border. Inside, use the ordinary job tokens (`text-foreground`, `text-muted-foreground`, `text-link`); the card utility makes them right for its fill. In a row, the fills alternate so no two neighbours match.
 - **Photo tile:** 12px corners, the photo covers the tile, a dark gradient at the bottom carries a white note.
 
 ### Date badge
-A `bg-highlight` tile with `text-highlight-foreground` (or `bg-primary` with `text-primary-foreground`), 12px corners, a small uppercase month (eyebrow) and a large day range (Title Large), overlapping the bottom edge of a photo by 24px with the badge shadow.
+A `bg-highlight` tile with `text-highlight-foreground` (or `bg-primary` with `text-primary-foreground`), 12px corners, a small uppercase month (eyebrow) and a large day range (Title Large), overlapping the bottom edge of a photo by 24px, with `shadow-raised`.
 
 ### Pricing tiers (signature)
 A `bg-card` panel with rows of: tier eyebrow and name, a 44px bar that shows what the family pays (`fill-bold`) and what donors cover (diagonal `fill-warm` stripes on `card`), then the price (Title Large, tabular numbers) and a button. The campership tier sits below a dashed ticket edge on a `fill-cool` tint. Prices and the donor share are always visible.
@@ -385,6 +392,8 @@ Fill cards with a large quote mark (Work Sans 800, 56px, `text-mark` on `fill-qu
 
 ### Navigation
 The logo at 42px tall on the left, six links in Work Sans 600 16px, then Donate (highlight) and Register (primary) buttons. Below 1080px the links move into a menu button; Register stays visible.
+
+The bar floats: a panel a little wider than the content measure, 12px corners on all four sides, `--header-gap` (12px) below the top of the window and beside it on narrow screens, with `shadow-raised`. At the top of a page that opens with a hero it is see-through, with no edge and no shadow. Over a light hero it hides on the first scroll down, and it comes back only at the top, already see-through. Its menus are level 3 (`shadow-overlay`).
 
 ## Do's and Don'ts
 
@@ -404,5 +413,6 @@ The logo at 42px tall on the left, six links in Work Sans 600 16px, then Donate 
 - **Don't** use `text-emphasis`, `text-mark` or marigold for small text on light fields.
 - **Don't** add a second accent phrase to a headline or a second handwritten note to a small section.
 - **Don't** use pill-shaped buttons; buttons are 8px.
+- **Don't** tilt, rotate or skew a photo. Only handwritten notes tilt.
 - **Don't** set a status line or sentence in uppercase.
 - **Don't** make it look like a clinic: no clinical blues, no stock photos, no icon-card rows as the page structure.

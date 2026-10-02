@@ -192,7 +192,7 @@ export default function InnerHero({
             on desktop. Hairlines are cream at reduced alpha, never a grey. */}
         {factList.length ? (
           <dl
-            className="mt-10 grid grid-cols-2 border-t border-birch-bark/20 lg:mt-0 lg:flex"
+            className="mt-10 grid grid-cols-2 lg:mt-0 lg:flex"
             data-sanity={dataAttribute?.("facts")}
           >
             {factList.map((fact) => {

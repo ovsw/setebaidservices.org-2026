@@ -65,8 +65,8 @@ export function MobileNav({
           className={cn(
             "border bg-transparent hover:shadow-none",
             dark
-              ? "border-birch-bark/45 text-birch-bark hover:bg-birch-bark/8"
-              : "border-pine-night/25 text-pine-night hover:bg-cedar/8",
+              ? "border-birch-bark/45 text-birch-bark hover:bg-birch-bark/8 hover:text-birch-bark"
+              : "border-pine-night/25 text-pine-night hover:bg-cedar/8 hover:text-pine-night",
           )}
           size="icon"
           variant="ghost"

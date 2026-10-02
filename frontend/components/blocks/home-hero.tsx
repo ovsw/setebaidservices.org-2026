@@ -72,7 +72,7 @@ export default function HomeHero({
     <section
       aria-labelledby={headingId}
       className={cn(
-        "overflow-x-clip pt-[calc(var(--header-height)+2.5rem)] pb-(--section-pad-bottom) lg:pt-[calc(var(--header-height)+3rem)]",
+        "overflow-x-clip pt-[calc(var(--header-height)+var(--header-gap)+2.5rem)] pb-(--section-pad-bottom) lg:pt-[calc(var(--header-height)+var(--header-gap)+3rem)]",
         sectionThemeClass("white"),
         "glow-sunrise",
       )}

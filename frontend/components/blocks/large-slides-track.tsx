@@ -136,7 +136,7 @@ export default function LargeSlidesTrack({
               <figure
                 className={cn(
                   styles.stackedPhoto,
-                  "relative m-0 aspect-[3/2] w-full overflow-hidden rounded-md bg-forest-panel shadow-media-rest",
+                  "relative m-0 aspect-[3/2] w-full overflow-hidden rounded-md bg-forest-panel shadow-raised",
                 )}
                 data-sanity={slide.sanity.image}
               >

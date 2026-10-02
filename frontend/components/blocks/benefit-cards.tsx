@@ -22,8 +22,8 @@ type BenefitCardsProps = Extract<PageBlock, { _type: "benefitCards" }> & {
  *
  * 1px gaps over a translucent background draw the grid; tiles have no
  * radius or border of their own and never lift, they tint on hover. The
- * icon sits in a pill outline, coloured Moss on the forest field and Cedar
- * on cream, so amber stays reserved for the page's actions.
+ * icon sits in a pill outline, marigold on the forest field and Cedar on
+ * cream.
  */
 type Field = { cream: boolean };
 
@@ -190,7 +190,7 @@ function BenefitCardsGrid({
                       "flex size-11 items-center justify-center rounded-full border [&_svg]:size-5",
                       cream
                         ? "border-pine-night/18 text-cedar"
-                        : "border-birch-bark/22 text-moss",
+                        : "border-birch-bark/22 text-highlight",
                     )}
                     data-sanity={dataAttribute?.(`${cardPath}.icon`)}
                   >

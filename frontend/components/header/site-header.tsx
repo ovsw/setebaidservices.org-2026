@@ -24,7 +24,7 @@ export function Header({
       {(theme) => {
         const brand = <HeaderBrand brand={model.brand} theme={theme} />;
         return (
-      <div className="container-content flex h-(--header-height) items-center justify-between gap-3 xl:gap-5">
+      <div className="container-content flex h-full items-center justify-between gap-3 xl:gap-5">
         <Link
           aria-label={`${model.brand.label} home page`}
           className="flex shrink-0 items-center rounded-control font-display text-[15px] font-extrabold tracking-[0.035em] focus-ring"
@@ -34,18 +34,24 @@ export function Header({
         </Link>
         <DesktopNav navigation={model.navigation} theme={theme} />
         <div className="hidden shrink-0 items-center gap-4 xl:flex">
-          {model.navigation.actions.map((action) => {
+          {/* The last action is the bar's main call to action: marigold on
+              the dark bar, camp green on the light one. The rest are
+              outlined. Editors choose which by the order in Navigation. */}
+          {model.navigation.actions.map((action, index, actions) => {
+            const primary = index === actions.length - 1;
             return (
               <HeaderLink
                 className={cn(
                   buttonVariants({
                     size: "compact",
-                    variant: "outline",
+                    variant: primary ? (theme === "dark" ? "highlight" : "primary") : "outline",
                   }),
                   "hover:translate-y-0",
-                  theme === "dark" &&
+                  !primary &&
+                    theme === "dark" &&
                     "border-birch-bark/45 text-birch-bark hover:border-birch-bark/70 hover:bg-birch-bark/8 hover:text-birch-bark",
                 )}
+                data-header-cta={primary ? "" : undefined}
                 key={action.key}
                 link={action.link}
               />

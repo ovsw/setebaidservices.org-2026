@@ -56,6 +56,7 @@ export default function FlipCards({
             front: card.front ?? "",
             key: card._key,
           }))}
+          dark={stegaClean(background) === "green"}
           frontLabel={stegaClean(frontLabel) || "Diabetes"}
           turnLabel={turnLabel || "turn it around"}
         />

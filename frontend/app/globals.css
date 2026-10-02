@@ -155,19 +155,23 @@
      padding from section-boundaries.ts would never apply. */
   --spacing-gutter: 32px;
 
-  /* ---- Shadows ---- */
-  --shadow-card: 0 1px 2px color-mix(in oklab, var(--brand-ink) 6%, transparent),
-    0 14px 30px -18px color-mix(in oklab, var(--brand-ink) 35%, transparent);
-  --shadow-badge: 0 8px 24px color-mix(in oklab, var(--brand-ink) 18%, transparent);
+  /* ---- Elevation ----
+     Four levels; see DESIGN.md § Elevation & Depth. Level 0 (the page) and
+     level 1 (a card resting on it) have no shadow. Level 2, raised: an
+     element that floats over another layer (the nav, a badge over a photo,
+     photo tiles, the staff card). Level 3, overlay: a short-lived layer
+     (menus, dialogs, sheets, toasts, the lightbox). A cut-out image takes
+     the raised drop shadow, which follows its outline. */
+  --shadow-raised: 0 1px 2px color-mix(in oklab, var(--brand-ink) 8%, transparent),
+    0 12px 28px -12px color-mix(in oklab, var(--brand-ink) 32%, transparent);
+  --shadow-overlay: 0 2px 6px color-mix(in oklab, var(--brand-ink) 8%, transparent),
+    0 24px 56px -16px color-mix(in oklab, var(--brand-ink) 40%, transparent);
+  --drop-shadow-raised: 0 28px 34px rgb(13 18 8 / 0.22);
+  /* Interaction, not a level: a button or card on hover, and the one
+     emphasised primary (green) or giving (marigold) action on a page. */
   --shadow-lift: 0 14px 28px -14px color-mix(in oklab, var(--brand-ink) 45%, transparent);
   --shadow-cta: 0 14px 36px -12px color-mix(in oklab, var(--brand-camp-green) 45%, transparent);
   --shadow-highlight: 0 14px 36px -12px color-mix(in oklab, var(--brand-marigold) 50%, transparent);
-  /* Deprecated CAC shadows. */
-  --shadow-media-rest: var(--shadow-card);
-  --shadow-globe-rest: var(--shadow-card);
-  --shadow-card-rest-cream: var(--shadow-card);
-  --shadow-stamp: var(--shadow-badge);
-  --shadow-hero-cta: var(--shadow-cta);
 
   /* ---- Container ---- */
   --container-content: 1240px;
@@ -200,6 +204,8 @@
   --gutter: clamp(20px, 5vw, 32px);
   --section-pad: clamp(64px, 9vw, 96px);
   --header-height: 80px;
+  /* The nav floats: this gap sits above it, and beside it on narrow screens. */
+  --header-gap: 12px;
   /* Tuck overlap: how far a rounded-top section reaches up over the section
      above. Equal to the section radius so the curve starts at the seam. */
   --section-overlap: var(--radius-section);
@@ -244,13 +250,25 @@
    the configured dark theme, so the bar keeps its dark colour for that
    moment instead of showing light text over the light hero. */
 body:has([data-header-overlay]) header[data-site-header] {
-  margin-bottom: calc(var(--header-height) * -1);
+  margin-bottom: calc((var(--header-height) + var(--header-gap)) * -1);
 }
 
 body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"],
 body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="true"][data-theme="light"] {
   background-color: transparent;
   border-color: transparent;
+  box-shadow: none;
+}
+
+/* While the bar is see-through, its main action is camp green whatever the
+   bar's theme. On the solid dark bar it turns marigold (site-header.tsx). */
+body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] [data-header-cta] {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+
+  &:hover {
+    background-color: var(--color-primary-hover);
+  }
 }
 
 /* When the bar changes look while in view (see-through at the top, solid
@@ -259,7 +277,7 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
    links do not change ahead of the background. */
 @media (prefers-reduced-motion: no-preference) {
   header[data-site-header][data-color-fade="true"] * {
-    transition-property: color, background-color, border-color, opacity;
+    transition-property: color, background-color, border-color, box-shadow, opacity;
     transition-duration: 200ms;
     transition-timing-function: var(--ease-standard);
   }
@@ -357,16 +375,18 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
 }
 
 /* Sunlit dark field: marigold light in the top-right corner, a green glow
-   rising from the bottom-left, and a shade settling at the bottom. Sized to
-   the band, so a long run gets one slow sweep rather than a glow per
-   section. */
+   rising from the bottom-left, and a shade settling at the bottom. One set
+   per band, so a long run gets one sweep rather than a glow per section.
+   The radii and the vertical offsets follow the page width (vw), never the
+   band height, so the glows keep their shape on a tall band and stay in
+   their corners. */
 [data-band="green"]::before,
 [data-band="night"]::before {
   opacity: var(--glow-intensity);
   background-image:
-    radial-gradient(40% 90% at 92% 10%, var(--band-glow), transparent 72%),
-    radial-gradient(50% 110% at 0% 100%, var(--band-glow-green), transparent 72%),
-    radial-gradient(60% 80% at 55% 120%, var(--band-shade), transparent 72%);
+    radial-gradient(40vw 44vw at 92% 4rem, var(--band-glow), transparent 72%),
+    radial-gradient(50vw 54vw at 0% 100%, var(--band-glow-green), transparent 72%),
+    radial-gradient(60vw 39vw at 55% calc(100% + 10vw), var(--band-shade), transparent 72%);
 }
 
 [data-band="green"]::after,

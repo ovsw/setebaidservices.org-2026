@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-02T04:30:08+00:00",
+  "generatedAt": "2026-10-02T16:49:14+00:00",
   "title": "Design System: Setebaid Services",
   "extensions": {
     "colorMeta": {
@@ -518,29 +518,34 @@
     },
     "shadows": [
       {
-        "name": "card",
-        "value": "0 1px 2px rgb(20 40 30 / 0.06), 0 14px 30px -18px rgb(20 40 30 / 0.35)",
-        "purpose": "Cards and photo tiles that sit above a field."
+        "name": "raised",
+        "value": "0 1px 2px color-mix(in oklab, var(--brand-ink) 8%, transparent), 0 12px 28px -12px color-mix(in oklab, var(--brand-ink) 32%, transparent)",
+        "purpose": "Level 2: an element that floats over another layer (the floating nav, the date badge over a photo, photo tiles, the staff card)."
       },
       {
-        "name": "badge",
-        "value": "0 8px 24px rgb(28 42 34 / 0.18)",
-        "purpose": "The date badge that overlaps a photo."
+        "name": "overlay",
+        "value": "0 2px 6px color-mix(in oklab, var(--brand-ink) 8%, transparent), 0 24px 56px -16px color-mix(in oklab, var(--brand-ink) 40%, transparent)",
+        "purpose": "Level 3: a short-lived layer (nav menus, dropdowns, dialogs, sheets, toasts, the video lightbox)."
+      },
+      {
+        "name": "raised-drop",
+        "value": "drop-shadow(0 28px 34px rgb(13 18 8 / 0.22))",
+        "purpose": "Level 2 for a cut-out image; 55% alpha on a dark field."
       },
       {
         "name": "lift",
-        "value": "0 14px 28px -14px rgb(20 40 30 / 0.45)",
-        "purpose": "A button on hover."
+        "value": "0 14px 28px -14px color-mix(in oklab, var(--brand-ink) 45%, transparent)",
+        "purpose": "A button or a linked card on hover. An interaction, not a level."
       },
       {
         "name": "cta",
-        "value": "0 14px 36px -12px rgb(26 127 82 / 0.45)",
+        "value": "0 14px 36px -12px color-mix(in oklab, var(--brand-camp-green) 45%, transparent)",
         "purpose": "The one emphasised primary action on a page."
       },
       {
         "name": "highlight",
         "value": "0 14px 36px -12px color-mix(in oklab, var(--brand-marigold) 50%, transparent)",
-        "purpose": "Emphasis for a highlight (giving) button."
+        "purpose": "The same emphasis for a highlight (giving) button."
       }
     ],
     "motion": [
@@ -647,78 +652,93 @@
       "refersTo": "date-badge",
       "description": "Month and day range overlapping a camp photo.",
       "html": "<div class=\"ds-badge\"><span class=\"ds-badge-m\">JUL</span><span class=\"ds-badge-d\">11–17</span></div>",
-      "css": ".ds-badge{display:inline-flex;align-items:baseline;gap:8px;padding:12px 16px;border-radius:12px;background:var(--color-highlight,#F2B93D);color:var(--color-highlight-foreground,#1C3B2C);box-shadow:0 8px 24px rgb(28 42 34 / .18);font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);line-height:1} .ds-badge-m{font-size:14px;font-weight:600;letter-spacing:.08em} .ds-badge-d{font-size:32px;font-weight:800;letter-spacing:-.02em}"
+      "css": ".ds-badge{display:inline-flex;align-items:baseline;gap:8px;padding:12px 16px;border-radius:12px;background:var(--color-highlight,#F2B93D);color:var(--color-highlight-foreground,#1C3B2C);box-shadow:0 1px 2px color-mix(in oklab, var(--brand-ink,#1C3B2C) 8%, transparent), 0 12px 28px -12px color-mix(in oklab, var(--brand-ink,#1C3B2C) 32%, transparent);font-family:var(--font-ui, 'Work Sans', system-ui, sans-serif);line-height:1} .ds-badge-m{font-size:14px;font-weight:600;letter-spacing:.08em} .ds-badge-d{font-size:32px;font-weight:800;letter-spacing:-.02em}"
+    },
+    {
+      "name": "Floating Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "The floating bar: a 12px-cornered panel held 12px below the top of the window, with the raised shadow.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-logo\">setebaid</span><span class=\"ds-nav-links\"><a href=\"#\">Camps</a><a href=\"#\">Parents</a><a href=\"#\">Stories</a><a href=\"#\">About</a></span><span class=\"ds-nav-actions\"><a class=\"ds-nav-donate\" href=\"#\">Donate</a><a class=\"ds-nav-register\" href=\"#\">Register</a></span></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:space-between;gap:20px;height:80px;margin:12px;padding:0 32px;background:var(--brand-ink,#1C3B2C);color:var(--brand-cream,#FBF7EC);border:1px solid rgb(251 247 236 / .15);border-radius:12px;box-shadow:0 1px 2px color-mix(in oklab, var(--brand-ink,#1C3B2C) 8%, transparent), 0 12px 28px -12px color-mix(in oklab, var(--brand-ink,#1C3B2C) 32%, transparent);font-family:\"Work Sans\",sans-serif} .ds-nav-logo{font-weight:800;font-size:24px} .ds-nav-links{display:flex;gap:28px;font-weight:600;font-size:16px} .ds-nav-links a{color:inherit;text-decoration:none} .ds-nav-links a:hover{text-decoration:underline;text-underline-offset:4px} .ds-nav-actions{display:flex;gap:12px} .ds-nav-actions a{display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none} .ds-nav-donate{background:var(--brand-marigold,#F2B93D);color:var(--brand-ink,#1C3B2C)} .ds-nav-register{background:var(--brand-camp-green,#1A7F52);color:#fff} .ds-nav-actions a:focus-visible,.ds-nav-links a:focus-visible{outline:2px solid var(--brand-marigold,#F2B93D);outline-offset:3px}"
     }
   ],
   "narrative": {
     "northStar": "Sunlit Camp",
-    "overview": "The site feels like a bright afternoon at camp: a warm cream ground, deep camp green, and one marigold sun, with lake sky as the cool shade and a counselor's handwritten note in the margin. It is warm and plain-spoken, and the photographs of children at camp carry it. Sections are full-width fields of cream, sand or dark forest green with soft glows in the corners and a fine grain; cards are flat and lightly outlined.",
+    "overview": "The site feels like a bright afternoon at camp: a warm cream ground, deep camp green, and one marigold sun. Lake sky shows up as the cool shade, and a counselor's handwritten note sits in the margin. It is warm and plain-spoken, and the photographs of children at camp carry it. Parents read calm, sturdy type. Kids see the energy in the photos, the handwritten notes and the scribbled arrows.\n\nThe system grew from the Claude Design prototype (`frontend/prototype/Home-Page-Prototype.html`). It takes the colours of direction 1A \"Sunlit camp\" and the type of direction 1C \"Warm nonprofit\". Earlier versions of the prototype are in `frontend/prototype/exports/SetebaidServices.org/`.\n\nDensity is moderate. Sections are full-width fields of cream, sand or dark forest green, with soft glows pooling in the corners and a fine grain over them. Content sits on a 1240px measure. Cards are flat fills with no outline. Depth comes from tone and glow, and shadows appear only under things that float over another layer.\n\nConfirmed rejections (from PRODUCT.md and the homepage brief): no clinic or hospital look, no generic stock summer camp, no wall of text at the top, and cost and campership are never hidden.",
     "keyCharacteristics": [
       "Cream ground, camp green for action, marigold for warmth and giving, lake sky as the cool second colour.",
-      "Work Sans 800 headlines, Merriweather sentences, Caveat notes.",
-      "One accent phrase per headline, in the emphasis colour of the field.",
+      "Work Sans 800 for headlines, Merriweather for every sentence, Caveat for the handwritten note.",
+      "One accent phrase per headline, set in the `emphasis` colour: logo green on Cream, camp green deep on Sand, marigold on Forest.",
       "8px buttons, 12px cards, circles for portraits and the photo ring.",
-      "Glow and grain on the fields; flat cards with hairlines."
+      "Glow and grain on the fields; flat fill cards; four elevation levels, and shadows only on the top two."
     ],
     "rules": [
       {
         "name": "The Job Token Rule",
-        "body": "Component code uses only job tokens (bg-primary, text-link, card-warm…). Brand colours exist only in globals.css and Tailwind generates no classes for them; a rebrand changes one file.",
+        "body": "Component code uses only job tokens (`bg-primary`, `text-link`, `card-warm`…). Brand colours exist only in `globals.css`, and Tailwind generates no classes for them. A rebrand changes one file.",
         "section": "colors"
       },
       {
         "name": "The Ink-on-Colour Rule",
-        "body": "Marigold, lake sky and sand always carry ink text (highlight-foreground and the card-* utilities); only camp green, camp green deep, error and ink (the Forest field and fill-deep) carry light text.",
+        "body": "Marigold, lake sky and sand always carry ink text: use `highlight-foreground` and the `card-*` utilities. Only camp green, camp green deep, error and ink (the Forest field and `fill-deep`) carry light text.",
         "section": "colors"
       },
       {
         "name": "The Big Green Rule",
-        "body": "Logo green (mark, and emphasis on Cream) is for marks, rings, rules and heading-size words; small green text uses text-link, which is camp green on Cream and camp green deep on Sand.",
+        "body": "Logo green (`mark`, and `emphasis` on Cream) is for marks, rings, rules and heading-size words. Small green text uses `text-link`, which is camp green on Cream and camp green deep on Sand. Never use `text-emphasis` or `text-mark` for small text.",
         "section": "colors"
       },
       {
         "name": "The Sun Rule",
-        "body": "One or two highlight or fill-warm (marigold) elements per screen.",
+        "body": "Marigold is the sun: one or two `highlight` or `card-warm` elements per screen (a Donate button, a badge, a dot). A page where everything is marigold has no sun.",
         "section": "colors"
       },
       {
         "name": "The Sentence Rule",
-        "body": "Every sentence is Merriweather; every heading, label, button and link is Work Sans.",
+        "body": "Every sentence is Merriweather; every heading, label, button and link is Work Sans. The base stylesheet sets `p` to Merriweather; a paragraph that is really interface text opts out with `font-ui`.",
         "section": "typography"
       },
       {
         "name": "The One Hand Rule",
-        "body": "Caveat appears once or twice per section as a short note, never as a heading or interface text.",
+        "body": "Caveat appears once or twice per section, as a short note of a few words, never as a heading and never for interface text.",
         "section": "typography"
       },
       {
         "name": "The Short Caps Rule",
-        "body": "Uppercase is for eyebrows of one to three words only.",
+        "body": "Uppercase is for eyebrows of one to three words only. Status lines and sentences stay in sentence case.",
         "section": "typography"
       },
       {
         "name": "The Flat-at-Rest Rule",
-        "body": "Cards are flat; a shadow appears only under an overlapping element or on hover.",
+        "body": "Levels 0 and 1 have no shadow. A shadow appears only on an element that floats over another layer (level 2), on a short-lived layer (level 3), or on hover.",
         "section": "elevation"
+      },
+      {
+        "name": "The Straight Photo Rule",
+        "body": "Photos are never tilted, skewed or set at an angle, in any section. They sit square, so the page feels steady for parents making a decision; the children in the photos carry the energy. Only the handwritten notes tilt, 2 to 3 degrees.",
+        "section": "shapes"
       }
     ],
     "dos": [
-      "Do use job tokens (bg-background, text-foreground, text-link, text-emphasis, bg-primary, bg-highlight, card-warm…) and the role utilities.",
-      "Do set a section's background with its field and let the field tokens adapt the content.",
-      "Do put the matching -foreground text on every fill: ink on marigold, lake sky and sand, and white on camp green.",
-      "Do take spacing from the 4px scale.",
-      "Do lead with big photographs of children at camp.",
-      "Do show cost, the donor share and the campership tier openly."
+      "**Do** use job tokens (`bg-background`, `text-foreground`, `text-muted-foreground`, `text-link`, `text-emphasis`, `bg-primary`, `bg-highlight`, `card-warm`…) and the role utilities (`text-headline`, `text-lead`, `text-eyebrow`, `text-note`…).",
+      "**Do** set a section's background with its field, through `sectionThemeClass()`, and let the field tokens adapt the content.",
+      "**Do** put the matching `-foreground` text on every fill: ink on marigold, lake sky and sand, and white on camp green.",
+      "**Do** set every sentence in Merriweather and every interface word in Work Sans.",
+      "**Do** take spacing from the 4px scale, and section padding from the section system.",
+      "**Do** lead with big photographs of children at camp.",
+      "**Do** show cost, the donor share and the campership tier openly."
     ],
     "donts": [
-      "Don't use brand colour names in component code; if a job is missing, add a job token in globals.css.",
-      "Don't use the deprecated CAC names in new code.",
-      "Don't add \"on dark\" variants for the Forest field; the field tokens already handle it.",
-      "Don't use text-emphasis, text-mark or marigold for small text on light fields.",
-      "Don't add a second accent phrase to a headline.",
-      "Don't use pill-shaped buttons.",
-      "Don't set a status line or sentence in uppercase.",
-      "Don't make it look like a clinic."
+      "**Don't** use brand colour names in component code. If a job is missing, add a job token in `globals.css`.",
+      "**Don't** use the deprecated CAC names (`pine-night`, `birch-bark`, `campfire-amber`, `cedar`, `forest-floor`, `forest-panel`, `moss`, `ink-muted`…) in new code. They are aliases that will be deleted.",
+      "**Don't** add \"on dark\" variants for the Forest field; the field tokens already handle it.",
+      "**Don't** use `text-emphasis`, `text-mark` or marigold for small text on light fields.",
+      "**Don't** add a second accent phrase to a headline or a second handwritten note to a small section.",
+      "**Don't** use pill-shaped buttons; buttons are 8px.",
+      "**Don't** tilt, rotate or skew a photo. Only handwritten notes tilt.",
+      "**Don't** set a status line or sentence in uppercase.",
+      "**Don't** make it look like a clinic: no clinical blues, no stock photos, no icon-card rows as the page structure."
     ]
   }
 }

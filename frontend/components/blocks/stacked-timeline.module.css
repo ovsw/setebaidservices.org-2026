@@ -6,7 +6,7 @@
  */
 
 .intro {
-  --stacked-timeline-sticky-top: calc(var(--header-height, 80px) + 2rem);
+  --stacked-timeline-sticky-top: calc(var(--header-height, 80px) + var(--header-gap, 0px) + 2rem);
 }
 
 @media (min-width: 1024px) {

@@ -156,7 +156,7 @@ function ImageCollageCollage({
         <div className="relative min-h-[28rem] sm:min-h-[34rem] lg:min-h-[40rem]">
           {primaryImage?.asset?._id ? (
             <div
-              className="absolute right-0 top-0 h-[78%] w-[86%] overflow-hidden rounded-xl shadow-media-rest"
+              className="absolute right-0 top-0 h-[78%] w-[86%] overflow-hidden rounded-xl shadow-raised"
               data-sanity={dataAttribute?.("primaryImage")}
             >
               <div
@@ -184,7 +184,7 @@ function ImageCollageCollage({
           {secondaryImage?.asset?._id ? (
             <div
               className={cn(
-                "absolute bottom-0 left-0 h-[42%] w-[46%] -rotate-3 overflow-hidden rounded-lg border-[0.625rem] border-birch-bark shadow-card-rest-cream",
+                "absolute bottom-0 left-0 h-[42%] w-[46%] overflow-hidden rounded-lg border-[0.625rem] border-birch-bark shadow-raised",
                 styles.secondaryReveal,
               )}
               data-sanity={dataAttribute?.("secondaryImage")}

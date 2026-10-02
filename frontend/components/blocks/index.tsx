@@ -226,6 +226,8 @@ export default function Blocks({
           block._type === "latestArticles" && blogListing ? { blogListing } : {};
 
         return (
+          // Presentation's overlay sets `cursor: move` on a section it can
+          // drag, sometimes before hydration; that one attribute may differ.
           <div
             data-sanity={dataSanity}
             data-seam-top={boundary.seamTop ? "" : undefined}
@@ -235,6 +237,7 @@ export default function Blocks({
             data-tuck-below={boundary.tuckBelow ? "" : undefined}
             data-smile-above={boundary.smileAbove ? "" : undefined}
             data-smile-below={boundary.smileBelow ? "" : undefined}
+            suppressHydrationWarning
             key={block._key}
           >
             <Component {...themedBlock} {...editingProps} {...pageDataProps} />

@@ -23,8 +23,8 @@ import type {
 import { NavigationIcon } from "./navigation-icon";
 import type { HeaderTheme } from "./theme";
 
-const SINGLE_COLUMN_PANEL_WIDTH = 380;
-const TWO_COLUMN_PANEL_WIDTH = 740;
+const SINGLE_COLUMN_PANEL_WIDTH = 300;
+const TWO_COLUMN_PANEL_WIDTH = 580;
 const TWO_COLUMN_MIN_LINKS = 6;
 const VIEWPORT_EDGE_GAP = 16;
 const CLOSE_DELAY_MS = 120;
@@ -67,20 +67,20 @@ function GroupPanelContent({
                 key={child.key}
                 link={child.link}
               >
+                {/* A bare line icon: no disc behind it, and a thinner stroke than
+                    the library default, so a column of items stays light. */}
                 {child.icon ? (
                   <span
                     className={cn(
-                      "flex size-10 shrink-0 items-center justify-center rounded-full transition-colors motion-fast [&_svg]:size-5",
-                      dark
-                        ? "bg-forest-floor text-campfire-amber group-hover/nav-link:bg-forest-floor/75"
-                        : "bg-cedar/10 text-cedar group-hover/nav-link:bg-cedar/15",
+                      "mt-px flex shrink-0 [&_svg]:size-5 [&_svg]:stroke-[1.6]",
+                      dark ? "text-highlight" : "text-primary",
                     )}
                   >
                     <NavigationIcon icon={child.icon} />
                   </span>
                 ) : null}
-                <span className="grid min-w-0 gap-1">
-                  <span className="flex items-center gap-0.5 text-sm font-semibold">
+                <span className="grid min-w-0 gap-0.5">
+                  <span className="flex items-center gap-0.5 text-[15px] font-semibold">
                     {child.label}
                     <ChevronRight
                       aria-hidden="true"
@@ -93,7 +93,7 @@ function GroupPanelContent({
                   {child.description ? (
                     <span
                       className={cn(
-                        "text-[15px] leading-tight",
+                        "text-sm leading-snug",
                         dark ? "text-birch-bark/65" : "text-ink-muted",
                       )}
                     >
@@ -212,8 +212,10 @@ export function DesktopNav({
   // it is and the new one fades in under its own trigger; nothing slides.
   const fade = { duration: prefersReducedMotion ? 0 : 0.14 };
   // The open trigger and its panel are one surface, so they share a colour.
+  // On dark it is the bar's ink, lifted a touch toward cream so the panel
+  // still reads as its own layer.
   const panelSurfaceClassName = dark
-    ? "bg-forest-panel text-birch-bark"
+    ? "bg-[color-mix(in_oklab,var(--color-fill-deep)_94%,var(--color-background))] text-birch-bark"
     : "bg-birch-bark-bright text-pine-night";
   const primaryLinkClassName = cn(
     // px-2 -mx-1 keeps the same flow width as the old px-1 while giving the
@@ -303,9 +305,8 @@ export function DesktopNav({
               className={cn(
                 "relative overflow-hidden rounded-[var(--radius-md)] border",
                 panelSurfaceClassName,
-                dark
-                  ? "border-birch-bark/15 shadow-lift"
-                  : "border-pine-night/12 shadow-card-rest-cream",
+                "shadow-overlay",
+                dark ? "border-birch-bark/15" : "border-pine-night/12",
               )}
             >
               <GroupPanelContent
