@@ -6,6 +6,10 @@ import FaqPageJsonLd from "@/components/faq-json-ld";
 import { siteUrl } from "@/lib/site-url";
 import VideoJsonLd from "@/components/video-json-ld";
 import PostHero from "@/components/blocks/post-hero";
+import {
+  sectionThemeClass,
+  type SectionTheme,
+} from "@/components/blocks/section-theme";
 import { postPath } from "@/lib/routes";
 import {
   createPostBodyModel,
@@ -36,6 +40,11 @@ function PageContent({
     blocks[0]?._type !== "hero" &&
     blocks[0]?._type !== "innerHero" &&
     stegaClean(page.title)?.trim();
+  const firstBlock = blocks[0];
+  const firstBackground =
+    firstBlock && "background" in firstBlock
+      ? (stegaClean(firstBlock.background) as SectionTheme | null | undefined)
+      : undefined;
   const rootDataAttribute = stega
     ? (path: "description" | "title") =>
         createDataAttribute({
@@ -60,13 +69,28 @@ function PageContent({
       <FaqPageJsonLd blocks={blocks} />
       <VideoJsonLd content={blocks} />
       {needsTitleHeader ? (
-        <header>
-          <h1 data-sanity={rootDataAttribute?.("title")}>{page.title}</h1>
-          {stegaClean(page.description)?.trim() ? (
-            <p data-sanity={rootDataAttribute?.("description")}>
-              {page.description}
-            </p>
-          ) : null}
+        // Text-only pages (legal, policies) open with the page title instead
+        // of a photo hero. The header takes the first section's ground and
+        // its reading column, so title and text read as one document.
+        <header className={`${sectionThemeClass(firstBackground)} pt-(--section-pad)`}>
+          <div className="container-content">
+            <div className="mx-auto max-w-[70ch]">
+              <h1
+                className="text-display-page text-balance"
+                data-sanity={rootDataAttribute?.("title")}
+              >
+                {page.title}
+              </h1>
+              {stegaClean(page.description)?.trim() ? (
+                <p
+                  className="text-lead mt-6 text-ink-soft"
+                  data-sanity={rootDataAttribute?.("description")}
+                >
+                  {page.description}
+                </p>
+              ) : null}
+            </div>
+          </div>
         </header>
       ) : null}
       <Blocks
