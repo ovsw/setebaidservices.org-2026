@@ -1,101 +1,176 @@
 @import "tailwindcss";
 
 /*
- * Design System
+ * Design System: Setebaid Services, "Sunlit Camp"
  *
- * Tokens from DESIGN.md and .impeccable/design.json.
+ * Tokens from frontend/DESIGN.md and frontend/.impeccable/design.json. The
+ * source of the system is frontend/prototype/Home-Page-Prototype.html.
  * Font families are loaded via next/font/google in layout.tsx and injected as
- * CSS variables (--font-display, --font-body, --font-accent). The mono/label
- * stack is a system font — no web font needed.
+ * CSS variables (--font-work-sans, --font-merriweather, --font-caveat).
  *
- * Colour names follow the prototype palette (13 named colours + translucent
- * derivatives). Only the named stops are registered — no 50-950 ramps.
+ * Colour has two layers:
+ *   1. Brand colours (--brand-*) in :root. They are the palette. They are
+ *      outside @theme, so Tailwind makes no classes for them: component code
+ *      cannot use them directly.
+ *   2. Job tokens (--color-*) in @theme. They say what a colour is for
+ *      (background, foreground, primary, link…) and point at brand colours.
+ *      Component code uses only these. The field utilities (field-cream,
+ *      field-sand, field-forest) re-point the contextual ones, so a section
+ *      is right on any background without "on dark" variants.
+ *
+ * The CAC names at the end of the colour block are deprecated aliases from
+ * the copied code base. They point at fixed brand colours, because CAC code
+ * used them as literal colours. Delete each one when no block uses it.
  */
 
 /* ------------------------------------------------------------------ */
-/* Theme                                                               */
+/* Brand colours (layer 1: the palette, never used in components)      */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --brand-cream: #fbf7ec;
+  --brand-white: #ffffff;
+  --brand-sand: #f1e7ce;
+  --brand-ink: #1c3b2c;
+  --brand-ink-soft: #3e5a4b;
+  --brand-mist: #cfd9d0;
+  --brand-camp-green: #1a7f52;
+  --brand-camp-green-deep: #14653f;
+  --brand-logo-green: #1a8b5a;
+  --brand-marigold: #f2b93d;
+  --brand-marigold-deep: #e0a529;
+  --brand-marigold-ink: #86580a;
+  --brand-lake-sky: #7cbbdd;
+  --brand-lake-ink: #2c6587;
+  --brand-error: #a93a23;
+  --brand-line: rgb(28 59 44 / 0.14);
+  --brand-line-on-dark: rgb(251 247 236 / 0.15);
+}
+
+/* ------------------------------------------------------------------ */
+/* Theme (layer 2: job tokens)                                         */
 /* ------------------------------------------------------------------ */
 
 @theme {
-  /* ---- Colours ---- */
-  --color-campfire-amber: oklch(76.3% 0.141 73);
-  --color-navigation-yellow: oklch(84% 0.095 92);
-  --color-campfire-amber-deep: oklch(67.3% 0.135 71);
+  /* ---- Field tokens ----
+     Defaults are the Cream field. field-sand and field-forest re-point
+     them; see "Fields" below. */
+  --color-background: var(--brand-cream); /* the section's ground */
+  --color-foreground: var(--brand-ink); /* headings and primary text */
+  --color-muted: var(--brand-sand); /* quiet fill: placeholders, table stripes */
+  --color-muted-foreground: var(--brand-ink-soft); /* body and secondary text */
+  --color-card: var(--brand-white); /* cards and panels on this field */
+  --color-card-foreground: var(--brand-ink);
+  --color-popover: var(--brand-white);
+  --color-popover-foreground: var(--brand-ink);
+  --color-border: var(--brand-line); /* hairlines, outlines, dividers */
+  --color-input: var(--brand-line); /* field borders */
+  --color-ring: var(--brand-camp-green); /* focus rings */
+  --color-link: var(--brand-camp-green); /* links, eyebrows, small accent text */
+  --color-emphasis: var(--brand-logo-green); /* the accent phrase in a headline (heading sizes only) */
+  --color-accent: var(--brand-sand); /* shadcn: quiet hover and selected background */
+  --color-accent-foreground: var(--brand-ink);
+  --color-secondary: var(--brand-sand); /* shadcn: subtle button fill */
+  --color-secondary-foreground: var(--brand-ink);
 
-  --color-cedar: oklch(50.7% 0.095 131);
-  --color-cedar-deep: oklch(40.7% 0.079 131);
-  --color-sunlit-moss: oklch(86.4% 0.096 122);
-  --color-moss: oklch(78% 0.118 123);
+  /* ---- Action tokens (the same on every field) ---- */
+  --color-primary: var(--brand-camp-green); /* the main action: Register */
+  --color-primary-foreground: var(--brand-white);
+  --color-primary-hover: var(--brand-camp-green-deep);
+  --color-highlight: var(--brand-marigold); /* giving actions, badges, the sun */
+  --color-highlight-foreground: var(--brand-ink);
+  --color-highlight-hover: var(--brand-marigold-deep);
+  --color-destructive: var(--brand-error);
+  --color-destructive-foreground: var(--brand-white);
+  --color-mark: var(--brand-logo-green); /* brand marks, photo rings, thick rules */
 
-  --color-pine-night: oklch(22.8% 0.034 133);
-  --color-forest-floor: oklch(37.7% 0.07 130);
-  --color-forest-panel: oklch(30% 0.047 134);
-  --color-birch-bark: oklch(95.2% 0.018 93);
-  --color-birch-bark-bright: oklch(97.6% 0.012 92);
-  --color-lake-night: oklch(20% 0.035 261);
+  /* ---- Card fills (the same on every field) ----
+     Decorative fills for rows of cards; alternate them so neighbours differ.
+     For a card, use the card-* utilities below: they also re-point the text
+     tokens inside the card. The bare fill tokens are for bars, dots and
+     rules. */
+  --color-fill-quiet: var(--brand-sand);
+  --color-fill-quiet-foreground: var(--brand-ink);
+  --color-fill-warm: var(--brand-marigold);
+  --color-fill-warm-foreground: var(--brand-ink);
+  --color-fill-cool: var(--brand-lake-sky);
+  --color-fill-cool-foreground: var(--brand-ink);
+  --color-fill-deep: var(--brand-ink);
+  --color-fill-deep-foreground: var(--brand-cream);
+  --color-fill-bold: var(--brand-camp-green);
+  --color-fill-bold-foreground: var(--brand-white);
+  /* The warm and cool hues as small text on a light background. */
+  --color-warm-text: var(--brand-marigold-ink);
+  --color-cool-text: var(--brand-lake-ink);
 
-  /* Ink tiers — solid secondary text on cream. Pine Night's hue and chroma at
-     a raised lightness, so the value is the same on Birch Bark and on Birch
-     Bark Bright. Contrast on Birch Bark (the darker cream): ink-muted 5.1:1,
-     ink-soft 6.5:1. Text on cream never uses an alpha; see DESIGN.md. */
-  --color-ink-muted: oklch(50% 0.034 133);
-  --color-ink-soft: oklch(44.5% 0.034 133);
-
-  --color-ember-red: oklch(53.5% 0.154 38);
-
-  /* Semantic aliases used by components (home-hero, button, etc.) */
-  --color-cream: var(--color-birch-bark);
-  --color-accent: var(--color-campfire-amber);
-  --color-accent-hover: var(--color-campfire-amber-deep);
-  --color-forest-900: var(--color-forest-floor);
-
-  /* shadcn/ui semantic tokens — mapped to the camp palette */
-  --color-background: var(--color-birch-bark);
-  --color-foreground: var(--color-pine-night);
-  --color-primary: var(--color-campfire-amber);
-  --color-primary-foreground: var(--color-pine-night);
-  --color-secondary: var(--color-forest-panel);
-  --color-secondary-foreground: var(--color-birch-bark);
-  --color-muted: var(--color-birch-bark-bright);
-  --color-muted-foreground: var(--color-ink-muted);
-  --color-card: var(--color-birch-bark);
-  --color-card-foreground: var(--color-pine-night);
-  --color-destructive: var(--color-ember-red);
+  /* ---- Deprecated CAC colour names ----
+     Fixed brand colours, because CAC code used them literally. Delete each
+     alias once no block uses it. Do not use them in new code. */
+  --color-campfire-amber: var(--brand-marigold);
+  --color-campfire-amber-deep: var(--brand-marigold-deep);
+  --color-navigation-yellow: var(--brand-marigold);
+  --color-cedar: var(--brand-camp-green);
+  --color-cedar-deep: var(--brand-camp-green-deep);
+  --color-sunlit-moss: var(--brand-lake-sky);
+  --color-moss: var(--brand-lake-sky);
+  --color-pine-night: var(--brand-ink);
+  --color-forest-floor: var(--brand-ink);
+  --color-forest-900: var(--brand-ink);
+  --color-forest-panel: var(--brand-ink-soft);
+  --color-lake-night: var(--brand-ink);
+  --color-birch-bark: var(--brand-cream);
+  --color-birch-bark-bright: var(--brand-white);
+  --color-cream: var(--brand-cream);
+  --color-ink-soft: var(--brand-ink-soft);
+  --color-ink-muted: var(--brand-ink-soft);
+  --color-ember-red: var(--brand-error);
 
   /* ---- Typography ---- */
 
-  /* Font families — CSS variables are set by next/font in layout.tsx. */
-  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-accent: "Caveat", var(--font-caveat), cursive;
+  /* Font families — CSS variables are set by next/font in layout.tsx.
+     display and ui are the same face; the names keep the two jobs apart. */
+  --font-display: var(--font-work-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-ui: var(--font-work-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-merriweather), Georgia, "Times New Roman", serif;
+  --font-accent: var(--font-caveat), "Bradley Hand", "Segoe Print", cursive;
   --font-mono: ui-monospace, Menlo, "Cascadia Mono", "Segoe UI Mono",
     "Liberation Mono", monospace;
 
   /* ---- Border Radius ---- */
-  --radius-xs: 3px;
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
-  --radius-xl: 26px;
-  --radius-section: 44px;
+  --radius-xs: 2px; /* bars and rules */
+  --radius-sm: 8px; /* buttons, inputs, small fills */
+  --radius-md: 12px; /* cards, photos, panels */
+  --radius-card: var(--radius-md); /* job name for the card radius */
+  --radius-section: 44px; /* tuck curve (structural) */
   --radius-pill: 999px;
+  /* Deprecated CAC steps; Setebaid cards use radius-md. */
+  --radius-lg: var(--radius-md);
+  --radius-xl: var(--radius-md);
 
-  /* ---- Spacing ---- */
-  /* No `--spacing-section` token: it would make Tailwind's built-in
+  /* ---- Spacing ----
+     The spacing scale is Tailwind's 4px step (p-1 = 4px … p-30 = 120px).
+     Use 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 16, 24 and 30; see DESIGN.md § Layout.
+     No `--spacing-section` token: it would make Tailwind's built-in
      `py-section` win over the `@utility py-section` below, and the seam
      padding from section-boundaries.ts would never apply. */
-  --spacing-gutter: 56px;
+  --spacing-gutter: 32px;
 
   /* ---- Shadows ---- */
-  --shadow-lift: 0 40px 70px -22px rgba(13, 18, 8, 0.65);
-  --shadow-media-rest: 0 36px 70px rgba(13, 18, 8, 0.45);
-  --shadow-globe-rest: 0 42px 84px rgba(0, 0, 0, 0.5);
-  --shadow-card-rest-cream: 0 22px 44px rgba(22, 32, 15, 0.12);
-  --shadow-stamp: 0 10px 24px rgba(13, 18, 8, 0.35);
-  --shadow-hero-cta: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 1px 2px color-mix(in oklab, var(--brand-ink) 6%, transparent),
+    0 14px 30px -18px color-mix(in oklab, var(--brand-ink) 35%, transparent);
+  --shadow-badge: 0 8px 24px color-mix(in oklab, var(--brand-ink) 18%, transparent);
+  --shadow-lift: 0 14px 28px -14px color-mix(in oklab, var(--brand-ink) 45%, transparent);
+  --shadow-cta: 0 14px 36px -12px color-mix(in oklab, var(--brand-camp-green) 45%, transparent);
+  --shadow-highlight: 0 14px 36px -12px color-mix(in oklab, var(--brand-marigold) 50%, transparent);
+  /* Deprecated CAC shadows. */
+  --shadow-media-rest: var(--shadow-card);
+  --shadow-globe-rest: var(--shadow-card);
+  --shadow-card-rest-cream: var(--shadow-card);
+  --shadow-stamp: var(--shadow-badge);
+  --shadow-hero-cta: var(--shadow-cta);
 
   /* ---- Container ---- */
-  --container-content: 1320px;
+  --container-content: 1240px;
 
   /* ---- Breakpoints ---- */
   --breakpoint-phone: 640px;
@@ -105,6 +180,7 @@
   /* ---- Easing ---- */
   --ease-reveal: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-flip: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-standard: ease;
 
   /* ---- Animation ---- */
@@ -115,12 +191,14 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Responsive layout custom properties                                 */
+/* Layout custom properties                                            */
 /* ------------------------------------------------------------------ */
 
 :root {
-  --gutter: 56px;
-  --section-pad: 120px;
+  /* Fluid, so no breakpoint overrides: 20px gutter and 64px rhythm on a
+     phone, 32px and 96px on a desktop. */
+  --gutter: clamp(20px, 5vw, 32px);
+  --section-pad: clamp(64px, 9vw, 96px);
   --header-height: 80px;
   /* Tuck overlap: how far a rounded-top section reaches up over the section
      above. Equal to the section radius so the curve starts at the seam. */
@@ -130,28 +208,22 @@
   --seam-factor: 0.5;
   --section-pad-top: var(--section-pad);
   --section-pad-bottom: var(--section-pad);
-  /* Dark band surface: a warm glow near the top, a shadow settling at the
-     bottom, and a grain over both. Tune here. */
-  --band-glow: color-mix(in oklch, var(--color-campfire-amber) 14%, transparent);
-  --band-shade: color-mix(in oklch, var(--color-pine-night) 45%, transparent);
+
+  /* Glows: soft light pooled in the corners of a field. The dark band uses
+     the first three; light fields use sun, peach and daylight (see DESIGN.md
+     § Elevation & Depth). Tune the strength with --glow-intensity. */
+  --glow-intensity: 0.9;
+  --band-glow: color-mix(in oklab, var(--brand-marigold) 31%, transparent);
+  --band-glow-green: rgb(60 165 112 / 0.72);
+  --band-shade: rgb(8 22 15 / 0.6);
+  --glow-sun: color-mix(in oklab, var(--brand-marigold) 48%, transparent);
+  --glow-peach: rgb(244 158 108 / 0.29);
+  --glow-daylight: rgb(255 252 243 / 0.96);
+
+  /* Grain over the glow. */
   --grain-size: 180px;
   --grain-opacity: 0.45;
   --grain-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-}
-
-
-@media (max-width: 1023px) {
-  :root {
-    --gutter: 32px;
-    --section-pad: 96px;
-  }
-}
-
-@media (max-width: 639px) {
-  :root {
-    --gutter: 20px;
-    --section-pad: 72px;
-  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -214,10 +286,10 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
 }
 
 /* Band surface. The dispatcher wraps each run of seam-joined sections in a
-   band (see resolveSectionBands). Dark bands carry one grain overlay that
-   spans the whole run, so the texture never restarts at a seam. The band
-   does not paint a background: sections keep their own colour, the overlay
-   sits above them and blends in. flow-root stops a leading tucker's
+   band (see resolveSectionBands). Dark bands carry one glow and one grain
+   overlay that span the whole run, so the texture never restarts at a seam.
+   The band does not paint a background: sections keep their own colour, the
+   overlay sits above them and blends in. flow-root stops a leading tucker's
    negative margin from collapsing through the band, so the band box starts
    at the boundary and the tucker overflows above it; the overlay reaches
    up by the same overlap and rounds its corners to the tucker's shape.
@@ -241,15 +313,17 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
   pointer-events: none;
 }
 
-/* Tonal variation: two large warm glows, top-left and bottom-right, with a
-   shadow in the top-right corner between them. Sized to the band, so a long
-   run gets one slow sweep rather than a glow per section. */
+/* Sunlit dark field: marigold light in the top-right corner, a green glow
+   rising from the bottom-left, and a shade settling at the bottom. Sized to
+   the band, so a long run gets one slow sweep rather than a glow per
+   section. */
 [data-band="green"]::before,
 [data-band="night"]::before {
+  opacity: var(--glow-intensity);
   background-image:
-    radial-gradient(170% 95% at 8% 0%, var(--band-glow), transparent 70%),
-    radial-gradient(170% 95% at 96% 100%, var(--band-glow), transparent 70%),
-    radial-gradient(120% 60% at 100% 0%, var(--band-shade), transparent 70%);
+    radial-gradient(40% 90% at 92% 10%, var(--band-glow), transparent 72%),
+    radial-gradient(50% 110% at 0% 100%, var(--band-glow-green), transparent 72%),
+    radial-gradient(60% 80% at 55% 120%, var(--band-shade), transparent 72%);
 }
 
 [data-band="green"]::after,
@@ -265,6 +339,69 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
   top: calc(-1 * var(--section-overlap));
   border-top-left-radius: var(--radius-section);
   border-top-right-radius: var(--radius-section);
+}
+
+/* ------------------------------------------------------------------ */
+/* Card fills                                                          */
+/* ------------------------------------------------------------------ */
+
+/* A coloured card is a small field: it paints its fill and re-points the
+   text tokens inside it, so a marigold card on the Forest field does not
+   inherit marigold links and mist text. Values follow contrast on each fill:
+   ink is the only small-text colour that passes on marigold and lake sky. */
+@utility card-quiet {
+  background-color: var(--color-fill-quiet);
+  color: var(--color-fill-quiet-foreground);
+  --color-foreground: var(--brand-ink);
+  --color-muted-foreground: var(--brand-ink-soft);
+  --color-link: var(--brand-camp-green-deep);
+  --color-emphasis: var(--brand-camp-green-deep);
+  --color-border: var(--brand-line);
+  --color-ring: var(--brand-camp-green-deep);
+}
+
+@utility card-warm {
+  background-color: var(--color-fill-warm);
+  color: var(--color-fill-warm-foreground);
+  --color-foreground: var(--brand-ink);
+  --color-muted-foreground: var(--brand-ink);
+  --color-link: var(--brand-ink);
+  --color-emphasis: var(--brand-ink);
+  --color-border: var(--brand-line);
+  --color-ring: var(--brand-ink);
+}
+
+@utility card-cool {
+  background-color: var(--color-fill-cool);
+  color: var(--color-fill-cool-foreground);
+  --color-foreground: var(--brand-ink);
+  --color-muted-foreground: var(--brand-ink);
+  --color-link: var(--brand-ink);
+  --color-emphasis: var(--brand-ink);
+  --color-border: var(--brand-line);
+  --color-ring: var(--brand-ink);
+}
+
+@utility card-deep {
+  background-color: var(--color-fill-deep);
+  color: var(--color-fill-deep-foreground);
+  --color-foreground: var(--brand-cream);
+  --color-muted-foreground: var(--brand-mist);
+  --color-link: var(--brand-marigold);
+  --color-emphasis: var(--brand-marigold);
+  --color-border: var(--brand-line-on-dark);
+  --color-ring: var(--brand-marigold);
+}
+
+@utility card-bold {
+  background-color: var(--color-fill-bold);
+  color: var(--color-fill-bold-foreground);
+  --color-foreground: var(--brand-white);
+  --color-muted-foreground: var(--brand-white);
+  --color-link: var(--brand-white);
+  --color-emphasis: var(--brand-white);
+  --color-border: color-mix(in oklab, var(--brand-white) 25%, transparent);
+  --color-ring: var(--brand-white);
 }
 
 /* ------------------------------------------------------------------ */
@@ -305,7 +442,7 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
 /* Utility classes                                                     */
 /* ------------------------------------------------------------------ */
 
-/* Content padding — maps to responsive --gutter */
+/* Content padding — maps to the fluid --gutter */
 @utility px-content-x {
   padding-inline: var(--gutter);
 }
@@ -326,94 +463,188 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
 /* Typography utilities                                                */
 /* ------------------------------------------------------------------ */
 
-/* Display — hero headline only */
+/* Headings are Work Sans 800 (font-display). Sentences are Merriweather
+   (font-body). Notes are Caveat (font-accent). The role utilities below set
+   size, leading and tracking; each also sets the family it belongs to. */
+
+/* Display — the hero headline only */
 @utility text-display-hero {
-  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 1.6rem + 5vw, 5.25rem);
+  font-weight: 800;
   line-height: 0.96;
-  letter-spacing: -0.025em;
-  font-variation-settings: "opsz" 96;
+  letter-spacing: -0.03em;
 }
 
-/* Display, page-header scale — interior page openers */
+/* Display, page scale — interior page openers */
 @utility text-display-page {
-  font-size: clamp(2.625rem, 6vw, 4.875rem);
-  line-height: 0.94;
-  letter-spacing: -0.035em;
-  font-variation-settings: "opsz" 96;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.6rem + 3.4vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
 }
 
 /* Headline — section openers */
 @utility text-headline {
-  font-size: clamp(2.25rem, 5vw, 3.625rem);
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 1.5rem + 2.2vw, 3.125rem);
   font-weight: 800;
-  line-height: 1.02;
+  line-height: 1.04;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
-/* Title — cards, program titles, stat numbers */
-@utility text-title {
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-}
-
-/* Larger title — row headings with room to wrap */
+/* Large title — camp names, feature cards, prices */
 @utility text-title-lg {
-  font-size: 28px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 1.25rem + 1vw, 2rem);
+  font-weight: 800;
   line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+/* Title — card, event and news titles */
+@utility text-title {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1.2;
   letter-spacing: -0.01em;
 }
 
-/* Eyebrow — supporting context for a heading. Keep it readable in sentence case. */
-@utility text-eyebrow {
+/* Figure — a date or number that anchors a card ("Apr 24") */
+@utility text-figure {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Statement — a short claim set large inside a card */
+@utility text-statement {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 0.9rem + 1vw, 1.625rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+/* Statement, small — two sentences in a card, lighter weight */
+@utility text-statement-sm {
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 0.85rem + 0.8vw, 1.375rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+
+/* Quote — testimonial text */
+@utility text-quote {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+/* Lead — the paragraph under a hero or section headline */
+@utility text-lead {
   font-family: var(--font-body);
-  min-height: 1.35em;
-  font-size: 14px;
+  font-size: clamp(1.125rem, 1rem + 0.4vw, 1.25rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* Body — running text */
+@utility text-body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+/* Small — card blurbs and notes under a table */
+@utility text-small {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* Eyebrow — the short uppercase label above a heading or inside a card */
+@utility text-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.35;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* Label — chips, map markers, stamps, and metadata. It must remain legible at a glance. */
+/* Label — metadata in sentence case: dates, places, roles, chips */
 @utility text-label {
-  font-family: var(--font-body);
-  min-height: 1.35em;
-  font-size: 14px;
-  font-weight: 500;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 600;
   line-height: 1.35;
-  letter-spacing: 0.01em;
+}
+
+/* Note — the handwritten aside: captions, signatures, margin notes */
+@utility text-note {
+  font-family: var(--font-accent);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+@utility text-note-sm {
+  font-family: var(--font-accent);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+/* Heading emphasis — the accent phrase inside a headline. It keeps the
+   headline's font and weight and only changes colour; pair it with
+   `text-emphasis` on a field, or `text-highlight` on a photo or fixed dark
+   ground. Caveat is never used in headings (DESIGN.md, The One Hand Rule). */
+@utility heading-emphasis {
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: normal;
+}
+
+/* Step number above a stop's time in the day-list blocks ("01", "02"). */
+@utility text-step-number {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ------------------------------------------------------------------ */
 /* Button / control utilities (consumed by components/ui/button.tsx)    */
 /* ------------------------------------------------------------------ */
 
-/* Step number above a stop's time in the day-list blocks ("01", "02"). */
-@utility text-step-number {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-}
-
 @utility rounded-control {
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
 }
 
 @utility typo-button {
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 700;
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 600;
 }
 
 @utility typo-button-lg {
-  font-family: var(--font-body);
-  font-size: 17px;
-  font-weight: 700;
+  font-family: var(--font-ui);
+  font-size: 1.0625rem;
+  font-weight: 600;
 }
 
 /* ------------------------------------------------------------------ */
@@ -434,11 +665,98 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
 /* Focus ring                                                          */
 /* ------------------------------------------------------------------ */
 
+/* The ring token follows the field: camp green on light, marigold on dark. */
 @utility focus-ring {
   &:focus-visible {
-    outline: 2px solid var(--color-campfire-amber);
+    outline: 2px solid var(--color-ring);
     outline-offset: 3px;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Fields                                                              */
+/* ------------------------------------------------------------------ */
+
+/* A field is a section background. Each utility paints the ground and
+   re-points the contextual job tokens for everything inside it, so the same
+   component markup is correct on Cream, Sand and Forest. sectionThemeClass()
+   in components/blocks/section-theme.ts picks one from the editor's choice.
+   --section-accent and --section-surface are deprecated stand-ins that CAC
+   blocks still read; they follow the link and background tokens. */
+@utility field-cream {
+  --color-background: var(--brand-cream);
+  --color-foreground: var(--brand-ink);
+  --color-muted: var(--brand-sand);
+  --color-muted-foreground: var(--brand-ink-soft);
+  --color-card: var(--brand-white);
+  --color-card-foreground: var(--brand-ink);
+  --color-popover: var(--brand-white);
+  --color-popover-foreground: var(--brand-ink);
+  --color-border: var(--brand-line);
+  --color-input: var(--brand-line);
+  --color-ring: var(--brand-camp-green);
+  --color-link: var(--brand-camp-green);
+  --color-emphasis: var(--brand-logo-green);
+  --color-accent: var(--brand-sand);
+  --color-accent-foreground: var(--brand-ink);
+  --color-secondary: var(--brand-sand);
+  --color-secondary-foreground: var(--brand-ink);
+  --section-accent: var(--color-link);
+  --section-surface: var(--color-background);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Sand: camp green is under 4.5:1 here, so small accent text and the focus
+   ring take the deeper green. */
+@utility field-sand {
+  --color-background: var(--brand-sand);
+  --color-foreground: var(--brand-ink);
+  --color-muted: var(--brand-cream);
+  --color-muted-foreground: var(--brand-ink-soft);
+  --color-card: var(--brand-white);
+  --color-card-foreground: var(--brand-ink);
+  --color-popover: var(--brand-white);
+  --color-popover-foreground: var(--brand-ink);
+  --color-border: var(--brand-line);
+  --color-input: var(--brand-line);
+  --color-ring: var(--brand-camp-green-deep);
+  --color-link: var(--brand-camp-green-deep);
+  --color-emphasis: var(--brand-camp-green-deep);
+  --color-accent: var(--brand-cream);
+  --color-accent-foreground: var(--brand-ink);
+  --color-secondary: var(--brand-cream);
+  --color-secondary-foreground: var(--brand-ink);
+  --section-accent: var(--color-link);
+  --section-surface: var(--color-background);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Forest: the dark field. Cream text, mist for secondary text, marigold for
+   small accents and the headline phrase. */
+@utility field-forest {
+  --color-background: var(--brand-ink);
+  --color-foreground: var(--brand-cream);
+  --color-muted: color-mix(in oklab, var(--brand-cream) 8%, var(--brand-ink));
+  --color-muted-foreground: var(--brand-mist);
+  --color-card: color-mix(in oklab, var(--brand-cream) 7%, var(--brand-ink));
+  --color-card-foreground: var(--brand-cream);
+  --color-popover: var(--brand-white);
+  --color-popover-foreground: var(--brand-ink);
+  --color-border: var(--brand-line-on-dark);
+  --color-input: var(--brand-line-on-dark);
+  --color-ring: var(--brand-marigold);
+  --color-link: var(--brand-marigold);
+  --color-emphasis: var(--brand-marigold);
+  --color-accent: color-mix(in oklab, var(--brand-cream) 10%, var(--brand-ink));
+  --color-accent-foreground: var(--brand-cream);
+  --color-secondary: color-mix(in oklab, var(--brand-cream) 10%, var(--brand-ink));
+  --color-secondary-foreground: var(--brand-cream);
+  --section-accent: var(--color-link);
+  --section-surface: var(--color-background);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
 }
 
 /* ------------------------------------------------------------------ */
@@ -453,12 +771,14 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
 /* Border utilities                                                    */
 /* ------------------------------------------------------------------ */
 
+/* A stronger hairline; follows the field's text colour. */
 @utility border-strong {
-  border-color: rgba(22, 32, 15, 0.18);
+  border-color: color-mix(in oklab, var(--color-foreground) 18%, transparent);
 }
 
+/* Deprecated CAC name: a strong cream edge on dark or photographic ground. */
 @utility edge-on-dark-strong {
-  border-color: rgba(243, 239, 226, 0.22);
+  border-color: color-mix(in oklab, var(--brand-cream) 22%, transparent);
 }
 
 /* ------------------------------------------------------------------ */
@@ -466,12 +786,12 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
 /* ------------------------------------------------------------------ */
 
 :root {
-  --control-height: 48px;
-  --control-inline: 30px;
-  --control-height-hero: 56px;
-  --control-inline-hero: 34px;
+  --control-height: 44px;
+  --control-inline: 20px;
+  --control-height-hero: 52px;
+  --control-inline-hero: 28px;
   --control-height-compact: 38px;
-  --control-inline-compact: 22px;
+  --control-inline-compact: 16px;
 }
 
 /* ------------------------------------------------------------------ */
@@ -479,11 +799,33 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
 /* ------------------------------------------------------------------ */
 
 body {
-  font-family: var(--font-body);
-  color: var(--color-pine-night);
-  background-color: var(--color-birch-bark);
+  font-family: var(--font-ui);
+  color: var(--color-foreground);
+  background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  text-size-adjust: 100%;
+}
+
+@layer base {
+  /* The Sentence Rule: every paragraph is Merriweather. Interface text
+     (labels, buttons, navigation) stays in Work Sans; a paragraph that is
+     really interface text opts out with `font-ui`. */
+  p {
+    font-family: var(--font-body);
+    text-wrap: pretty;
+  }
+
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: max(1px, 0.08em);
+  }
+
+  ::selection {
+    background-color: var(--color-highlight);
+    color: var(--color-highlight-foreground);
+  }
 }
 
 /* ------------------------------------------------------------------ */

@@ -26,17 +26,14 @@ type BenefitCardsProps = Extract<PageBlock, { _type: "benefitCards" }> & {
  */
 type Field = { cream: boolean };
 
-function headingComponents({ cream }: Field): PortableTextComponents {
+function headingComponents(): PortableTextComponents {
   return {
     block: { normal: ({ children }) => <>{children}</> },
     marks: {
       strong: ({ children }) => <strong>{children}</strong>,
       em: ({ children }) => (
         <em
-          className={cn(
-            "font-accent not-italic",
-            cream ? "text-cedar" : "text-campfire-amber",
-          )}
+          className="heading-emphasis text-emphasis"
         >
           {children}
         </em>
@@ -138,7 +135,7 @@ export default function BenefitCards({
             data-sanity={dataAttribute?.("title")}
             id={headingId}
           >
-            <PortableText components={headingComponents({ cream })} value={title} />
+            <PortableText components={headingComponents()} value={title} />
           </h2>
           {hasText(intro) ? (
             <p

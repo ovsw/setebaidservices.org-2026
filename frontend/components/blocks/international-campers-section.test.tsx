@@ -254,11 +254,12 @@ describe("InternationalCampersSection", () => {
     expect(torontoButton).toHaveAttribute("aria-pressed", "false");
   });
 
-  it("renders the accent phrase in the handwritten font", () => {
+  it("renders the accent phrase in the headline font, not the handwritten one", () => {
     render(<InternationalCampersSection {...section} />);
 
     const accent = screen.getByText("The whole world.");
     expect(accent.tagName).toBe("EM");
-    expect(accent.className).toContain("font-accent");
+    expect(accent.className).toContain("heading-emphasis");
+    expect(accent.className).not.toContain("font-accent");
   });
 });

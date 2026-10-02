@@ -44,7 +44,7 @@ const headingComponents: PortableTextComponents = {
   marks: {
     strong: ({ children }) => <strong>{children}</strong>,
     em: ({ children }) => (
-      <em className="block font-accent text-[clamp(2.625rem,5vw,4.25rem)] font-semibold not-italic leading-none text-campfire-amber">
+      <em className="block heading-emphasis text-highlight">
         {children}
       </em>
     ),
