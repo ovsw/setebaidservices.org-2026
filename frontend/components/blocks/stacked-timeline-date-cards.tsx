@@ -51,7 +51,7 @@ function CardShell({
     <Link
       className={cn(
         className,
-        "focus-ring transition-transform motion-base hover:-translate-y-0.5 motion-reduce:hover:translate-y-0",
+        "focus-ring transition-transform motion-base hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0",
       )}
       data-sanity={dataSanity}
       href={link.href}
@@ -125,7 +125,7 @@ export default function StackedTimelineDateCards({
                   {hasText(card.meta) ? <span className="text-figure">{card.meta}</span> : null}
                   <span className="mt-2 text-title">{card.title}</span>
                   {hasText(card.text) ? (
-                    <span className="text-small opacity-90">{card.text}</span>
+                    <span className="text-small">{card.text}</span>
                   ) : null}
                   {cardLink ? (
                     <span className="mt-auto pt-3 typo-button underline underline-offset-[0.22em]">

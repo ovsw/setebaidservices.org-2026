@@ -44,7 +44,7 @@ export default function BenefitCardsRingPhoto({
   return (
     <section
       aria-labelledby={headingId}
-      className={cn("py-section", sectionThemeClass(background),
+      className={cn("overflow-x-clip py-section", sectionThemeClass(background),
         lightGlowClass(background, "corners"),
       )}
     >

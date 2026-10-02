@@ -146,7 +146,7 @@ export default function HomeHero({
               <HomeHeroVideoLightbox href={filmUrl} label={filmLabel}>
                 <button
                   aria-label={filmLabel}
-                  className="focus-ring absolute bottom-[44px] left-1 flex size-20 cursor-pointer items-center justify-center rounded-full bg-highlight shadow-[0_0_0_8px_var(--color-background)] transition-transform motion-base hover:scale-105 motion-reduce:hover:scale-100 lg:bottom-[58px] lg:left-1.5 lg:size-[100px]"
+                  className="focus-ring absolute bottom-[44px] left-1 flex size-20 cursor-pointer items-center justify-center rounded-full bg-highlight shadow-[0_0_0_8px_var(--color-background)] transition-transform motion-base hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100 lg:bottom-[58px] lg:left-1.5 lg:size-[100px]"
                   data-sanity={dataAttribute?.("filmButton")}
                   type="button"
                 >

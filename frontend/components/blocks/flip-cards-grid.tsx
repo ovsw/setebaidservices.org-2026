@@ -132,7 +132,7 @@ export default function FlipCardGrid({
                 style={{ transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
               >
                 <span
-                  aria-hidden={isFlipped}
+                  aria-hidden={isFlipped || undefined}
                   className={cn(
                     "absolute inset-0 flex flex-col justify-between rounded-card p-7 text-foreground [backface-visibility:hidden]",
                     tone.front,
@@ -146,7 +146,7 @@ export default function FlipCardGrid({
                   </span>
                 </span>
                 <span
-                  aria-hidden={!isFlipped}
+                  aria-hidden={!isFlipped || undefined}
                   className={cn(
                     "absolute inset-0 flex flex-col justify-between overflow-hidden rounded-card p-7 [backface-visibility:hidden] [transform:rotateY(180deg)]",
                     tone.back,
@@ -156,7 +156,7 @@ export default function FlipCardGrid({
                     className="absolute -right-[50px] -bottom-[50px] size-[220px] opacity-[0.06]"
                     strokeWidth={2.5}
                   />
-                  <span className="text-eyebrow opacity-85">{backLabel}</span>
+                  <span className="text-eyebrow">{backLabel}</span>
                   <span className="relative text-statement-sm text-pretty">{card.back}</span>
                   <span aria-hidden="true" className="relative text-[34px] leading-none">
                     {card.emoji}

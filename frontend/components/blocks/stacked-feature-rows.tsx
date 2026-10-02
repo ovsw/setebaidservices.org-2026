@@ -90,7 +90,7 @@ export default function StackedFeatureRows({
         <header className="grid max-w-4xl gap-4">
           {hasText(eyebrow) ? (
             <p
-              className="text-eyebrow text-current/70"
+              className="text-eyebrow text-current/80"
               data-sanity={dataAttribute?.("eyebrow")}
             >
               {eyebrow}
