@@ -59,20 +59,29 @@ describe("resolveSectionBoundaries", () => {
     ]);
   });
 
-  it("alternates shaped edges: smile, then tuck, then smile", () => {
+  it("gives each section one shape and alternates the shapes up from the footer", () => {
     const result = resolveSectionBoundaries([
       block("benefitCards", "green"),
       block("faqAccordion", "cream"),
       block("journey", "green"),
       block("richTextBlock", "white"),
+      block("bigImageList", "green"),
+      block("teamMembers", "white"),
     ]);
+    // Edges: straight, tuck, straight, smile, straight, straight, footer tuck.
     expect(result.map(({ smileAbove, tuck }) => ({ smileAbove, tuck }))).toEqual([
       { smileAbove: false, tuck: false },
-      { smileAbove: true, tuck: false },
       { smileAbove: false, tuck: true },
+      { smileAbove: false, tuck: false },
       { smileAbove: true, tuck: false },
+      { smileAbove: false, tuck: false },
+      { smileAbove: false, tuck: false },
     ]);
-    expect(result[1].tuckBelow).toBe(true);
+    for (const boundary of result) {
+      const top = boundary.tuck || boundary.smileAbove;
+      const bottom = boundary.smileBelow || boundary.tuckBelow;
+      if (boundary !== result[result.length - 1]) expect(top && bottom).toBe(false);
+    }
   });
 
   it("does not tuck a first section under nothing", () => {
@@ -131,10 +140,36 @@ describe("resolveSectionBoundaries smile", () => {
   }
 
   it("hangs a smile between two different solid colours", () => {
-    expect(smiles([block("benefitCards", "white"), block("faqAccordion", "green")])).toEqual([
+    expect(
+      smiles([
+        block("benefitCards", "white"),
+        block("faqAccordion", "green"),
+        block("richTextBlock", "white"),
+      ]),
+    ).toEqual([
       { smileAbove: false, smileBelow: true },
       { smileAbove: true, smileBelow: false },
+      { smileAbove: false, smileBelow: false },
     ]);
+  });
+
+  it("treats seam-joined sections as one surface with one shape", () => {
+    const result = resolveSectionBoundaries([
+      block("benefitCards", "white"),
+      block("faqAccordion", "cream"),
+      block("journey", "cream"),
+      block("richTextBlock", "white"),
+      block("teamMembers", "green"),
+      block("bigImageList", "white"),
+    ]);
+    expect(result[1].smileAbove || result[1].tuck).toBe(true);
+    expect(result[3].smileAbove || result[3].tuck).toBe(false);
+  });
+
+  it("keeps the edge above the last section straight, since the footer tucks under it", () => {
+    expect(smiles([block("benefitCards", "white"), block("faqAccordion", "green")])[1].smileAbove).toBe(
+      false,
+    );
   });
 
   it("does not smile at a seam or above the footer", () => {
@@ -150,7 +185,10 @@ describe("resolveSectionBoundaries smile", () => {
   });
 
   it("smiles below the solid home hero", () => {
-    expect(smiles([block("homeHero"), block("wordSwap", "green")])[0].smileBelow).toBe(true);
+    expect(
+      smiles([block("homeHero"), block("wordSwap", "green"), block("richTextBlock", "white")])[0]
+        .smileBelow,
+    ).toBe(true);
   });
 
   it("does not smile between Green and Night, which share a colour", () => {
@@ -170,63 +208,37 @@ describe("resolveSectionBands layer", () => {
         block("ctaBanner", "cream"),
       ]),
     );
-    // Edges: smile, tuck, smile.
+    // Edges: smile, straight, straight.
     expect(bands.map(({ smile, layer }) => ({ smile, layer }))).toEqual([
-      { smile: true, layer: 3 },
-      { smile: false, layer: 2 },
       { smile: true, layer: 2 },
+      { smile: false, layer: 1 },
+      { smile: false, layer: 1 },
       { smile: false, layer: 1 },
     ]);
   });
 });
 
 describe("resolveSectionBoundaries photo CTA banner", () => {
-  it("follows a forced tuck with a smile", () => {
-    const banner = { ...block("ctaBanner", "cream"), variant: "photo" } as Block;
-    const result = resolveSectionBoundaries([
-      block("benefitCards", "green"),
-      banner,
-      block("faqAccordion", "cream"),
-      block("richTextBlock", "white"),
-    ]);
-    expect(result[1].tuck).toBe(true);
-    expect(result[2].under).toBe(true);
-    expect(result[3].smileAbove).toBe(true);
-  });
+  const banner = () => ({ ...block("ctaBanner", "cream"), variant: "photo" }) as Block;
 
-  it("plans the edges before a photo card backwards so a smile meets its tuck", () => {
-    const banner = { ...block("ctaBanner", "cream"), variant: "photo" } as Block;
-    const result = resolveSectionBoundaries([
-      block("benefitCards", "green"),
-      block("faqAccordion", "cream"),
-      block("richTextBlock", "white"),
-      banner,
-      block("journey", "cream"),
-    ]);
-    expect(result.map(({ smileAbove, tuck, under }) => ({ smileAbove, tuck, under }))).toEqual([
-      { smileAbove: false, tuck: false, under: false },
-      { smileAbove: false, tuck: true, under: false },
-      { smileAbove: true, tuck: false, under: false },
-      { smileAbove: false, tuck: true, under: false },
-      { smileAbove: false, tuck: false, under: true },
-    ]);
-  });
-
-  it("resolves the photo banner as a photo whatever the editor background says", () => {
-    const banner = { ...block("ctaBanner", "cream"), variant: "photo" } as Block;
+  it("meets both neighbours at straight edges", () => {
     const result = resolveSectionBoundaries([
       block("stackedTimeline", "cream"),
-      banner,
+      banner(),
       block("imageCollageFeature", "cream"),
+      block("richTextBlock", "white"),
     ]);
     expect(result[1].background).toBe("photo");
-    expect(result[1].tuck).toBe(true);
-    expect(result[1].overhang).toBe(true);
-    expect(result[2].under).toBe(true);
-    expect(result[2].tuck).toBe(false);
     expect(result[0].seamBottom).toBe(false);
+    expect(result[0].smileBelow).toBe(false);
+    expect(result[1].tuck).toBe(false);
+    expect(result[1].tuckBelow).toBe(false);
+    expect(result[1].smileBelow).toBe(false);
     expect(result[2].seamTop).toBe(false);
-    expect(result[2].smileAbove).toBe(false);
+  });
+
+  it("does not tuck under a photo hero", () => {
+    expect(resolveSectionBoundaries([block("innerHero"), banner()])[1].tuck).toBe(false);
   });
 });
 

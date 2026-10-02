@@ -287,18 +287,6 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
   --section-pad-bottom: calc(var(--section-pad) + var(--section-overlap));
 }
 
-/* A section under a photo card slides up under the card's rounded bottom,
-   so its colour fills the corners, and pads past the overlap. */
-[data-under] {
-  --section-pad-top: calc(var(--section-pad) + var(--section-overlap));
-  margin-top: calc(-1 * var(--section-overlap));
-}
-
-[data-overhang] > * {
-  border-bottom-left-radius: var(--radius-section);
-  border-bottom-right-radius: var(--radius-section);
-}
-
 /* A section under a smile pads past the curve, so the curve does not eat
    its content. */
 [data-smile-above] {
@@ -318,13 +306,13 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
 }
 
 /* Tuck geometry. The wrapper, not the section, pulls a tucker up over the
-   section above and stacks it on top. z-index 1 sits under the sticky header
-   (z-60) and the catalogue jump bar (z-40). No overflow clipping here: the
-   story feature and large slides pin sticky frames that stop working under a
+   section above. The band's layer stacks it on top (see [data-band]), so the
+   wrapper sets no z-index of its own: one would lift the tucker over its
+   band's glow and hide the glow. No overflow clipping here: the story
+   feature and large slides pin sticky frames that stop working under a
    clipping ancestor. */
 [data-tuck] {
   position: relative;
-  z-index: 1;
   margin-top: calc(-1 * var(--section-overlap));
 }
 

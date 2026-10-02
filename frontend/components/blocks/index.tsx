@@ -235,8 +235,6 @@ export default function Blocks({
             data-tuck-below={boundary.tuckBelow ? "" : undefined}
             data-smile-above={boundary.smileAbove ? "" : undefined}
             data-smile-below={boundary.smileBelow ? "" : undefined}
-            data-under={boundary.under ? "" : undefined}
-            data-overhang={boundary.overhang ? "" : undefined}
             key={block._key}
           >
             <Component {...themedBlock} {...editingProps} {...pageDataProps} />

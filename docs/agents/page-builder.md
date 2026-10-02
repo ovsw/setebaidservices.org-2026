@@ -32,14 +32,17 @@ resolve to the same background and the upper one is not a hero. Every other
 boundary is an edge. The first section's top is an edge. The last section's
 bottom is an edge, and the footer tucks under it.
 
-**Edge shapes.** An edge between two different colours is shaped, and shaped
-edges alternate down the page: a smile (the upper colour hangs a curve into
-the lower section), then a tuck (the lower section's rounded top overlaps the
-upper one), then a smile again. Exceptions:
+**Edge shapes.** An edge between two different colours can take a shape: a
+smile (the upper colour hangs a curve into the lower section) or a tuck (the
+lower section's rounded top overlaps the upper one). A section, or a run of
+seam-joined sections, touches at most one shape, so a shaped edge is always
+followed by a straight one. The
+shapes alternate down the page: smile, straight, tuck, straight, smile. The
+footer always tucks, so the edge above the last section is straight and the
+last shape before the footer is a smile. Exceptions:
 
-- A full-width photo section that is not a hero is a card with four rounded
-  corners. It always tucks over the section above, and the section below
-  slides under its rounded bottom. The next free edge after it is a smile.
+- A full-width photo section that is not a hero meets both neighbours at
+  straight edges, with square corners.
 - Below a photo hero, only a tucker tucks; other sections meet the hero at a
   straight edge.
 - Green and Night paint the same colour, so they meet at a straight edge.
@@ -58,7 +61,7 @@ change.
 **Wrapper attributes.** The resolver in
 `frontend/components/blocks/section-boundaries.ts` runs once per page on the
 server. The dispatcher in `frontend/components/blocks/index.tsx` writes its
-result on the wrapper element as four boolean data attributes:
+result on the wrapper element as boolean data attributes:
 
 - `data-seam-top`: the top boundary is a seam.
 - `data-seam-bottom`: the bottom boundary is a seam.
@@ -68,9 +71,6 @@ result on the wrapper element as four boolean data attributes:
 - `data-smile-above`: the section above hangs a smile into this one; the
   top padding grows by `--smile-depth`.
 - `data-smile-below`: this section hangs a smile into the next one.
-- `data-overhang`: this photo card rounds its bottom over the next section.
-- `data-under`: this section slides under the photo card above; its top
-  padding grows by `--section-overlap`.
 
 A section reads these attributes from its wrapper in CSS. It never receives
 them as a prop, and it never reads the DOM or its neighbours.
@@ -98,9 +98,9 @@ typecheck. Declare traits like this:
 
 - `{}`: a normal section. The editor picks the background.
 - `{ tuck: true }`: a section that tucks under a photo hero. Elsewhere any
-  section may tuck through the alternation. Do not add `rounded-t-section`,
-  a negative margin, or a z-index on a section; the wrapper applies all
-  three, and only while the section tucks.
+  section may tuck through the alternation. Do not add `rounded-t-section`
+  or a negative margin on a section; the wrapper applies both, and only
+  while the section tucks.
 - `{ background: "night", tuck: true }`: a fixed background. The editor field
   is ignored. Also add the `_type` to `FixedBackgroundType` in the same file,
   and omit `background` from its GROQ projection.
