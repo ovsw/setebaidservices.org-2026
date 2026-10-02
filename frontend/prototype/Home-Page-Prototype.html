@@ -468,7 +468,7 @@ class Component extends DCLogic {
   gridRef = React.createRef();
   voicesRef = React.createRef();
   drag = null;
-  onTrackDown = (e) => { if (e.pointerType !== 'mouse') return; const el = this.voicesRef.current; this.drag = { x: e.clientX, left: el.scrollLeft, moved: false }; el.setPointerCapture(e.pointerId); el.style.cursor = 'grabbing'; };
+  onTrackDown = (e) => { this.wasDrag = false; if (e.pointerType !== 'mouse') return; const el = this.voicesRef.current; this.drag = { x: e.clientX, left: el.scrollLeft, moved: false }; el.setPointerCapture(e.pointerId); el.style.cursor = 'grabbing'; };
   onTrackMove = (e) => { if (!this.drag) return; const dx = e.clientX - this.drag.x; if (Math.abs(dx) > 4) this.drag.moved = true; this.voicesRef.current.scrollLeft = this.drag.left - dx; };
   onTrackUp = () => { if (!this.drag) return; const el = this.voicesRef.current; el.style.cursor = 'grab'; this.wasDrag = this.drag.moved; this.drag = null; };
   onTrackClick = (e) => { if (this.wasDrag) { e.preventDefault(); e.stopPropagation(); this.wasDrag = false; } };

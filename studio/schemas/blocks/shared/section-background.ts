@@ -35,7 +35,7 @@ export const sectionBackgroundField = defineField({
   validation: (rule) =>
     rule.custom((value, context) =>
       isLastSection(value, context.document, context.parent)
-        ? "Choose White or Cream for the final section above the footer."
+        ? "Choose Cream or Sand for the final section above the footer."
         : true,
     ),
 });
