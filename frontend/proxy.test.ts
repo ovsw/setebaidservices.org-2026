@@ -136,10 +136,10 @@ describe("blog post count cache", () => {
   });
 
   test.each([
-    "/blog/category/categories/1",
-    "/blog/category/categories/abc",
-    "/blog/category/categories/2/extra",
-    "/blog/category/categories/2/3",
+    "/stories/category/categories/1",
+    "/stories/category/categories/abc",
+    "/stories/category/categories/2/extra",
+    "/stories/category/categories/2/3",
   ])("rejects malformed category route %s", async (pathname) => {
     const { proxy: freshProxy } = await import("@/proxy");
 

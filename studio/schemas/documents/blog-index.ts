@@ -40,7 +40,7 @@ export default defineType({
     select: { title: "title", subtitle: "description" },
     prepare: ({ subtitle, title }) => ({
       title: title || "Untitled Blog Index",
-      subtitle: subtitle || "/blog",
+      subtitle: subtitle || "/stories",
     }),
   },
 });

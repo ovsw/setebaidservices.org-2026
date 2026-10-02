@@ -100,7 +100,7 @@ const category = {
 
 describe("generatePageMetadata", () => {
   it("uses one signed generated card for post Open Graph and Twitter metadata", () => {
-    const metadata = generatePageMetadata({ page: post, path: "/blog/market-trends" });
+    const metadata = generatePageMetadata({ page: post, path: "/stories/market-trends" });
     const image = metadata.openGraph.images[0];
     const url = new URL(image.url);
 
@@ -357,7 +357,7 @@ describe("description resolution", () => {
         ...withMeta(post, { description: null }),
         excerpt: "A short summary.",
       } as NonNullable<POST_QUERY_RESULT>,
-      path: "/blog/market-trends",
+      path: "/stories/market-trends",
       settings: siteSettings,
     });
 

@@ -7,7 +7,7 @@ import LatestArticles from "@/components/blocks/latest-articles";
 import {
   BlogIndexRoute,
   withBlogListingSection,
-} from "@/app/(main)/blog/_components/blog-index-route";
+} from "@/app/(main)/stories/_components/blog-index-route";
 import {
   fetchBlogIndex,
   fetchLatestPost,
@@ -150,7 +150,7 @@ describe("blog index", () => {
     expect(screen.queryByRole("link", { name: "News" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Summer update" })).toHaveAttribute(
       "href",
-      "/blog/summer-update",
+      "/stories/summer-update",
     );
   });
 
@@ -180,7 +180,7 @@ describe("blog index", () => {
     expect(cards[0].closest("a")).toBeNull();
     expect(
       within(cards[0] as HTMLElement).getByRole("link", { name: "Post one" }),
-    ).toHaveAttribute("href", "/blog/one");
+    ).toHaveAttribute("href", "/stories/one");
     expect(screen.queryByRole("link", { name: "News" })).not.toBeInTheDocument();
     expect(screen.queryByRole("navigation", { name: "Pagination" })).toBeNull();
   });
@@ -214,17 +214,17 @@ describe("blog index", () => {
   });
 
   it("builds canonical pagination and category paths", () => {
-    expect(getBlogPaginationUrl(1)).toBe("/blog");
-    expect(getBlogPaginationUrl(2)).toBe("/blog/2");
-    expect(getBlogCanonicalPath(1)).toBe("/blog");
-    expect(getBlogCanonicalPath(3)).toBe("/blog/3");
-    expect(getBlogPaginationUrl(1, "/blog/category/news/")).toBe(
-      "/blog/category/news",
+    expect(getBlogPaginationUrl(1)).toBe("/stories");
+    expect(getBlogPaginationUrl(2)).toBe("/stories/2");
+    expect(getBlogCanonicalPath(1)).toBe("/stories");
+    expect(getBlogCanonicalPath(3)).toBe("/stories/3");
+    expect(getBlogPaginationUrl(1, "/stories/category/news/")).toBe(
+      "/stories/category/news",
     );
-    expect(getBlogPaginationUrl(2, "/blog/category/news/")).toBe(
-      "/blog/category/news/2",
+    expect(getBlogPaginationUrl(2, "/stories/category/news/")).toBe(
+      "/stories/category/news/2",
     );
-    expect(getCategoryArchivePath("news")).toBe("/blog/category/news");
+    expect(getCategoryArchivePath("news")).toBe("/stories/category/news");
   });
 
   it("keeps category static generation non-empty before archive copy or pagination exists", () => {
@@ -353,7 +353,7 @@ describe("blog index", () => {
 
     expect(screen.getByRole("link", { name: "Summer update" })).toHaveAttribute(
       "href",
-      "/blog/summer-update",
+      "/stories/summer-update",
     );
     expect(screen.getByText("No more posts yet.")).toBeInTheDocument();
   });
@@ -376,7 +376,7 @@ describe("blog index", () => {
 
     expect(screen.getByRole("link", { name: "Go to page 3" })).toHaveAttribute(
       "href",
-      "/blog/3#latest-posts",
+      "/stories/3#latest-posts",
     );
     expect(screen.getByRole("link", { name: "Go to page 2" })).toHaveAttribute(
       "aria-current",
@@ -384,7 +384,7 @@ describe("blog index", () => {
     );
     expect(screen.getByRole("link", { name: "Go to previous page" })).toHaveAttribute(
       "href",
-      "/blog#latest-posts",
+      "/stories#latest-posts",
     );
   });
 });

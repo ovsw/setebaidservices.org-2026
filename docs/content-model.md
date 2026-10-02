@@ -8,9 +8,9 @@ project `o36mi5w4`, dataset `production`. The schemas live in
 
 - `homePage` owns `/`.
 - `page` owns normal page slugs such as `/about/`.
-- `blogIndex` owns `/blog/`.
-- `post` owns `/blog/<slug>/`.
-- `category` owns `/blog/category/<slug>/`.
+- `blogIndex` owns `/stories/`.
+- `post` owns `/stories/<slug>/`.
+- `category` owns `/stories/category/<slug>/`.
 - `redirect` maps an old path to routed content or an external URL.
 
 ## Shared content

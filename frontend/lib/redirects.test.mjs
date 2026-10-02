@@ -78,7 +78,7 @@ test("rejects unsafe paths and application-owned sources", () => {
     "/bad\\source",
     "/old?preview=true",
     "/api/draft-mode/enable",
-    "/blog/2",
+    "/stories/2",
     "/contact/thanks",
   ]) {
     assert.throws(

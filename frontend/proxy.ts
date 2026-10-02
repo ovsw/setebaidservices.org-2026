@@ -107,7 +107,7 @@ function hasValidatedDraftMode(request: NextRequest) {
 }
 
 export async function proxy(request: NextRequest) {
-  if (!request.nextUrl.pathname.startsWith("/blog/")) {
+  if (!request.nextUrl.pathname.startsWith("/stories/")) {
     return NextResponse.next();
   }
 
