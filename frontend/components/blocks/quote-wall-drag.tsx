@@ -39,6 +39,7 @@ export default function QuoteWallDrag({
       }}
       onPointerCancel={() => {
         drag.current = null;
+        if (ref.current) ref.current.style.cursor = "";
       }}
       onPointerDown={(event) => {
         wasDrag.current = false;
