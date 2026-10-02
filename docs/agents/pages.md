@@ -71,8 +71,11 @@ landing pages are the main reason for the sprint.
   Volunteers and staff → Eager Ethan; Doctors and nurses → Busy Beth RN.
   Audience "Everyone" means: pick the main reader for each part of the
   page. Export it as text with
-  `gws drive files export --params '{"fileId":"1GWEIRrCAPV-8fiUsjCAWIFxwLz1JYIQRLwZXJfcnlNE","mimeType":"text/markdown"}'`
-  and drop the embedded image data lines.
+  `gws drive files export --params '{"fileId":"1GWEIRrCAPV-8fiUsjCAWIFxwLz1JYIQRLwZXJfcnlNE","mimeType":"text/markdown"}' -o /tmp/stb-avatars.md`
+  and drop the embedded image data lines. Each segment and each avatar
+  starts with a top-level heading. Read only the segment and avatar
+  sections that the page's Audience (or the plan's "Reader" section)
+  names.
 - **Marketing plan:** `/work/dev/stb/marketing/marketing-recommendations.md`
   (outside the repo). The "Plan steps" column (A1, C3, F2…) points to its
   sections.
