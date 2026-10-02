@@ -142,10 +142,10 @@ test.describe("every prebuilt route", () => {
     expect(routes, "sitemap should list the home page").toContain("/");
     const templates = [
       "/",
-      routes.find((route) => route !== "/" && !/^\/blog(?:\/|$)/.test(route)),
-      routes.find((route) => route === "/blog"),
-      routes.find((route) => /^\/blog\/(?!category\/)[^/]+$/.test(route)),
-      routes.find((route) => /^\/blog\/category\/[^/]+$/.test(route)),
+      routes.find((route) => route !== "/" && !/^\/stories(?:\/|$)/.test(route)),
+      routes.find((route) => route === "/stories"),
+      routes.find((route) => /^\/stories\/(?!category\/)[^/]+$/.test(route)),
+      routes.find((route) => /^\/stories\/category\/[^/]+$/.test(route)),
     ].filter((route): route is string => Boolean(route));
     const violations: string[] = [];
 

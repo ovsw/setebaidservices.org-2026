@@ -6,9 +6,9 @@ const destinationProjection = `{
   "href": select(
     kind == "internal" => select(
       internal->_id == "homePage" || internal->_type == "homePage" => "/",
-      internal->_id == "blogIndex" => "/blog",
-      internal->_type == "post" && defined(internal->slug.current) => "/blog/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),
-      internal->_type == "category" && defined(internal->slug.current) => "/blog/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),
+      internal->_id == "blogIndex" => "/stories",
+      internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),
+      internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),
       defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")
     ),
     kind == "external" => external
@@ -49,6 +49,7 @@ export const FOOTER_QUERY = defineQuery(`
     },
     "legalLinks": coalesce(legalLinks, compliance.legalLinks)[]${linkProjection},
     "copyrightStartYear": coalesce(copyrightStartYear, compliance.copyrightStartYear),
-    "copyrightOwner": coalesce(copyrightOwner, compliance.copyrightOwner)
+    "copyrightOwner": coalesce(copyrightOwner, compliance.copyrightOwner),
+    charityStatement
   }
 `);

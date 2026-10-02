@@ -42,7 +42,7 @@ export function getPresentationPath(
   documentType: string,
   slug?: string | null,
 ) {
-  if (documentType === "blogIndex") return "/blog";
+  if (documentType === "blogIndex") return "/stories";
   if (documentType === "homePage") return "/";
   if (!isPresentationDocumentType(documentType) || !slug?.trim()) return null;
   if (documentType === "page") return pagePath(slug);

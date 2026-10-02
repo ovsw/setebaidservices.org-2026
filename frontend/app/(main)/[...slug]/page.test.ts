@@ -44,9 +44,9 @@ describe("root content metadata", () => {
     ]);
   });
 
-  it("does not generate page routes inside the blog namespace", async () => {
+  it("does not generate page routes inside the stories namespace", async () => {
     sanityFetchStaticParams.mockResolvedValue({
-      data: [{ slug: { current: "blog/first-post" } }],
+      data: [{ slug: { current: "stories/first-post" } }],
     });
 
     // Only the not-found sentinel remains, because Cache Components rejects

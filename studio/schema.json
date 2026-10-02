@@ -6475,6 +6475,13 @@
           "type": "string"
         },
         "optional": true
+      },
+      "charityStatement": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       }
     }
   },

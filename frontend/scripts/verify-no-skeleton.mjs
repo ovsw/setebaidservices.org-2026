@@ -123,17 +123,17 @@ const categories = rawCategories.filter(categoryHasValidSlug);
 const knownRoutes = new Map([["/", "home"]]);
 
 for (const slug of pageSlugs) knownRoutes.set(routeFromSlug(slug), "page");
-for (const slug of postSlugs) knownRoutes.set(`/blog${routeFromSlug(slug)}`, "post");
-knownRoutes.set("/blog", "blog");
+for (const slug of postSlugs) knownRoutes.set(`/stories${routeFromSlug(slug)}`, "post");
+knownRoutes.set("/stories", "blog");
 
 const regularPostCount = Math.max(Number(eligiblePostCount) - 1, 0);
 const blogTotalPages = totalPages(regularPostCount);
 for (let page = 2; page <= blogTotalPages; page += 1) {
-  knownRoutes.set(`/blog/${page}`, "blog pagination");
+  knownRoutes.set(`/stories/${page}`, "blog pagination");
 }
 
 for (const category of categories) {
-  const categoryPath = `/blog/category/${encodeURIComponent(category.slug)}`;
+  const categoryPath = `/stories/category/${encodeURIComponent(category.slug)}`;
   knownRoutes.set(categoryPath, "category");
   const categoryTotalPages = totalPages(category.publishedPostCount);
   for (let page = 2; page <= categoryTotalPages; page += 1) {
@@ -153,8 +153,8 @@ while (
 
 const unknownRoutes = new Map([
   [`/${unknownSlug}`, "unknown content"],
-  [`/blog/${Math.max(blogTotalPages + 1, 2)}`, "unknown blog pagination"],
-  [`/blog/category/${unknownSlug}`, "unknown category"],
+  [`/stories/${Math.max(blogTotalPages + 1, 2)}`, "unknown blog pagination"],
+  [`/stories/category/${unknownSlug}`, "unknown category"],
 ]);
 
 const largestCategory = categories.reduce(
@@ -164,11 +164,11 @@ const largestCategory = categories.reduce(
 );
 if (largestCategory) {
   unknownRoutes.set(
-    `/blog/category/${encodeURIComponent(largestCategory.slug)}/${Math.max(totalPages(largestCategory.publishedPostCount) + 1, 2)}`,
+    `/stories/category/${encodeURIComponent(largestCategory.slug)}/${Math.max(totalPages(largestCategory.publishedPostCount) + 1, 2)}`,
     "unknown category pagination",
   );
 } else {
-  unknownRoutes.set(`/blog/category/${unknownSlug}/2`, "unknown category pagination");
+  unknownRoutes.set(`/stories/category/${unknownSlug}/2`, "unknown category pagination");
 }
 
 const failures = [];

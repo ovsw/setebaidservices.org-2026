@@ -26,7 +26,7 @@ describe("blog post count cache", () => {
     const { proxy: freshProxy } = await import("@/proxy");
 
     const response = await freshProxy(
-      new NextRequest("https://www.example.com/blog"),
+      new NextRequest("https://www.example.com/stories"),
     );
 
     expect(response.status).toBe(200);
@@ -37,7 +37,7 @@ describe("blog post count cache", () => {
     const { proxy: freshProxy } = await import("@/proxy");
 
     const response = await freshProxy(
-      new NextRequest("https://www.example.com/blog/first-post"),
+      new NextRequest("https://www.example.com/stories/first-post"),
     );
 
     expect(response.status).toBe(200);
@@ -50,7 +50,7 @@ describe("blog post count cache", () => {
     const { proxy: freshProxy } = await import("@/proxy");
 
     const response = await freshProxy(
-      new NextRequest("https://www.example.com/blog/2/", {
+      new NextRequest("https://www.example.com/stories/2/", {
         headers: { cookie: "__prerender_bypass=preview-id" },
       }),
     );
@@ -64,7 +64,7 @@ describe("blog post count cache", () => {
     const { proxy: freshProxy } = await import("@/proxy");
 
     const response = await freshProxy(
-      new NextRequest("https://www.example.com/blog/2/"),
+      new NextRequest("https://www.example.com/stories/2/"),
     );
 
     expect(response.status).toBe(404);
@@ -81,7 +81,7 @@ describe("blog post count cache", () => {
     );
     const { proxy: freshProxy } = await import("@/proxy");
     const requests = [1, 2, 3].map(() =>
-      freshProxy(new NextRequest("https://www.example.com/blog/2/")),
+      freshProxy(new NextRequest("https://www.example.com/stories/2/")),
     );
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -97,7 +97,7 @@ describe("blog post count cache", () => {
     fetchMock.mockResolvedValueOnce(30).mockResolvedValueOnce(30);
     const { proxy: freshProxy } = await import("@/proxy");
     const request = () =>
-      freshProxy(new NextRequest("https://www.example.com/blog/2/"));
+      freshProxy(new NextRequest("https://www.example.com/stories/2/"));
 
     await request();
     vi.advanceTimersByTime(59_999);
@@ -115,7 +115,7 @@ describe("blog post count cache", () => {
       .mockResolvedValueOnce(30);
     const { proxy: freshProxy } = await import("@/proxy");
     const request = () =>
-      freshProxy(new NextRequest("https://www.example.com/blog/2/"));
+      freshProxy(new NextRequest("https://www.example.com/stories/2/"));
 
     await expect(request()).resolves.toMatchObject({ status: 200 });
     await expect(request()).resolves.toMatchObject({ status: 200 });
@@ -127,7 +127,7 @@ describe("blog post count cache", () => {
 
     const response = await freshProxy(
       new NextRequest(
-        "https://www.example.com/blog/category/categories/",
+        "https://www.example.com/stories/category/categories/",
       ),
     );
 
@@ -136,10 +136,10 @@ describe("blog post count cache", () => {
   });
 
   test.each([
-    "/blog/category/categories/1",
-    "/blog/category/categories/abc",
-    "/blog/category/categories/2/extra",
-    "/blog/category/categories/2/3",
+    "/stories/category/categories/1",
+    "/stories/category/categories/abc",
+    "/stories/category/categories/2/extra",
+    "/stories/category/categories/2/3",
   ])("rejects malformed category route %s", async (pathname) => {
     const { proxy: freshProxy } = await import("@/proxy");
 
@@ -159,7 +159,7 @@ describe("blog post count cache", () => {
     const request = () =>
       freshProxy(
         new NextRequest(
-          "https://www.example.com/blog/category/categories/2/",
+          "https://www.example.com/stories/category/categories/2/",
         ),
       );
 
@@ -176,12 +176,12 @@ describe("blog post count cache", () => {
 
     const serviceTypesResponse = await freshProxy(
       new NextRequest(
-        "https://www.example.com/blog/category/categories/2/",
+        "https://www.example.com/stories/category/categories/2/",
       ),
     );
     const buyerEducationResponse = await freshProxy(
       new NextRequest(
-        "https://www.example.com/blog/category/buyer-education/2/",
+        "https://www.example.com/stories/category/buyer-education/2/",
       ),
     );
 
@@ -198,12 +198,12 @@ describe("blog post count cache", () => {
 
     await freshProxy(
       new NextRequest(
-        "https://www.example.com/blog/category/categories/2/",
+        "https://www.example.com/stories/category/categories/2/",
       ),
     );
     const response = await freshProxy(
       new NextRequest(
-        "https://www.example.com/blog/category/made-up/2/",
+        "https://www.example.com/stories/category/made-up/2/",
       ),
     );
 
@@ -217,7 +217,7 @@ describe("blog post count cache", () => {
 
     const response = await freshProxy(
       new NextRequest(
-        "https://www.example.com/blog/category/categories/2/",
+        "https://www.example.com/stories/category/categories/2/",
         { headers: { cookie: "__prerender_bypass=preview-id" } },
       ),
     );
@@ -239,7 +239,7 @@ describe("blog post count cache", () => {
       (slug) =>
         freshProxy(
           new NextRequest(
-            `https://www.example.com/blog/category/${slug}/2/`,
+            `https://www.example.com/stories/category/${slug}/2/`,
           ),
         ),
     );
@@ -265,7 +265,7 @@ describe("blog post count cache", () => {
     const request = () =>
       freshProxy(
         new NextRequest(
-          "https://www.example.com/blog/category/categories/2/",
+          "https://www.example.com/stories/category/categories/2/",
         ),
       );
 
@@ -285,7 +285,7 @@ describe("blog post count cache", () => {
     const request = () =>
       freshProxy(
         new NextRequest(
-          "https://www.example.com/blog/category/categories/2/",
+          "https://www.example.com/stories/category/categories/2/",
         ),
       );
 

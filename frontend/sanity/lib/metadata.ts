@@ -262,7 +262,7 @@ export function generateBlogIndexMetadata({
 }) {
   const { cardTitle, pageTitleResolution } = resolveArchiveTitles({
     contentTitle: blogIndex?.title,
-    fallbackTitle: "Blog",
+    fallbackTitle: "Stories",
     overrideTitle: blogIndex?.meta?.title,
     page,
   });

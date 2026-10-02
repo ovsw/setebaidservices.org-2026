@@ -10,10 +10,10 @@ import {
 
 function expectCanonicalBlogRoutes(query: string, reference: string) {
   expect(query).toContain(
-    `${reference}->_type == "post" && defined(${reference}->slug.current) => "/blog/" + array::join(string::split(${reference}->slug.current, "/")[@ != ""], "/")`,
+    `${reference}->_type == "post" && defined(${reference}->slug.current) => "/stories/" + array::join(string::split(${reference}->slug.current, "/")[@ != ""], "/")`,
   );
   expect(query).toContain(
-    `${reference}->_type == "category" && defined(${reference}->slug.current) => "/blog/category/" + array::join(string::split(${reference}->slug.current, "/")[@ != ""], "/")`,
+    `${reference}->_type == "category" && defined(${reference}->slug.current) => "/stories/category/" + array::join(string::split(${reference}->slug.current, "/")[@ != ""], "/")`,
   );
   expect(query).not.toContain(`${reference}->slug.current + "/"`);
 }
@@ -33,10 +33,10 @@ describe("internal href queries", () => {
 
   it("resolves the Blog index singleton from shared button URLs", () => {
     expect(urlInternalHref).toContain(
-      'url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/blog"',
+      'url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories"',
     );
     expect(linkInternalHref).toContain(
-      'link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/blog"',
+      'link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories"',
     );
   });
 

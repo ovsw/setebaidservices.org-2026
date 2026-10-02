@@ -75,11 +75,11 @@ test("creates post and category redirects in their public namespaces", () => {
   });
 
   assert.equal(post.action, "apply");
-  assert.equal(post.source, "/blog/old-post");
-  assert.equal(post.destination, "/blog/new-post");
+  assert.equal(post.source, "/stories/old-post");
+  assert.equal(post.destination, "/stories/new-post");
   assert.equal(category.action, "apply");
-  assert.equal(category.source, "/blog/category/old-category");
-  assert.equal(category.destination, "/blog/category/new-category");
+  assert.equal(category.source, "/stories/category/old-category");
+  assert.equal(category.destination, "/stories/category/new-category");
 });
 
 test("flattens incoming redirects after repeated renames", () => {
@@ -309,7 +309,7 @@ test("blocks inactive-source conflicts, live routes, and redirect cycles", () =>
 test("rejects reserved, unsafe, unsupported, and first-publish events", () => {
   for (const event of [
     {
-      beforeSlug: "blog",
+      beforeSlug: "stories",
       documentId: "page-id",
       documentType: "page",
       slug: "new",

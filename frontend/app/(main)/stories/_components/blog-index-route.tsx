@@ -90,7 +90,7 @@ export async function BlogIndexRoute({
       <BreadcrumbJsonLd
         items={[
           { name: "Home", path: "/" },
-          { name: "Blog", path: getBlogCanonicalPath(currentPage) },
+          { name: "Stories", path: getBlogCanonicalPath(currentPage) },
         ]}
         siteUrl={siteUrl}
       />

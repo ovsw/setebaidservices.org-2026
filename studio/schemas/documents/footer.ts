@@ -231,6 +231,15 @@ const footer = defineType({
       group: "legal",
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: "charityStatement",
+      title: "Charity registration statement",
+      type: "text",
+      rows: 3,
+      group: "legal",
+      description:
+        "The state disclosure required wherever the site asks for money. Copy it word for word.",
+    }),
   ],
   preview: { prepare: () => ({ title: "Site Footer" }) },
 });

@@ -100,7 +100,7 @@ const category = {
 
 describe("generatePageMetadata", () => {
   it("uses one signed generated card for post Open Graph and Twitter metadata", () => {
-    const metadata = generatePageMetadata({ page: post, path: "/blog/market-trends" });
+    const metadata = generatePageMetadata({ page: post, path: "/stories/market-trends" });
     const image = metadata.openGraph.images[0];
     const url = new URL(image.url);
 
@@ -357,7 +357,7 @@ describe("description resolution", () => {
         ...withMeta(post, { description: null }),
         excerpt: "A short summary.",
       } as NonNullable<POST_QUERY_RESULT>,
-      path: "/blog/market-trends",
+      path: "/stories/market-trends",
       settings: siteSettings,
     });
 
@@ -389,7 +389,7 @@ describe("description resolution", () => {
     expect(descriptions(metadata)).toEqual(
       Array(3).fill("Summer camp in Ontario. Page 2."),
     );
-    expect(metadata.alternates.canonical).toBe("https://example.test/blog/2");
+    expect(metadata.alternates.canonical).toBe("https://example.test/stories/2");
   });
 
   it("uses category description fallbacks with pagination", () => {
@@ -431,7 +431,7 @@ describe("listing sharing images", () => {
       "/api/og/page/category/categories/2",
     );
     expect(metadata.alternates.canonical).toBe(
-      "https://example.test/blog/category/categories/2",
+      "https://example.test/stories/category/categories/2",
     );
   });
 

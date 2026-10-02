@@ -56,7 +56,7 @@ export async function CategoryArchiveRoute({
       <BreadcrumbJsonLd
         items={[
           { name: "Home", path: "/" },
-          { name: "Blog", path: "/blog" },
+          { name: "Stories", path: "/stories" },
           { name: title, path: canonicalPath },
         ]}
         siteUrl={siteUrl}
@@ -70,8 +70,8 @@ export async function CategoryArchiveRoute({
         <div className="container-content">
           <header className="mb-12 max-w-3xl">
             <nav aria-label="Breadcrumb" className="mb-5 text-eyebrow text-cedar">
-              <Link className="focus-ring underline-offset-4 hover:underline" href="/blog">
-                Blog
+              <Link className="focus-ring underline-offset-4 hover:underline" href="/stories">
+                Stories
               </Link>
               <span aria-hidden="true"> / </span>
               <span>{title}</span>

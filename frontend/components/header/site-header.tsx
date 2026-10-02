@@ -17,7 +17,7 @@ export function Header({
   model: HeaderModel;
   theme?: HeaderTheme;
 }) {
-  const brand = <HeaderBrand brand={model.brand} />;
+  const brand = <HeaderBrand brand={model.brand} theme={theme} />;
 
   return (
     <SiteHeaderShell theme={theme}>

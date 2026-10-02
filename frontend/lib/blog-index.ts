@@ -56,7 +56,7 @@ export function calculateBlogPagination(
   };
 }
 
-export function getBlogPaginationUrl(page: number, basePath = "/blog") {
+export function getBlogPaginationUrl(page: number, basePath = "/stories") {
   const normalizedBasePath = `/${basePath.replace(/^\/+|\/+$/g, "")}`;
   return page === 1 ? normalizedBasePath : `${normalizedBasePath}/${page}`;
 }
@@ -64,7 +64,7 @@ export function getBlogPaginationUrl(page: number, basePath = "/blog") {
 export const getBlogCanonicalPath = getBlogPaginationUrl;
 
 export function getCategoryArchivePath(slug: string) {
-  return `/blog/category/${slug.replace(/^\/+|\/+$/g, "")}`;
+  return `/stories/category/${slug.replace(/^\/+|\/+$/g, "")}`;
 }
 
 export function isIndexableCategory({

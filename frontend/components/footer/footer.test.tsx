@@ -57,6 +57,7 @@ const model: FooterModel = {
   legalLinks: [link("privacy", "Privacy", "/privacy")],
   copyrightYears: "2024-2026",
   copyrightOwner: "Northline Studio",
+  charityStatement: "Registration does not imply endorsement.",
 };
 
 describe("SiteFooter", () => {
