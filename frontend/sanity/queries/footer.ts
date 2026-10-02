@@ -24,7 +24,6 @@ const linkProjection = `{
 export const FOOTER_QUERY = defineQuery(`
   *[_type == "footer" && _id == "footer"][0]{
     _id,
-    eyebrow,
     heading,
     accent,
     actions[]${linkProjection},

@@ -60,6 +60,7 @@ export default function PhotoStrip({
               index % 2 === 1 && "mt-6 md:mt-10",
               index >= 3 && "max-md:hidden",
             )}
+            data-sanity={dataAttribute?.(`images[_key=="${photo._key}"]`)}
             key={photo._key}
           >
             <SectionImage image={photo} sizes="(min-width: 768px) 25vw, 33vw" width={900} />

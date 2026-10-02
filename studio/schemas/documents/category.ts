@@ -19,7 +19,6 @@ export default defineType({
       title: "Title",
       type: "string",
       group: "content",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",

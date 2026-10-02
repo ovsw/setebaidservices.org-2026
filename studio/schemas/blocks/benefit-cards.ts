@@ -55,7 +55,6 @@ const benefitCard = defineArrayMember({
       name: "title",
       type: "string",
       description: "The heading shown for this feature.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "body",

@@ -16,14 +16,12 @@ export default defineType({
       title: "Crossed-out word",
       type: "string",
       description: 'Shown crossed out, e.g. "diabetes".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "word",
       title: "Replacement word",
       type: "string",
       description: 'Shown below the crossed-out word, e.g. "setebaid".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "body",

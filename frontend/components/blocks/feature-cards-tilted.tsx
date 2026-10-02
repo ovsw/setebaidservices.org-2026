@@ -21,13 +21,13 @@ type FeatureCardsProps = Extract<PageBlock, { _type: "featureCards" }> & {
 };
 
 /*
- * Feature Cards, tilted layout (prototype "Camps"): large cards with a photo
- * tilted a degree and a half, alternating left and right, and a date badge
- * pinned over its lower edge. Badges alternate marigold and camp green. Row
+ * Feature Cards, tilted layout (prototype "Camps"): large cards with a
+ * straight photo and a date badge pinned over its lower edge. The prototype
+ * tilted the photos; the system keeps every photo straight (DESIGN.md §
+ * Shapes), and "tilted" survives only as the stored layout name. Badges alternate marigold and camp green. Row
  * headings are not shown; the cards of every row run as one grid.
  */
 const BADGES = ["card-warm", "card-bold"] as const;
-const TILTS = ["-rotate-[1.5deg]", "rotate-[1.5deg]"] as const;
 
 export default function FeatureCardsTilted({
   _key,
@@ -50,7 +50,9 @@ export default function FeatureCardsTilted({
   return (
     <section
       aria-labelledby={headingId}
-      className={cn("relative overflow-x-clip py-section", sectionThemeClass(background),
+      // Clip on both axes: the sun disc sits over the top edge, and when the
+      // section tucks it must stay inside the rounded corners.
+      className={cn("relative overflow-clip py-section", sectionThemeClass(background),
         lightGlowClass(background, "right"),
       )}
     >
@@ -69,12 +71,10 @@ export default function FeatureCardsTilted({
           </h2>
           <ArrowLink button={link} dataSanity={dataAttribute?.("link")} />
         </div>
+        {/* Two columns at most: the photos and their text need the width,
+            and three across reads as crowded. */}
         <div
-          className={cn(
-            "grid gap-x-8 gap-y-14",
-            cards.length >= 2 && "md:grid-cols-2",
-            cards.length >= 3 && "lg:grid-cols-3",
-          )}
+          className={cn("grid gap-x-8 gap-y-14", cards.length >= 2 && "md:grid-cols-2")}
           data-sanity={dataAttribute?.("groups")}
         >
           {cards.map((card, index) => {
@@ -87,10 +87,7 @@ export default function FeatureCardsTilted({
                 <div className="relative mb-6">
                   {hasImage(card.image) ? (
                     <div
-                      className={cn(
-                        "relative aspect-[4/3] overflow-hidden rounded-card",
-                        TILTS[index % TILTS.length],
-                      )}
+                      className="relative aspect-[4/3] overflow-hidden rounded-card"
                       data-sanity={cardData?.("image")}
                     >
                       <SectionImage
@@ -103,7 +100,7 @@ export default function FeatureCardsTilted({
                   {hasBadge ? (
                     <div
                       className={cn(
-                        "absolute -bottom-6 left-5 flex items-baseline gap-2 rounded-card px-4 py-3 leading-none shadow-badge",
+                        "absolute -bottom-6 left-5 flex items-baseline gap-2 rounded-card px-4 py-3 leading-none shadow-raised",
                         BADGES[index % BADGES.length],
                       )}
                     >

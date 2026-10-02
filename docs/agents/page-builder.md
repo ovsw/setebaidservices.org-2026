@@ -29,10 +29,27 @@ does not decide its own padding.
 **Seam and edge rule.** Each section has a top boundary and a bottom boundary.
 A boundary is a seam or an edge. Two neighbours meet at a seam when they
 resolve to the same background and the upper one is not a hero. Every other
-boundary is an edge. A tucker tucks only when its background differs from the
-section above; on a matching background its curve would be invisible, so it
-seams like a normal section. The first section's top is an edge. The last
-section's bottom is an edge, and the footer tucks under it.
+boundary is an edge. The first section's top is an edge. The last section's
+bottom is an edge, and the footer tucks under it.
+
+**Edge shapes.** An edge between two different colours can take a shape: a
+smile (the upper colour hangs a curve into the lower section) or a tuck (the
+lower section's rounded top overlaps the upper one). A section, or a run of
+seam-joined sections, touches at most one shape, so a shaped edge is always
+followed by a straight one. The
+shapes alternate down the page: smile, straight, tuck, straight, smile. The
+footer always tucks, so the edge above the last section is straight and the
+last shape before the footer is a smile. Exceptions:
+
+- A full-width photo section that is not a hero meets both neighbours at
+  straight edges, with square corners.
+- Below a photo hero, only a tucker tucks; other sections meet the hero at a
+  straight edge.
+- Green and Night paint the same colour, so they meet at a straight edge.
+
+The curve depth is `--smile-depth` and its shape is `--smile-mask`, both in
+`frontend/app/globals.css`. Light-field glows fade out toward a seam or a
+smile of their own colour, so they never stop at a hard line.
 
 **Values.** A seam gets half the section rhythm: `--section-pad` multiplied
 by `--seam-factor` (0.5). An edge gets the full rhythm. An edge above a tucker
@@ -44,13 +61,16 @@ change.
 **Wrapper attributes.** The resolver in
 `frontend/components/blocks/section-boundaries.ts` runs once per page on the
 server. The dispatcher in `frontend/components/blocks/index.tsx` writes its
-result on the wrapper element as four boolean data attributes:
+result on the wrapper element as boolean data attributes:
 
 - `data-seam-top`: the top boundary is a seam.
 - `data-seam-bottom`: the bottom boundary is a seam.
 - `data-tuck`: this section overlaps the section above.
 - `data-tuck-below`: the next section, or the footer, tucks under this one.
 - `data-mirror`: this section holds an odd position in a run, so it flips.
+- `data-smile-above`: the section above hangs a smile into this one; the
+  top padding grows by `--smile-depth`.
+- `data-smile-below`: this section hangs a smile into the next one.
 
 A section reads these attributes from its wrapper in CSS. It never receives
 them as a prop, and it never reads the DOM or its neighbours.
@@ -64,8 +84,11 @@ div inside it.
 sections into bands, and the dispatcher wraps each band in a div with
 `data-band="<background>"` and `data-band-tuck` when its first section
 tucks. Green and night bands carry a warm glow sweep and a grain overlay
-that span the whole run, so the texture does not restart at a seam. The
-band paints no background; sections keep their own colour. The glow, shade,
+that span the whole run, so the texture does not restart at a seam. A band
+that smiles carries `data-band-smile` and renders the curve as its last
+child. Each band's z-index comes from its `layer`: a smiling band sits one
+layer above the band below it. The band paints no background; sections keep
+their own colour. The glow, shade,
 and grain tokens live in `frontend/app/globals.css` next to the rhythm
 tokens.
 
@@ -74,10 +97,10 @@ keyed by every block `_type`. A new section type without an entry fails
 typecheck. Declare traits like this:
 
 - `{}`: a normal section. The editor picks the background.
-- `{ tuck: true }`: a rounded-top section that overlaps the section above
-  when their backgrounds differ. Do not add `rounded-t-section`, a negative
-  margin, or a z-index on the section; the wrapper applies all three, and
-  only while the section tucks.
+- `{ tuck: true }`: a section that tucks under a photo hero. Elsewhere any
+  section may tuck through the alternation. Do not add `rounded-t-section`
+  or a negative margin on a section; the wrapper applies both, and only
+  while the section tucks.
 - `{ background: "night", tuck: true }`: a fixed background. The editor field
   is ignored. Also add the `_type` to `FixedBackgroundType` in the same file,
   and omit `background` from its GROQ projection.

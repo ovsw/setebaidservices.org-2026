@@ -23,7 +23,6 @@ const includedItem = defineArrayMember({
       name: "label",
       type: "string",
       description: 'What is included, e.g. "All 35 activities".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "detail",
@@ -43,13 +42,11 @@ const priceTier = defineArrayMember({
       name: "name",
       type: "string",
       description: 'What the price buys, e.g. "Adult camp weekend" or "Competition 1".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "price",
       type: "string",
       description: 'The number as written, e.g. "$725" or "$1,100".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "unit",
@@ -74,7 +71,6 @@ const extraItem = defineArrayMember({
       name: "label",
       type: "string",
       description: 'The extra, e.g. "Camp bus from Yorkdale".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "detail",
@@ -85,7 +81,6 @@ const extraItem = defineArrayMember({
       name: "price",
       type: "string",
       description: 'Shown as written, e.g. "$265 + tax" or "Camp to confirm".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "link",
@@ -146,7 +141,6 @@ export default defineType({
         defineField({
           name: "heading",
           type: "string",
-          validation: (rule) => rule.required(),
         }),
         defineField({
           name: "note",
@@ -170,7 +164,6 @@ export default defineType({
         defineField({
           name: "heading",
           type: "string",
-          validation: (rule) => rule.required(),
         }),
         defineField({
           name: "note",

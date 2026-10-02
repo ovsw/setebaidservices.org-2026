@@ -14,7 +14,6 @@ export default defineType({
       title: "Title",
       type: "string",
       description: "The topic name visitors see, for example “Getting there”.",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",

@@ -11,7 +11,6 @@ const socialLink = defineType({
       name: "label",
       type: "string",
       description: "The network or community name shown to visitors.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "url",
@@ -61,7 +60,6 @@ const settings = defineType({
       title: "Site name",
       type: "string",
       group: "identity",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "logo",

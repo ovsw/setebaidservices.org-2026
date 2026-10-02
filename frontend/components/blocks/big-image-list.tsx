@@ -148,7 +148,7 @@ export default function BigImageList({
                   </p>
                 </div>
                 <figure
-                  className="relative aspect-[3/2] w-full overflow-hidden rounded-md bg-forest-panel shadow-media-rest"
+                  className="relative aspect-[3/2] w-full overflow-hidden rounded-md bg-forest-panel shadow-raised"
                   data-sanity={dataAttribute?.(`${stopPath}.image`)}
                 >
                   {stop.image?.asset?._id ? (

@@ -12,13 +12,11 @@ const tier = defineArrayMember({
       name: "name",
       type: "string",
       description: 'Short uppercase name, e.g. "Tier I".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "label",
       type: "string",
       description: 'What the tier is, e.g. "Full cost" or "Subsidized".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "price",

@@ -32,7 +32,6 @@ export type FooterContactLinkModel = {
 };
 
 export type FooterModel = {
-  eyebrow: string;
   heading: string;
   accent: string;
   actions: FooterLinkModel[];
@@ -63,7 +62,6 @@ type RawImage = {
 
 export type RawFooter = {
   _id?: string | null;
-  eyebrow?: string | null;
   heading?: string | null;
   accent?: string | null;
   actions?: RawLink[] | null;
@@ -148,14 +146,12 @@ export function createFooterModel(
   raw: RawFooter,
   currentYear: number,
 ): FooterModel | null {
-  const eyebrow = text(raw?.eyebrow);
   const heading = text(raw?.heading);
   const accent = text(raw?.accent);
   const owner = text(raw?.copyrightOwner);
   const startYear = raw?.copyrightStartYear;
   if (
     raw?._id !== "footer" ||
-    !eyebrow ||
     !heading ||
     !accent ||
     !owner ||
@@ -202,7 +198,6 @@ export function createFooterModel(
   }
 
   return {
-    eyebrow,
     heading,
     accent,
     actions,

@@ -11,13 +11,11 @@ const homeHeroStat = defineArrayMember({
       name: "value",
       type: "string",
       description: 'The bold fact, e.g. "July 11–17, 2027".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "label",
       type: "string",
       description: 'A short line under the fact, e.g. "Mifflinburg, PA".',
-      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

@@ -24,7 +24,6 @@ const stop = defineArrayMember({
       title: "Stop name",
       type: "string",
       description: "Where this stop is, e.g. Yorkdale.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "time",
@@ -38,7 +37,7 @@ const stop = defineArrayMember({
       type: "string",
       description:
         "One sentence on what happens here and who is with the camper. Explain any camp jargon.",
-      validation: (rule) => rule.required().max(180),
+      validation: (rule) => rule.max(180),
     }),
     defineField({
       name: "image",

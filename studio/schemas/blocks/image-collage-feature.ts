@@ -21,14 +21,12 @@ const imageCollagePoint = defineArrayMember({
       name: "title",
       type: "string",
       description: "The short lead shown in bold.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "body",
       type: "text",
       rows: 3,
       description: "The explanation that follows the lead.",
-      validation: (rule) => rule.required(),
     }),
   ],
   preview: {
@@ -46,7 +44,6 @@ const imageCollageCta = defineField({
       name: "text",
       title: "Link Text",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "url",
@@ -99,7 +96,6 @@ export default defineType({
       type: "text",
       rows: 5,
       description: "One paragraph shown below the heading.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "points",

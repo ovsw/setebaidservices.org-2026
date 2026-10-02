@@ -13,34 +13,43 @@ type FlipCard = {
 
 /*
  * Each card takes the next tone in this order. The back is a full card fill;
- * the front is the same hue washed into the field, with a hairline and an
- * accent for the small text.
+ * the front is the same hue washed into the field, with no outline (like the
+ * other cards on the site) and an accent for the small text.
  */
 const TONES = [
   {
     back: "card-deep",
-    front:
-      "bg-[color-mix(in_oklab,var(--color-fill-deep)_12%,var(--color-background))] shadow-[inset_0_0_0_1.5px_color-mix(in_oklab,var(--color-fill-deep)_24%,var(--color-background))]",
+    front: "bg-[color-mix(in_oklab,var(--color-fill-deep)_12%,var(--color-background))]",
     accent: "text-foreground",
   },
   {
     back: "card-bold",
-    front:
-      "bg-[color-mix(in_oklab,var(--color-fill-bold)_14%,var(--color-background))] shadow-[inset_0_0_0_1.5px_color-mix(in_oklab,var(--color-fill-bold)_26%,var(--color-background))]",
+    front: "bg-[color-mix(in_oklab,var(--color-fill-bold)_14%,var(--color-background))]",
     accent: "text-link",
   },
   {
     back: "card-warm",
-    front:
-      "bg-[color-mix(in_oklab,var(--color-fill-warm)_26%,var(--color-background))] shadow-[inset_0_0_0_1.5px_color-mix(in_oklab,var(--color-fill-warm)_48%,var(--color-background))]",
+    front: "bg-[color-mix(in_oklab,var(--color-fill-warm)_26%,var(--color-background))]",
     accent: "text-warm-text",
   },
   {
     back: "card-cool",
-    front:
-      "bg-[color-mix(in_oklab,var(--color-fill-cool)_26%,var(--color-background))] shadow-[inset_0_0_0_1.5px_color-mix(in_oklab,var(--color-fill-cool)_50%,var(--color-background))]",
+    front: "bg-[color-mix(in_oklab,var(--color-fill-cool)_26%,var(--color-background))]",
     accent: "text-cool-text",
   },
+] as const;
+
+/*
+ * On the Forest field the washes above turn muddy (marigold and lake mixed
+ * into ink) and the deep fill is the field itself. Every front takes the
+ * field's card surface instead, the small text a colour that reads on dark,
+ * and the first back the quiet Sand fill so it does not vanish.
+ */
+const DARK_TONES = [
+  { back: "card-quiet", front: "bg-card", accent: "text-muted-foreground" },
+  { back: "card-bold", front: "bg-card", accent: "text-foreground" },
+  { back: "card-warm", front: "bg-card", accent: "text-highlight" },
+  { back: "card-cool", front: "bg-card", accent: "text-[var(--color-fill-cool)]" },
 ] as const;
 
 function TurnIcon({ className, strokeWidth }: { className?: string; strokeWidth: number }) {
@@ -66,11 +75,14 @@ function TurnIcon({ className, strokeWidth }: { className?: string; strokeWidth:
 export default function FlipCardGrid({
   backLabel,
   cards,
+  dark = false,
   frontLabel,
   turnLabel,
 }: {
   backLabel: string;
   cards: FlipCard[];
+  /** The section sits on the Forest field. */
+  dark?: boolean;
   frontLabel: string;
   turnLabel: string;
 }) {
@@ -113,7 +125,8 @@ export default function FlipCardGrid({
       ref={gridRef}
     >
       {cards.map((card, index) => {
-        const tone = TONES[index % TONES.length];
+        const tones = dark ? DARK_TONES : TONES;
+        const tone = tones[index % tones.length];
         const isFlipped = Boolean(flipped[card.key]);
         return (
           <button

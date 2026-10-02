@@ -24,7 +24,6 @@ const slide = defineArrayMember({
       title: "Title",
       type: "string",
       description: "The name of this slide: a place, a moment, or a step.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "time",
@@ -39,7 +38,7 @@ const slide = defineArrayMember({
       type: "string",
       description:
         "One or two sentences about this slide. Explain any camp jargon.",
-      validation: (rule) => rule.required().max(260),
+      validation: (rule) => rule.max(260),
     }),
     defineField({
       name: "image",

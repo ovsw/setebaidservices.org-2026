@@ -86,12 +86,6 @@ export function SiteFooter({
       <div className="mx-auto max-w-[1320px]">
         <div className="flex flex-wrap items-end justify-between gap-[34px] pb-[70px]">
           <div>
-            <p
-              className="text-eyebrow mb-5 text-campfire-amber"
-              data-sanity={dataAttribute?.("eyebrow")}
-            >
-              {model.eyebrow}
-            </p>
             <h2
               className="text-headline font-display text-birch-bark"
               id="site-footer-heading"

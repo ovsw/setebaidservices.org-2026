@@ -71,7 +71,7 @@ export default function ImageCollageBento({
       )}
     >
       <div className="container-content grid grid-cols-2 gap-4 md:grid-cols-4 md:grid-rows-[minmax(290px,auto)_minmax(290px,auto)]">
-        <div className="col-span-2 flex flex-col justify-between gap-4 rounded-card bg-card p-8 text-card-foreground shadow-card md:col-start-1 md:row-start-1">
+        <div className="col-span-2 flex flex-col justify-between gap-4 rounded-card bg-card p-8 text-card-foreground shadow-raised md:col-start-1 md:row-start-1">
           <div className="flex flex-col gap-3">
             <div aria-hidden="true" className="flex gap-2">
               <span className="h-1 w-9 rounded-xs bg-mark" />
@@ -106,7 +106,7 @@ export default function ImageCollageBento({
           const caption = (photo as { caption?: string | null } | null | undefined)?.caption;
           return (
             <div
-              className={cn("relative min-h-0 rounded-card shadow-card", cell.className)}
+              className={cn("relative min-h-0 rounded-card shadow-raised", cell.className)}
               data-sanity={dataAttribute?.(cell.path)}
               key={cell.path}
             >

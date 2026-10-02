@@ -11,7 +11,6 @@ const featureCardLink = defineField({
       name: "text",
       title: "Link Text",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "url",
@@ -54,13 +53,11 @@ const featureCard = defineArrayMember({
     defineField({
       name: "title",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "text",
       type: "text",
       rows: 4,
-      validation: (rule) => rule.required(),
     }),
     featureCardLink,
     defineField({

@@ -12,8 +12,7 @@ export const SITE_HEADER_OFFSET_PROPERTY = "--site-header-offset";
  * configured theme (light text over a photo); "light" asks for dark text,
  * for a hero on a light ground such as the home page.
  */
-function readOverlayTheme(): HeaderTheme | null {
-  const overlay = document.querySelector("[data-header-overlay]");
+function readOverlayTheme(overlay: Element | null): HeaderTheme | null {
   if (!overlay) return null;
   return overlay.getAttribute("data-header-overlay") === "light" ? "light" : "dark";
 }
@@ -33,6 +32,7 @@ export function SiteHeaderShell({
   const [overlayTheme, setOverlayTheme] = useState<HeaderTheme | null>(null);
   /** Read by the scroll handler, which is set up once. */
   const lightOverlay = useRef(false);
+  const overlayElement = useRef<Element | null>(null);
   const visibleRef = useRef(true);
   const atTopRef = useRef(true);
   const pathname = usePathname();
@@ -42,7 +42,8 @@ export function SiteHeaderShell({
   // The hero is rendered by the page, so look it up again after navigation.
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      const next = readOverlayTheme();
+      overlayElement.current = document.querySelector("[data-header-overlay]");
+      const next = readOverlayTheme(overlayElement.current);
       lightOverlay.current = next === "light";
       setOverlayTheme(next);
     });
@@ -52,6 +53,16 @@ export function SiteHeaderShell({
   useEffect(() => {
     lastScrollY.current = window.scrollY;
     let fadeTimer: number | undefined;
+
+    /** Page offset where the light hero ends, less the bar's height. */
+    const lightHeroBottom = (scrollY: number) => {
+      const overlay = overlayElement.current;
+      if (!overlay) return 0;
+      const headerHeight = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue("--header-height"),
+      );
+      return overlay.getBoundingClientRect().bottom + scrollY - (headerHeight || 0);
+    };
 
     const update = () => {
       const current = window.scrollY;
@@ -67,6 +78,11 @@ export function SiteHeaderShell({
       // Leaving the top over a light hero, it hides in the same frame. Kept
       // in view for a few more pixels, it would flash dark over the hero.
       else if (lightOverlay.current && atTopRef.current && !nextAtTop) nextVisible = false;
+      // Scrolling back up a light hero, a hidden bar stays hidden until it
+      // reaches the top, then fades in already see-through. Revealed on the
+      // way up, it would fade in dark and then turn see-through in view.
+      else if (lightOverlay.current && !visibleRef.current && current < lightHeroBottom(current))
+        nextVisible = nextAtTop;
       else if (Math.abs(delta) >= 8) nextVisible = delta < 0 || current <= hideAfter;
 
       // The look changes while the bar stays in view: fade all of it. A bar
@@ -104,7 +120,7 @@ export function SiteHeaderShell({
   useEffect(() => {
     document.documentElement.style.setProperty(
       SITE_HEADER_OFFSET_PROPERTY,
-      visible ? "var(--header-height)" : "0px",
+      visible ? "calc(var(--header-height) + var(--header-gap))" : "0px",
     );
     return () => {
       document.documentElement.style.removeProperty(SITE_HEADER_OFFSET_PROPERTY);
@@ -120,13 +136,17 @@ export function SiteHeaderShell({
   return (
     <header
       className={cn(
-        "sticky top-0 z-60 w-full border-b ease-reveal motion-reduce:transition-none",
+        // The bar floats: a rounded panel a little wider than the content,
+        // held --header-gap below the top of the window, with the page
+        // showing all round it. Its height includes the border, so a hero
+        // pulled up by --header-height + --header-gap meets the window top.
+        "sticky top-(--header-gap) z-60 mx-auto mt-(--header-gap) h-(--header-height) w-[calc(100%-2*var(--header-gap))] max-w-[calc(var(--container-content)+var(--gutter))] rounded-md border shadow-raised ease-reveal motion-reduce:transition-none",
         // The bar fades in and out in place over 300ms; it never moves.
         // Colours fade over 200ms, the same as every part inside the bar
         // (see data-color-fade in globals.css), and only while the bar
         // stays in view.
         fading
-          ? "transition-[opacity,background-color,border-color,color] [transition-duration:300ms,200ms,200ms,200ms]"
+          ? "transition-[opacity,background-color,border-color,color,box-shadow] [transition-duration:300ms,200ms,200ms,200ms,200ms]"
           : "transition-opacity duration-300",
         effectiveTheme === "dark"
           ? "border-birch-bark/15 bg-pine-night text-birch-bark"

@@ -10,7 +10,6 @@ const rawLink = (
 
 const rawFooter: RawFooter = {
   _id: "footer",
-  eyebrow: "Example Town · Est. 2000",
   heading: "Until next summer,",
   accent: "see you on the island",
   actions: [rawLink("enroll", "Enroll", "https://example.com", true)],

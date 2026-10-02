@@ -11,7 +11,6 @@ const link = (
 ) => ({ key, label, href, openInNewTab });
 
 const model: FooterModel = {
-  eyebrow: "Example Town · Est. 2000",
   heading: "Until next summer,",
   accent: "see you on the island",
   actions: [link("enroll", "Enroll", "https://example.com", true)],
@@ -108,9 +107,6 @@ describe("SiteFooter", () => {
     const dataAttribute = (path: string) => `field:${path}`;
     render(<SiteFooter dataAttribute={dataAttribute} model={model} />);
 
-    expect(
-      document.querySelector('[data-sanity="field:eyebrow"]'),
-    ).toHaveTextContent("Example Town");
     expect(
       document.querySelector('[data-sanity="field:copyrightStartYear"]'),
     ).toHaveTextContent("2024-2026");

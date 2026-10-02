@@ -64,7 +64,7 @@ export default function DirectorCta({
     >
       <div className="container-content">
         <div
-          className={`grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-10 ${styles.reveal}`}
+          className={`grid lg:min-h-[26rem] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-10 ${styles.reveal}`}
         >
           <div className="order-2 pt-[26px] text-center lg:order-1 lg:pt-0 lg:text-left">
             <h2
@@ -117,31 +117,30 @@ export default function DirectorCta({
             ) : null}
           </div>
 
-          {/* One-sided bleed: the portrait column is the top edge on phones and
-              the bottom edge on desktop, so it cancels the section padding on
-              that side only. The copy honours the padding. On desktop the
-              column has no height of its own: it stretches to the row the
-              copy sets, and the portrait scales to fill it, so the section
-              is as tall as its copy and never taller. */}
+          {/* Bleed: on phones the portrait column is the top edge, so it
+              cancels the top padding. On desktop it cancels both paddings and
+              spans the full section height; the portrait stands on the bottom
+              edge with 2rem of air above, and the circle is sized from the
+              same height, so the two stay in proportion. The copy honours the
+              padding and sits centred; the row has a minimum height so the
+              portrait is never small. */}
           <div
-            className="relative order-1 -mx-5 -mt-(--section-pad-top) h-80 overflow-hidden lg:order-2 lg:mx-0 lg:mt-0 lg:-mb-(--section-pad-bottom) lg:h-auto lg:self-stretch lg:overflow-visible"
+            className="relative order-1 -mx-5 -mt-(--section-pad-top) h-80 overflow-hidden lg:order-2 lg:mx-0 lg:-mb-(--section-pad-bottom) lg:h-auto lg:self-stretch lg:overflow-visible"
             data-sanity={dataAttribute?.("image")}
           >
             <div
               aria-hidden="true"
-              className={`absolute left-1/2 top-[70px] size-[330px] -translate-x-1/2 rounded-full after:absolute after:inset-0 after:rounded-full lg:left-[calc(50%_-_40px)] lg:top-auto lg:bottom-[-110px] lg:size-[600px] ${
+              className={`absolute left-1/2 top-[70px] size-[330px] -translate-x-1/2 rounded-full after:absolute after:inset-0 after:rounded-full lg:left-1/2 lg:top-auto lg:bottom-[-4%] lg:size-auto lg:aspect-square lg:h-[86%] ${
                 onDark
                   ? "bg-forest-panel after:bg-[radial-gradient(55%_45%_at_50%_42%,color-mix(in_oklab,var(--color-campfire-amber)_16%,transparent),transparent_70%)]"
-                  : "bg-[color-mix(in_oklab,var(--color-sunlit-moss)_45%,var(--section-surface))] after:bg-[radial-gradient(55%_45%_at_50%_42%,color-mix(in_oklab,var(--color-campfire-amber)_14%,transparent),transparent_70%)]"
+                  : "bg-[color-mix(in_oklab,var(--color-highlight)_38%,var(--section-surface))] after:bg-[radial-gradient(55%_45%_at_50%_42%,color-mix(in_oklab,var(--color-campfire-amber)_14%,transparent),transparent_70%)]"
               }`}
             />
             {portrait ? (
               <Image
                 alt={stegaClean(portrait.alt)?.trim() || ""}
-                className={`absolute bottom-0 left-1/2 z-10 h-[300px] w-auto max-w-none -translate-x-[47%] lg:h-full lg:-translate-x-1/2 ${
-                  onDark
-                    ? "drop-shadow-[0_34px_38px_rgba(13,18,8,0.55)]"
-                    : "drop-shadow-[0_28px_34px_rgba(13,18,8,0.22)]"
+                className={`absolute bottom-0 left-1/2 z-10 h-[300px] w-auto max-w-none -translate-x-[47%] lg:h-[calc(100%-2rem)] lg:-translate-x-1/2 ${
+                  onDark ? "drop-shadow-raised/55" : "drop-shadow-raised"
                 }`}
                 height={portraitHeight}
                 sizes="(max-width: 1023px) 400px, 827px"

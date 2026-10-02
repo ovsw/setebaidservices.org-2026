@@ -112,7 +112,7 @@ export default function HomeHeroVideoLightbox({
       {/* As wide as the screen allows while the whole 16:9 frame still
           fits the screen's height. */}
       <DialogContent
-        className="w-[min(92vw,calc(85svh*16/9))] max-w-none gap-0 border-0 bg-black p-0 shadow-2xl sm:max-w-none"
+        className="w-[min(92vw,calc(85svh*16/9))] max-w-none gap-0 border-0 bg-black p-0 shadow-overlay sm:max-w-none"
         showCloseButton={false}
       >
         <DialogTitle className="sr-only">{label}</DialogTitle>

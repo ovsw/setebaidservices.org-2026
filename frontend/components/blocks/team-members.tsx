@@ -1,3 +1,4 @@
+import { sectionThemeClass } from "@/components/blocks/section-theme";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -116,15 +117,24 @@ function TeamMemberProfile({
 
   const reverse = index % 2 === 1;
 
+  // Photo and text share one row, the text centred on the photo; every
+  // second profile puts the photo on the right. Type roles: the name is the
+  // title, the role a label under it, the bio body copy at reading measure.
   return (
     <article
-      className="grid items-center gap-split md:grid-cols-[0.82fr_1.18fr]"
+      className={cn(
+        "grid items-center gap-8 md:gap-x-16",
+        hasImage &&
+          (reverse
+            ? "md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]"
+            : "md:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]"),
+      )}
       data-sanity={referenceDataAttribute}
     >
       {hasImage && member.image ? (
         <div
           className={cn(
-            "aspect-[4/5] w-full max-w-[26.25rem] overflow-hidden rounded-card bg-muted shadow-card",
+            "aspect-[4/5] w-full max-w-[22rem] overflow-hidden rounded-card bg-muted shadow-raised",
             reverse && "md:order-2 md:justify-self-end",
           )}
         >
@@ -136,28 +146,30 @@ function TeamMemberProfile({
             height={900}
             loading="lazy"
             placeholder={member.image.asset?.metadata?.lqip ? "blur" : undefined}
-            sizes="(min-width: 768px) 42vw, min(100vw - 2rem, 420px)"
+            sizes="(min-width: 768px) 352px, min(100vw - 2rem, 352px)"
             src={urlFor(member.image).width(720).height(900).url()}
             width={720}
           />
         </div>
       ) : null}
-      <div className={cn("grid gap-(--space-stack)", reverse && "md:order-1")}>
-        {hasName ? (
-          <h3
-            className="text-balance typo-feature-heading text-foreground"
-            data-sanity={memberDataAttribute?.(member._id, "name")}
-          >
-            {member.name}
-          </h3>
-        ) : null}
-        <ProfileMeta
-          member={member}
-          memberDataAttribute={memberDataAttribute}
-        />
+      <div className={cn("grid content-center gap-5", reverse && "md:order-1")}>
+        <div className="grid gap-2.5">
+          {hasName ? (
+            <h3
+              className="text-balance text-title-lg text-foreground"
+              data-sanity={memberDataAttribute?.(member._id, "name")}
+            >
+              {member.name}
+            </h3>
+          ) : null}
+          <ProfileMeta
+            member={member}
+            memberDataAttribute={memberDataAttribute}
+          />
+        </div>
         {hasBio ? (
           <div
-            className="max-w-[35rem] text-pretty typo-body-editorial text-muted-foreground [&_p]:!my-0"
+            className="max-w-[34rem] text-pretty text-body text-muted-foreground [&_p]:!my-0 [&_p+p]:!mt-4"
             data-sanity={memberDataAttribute?.(member._id, "bio")}
           >
             <PortableTextRenderer value={member.bio ?? []} />
@@ -289,14 +301,9 @@ export default function TeamMembers({
   return (
     <section
       aria-labelledby={displayTitle ? titleId : undefined}
-      className={cn(
-        "py-section",
-        stegaClean(background) === "green"
-          ? "bg-forest-floor text-birch-bark [&_.text-foreground]:!text-birch-bark [&_.text-muted-foreground]:!text-birch-bark/72"
-          : stegaClean(background) === "cream"
-            ? "bg-birch-bark"
-            : "bg-birch-bark-bright",
-      )}
+      // The shared fields (White = Cream, Cream = Sand, Green = Forest), so
+      // the section paints the colour the section boundaries resolve.
+      className={cn("py-section", sectionThemeClass(stegaClean(background)))}
       data-sanity={dataAttribute?.("background")}
       id="team"
     >
@@ -337,7 +344,7 @@ export default function TeamMembers({
             "grid",
             isRoster
               ? "grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
-              : "gap-16",
+              : "mx-auto w-full max-w-5xl gap-16 md:gap-20",
           )}
           data-sanity={dataAttribute?.("members")}
         >

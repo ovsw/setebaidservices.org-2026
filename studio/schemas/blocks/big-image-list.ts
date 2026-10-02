@@ -24,14 +24,12 @@ const stop = defineArrayMember({
       title: "What happens",
       type: "string",
       description: "What happens at this point in the list.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "time",
       title: "Time",
       type: "string",
       description: "Shown as written, e.g. 7:15 am.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "text",
@@ -39,7 +37,7 @@ const stop = defineArrayMember({
       type: "string",
       description:
         "One sentence on what happens here and who is with the camper. Explain any camp jargon.",
-      validation: (rule) => rule.required().max(180),
+      validation: (rule) => rule.max(180),
     }),
     defineField({
       name: "image",
