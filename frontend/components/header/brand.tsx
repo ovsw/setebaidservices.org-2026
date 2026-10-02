@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { HeaderBrandModel, HeaderLogoModel } from "./model";
+import type { HeaderTheme } from "./theme";
 
 function Logo({
   alt,
@@ -20,8 +21,17 @@ function Logo({
   );
 }
 
-export function HeaderBrand({ brand }: { brand: HeaderBrandModel }) {
-  const logo = brand.light ?? brand.dark;
+export function HeaderBrand({
+  brand,
+  theme = "light",
+}: {
+  brand: HeaderBrandModel;
+  theme?: HeaderTheme;
+}) {
+  // A dark header needs the logo made for dark backgrounds: the light
+  // logo's dark lettering disappears on it.
+  const logo =
+    theme === "dark" ? (brand.dark ?? brand.light) : (brand.light ?? brand.dark);
 
   return (
     <span className="grid gap-[7px] whitespace-nowrap">

@@ -130,12 +130,12 @@ export function SiteFooter({
                   <span className="flex h-[72px] items-center justify-center">
                     <Image
                       alt={logo.alt}
-                      className="max-h-[72px] w-auto max-w-[86px] object-contain"
+                      className="max-h-[72px] w-auto max-w-[220px] object-contain"
                       data-sanity={dataAttribute?.(
                         `logos[_key==\"${logo.key}\"].image`,
                       )}
                       height={logo.image.height}
-                      sizes="86px"
+                      sizes="220px"
                       src={logo.image.src}
                       width={logo.image.width}
                     />
