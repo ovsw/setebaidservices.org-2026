@@ -208,6 +208,11 @@
   --seam-factor: 0.5;
   --section-pad-top: var(--section-pad);
   --section-pad-bottom: var(--section-pad);
+  /* Smile edge: how far the upper colour hangs into the lower section at
+     the middle of the page, and the curve's shape (a parabola that starts
+     flat at both sides). */
+  --smile-depth: clamp(28px, 5vw, 64px);
+  --smile-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 0H100Q50 200 0 0Z'/%3E%3C/svg%3E");
 
   /* Glows: soft light pooled in the corners of a field. The dark band uses
      the first three; light fields use sun, peach and daylight (see DESIGN.md
@@ -282,6 +287,36 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
   --section-pad-bottom: calc(var(--section-pad) + var(--section-overlap));
 }
 
+/* A section under a photo card slides up under the card's rounded bottom,
+   so its colour fills the corners, and pads past the overlap. */
+[data-under] {
+  --section-pad-top: calc(var(--section-pad) + var(--section-overlap));
+  margin-top: calc(-1 * var(--section-overlap));
+}
+
+[data-overhang] > * {
+  border-bottom-left-radius: var(--radius-section);
+  border-bottom-right-radius: var(--radius-section);
+}
+
+/* A section under a smile pads past the curve, so the curve does not eat
+   its content. */
+[data-smile-above] {
+  --section-pad-top: calc(var(--section-pad) + var(--smile-depth));
+}
+
+/* Light-field glows fade out toward a side that meets the same colour (a
+   seam) or a smile of its own colour, so the glow never stops at a hard
+   line. Read by the glow utilities below. */
+[data-seam-top] {
+  --glow-fade-top: var(--section-pad);
+}
+
+[data-seam-bottom],
+[data-smile-below] {
+  --glow-fade-bottom: var(--section-pad);
+}
+
 /* Tuck geometry. The wrapper, not the section, pulls a tucker up over the
    section above and stacks it on top. z-index 1 sits under the sticky header
    (z-60) and the catalogue jump bar (z-40). No overflow clipping here: the
@@ -310,13 +345,16 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
    negative margin from collapsing through the band, so the band box starts
    at the boundary and the tucker overflows above it; the overlay reaches
    up by the same overlap and rounds its corners to the tucker's shape.
-   z-index 1 matches the tuck wrapper, so DOM order still decides which
-   neighbour paints on top. */
+   Every band is positioned; the dispatcher sets its z-index from the band's
+   layer (see resolveSectionBands), so a smiling band paints over the band
+   below it and a tucker paints over the band above it. */
+[data-band] {
+  position: relative;
+}
+
 [data-band="green"],
 [data-band="night"] {
   display: flow-root;
-  position: relative;
-  z-index: 1;
 }
 
 [data-band="green"]::before,
@@ -356,6 +394,42 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
   top: calc(-1 * var(--section-overlap));
   border-top-left-radius: var(--radius-section);
   border-top-right-radius: var(--radius-section);
+}
+
+/* Smile edge. A band whose bottom meets a different solid colour hangs a
+   curve of its own colour into the next band (see resolveSectionBoundaries).
+   The band's layer keeps it above the next band. A dark band stretches its
+   glow and grain down over the curve and masks them to the same shape, so
+   the curve keeps the band's texture. */
+[data-smile] {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: var(--smile-depth);
+  pointer-events: none;
+  mask: var(--smile-mask) 0 0 / 100% 100% no-repeat;
+}
+
+[data-band="white"] > [data-smile] {
+  background-color: var(--brand-cream);
+}
+
+[data-band="cream"] > [data-smile] {
+  background-color: var(--brand-sand);
+}
+
+[data-band="green"] > [data-smile],
+[data-band="night"] > [data-smile] {
+  background-color: var(--brand-ink);
+}
+
+[data-band-smile]::before,
+[data-band-smile]::after {
+  bottom: calc(-1 * var(--smile-depth));
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--smile-depth) + 1px) no-repeat,
+    var(--smile-mask) bottom / 100% var(--smile-depth) no-repeat;
 }
 
 /* ------------------------------------------------------------------ */
@@ -779,10 +853,14 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
 /* Light-field glows. Soft sun, peach and daylight pooled in the corners of
    a Cream or Sand section, painted as the section's own background image
    over its field colour. Each placement comes from a prototype section, so
-   neighbouring sections light differently. Dark sections take the band glow
+   neighbouring sections light differently. The two linear layers on top
+   fade the glow out toward a seam (see "Section boundaries"); they are empty
+   at an edge. Dark sections take the band glow
    instead; see lightGlowClass() in components/blocks/section-theme.ts. */
 @utility glow-sunrise {
   background-image:
+    linear-gradient(to bottom, var(--color-background), transparent var(--glow-fade-top, 0px)),
+    linear-gradient(to top, var(--color-background), transparent var(--glow-fade-bottom, 0px)),
     radial-gradient(42% 60% at 86% 38%, var(--glow-sun), transparent 72%),
     radial-gradient(36% 50% at 14% 8%, var(--glow-daylight), transparent 72%),
     radial-gradient(40% 45% at 58% 100%, var(--glow-peach), transparent 72%);
@@ -790,18 +868,24 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
 
 @utility glow-left {
   background-image:
+    linear-gradient(to bottom, var(--color-background), transparent var(--glow-fade-top, 0px)),
+    linear-gradient(to top, var(--color-background), transparent var(--glow-fade-bottom, 0px)),
     radial-gradient(38% 70% at 4% 50%, var(--glow-peach), transparent 72%),
     radial-gradient(30% 60% at 98% 90%, color-mix(in oklab, var(--glow-sun) 60%, transparent), transparent 72%);
 }
 
 @utility glow-right {
   background-image:
+    linear-gradient(to bottom, var(--color-background), transparent var(--glow-fade-top, 0px)),
+    linear-gradient(to top, var(--color-background), transparent var(--glow-fade-bottom, 0px)),
     radial-gradient(34% 45% at 100% 18%, color-mix(in oklab, var(--glow-sun) 80%, transparent), transparent 72%),
     radial-gradient(34% 50% at 8% 80%, var(--glow-daylight), transparent 72%);
 }
 
 @utility glow-corners {
   background-image:
+    linear-gradient(to bottom, var(--color-background), transparent var(--glow-fade-top, 0px)),
+    linear-gradient(to top, var(--color-background), transparent var(--glow-fade-bottom, 0px)),
     radial-gradient(48% 70% at 0% 0%, var(--glow-daylight), transparent 72%),
     radial-gradient(40% 65% at 100% 100%, var(--glow-sun), transparent 72%),
     radial-gradient(30% 50% at 55% 100%, var(--glow-peach), transparent 72%);
@@ -809,6 +893,8 @@ body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="tr
 
 @utility glow-top {
   background-image:
+    linear-gradient(to bottom, var(--color-background), transparent var(--glow-fade-top, 0px)),
+    linear-gradient(to top, var(--color-background), transparent var(--glow-fade-bottom, 0px)),
     radial-gradient(44% 40% at 50% 0%, var(--glow-daylight), transparent 72%),
     radial-gradient(34% 50% at 94% 70%, var(--glow-peach), transparent 72%),
     radial-gradient(30% 45% at 4% 58%, color-mix(in oklab, var(--glow-sun) 65%, transparent), transparent 72%);

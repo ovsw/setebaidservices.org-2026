@@ -233,6 +233,10 @@ export default function Blocks({
             data-mirror={boundary.mirror ? "" : undefined}
             data-tuck={boundary.tuck ? "" : undefined}
             data-tuck-below={boundary.tuckBelow ? "" : undefined}
+            data-smile-above={boundary.smileAbove ? "" : undefined}
+            data-smile-below={boundary.smileBelow ? "" : undefined}
+            data-under={boundary.under ? "" : undefined}
+            data-overhang={boundary.overhang ? "" : undefined}
             key={block._key}
           >
             <Component {...themedBlock} {...editingProps} {...pageDataProps} />
@@ -242,16 +246,20 @@ export default function Blocks({
 
   // A band is a run of sections joined by seams: one continuous surface.
   // The stylesheet paints the surface texture on the band, so the texture
-  // does not restart at every seam.
+  // does not restart at every seam. A band whose bottom meets a different
+  // colour hangs a smile curve of its own colour into the next band.
   return (
     <>
       {bands.map((band) => (
         <div
           data-band={band.background}
           data-band-tuck={band.tuck ? "" : undefined}
+          data-band-smile={band.smile ? "" : undefined}
           key={sections[band.start]._key}
+          style={{ zIndex: band.layer }}
         >
           {wrappers.slice(band.start, band.end)}
+          {band.smile ? <div aria-hidden="true" data-smile="" /> : null}
         </div>
       ))}
     </>

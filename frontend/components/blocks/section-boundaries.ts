@@ -26,10 +26,9 @@ export type SectionTrait = {
   /** Fixed background. When set, the editor field is ignored for this type. */
   background?: SectionBackground;
   /**
-   * Rounded-top section that overlaps the section above by
-   * `--section-overlap`. It only tucks when its background differs from the
-   * section above; on a matching background the curve is invisible, so the
-   * two meet at a seam instead.
+   * Tucks under a photo hero: its rounded top overlaps the hero by
+   * `--section-overlap`. Elsewhere tucks follow the smile/tuck alternation
+   * like any section. See `resolveSectionBoundaries`.
    */
   tuck?: boolean;
   /** Full-bleed hero. The boundary below a hero is always an edge. */
@@ -97,6 +96,14 @@ export type SectionBoundary = {
   tuckBelow: boolean;
   /** Odd position in a run of alternating sections: photo on the other side. */
   mirror: boolean;
+  /** The section above hangs a smile curve into this one's top. */
+  smileAbove: boolean;
+  /** This section hangs a smile curve into the section below. */
+  smileBelow: boolean;
+  /** This section slides under the rounded bottom of the photo card above. */
+  under: boolean;
+  /** This photo card rounds its bottom corners over the section below. */
+  overhang: boolean;
 };
 
 /**
@@ -173,7 +180,19 @@ export function resolveEditorBackground(block: Block, isFinal: boolean): EditorB
 }
 
 export function resolveSectionBackground(block: Block, isFinal: boolean): SectionBackground {
+  // The photo CTA banner fills itself with a dark photo whatever the editor
+  // field says, so its neighbours must meet it as a photo, not as the field.
+  if (block._type === "ctaBanner" && stegaClean(block.variant) === "photo") return "photo";
   return sectionTraits[block._type].background ?? resolveEditorBackground(block, isFinal);
+}
+
+/**
+ * Two backgrounds that paint the same colour. Night and Green are both the
+ * ink field, so a smile between them would be invisible.
+ */
+function sameFill(a: SectionBackground, b: SectionBackground): boolean {
+  const fill = (background: SectionBackground) => (background === "night" ? "green" : background);
+  return fill(a) === fill(b);
 }
 
 /**
@@ -187,11 +206,32 @@ function hasPhoto(block: Block): boolean {
 }
 
 /**
+ * How a section's top meets the section above.
+ * - `seam`: same background, half rhythm, no shape.
+ * - `straight`: a plain edge.
+ * - `smile`: the upper colour hangs a smile curve into this section.
+ * - `tuck`: this section's rounded top overlaps the section above.
+ * - `under`: this section slides under the rounded bottom of a photo card.
+ */
+export type SectionEdge = "seam" | "straight" | "smile" | "tuck" | "under";
+
+/**
  * Rules:
- * - the first section's top is an edge;
- * - a tucker tucks only when its background differs from the section above;
+ * - the first section's top is a straight edge;
  * - two neighbours meet at a seam when they resolve to the same background
  *   and the upper one is not a hero;
+ * - a full-width photo section that is not a hero is a card with four
+ *   rounded corners: it tucks over the section above, and the section below
+ *   slides under its rounded bottom;
+ * - below a photo hero only a tucker tucks; every other section meets the
+ *   hero at a straight edge;
+ * - Green and Night paint the same colour, so they meet at a straight edge;
+ * - every other edge between two colours is shaped, and shaped edges
+ *   alternate down the page: smile, tuck, smile, tuck. A forced tuck takes
+ *   part in the alternation: the free edges before it are planned backwards
+ *   so the edge just before it is a smile. Where a run of free edges sits
+ *   between two forced tucks and has an even length, two edges of one shape
+ *   meet; that is the one case the alternation cannot avoid;
  * - the last section's bottom is an edge, and the footer tucks under it;
  * - consecutive sections of one alternating type, each with a photo, form a
  *   run, and odd positions in that run render mirrored. Background never
@@ -201,10 +241,12 @@ function hasPhoto(block: Block): boolean {
 export function resolveSectionBoundaries(blocks: readonly Block[]): SectionBoundary[] {
   const sections = blocks.map((block, index) => {
     const trait = sectionTraits[block._type];
+    const background = resolveSectionBackground(block, index === blocks.length - 1);
     return {
-      background: resolveSectionBackground(block, index === blocks.length - 1),
+      background,
       tucker: trait.tuck === true,
       hero: trait.hero === true,
+      photoCard: background === "photo" && trait.hero !== true,
       type: block._type,
       alternating: trait.alternate === true && hasPhoto(block),
     };
@@ -219,25 +261,54 @@ export function resolveSectionBoundaries(blocks: readonly Block[]): SectionBound
     runPosition = section.alternating ? (continues ? runPosition + 1 : 0) : -1;
     return runPosition % 2 === 1;
   });
-  const tucks = sections.map(
-    (section, index) =>
-      section.tucker && index > 0 && sections[index - 1].background !== section.background,
-  );
 
-  return sections.map((section, index) => {
+  // First pass: fixed edges, with `free` marking a shaped edge whose shape
+  // the alternation decides.
+  const edges = sections.map((section, index): SectionEdge | "free" => {
     const above = sections[index - 1];
-    const below = sections[index + 1];
-    const seamTop =
-      above !== undefined && !above.hero && above.background === section.background;
-    const seamBottom =
-      below !== undefined && !section.hero && below.background === section.background;
+    if (above === undefined) return "straight";
+    if (!above.hero && above.background === section.background) return "seam";
+    if (above.photoCard) return "under";
+    if (section.photoCard) return "tuck";
+    if (above.background === "photo") return section.tucker ? "tuck" : "straight";
+    if (sameFill(above.background, section.background)) return "straight";
+    return "free";
+  });
+  // Second pass: free edges alternate. A forced tuck (or the rounded bottom
+  // of a photo card) counts as a tuck. A run of free edges that ends at a
+  // forced tuck alternates backwards from it, so the edge before it is a
+  // smile; the last run alternates forwards, starting with a smile after a
+  // tuck.
+  const shaped = (edge: SectionEdge | "free") => edge === "free" || edge === "tuck" || edge === "under";
+  let run: number[] = [];
+  const fill = (runEnd: "forced" | "end") => {
+    run.forEach((edgeIndex, position) => {
+      const fromForced = runEnd === "forced" ? run.length - 1 - position : position;
+      edges[edgeIndex] = fromForced % 2 === 0 ? "smile" : "tuck";
+    });
+    run = [];
+  };
+  edges.forEach((edge, index) => {
+    if (edge === "free") run.push(index);
+    else if (shaped(edge)) fill("forced");
+  });
+  fill("end");
+
+  const resolved = edges as SectionEdge[];
+  return sections.map((section, index) => {
+    const edge = resolved[index];
+    const below = resolved[index + 1];
     return {
       background: section.background,
-      seamTop,
-      seamBottom,
-      tuck: tucks[index],
-      tuckBelow: below === undefined || tucks[index + 1],
+      seamTop: edge === "seam",
+      seamBottom: below === "seam",
+      tuck: edge === "tuck",
+      tuckBelow: below === undefined || below === "tuck",
       mirror: mirrors[index],
+      smileAbove: edge === "smile",
+      smileBelow: below === "smile",
+      under: edge === "under",
+      overhang: below === "under",
     };
   });
 }
@@ -250,6 +321,18 @@ export type SectionBand = {
   end: number;
   /** The first section tucks over the section above, so the band's top is rounded. */
   tuck: boolean;
+  /** The last section hangs a smile curve into the next band. */
+  smile: boolean;
+  /** The last section is a photo card whose rounded bottom hangs over the next band. */
+  overhang: boolean;
+  /**
+   * Stacking layer (z-index). A band that smiles or overhangs sits one
+   * layer above the band below it, so its curve or corners paint over that
+   * band even when that band smiles too. At a tuck the two share a layer
+   * and DOM order lifts the tucker. The last band is layer 1, level with
+   * the footer that tucks under it.
+   */
+  layer: number;
 };
 
 /**
@@ -264,6 +347,8 @@ export function resolveSectionBands(boundaries: readonly SectionBoundary[]): Sec
     const current = bands[bands.length - 1];
     if (current !== undefined && boundary.seamTop) {
       current.end = index + 1;
+      current.smile = boundary.smileBelow;
+      current.overhang = boundary.overhang;
       return;
     }
     bands.push({
@@ -271,7 +356,13 @@ export function resolveSectionBands(boundaries: readonly SectionBoundary[]): Sec
       start: index,
       end: index + 1,
       tuck: boundary.tuck,
+      smile: boundary.smileBelow,
+      overhang: boundary.overhang,
+      layer: 1,
     });
   });
+  for (let index = bands.length - 2; index >= 0; index -= 1) {
+    bands[index].layer = bands[index + 1].layer + (bands[index].smile || bands[index].overhang ? 1 : 0);
+  }
   return bands;
 }

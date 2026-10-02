@@ -120,7 +120,7 @@ export function SiteHeaderShell({
   return (
     <header
       className={cn(
-        "sticky top-0 z-60 w-full border-b ease-reveal motion-reduce:transition-none",
+        "sticky top-0 z-60 w-full rounded-b-section border-b ease-reveal motion-reduce:transition-none",
         // The bar fades in and out in place over 300ms; it never moves.
         // Colours fade over 200ms, the same as every part inside the bar
         // (see data-color-fade in globals.css), and only while the bar
