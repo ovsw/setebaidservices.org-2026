@@ -12,7 +12,7 @@ const flipCard = defineArrayMember({
       title: "Front",
       type: "string",
       description: "The problem, set large on the front of the card.",
-      validation: (rule) => rule.required().max(80),
+      validation: (rule) => rule.max(80),
     }),
     defineField({
       name: "back",
@@ -20,7 +20,7 @@ const flipCard = defineArrayMember({
       type: "text",
       rows: 3,
       description: "How camp turns it around, shown when the card flips.",
-      validation: (rule) => rule.required().max(160),
+      validation: (rule) => rule.max(160),
     }),
     defineField({
       name: "emoji",
@@ -55,14 +55,12 @@ export default defineType({
       title: "Front label",
       type: "string",
       initialValue: "Diabetes",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "backLabel",
       title: "Back label",
       type: "string",
       initialValue: "Setebaid",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "turnLabel",
@@ -70,7 +68,6 @@ export default defineType({
       type: "string",
       description: "The handwritten hint at the foot of each front side.",
       initialValue: "turn it around",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "cards",

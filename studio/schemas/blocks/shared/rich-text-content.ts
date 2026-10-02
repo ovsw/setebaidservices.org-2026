@@ -92,7 +92,6 @@ export default defineType({
           title: "Body",
           type: "text",
           rows: 3,
-          validation: (rule) => rule.required(),
         }),
       ],
       preview: {

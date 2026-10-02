@@ -59,7 +59,6 @@ export default defineType({
       type: "string",
       title: "Search placeholder",
       description: "The grey hint inside the empty search field.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "emptyState",
@@ -68,7 +67,6 @@ export default defineType({
       title: "Empty result line",
       description:
         "Shown when no question matches the search. The office phone number is added under it.",
-      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

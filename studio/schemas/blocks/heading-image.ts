@@ -14,7 +14,6 @@ export default defineType({
       name: "title",
       title: "Heading",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "richText",

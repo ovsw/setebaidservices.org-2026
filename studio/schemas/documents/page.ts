@@ -66,7 +66,6 @@ export default defineType({
       name: "title",
       type: "string",
       group: "content",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "description",

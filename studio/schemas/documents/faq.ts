@@ -14,7 +14,6 @@ export default defineType({
       type: "string",
       title: "Question",
       description: "The question shown to visitors.",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "body",

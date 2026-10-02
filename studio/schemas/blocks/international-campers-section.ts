@@ -48,7 +48,6 @@ export const internationalCampersSection = defineType({
       type: "string",
       description:
         "Small label above the heading. Include the sequence number if you want one.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "heading",
@@ -61,13 +60,11 @@ export const internationalCampersSection = defineType({
       name: "description",
       type: "text",
       rows: 4,
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "linkLabel",
       type: "string",
       description: "Text shown on the onward link.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "link",

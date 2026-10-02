@@ -23,13 +23,11 @@ const innerHeroFact = defineArrayMember({
       name: "value",
       type: "string",
       description: 'The bold figure or short phrase, e.g. "160 acres".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "label",
       type: "string",
       description: "A one-line explanation shown under the value.",
-      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

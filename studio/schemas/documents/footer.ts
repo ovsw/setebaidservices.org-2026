@@ -25,7 +25,6 @@ const footerLink = defineType({
     defineField({
       name: "label",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "destination",
@@ -89,7 +88,6 @@ const footerContactLink = defineType({
       type: "text",
       rows: 2,
       description: "Press Enter to show this link on more than one line.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "destination",
@@ -115,7 +113,6 @@ const footerColumn = defineType({
     defineField({
       name: "heading",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "links",
@@ -157,24 +154,27 @@ const footer = defineType({
     }),
     defineField({
       name: "eyebrow",
-      title: "Location line",
+      title: "Location line (deprecated)",
       type: "string",
       group: "signoff",
-      validation: (rule) => rule.required(),
+      deprecated: {
+        reason: "The footer no longer shows a line above the closing heading.",
+      },
+      readOnly: true,
+      hidden: ({ value }) => value === undefined,
+      initialValue: undefined,
     }),
     defineField({
       name: "heading",
       title: "Closing heading",
       type: "string",
       group: "signoff",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "accent",
       title: "Closing emphasis",
       type: "string",
       group: "signoff",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "actions",
@@ -229,7 +229,6 @@ const footer = defineType({
       title: "Copyright owner and notice",
       type: "string",
       group: "legal",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "charityStatement",

@@ -22,7 +22,6 @@ export const blogPostSidebarAction = defineType({
     defineField({
       name: "title",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "description",

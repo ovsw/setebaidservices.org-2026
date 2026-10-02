@@ -47,7 +47,6 @@ export default defineType({
       name: "title",
       type: "string",
       description: "The question or statement that prompts visitors to act.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "description",

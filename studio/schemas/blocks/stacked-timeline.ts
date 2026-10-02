@@ -11,7 +11,6 @@ const item = defineArrayMember({
       name: "title",
       type: "string",
       description: "The name of this step, stop, or milestone, e.g. Yorkdale.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "meta",
@@ -25,7 +24,7 @@ const item = defineArrayMember({
       type: "string",
       description:
         "One sentence on what happens here. Explain any camp jargon.",
-      validation: (rule) => rule.required().max(180),
+      validation: (rule) => rule.max(180),
     }),
     defineField({
       name: "link",

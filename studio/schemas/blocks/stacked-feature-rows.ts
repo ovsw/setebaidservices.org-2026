@@ -78,7 +78,6 @@ const row = defineArrayMember({
       name: "title",
       type: "string",
       description: "A short heading beside this row’s supporting text.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "items",
@@ -98,7 +97,6 @@ const row = defineArrayMember({
           name: "text",
           title: "Link Text",
           type: "string",
-          validation: (rule) => rule.required(),
         }),
         defineField({
           name: "url",

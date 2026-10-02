@@ -31,7 +31,6 @@ export default defineType({
       name: "text",
       title: "Button Text",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "icon",

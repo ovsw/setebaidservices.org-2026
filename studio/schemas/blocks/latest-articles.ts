@@ -20,7 +20,6 @@ export default defineType({
       name: "title",
       type: "string",
       description: "The main heading for the latest posts section.",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "description",

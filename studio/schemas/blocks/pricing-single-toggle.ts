@@ -23,13 +23,12 @@ const option = defineArrayMember({
       name: "name",
       type: "string",
       description: 'The toggle label, e.g. "Round trip" or "Yearly". Keep it to two or three words.',
-      validation: (rule) => rule.required().max(24),
+      validation: (rule) => rule.max(24),
     }),
     defineField({
       name: "price",
       type: "string",
       description: 'The number as written, e.g. "$265".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "unit",
@@ -54,7 +53,6 @@ const fact = defineArrayMember({
       name: "label",
       type: "string",
       description: 'What the price includes, e.g. "Staff on board, there and back".',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "detail",

@@ -21,7 +21,6 @@ const childLink = defineType({
     defineField({
       name: "label",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "description",
@@ -76,7 +75,6 @@ const directLink = defineType({
     defineField({
       name: "label",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({ name: "destination", type: "navigationDestination" }),
   ],
@@ -92,7 +90,6 @@ const group = defineType({
     defineField({
       name: "label",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "links",
@@ -119,7 +116,6 @@ const action = defineType({
     defineField({
       name: "label",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({ name: "destination", type: "navigationDestination" }),
   ],
