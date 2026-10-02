@@ -42,6 +42,7 @@ export type FooterModel = {
   legalLinks: FooterLinkModel[];
   copyrightYears: string;
   copyrightOwner: string;
+  charityStatement: string | null;
 };
 
 type RawDestination = { href?: string | null; openInNewTab?: boolean | null };
@@ -86,6 +87,7 @@ export type RawFooter = {
   legalLinks?: RawLink[] | null;
   copyrightStartYear?: number | null;
   copyrightOwner?: string | null;
+  charityStatement?: string | null;
 } | null;
 
 function text(value: string | null | undefined): string | null {
@@ -210,5 +212,6 @@ export function createFooterModel(
     legalLinks: links(raw.legalLinks),
     copyrightYears,
     copyrightOwner: owner,
+    charityStatement: text(raw.charityStatement),
   };
 }

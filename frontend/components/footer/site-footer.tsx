@@ -194,6 +194,14 @@ export function SiteFooter({
             </FooterLink>
           ))}
         </div>
+        {model.charityStatement ? (
+          <p
+            className="mt-6 max-w-[80ch] text-[13px] leading-relaxed text-birch-bark/75"
+            data-sanity={dataAttribute?.("charityStatement")}
+          >
+            {model.charityStatement}
+          </p>
+        ) : null}
       </div>
     </footer>
   );
