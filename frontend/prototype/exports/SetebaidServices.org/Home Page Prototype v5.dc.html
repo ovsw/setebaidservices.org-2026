@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500;600;700;800&family=Merriweather:wght@400&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;--bg:#FBF7EC;--surface:#FFFFFF;--tint:#F1E7CE;--ink:#1C3B2C;--body:#3E5A4B;--primary:#1A7F52;--brand:#1A8B5A;--accent:#F2B93D;--accent-ink:#1C3B2C;--secondary:#7CBBDD;--secondary-ink:#1C3B2C;--dark:#1C3B2C;--on-dark:#FBF7EC;--on-dark-muted:#CFD9D0;--line:rgba(28,59,44,.14);--fh:'Work Sans',sans-serif;--hw:800;--fb:'Merriweather',serif;--fu:'Work Sans',sans-serif;--fn:'Caveat',cursive;--r:8px;--rc:12px;--body-size:16px;--body-lh:1.7;background:var(--bg);color:var(--ink)}
+a{color:var(--primary)}a:hover{color:var(--ink)}
+</style>
+</helmet>
+<div data-screen-label="Home v5" style="background:radial-gradient(ellipse 70% 40% at 80% 0%,rgba(255,255,255,.55),transparent 70%),var(--bg);color:var(--ink);font-family:var(--fb);min-height:100vh;overflow:hidden;position:relative">
+  <div aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.055;mix-blend-mode:multiply;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .8 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;);background-size:220px 220px"></div>
+  <div aria-hidden="true" style="position:absolute;left:-260px;top:520px;width:640px;height:640px;border-radius:50%;border:22px solid var(--brand);border-left-color:transparent;transform:rotate(30deg);opacity:.06;pointer-events:none"></div>
+
+  <header style="max-width:1240px;margin:0 auto;padding:22px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;font-family:var(--fu)">
+    <img src="assets/setebaid-nav.png" alt="Setebaid Services" style="height:42px;display:block;flex-shrink:0">
+    <nav style="display:flex;align-items:center;gap:clamp(14px,2vw,30px);font-size:16px;font-weight:600;white-space:nowrap">
+      <a href="#" style="color:var(--ink);text-decoration:none">Camps</a>
+      <a href="#" style="color:var(--ink);text-decoration:none">Dates &amp; Rates</a>
+      <a href="#" style="color:var(--ink);text-decoration:none">Parents</a>
+      <a href="#" style="color:var(--ink);text-decoration:none">About</a>
+      <a href="#" style="color:var(--ink);text-decoration:none">News</a>
+      <a href="#" style="color:var(--ink);text-decoration:none">Contact</a>
+    </nav>
+    <div style="display:flex;gap:10px;flex-shrink:0">
+      <a href="#" style="font-weight:600;font-size:15px;text-decoration:none;background:var(--accent);color:var(--accent-ink);padding:12px 20px;border-radius:var(--r)">Donate</a>
+      <a href="#" style="font-weight:600;font-size:15px;text-decoration:none;background:var(--primary);color:#fff;padding:12px 20px;border-radius:var(--r)">Register</a>
+    </div>
+  </header>
+
+  <section data-screen-label="Hero" style="max-width:1240px;margin:0 auto;padding:48px 32px 112px;display:grid;grid-template-columns:minmax(0,11fr) minmax(0,9fr);gap:56px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:44px;position:relative">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <div style="font-family:var(--fu);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);display:flex;align-items:center;gap:10px"><span style="width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block"></span>Registration for summer 2027 is open</div>
+        <h1 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:clamp(56px,6.5vw,84px);line-height:.98;letter-spacing:-.025em;text-wrap:balance">Turn diabetes <span style="display:inline-block;color:var(--brand)">around.</span></h1>
+        <p style="margin:0;font-size:20px;line-height:1.5;color:var(--body);max-width:40ch;text-wrap:pretty">A week of summer camp for kids who just happen to have diabetes. Swimming, campfires, new friends, and an expert healthcare team on site the whole time.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;font-family:var(--fu);align-items:center">
+        <a href="#" style="font-weight:600;font-size:17px;text-decoration:none;background:var(--primary);color:#fff;padding:17px 28px;border-radius:var(--r)">Register on CampBrain&nbsp;→</a>
+        <a href="#" style="font-weight:600;font-size:17px;text-decoration:none;background:var(--accent);color:var(--accent-ink);padding:17px 28px;border-radius:var(--r)">Donate</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,max-content));gap:48px;font-family:var(--fu);padding-top:28px;border-top:1px solid color-mix(in oklab,var(--ink) 14%,transparent);max-width:480px">
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:17px;color:var(--ink)">July 11–17, 2027</span><span style="font-size:15px;color:var(--body)">Mifflinburg, PA</span></div>
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:17px;color:var(--ink)">Ages 7–17</span><span style="font-size:15px;color:var(--body)">Two camps, since 1977</span></div>
+      </div>
+    </div>
+    <div style="max-width:560px;width:100%;margin-left:auto;display:flex;flex-direction:column">
+    <div style="position:relative;aspect-ratio:1;width:100%">
+      <div style="position:absolute;inset:0;border-radius:50%;border:18px solid var(--brand);border-left-color:transparent;transform:rotate(-38deg)"></div>
+      <div style="position:absolute;inset:38px;border-radius:50%;overflow:hidden;background:var(--tint)">
+        <img src="assets/photos/smiles.jpg" alt="Three campers smiling in the woods" style="width:100%;height:100%;object-fit:cover;object-position:60% 40%;display:block">
+      </div>
+      <a href="#" aria-label="Play camp video" style="position:absolute;left:6px;bottom:58px;width:100px;height:100px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 8px var(--bg);display:flex;align-items:center;justify-content:center;text-decoration:none" style-hover="transform:scale(1.05)"><span style="width:0;height:0;border-style:solid;border-width:16px 0 16px 27px;border-color:transparent transparent transparent var(--accent-ink);margin-left:6px"></span></a>
+    </div>
+      <div style="display:flex;align-items:flex-start;gap:8px;padding-left:38px;margin-top:8px;pointer-events:none">
+        <svg width="36" height="64" viewBox="0 0 36 64" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:-54px"><path d="M34 60 C 20 58, 13 38, 18 4"></path><path d="M12 11 L18 3 L24 11"></path></svg>
+        <span style="font-family:var(--fn);font-size:28px;line-height:1;color:var(--ink);white-space:nowrap;transform:rotate(-3deg);transform-origin:left top">watch a week<br>at camp</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Name story" style="background:var(--dark);color:var(--on-dark)">
+    <div style="max-width:1240px;margin:0 auto;padding:64px 32px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center">
+      <div style="font-family:var(--fh);font-weight:var(--hw);font-size:clamp(48px,6vw,80px);line-height:.95;letter-spacing:-.03em;display:flex;flex-direction:column;gap:6px;position:relative;width:max-content">
+        <svg aria-hidden="true" viewBox="0 0 60 80" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:100%;top:.42em;margin-left:.12em;width:.62em;height:.82em;overflow:visible"><path d="M4 6 C 40 2, 58 30, 46 52 C 40 63, 28 69, 12 71"></path><path d="M24 60 L11 71 L25 79"></path></svg>
+        <span style="color:var(--on-dark-muted);text-decoration:line-through;text-decoration-thickness:6px;text-decoration-color:var(--accent);opacity:.7">diabetes</span>
+        <span style="color:var(--on-dark)">setebaid</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px;max-width:44ch">
+        <p style="margin:0;font-size:20px;line-height:1.55;color:var(--on-dark-muted);text-wrap:pretty"><b style="color:var(--on-dark)">Our campers named us.</b> Setebaid is diabetes spelled backwards. The idea: together we can turn it around. Programs started in 1977; Setebaid Services® was incorporated in 1998.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Turn it around" style="max-width:1240px;margin:0 auto;padding:56px 32px 24px;display:flex;flex-direction:column;gap:28px">
+    <p style="margin:0;font-size:20px;line-height:1.55;color:var(--body);max-width:64ch;text-wrap:balance">The hard parts of living with diabetes don't disappear at camp. <b style="color:var(--ink);white-space:nowrap">They get turned around.</b></p>
+    <div ref="{{ gridRef }}" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+      <sc-for list="{{ cards }}" as="card" hint-placeholder-count="4">
+        <button onClick="{{ card.toggle }}" aria-pressed="{{ card.flipped }}" style="all:unset;cursor:pointer;display:block;perspective:1200px;width:100%;height:400px">
+          <div data-peek="" style="position:relative;width:100%;height:100%;transform-style:preserve-3d">
+          <div style="position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.4,0,.2,1);transform:{{ card.tf }}">
+            <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:{{ card.frontBg }};border-radius:var(--rc);box-shadow:inset 0 0 0 1.5px {{ card.frontLine }};padding:28px;display:flex;flex-direction:column;justify-content:space-between;color:var(--ink)">
+              <div style="font-family:var(--fu);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:{{ card.frontAccent }}">Diabetes</div>
+              <div style="font-family:var(--fh);font-weight:var(--hw);font-size:clamp(21px,2.1vw,26px);line-height:1.15;letter-spacing:-.01em;text-wrap:pretty">{{ card.front }}</div>
+              <div style="font-family:var(--fn);font-size:22px;color:{{ card.frontAccent }};display:flex;align-items:center;gap:8px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.5 7.5A8 8 0 1 1 5 14" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path><path d="M3 4.5v6h6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>turn it around</div>
+            </div>
+            <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:{{ card.bg }};color:{{ card.fg }};border-radius:var(--rc);padding:28px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" style="position:absolute;right:-50px;bottom:-50px;width:220px;height:220px;opacity:.06"><path d="M6.5 7.5A8 8 0 1 1 5 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path><path d="M3 4.5v6h6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <div style="font-family:var(--fu);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.85">Setebaid</div>
+              <div style="font-family:var(--fh);font-weight:var(--hw);font-size:clamp(20px,1.9vw,24px);line-height:1.2;letter-spacing:-.01em;text-wrap:pretty;position:relative">{{ card.back }}</div>
+              <span aria-hidden="true" style="font-size:34px;line-height:1;position:relative">{{ card.emoji }}</span>
+            </div>
+          </div>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Photo strip" style="padding:72px 0 0;display:flex;flex-direction:column;gap:18px">
+    <div style="display:grid;grid-template-columns:5fr 4fr 6fr 4fr 5fr;gap:14px;height:460px;padding:0 14px">
+      <img src="assets/photos/everyone.jpg" alt="The whole camp in matching team shirts" style="width:100%;height:100%;object-fit:cover;object-position:50% 40%;border-radius:var(--rc);display:block">
+      <img src="assets/photos/underthesea.jpg" alt="Campers in costume on theme night" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rc);display:block;margin-top:40px;height:calc(100% - 40px)">
+      <img src="assets/photos/k2.jpg" alt="Campers and staff gathered at the pavilion" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rc);display:block">
+      <img src="assets/photos/whattheydoing.jpg" alt="Field games on the lawn" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rc);display:block;margin-top:40px;height:calc(100% - 40px)">
+      <img src="assets/photos/girlsinblue.jpg" alt="Counselors in blue camp shirts" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;border-radius:var(--rc);display:block">
+    </div>
+    <div style="max-width:1240px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;gap:24px;width:100%;box-sizing:border-box;align-items:baseline">
+      <div style="font-family:var(--fn);font-size:28px;color:var(--body);transform:rotate(-2deg)">team colours, theme night, field games, and the whole camp in one shot</div>
+      <a href="#" style="font-family:var(--fu);font-weight:600;font-size:16px;white-space:nowrap">Photo galleries&nbsp;→</a>
+    </div>
+  </section>
+
+  <section data-screen-label="Camps" style="max-width:1240px;margin:0 auto;padding:96px 32px;display:flex;flex-direction:column;gap:40px;position:relative">
+    <div aria-hidden="true" style="position:absolute;right:-140px;top:-40px;width:260px;height:260px;border-radius:50%;background:var(--accent);opacity:.1;pointer-events:none"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <h2 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:46px;line-height:1.02;letter-spacing:-.02em;max-width:22ch;text-wrap:balance">Two camps, one week, same woods.</h2>
+      <a href="#" style="font-family:var(--fu);font-weight:600;font-size:16px">Compare dates &amp; rates&nbsp;→</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px">
+      <article style="display:flex;flex-direction:column;gap:0">
+        <div style="position:relative;margin-bottom:22px">
+          <img src="assets/photos/takeaim.jpg" alt="Young camper at archery" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--rc);display:block;transform:rotate(-1.5deg)">
+          <div style="position:absolute;left:20px;bottom:-22px;background:var(--accent);color:var(--accent-ink);border-radius:var(--rc);padding:14px 18px;font-family:var(--fh);font-weight:var(--hw);line-height:1;display:flex;align-items:baseline;gap:8px;box-shadow:0 8px 24px rgba(28,42,34,.18)"><span style="font-size:13px;letter-spacing:.1em;font-family:var(--fu);font-weight:600">JUL</span><span style="font-size:34px;letter-spacing:-.02em">11–17</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;padding:0 4px">
+          <div style="font-family:var(--fu);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);margin-top:12px">Ages 7–13</div>
+          <h3 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:30px;line-height:1.1;letter-spacing:-.01em">Harrisburg Diabetic Youth Camp</h3>
+          <p style="margin:0;color:var(--body);font-size:var(--body-size);line-height:var(--body-lh)">Our camp for younger kids, running since 1978. Cabins, crafts, archery and swimming, with a healthcare team that folds diabetes care into the day.</p>
+          <div style="display:flex;gap:10px;font-family:var(--fu);margin-top:4px">
+            <a href="#" style="font-weight:600;font-size:15px;text-decoration:none;background:var(--primary);color:#fff;padding:12px 20px;border-radius:var(--r)">Register&nbsp;→</a>
+            <a href="#" style="font-weight:600;font-size:15px;text-decoration:none;color:var(--ink);padding:12px 20px;border-radius:var(--r);box-shadow:inset 0 0 0 1.5px var(--line)">About HDYC</a>
+          </div>
+        </div>
+      </article>
+      <article style="display:flex;flex-direction:column;gap:0">
+        <div style="position:relative;margin-bottom:22px">
+          <img src="assets/photos/redteam.jpg" alt="Teen campers in red team shirts" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--rc);display:block;transform:rotate(1.5deg)">
+          <div style="position:absolute;left:20px;bottom:-22px;background:var(--primary);color:#fff;border-radius:var(--rc);padding:14px 18px;font-family:var(--fh);font-weight:var(--hw);line-height:1;display:flex;align-items:baseline;gap:8px;box-shadow:0 8px 24px rgba(28,42,34,.18)"><span style="font-size:13px;letter-spacing:.1em;font-family:var(--fu);font-weight:600">JUL</span><span style="font-size:34px;letter-spacing:-.02em">11–17</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;padding:0 4px">
+          <div style="font-family:var(--fu);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);margin-top:12px">Ages 13–17</div>
+          <h3 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:30px;line-height:1.1;letter-spacing:-.01em">Camp Setebaid at Mount Luther</h3>
+          <p style="margin:0;color:var(--body);font-size:var(--body-size);line-height:var(--body-lh)">For teens: more independence, the ropes course, late-night talks, and a path into our Counselor-in-Training program.</p>
+          <div style="display:flex;gap:10px;font-family:var(--fu);margin-top:4px">
+            <a href="#" style="font-weight:600;font-size:15px;text-decoration:none;background:var(--primary);color:#fff;padding:12px 20px;border-radius:var(--r)">Register&nbsp;→</a>
+            <a href="#" style="font-weight:600;font-size:15px;text-decoration:none;color:var(--ink);padding:12px 20px;border-radius:var(--r);box-shadow:inset 0 0 0 1.5px var(--line)">About Camp Setebaid</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section data-screen-label="Why Setebaid" style="background:radial-gradient(ellipse 60% 80% at 100% 100%,rgba(255,255,255,.45),transparent 70%),var(--tint)">
+    <div style="max-width:1240px;margin:0 auto;padding:96px 32px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:72px;align-items:center">
+      <figure style="margin:0;display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:440px;justify-self:end">
+      <div style="position:relative;aspect-ratio:1;width:100%">
+        <div style="position:absolute;inset:0;border-radius:50%;border:14px solid var(--brand);border-left-color:transparent;transform:rotate(140deg)"></div>
+        <img src="assets/photos/dsc01572.jpg" alt="Campers paddling a canoe" style="position:absolute;inset:30px;width:calc(100% - 60px);height:calc(100% - 60px);object-fit:cover;border-radius:50%;display:block">
+        <div style="position:absolute;right:6px;top:22px;width:52px;height:52px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 8px var(--tint)"></div>
+      </div>
+        <figcaption style="font-family:var(--fn);font-size:26px;line-height:1;color:var(--body);transform:rotate(-3deg)">canoe day, lake side</figcaption>
+      </figure>
+      <div style="display:flex;flex-direction:column;gap:36px;max-width:620px">
+        <h2 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:46px;line-height:1.02;letter-spacing:-.02em;text-wrap:balance">Here, diabetes is the norm. Not the exception.</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:28px">
+          <div style="display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--brand);padding-top:16px"><div style="font-family:var(--fh);font-weight:var(--hw);font-size:20px;line-height:1.2">Kids first</div><p style="margin:0;color:var(--body);font-size:16px;line-height:1.55;text-wrap:pretty">Everyone counts carbs. Nobody's the only one.</p></div>
+          <div style="display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--accent);padding-top:16px"><div style="font-family:var(--fh);font-weight:var(--hw);font-size:20px;line-height:1.2">Caught, not taught</div><p style="margin:0;color:var(--body);font-size:16px;line-height:1.55;text-wrap:pretty">No lectures. Just coaching during the fun.</p></div>
+          <div style="display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--secondary);padding-top:16px"><div style="font-family:var(--fh);font-weight:var(--hw);font-size:20px;line-height:1.2">Experts on site</div><p style="margin:0;color:var(--body);font-size:16px;line-height:1.55;text-wrap:pretty">Diabetes doctors and nurses, all week.</p></div>
+        </div>
+        <a href="#" style="align-self:flex-start;font-family:var(--fu);font-weight:600;font-size:16px">Health and safety at camp&nbsp;→</a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Pricing" style="max-width:1240px;margin:0 auto;padding:112px 32px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:start;position:relative">
+    <div aria-hidden="true" style="position:absolute;right:-420px;bottom:-340px;width:560px;height:560px;border-radius:50%;border:18px solid var(--secondary);border-left-color:transparent;transform:rotate(-120deg);opacity:.12;pointer-events:none"></div>
+    <div style="display:flex;flex-direction:column;gap:32px;position:sticky;top:32px">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="font-family:var(--fu);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--primary)">Honor-system pricing</div>
+        <h2 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:clamp(36px,3.6vw,46px);line-height:1.04;letter-spacing:-.02em;text-wrap:balance">Pay what your family can. Every child gets the same camp.</h2>
+      </div>
+      <p style="margin:0;color:var(--body);font-size:var(--body-size);line-height:var(--body-lh);text-wrap:pretty">Pick the tier that fits your family. Tiers I–III are a self-assessment: no application, no income check, and your choice stays confidential. Only Tier IV requires an application.<br><br>Tier I is the true cost. Donors make Tiers II and III possible. A $200 deposit is part of every fee.</p>
+      <p style="margin:0;font-family:var(--fu);font-size:14px;line-height:1.6;color:var(--body);padding-top:20px;border-top:1.5px solid var(--line)">2027 rates. Late fee of $50 after May 15.<br><a href="#">Refund policy</a></p>
+    </div>
+    <div style="display:flex;flex-direction:column;font-family:var(--fu)">
+      <div style="display:grid;grid-template-columns:80px minmax(0,1fr) auto;column-gap:32px;align-items:baseline;padding:30px 0;border-top:1.5px solid var(--line)"><div style="font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--body)">Tier I</div><div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:18px">The full cost of camp</span></div><div style="font-family:var(--fh);font-weight:var(--hw);font-size:34px;letter-spacing:-.02em;line-height:1">$3,700</div></div>
+      <div style="display:grid;grid-template-columns:80px minmax(0,1fr) auto;column-gap:32px;align-items:baseline;padding:30px 0;border-top:1.5px solid var(--line)"><div style="font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--body)">Tier II</div><div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:18px">A subsidized fee</span></div><div style="font-family:var(--fh);font-weight:var(--hw);font-size:34px;letter-spacing:-.02em;line-height:1">$1,300</div></div>
+      <div style="display:grid;grid-template-columns:80px minmax(0,1fr) auto;column-gap:32px;align-items:baseline;padding:30px 0;border-top:1.5px solid var(--line)"><div style="font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--body)">Tier III</div><div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:18px">A highly subsidized fee</span><span style="font-family:var(--fn);font-size:22px;line-height:1;color:var(--primary);white-space:nowrap">compare this one to other camps&nbsp;→</span></div><div style="font-family:var(--fh);font-weight:var(--hw);font-size:34px;letter-spacing:-.02em;line-height:1">$1,050</div></div>
+      <div style="display:grid;grid-template-columns:80px minmax(0,1fr) auto;column-gap:32px;align-items:baseline;padding:32px;margin:24px 0 0;background:var(--dark);color:var(--on-dark);border-radius:var(--rc)"><div style="font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Tier IV</div><div style="display:flex;flex-direction:column;gap:10px"><span style="font-size:18px">Income-based campership, by application</span><a href="#" style="color:var(--on-dark);font-weight:600;font-size:15px;line-height:1.4">Apply early. Awards are first come, first served&nbsp;→</a></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px"><span style="font-family:var(--fh);font-weight:var(--hw);font-size:34px;letter-spacing:-.02em;line-height:1">$50</span><span style="font-size:14px;font-weight:600;color:var(--on-dark-muted)">+ campership</span></div></div>
+    </div>
+  </section>
+
+  <section data-screen-label="Quote" style="max-width:1240px;margin:0 auto;padding:0 32px 96px">
+    <div style="position:relative;background:var(--surface);border-radius:var(--rc);padding:72px 64px;display:grid;grid-template-columns:minmax(0,8fr) minmax(0,3fr);gap:48px;align-items:center;box-shadow:inset 0 0 0 1.5px var(--line)">
+      <div style="position:absolute;left:48px;top:-28px;font-family:var(--fh);font-weight:var(--hw);font-size:140px;line-height:1;color:var(--accent);height:70px;overflow:hidden">“</div>
+      <blockquote style="margin:0;display:flex;flex-direction:column;gap:20px">
+        <p style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:30px;line-height:1.3;letter-spacing:-.01em;text-wrap:pretty">Once I entered the camp, I always felt like I could do more… learn from my mistakes, raise the bar on my behavior, and be more independent. I would not be half the person I am today without the people I met at Setebaid's camps.</p>
+        <footer style="font-family:var(--fu);font-size:16px;color:var(--body)">Setebaid alumnus</footer>
+      </blockquote>
+      <img src="assets/photos/k1.jpg" alt="Camper with a backpack outside a cabin" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;display:block;box-shadow:0 0 0 10px var(--tint)">
+    </div>
+  </section>
+
+  <section data-screen-label="Events" style="background:radial-gradient(ellipse 50% 70% at 0% 0%,rgba(255,255,255,.5),transparent 70%),var(--tint);position:relative;overflow:hidden">
+    <div aria-hidden="true" style="position:absolute;right:-60px;top:-120px;width:380px;height:380px;border-radius:50%;border:16px solid var(--brand);border-left-color:transparent;transform:rotate(200deg);opacity:.07;pointer-events:none"></div>
+    <div aria-hidden="true" style="position:absolute;left:8%;bottom:40px;width:28px;height:28px;border-radius:50%;background:var(--accent);opacity:.35;pointer-events:none"></div>
+    <div style="max-width:1240px;margin:0 auto;padding:96px 32px;display:flex;flex-direction:column;gap:36px;position:relative">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+        <h2 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:46px;line-height:1.02;letter-spacing:-.02em">Come find us this year</h2>
+        <a href="#" style="font-family:var(--fu);font-weight:600;font-size:16px">All events&nbsp;→</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;font-family:var(--fu)">
+        <a href="#" style="text-decoration:none;background:var(--primary);color:#fff;border-radius:var(--rc);padding:28px;display:flex;flex-direction:column;gap:14px"><div style="font-family:var(--fh);font-weight:var(--hw);font-size:40px;line-height:1;letter-spacing:-.02em">Apr 24</div><div style="font-size:14px;font-weight:600;opacity:.85">Saturday · Harrisburg, PA</div><div style="font-family:var(--fh);font-weight:var(--hw);font-size:22px;margin-top:8px">Setebaid Walk</div><div style="font-size:15px;line-height:1.55;opacity:.9">Walk, sponsor a camper, or bring a team.</div><div style="margin-top:auto;padding-top:10px;font-size:15px;font-weight:600;text-decoration:underline;text-underline-offset:3px">Event details&nbsp;→</div></a>
+        <a href="#" style="text-decoration:none;background:var(--accent);color:var(--accent-ink);border-radius:var(--rc);padding:28px;display:flex;flex-direction:column;gap:14px"><div style="font-family:var(--fh);font-weight:var(--hw);font-size:40px;line-height:1;letter-spacing:-.02em">Jun 7</div><div style="font-size:14px;font-weight:600;opacity:.85">Monday · Course TBA</div><div style="font-family:var(--fh);font-weight:var(--hw);font-size:22px;margin-top:8px">Golf Tournament</div><div style="font-size:15px;line-height:1.55;opacity:.9">Foursomes and hole sponsorships. Proceeds fund Camp Setebaid.</div><div style="margin-top:auto;padding-top:10px;font-size:15px;font-weight:600;text-decoration:underline;text-underline-offset:3px">Event details&nbsp;→</div></a>
+        <a href="#" style="text-decoration:none;background:var(--secondary);color:var(--secondary-ink);border-radius:var(--rc);padding:28px;display:flex;flex-direction:column;gap:14px"><div style="font-family:var(--fh);font-weight:var(--hw);font-size:40px;line-height:1;letter-spacing:-.02em">Sep 18</div><div style="font-size:14px;font-weight:600;opacity:.85">Saturday · Winfield, PA</div><div style="font-family:var(--fh);font-weight:var(--hw);font-size:22px;margin-top:8px">Type 1-derful 5K</div><div style="font-size:15px;line-height:1.55;opacity:.9">Run or walk with campers, families and alumni.</div><div style="margin-top:auto;padding-top:10px;font-size:15px;font-weight:600;text-decoration:underline;text-underline-offset:3px">Event details&nbsp;→</div></a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Donate" style="position:relative;min-height:640px;display:flex;align-items:flex-end;overflow:hidden;background:var(--dark)">
+    <img src="assets/photos/artscrafts.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block">
+    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,26,18,.92) 0%,rgba(10,26,18,.55) 45%,rgba(10,26,18,.05) 100%)"></div>
+    <div style="position:relative;max-width:1240px;margin:0 auto;padding:200px 32px 72px;width:100%;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:end;color:#FBF7EC">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="font-family:var(--fu);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">Campership Fund</div>
+        <h2 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:52px;line-height:1.02;letter-spacing:-.02em;text-wrap:balance">Keep camp open to every child with diabetes.</h2>
+        <p style="margin:0;font-size:var(--body-size);line-height:var(--body-lh);max-width:48ch;color:#E3E8E2">Donors cover the gap between what families pay and what camp costs. Give once, give monthly, or give in memory of someone.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;font-family:var(--fu)">
+        <a href="#" style="font-weight:600;font-size:17px;text-decoration:none;background:var(--accent);color:var(--accent-ink);padding:17px 28px;border-radius:var(--r)">Give to the Campership Fund&nbsp;→</a>
+        <a href="#" style="font-weight:600;font-size:16px;color:#FBF7EC">Make a memorial gift&nbsp;→</a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Staff" style="background:var(--tint)">
+    <div style="max-width:1240px;margin:0 auto;padding:96px 32px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:minmax(290px,auto) minmax(290px,auto);gap:16px">
+      <div style="grid-column:1/3;grid-row:1;background:var(--surface);border-radius:var(--rc);padding:30px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;box-shadow:inset 0 0 0 1.5px var(--line);min-height:0;position:relative;overflow:hidden">
+        <div style="position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;border:12px solid var(--tint);border-left-color:transparent;transform:rotate(-40deg)"></div>
+        <div style="display:flex;flex-direction:column;gap:12px;position:relative">
+          <div style="display:flex;gap:6px"><span style="width:36px;height:4px;background:var(--brand);border-radius:2px"></span><span style="width:36px;height:4px;background:var(--accent);border-radius:2px"></span><span style="width:36px;height:4px;background:var(--secondary);border-radius:2px"></span></div>
+          <div style="font-family:var(--fu);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--primary)">Staff &amp; volunteers</div>
+          <h2 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:34px;line-height:1.02;letter-spacing:-.02em;text-wrap:balance">Spend a week that matters.</h2>
+          <p style="margin:0;color:var(--body);font-size:var(--body-size);line-height:var(--body-lh);max-width:44ch">We need counselors, nurses, physicians, dietitians and helpers every July. Many of our staff were campers once.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;font-family:var(--fu);position:relative">
+          <a href="#" style="font-weight:600;font-size:15px;text-decoration:none;background:var(--primary);color:#fff;padding:13px 20px;border-radius:var(--r)">Staff interest form&nbsp;→</a>
+          <a href="#" style="font-weight:600;font-size:15px;text-decoration:none;color:var(--ink);padding:13px 20px;border-radius:var(--r);box-shadow:inset 0 0 0 1.5px var(--line)">Counselor-in-Training</a>
+        </div>
+      </div>
+      <div style="grid-column:3/5;grid-row:1/3;position:relative;min-height:0">
+        <img src="assets/photos/k3.jpg" alt="Camp staff seated on cabin steps" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;border-radius:var(--rc);display:block;position:absolute;inset:0">
+        <div style="position:absolute;left:-14px;top:28px;width:48px;height:48px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px var(--tint)"></div>
+        <div style="position:absolute;right:20px;bottom:18px;font-family:var(--fn);font-size:26px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5);transform:rotate(-3deg)">the whole crew, cabin steps</div>
+      </div>
+      <div style="grid-column:1;grid-row:2;position:relative;min-height:0;border-radius:var(--rc);box-shadow:0 0 0 4px var(--brand)">
+        <img src="assets/photos/staff.jpg" alt="Staff peeking through a cabin window" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rc);display:block;position:absolute;inset:0">
+        <div style="position:absolute;left:14px;bottom:12px;font-family:var(--fn);font-size:22px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5);transform:rotate(-2deg)">counselors</div>
+      </div>
+      <div style="grid-column:2;grid-row:2;position:relative;min-height:0;border-radius:var(--rc);box-shadow:0 0 0 4px var(--secondary)">
+        <img src="assets/photos/cit.jpg" alt="Counselors-in-training in green shirts" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;border-radius:var(--rc);display:block;position:absolute;inset:0">
+        <div style="position:absolute;left:14px;bottom:12px;font-family:var(--fn);font-size:22px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5);transform:rotate(-2deg)">CITs</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="News" style="max-width:1240px;margin:0 auto;padding:96px 32px;display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <div style="display:flex;align-items:baseline;gap:18px;flex-wrap:wrap"><h2 style="margin:0;font-family:var(--fh);font-weight:var(--hw);font-size:46px;line-height:1.02;letter-spacing:-.02em">From camp</h2><span style="font-family:var(--fn);font-size:28px;color:var(--body);transform:rotate(-3deg);display:inline-block">news from the office ↘</span></div>
+      <a href="#" style="font-family:var(--fu);font-weight:600;font-size:16px">All news&nbsp;→</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:250px 250px;gap:16px;font-family:var(--fu)">
+      <a href="#" style="grid-column:1/3;grid-row:1/3;position:relative;text-decoration:none;color:#FBF7EC;border-radius:var(--rc);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:32px;background:var(--dark)">
+        <img src="assets/photos/takeaim.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,26,18,.9) 0%,rgba(10,26,18,.4) 50%,rgba(10,26,18,0) 100%)"></div>
+        <div style="position:absolute;right:24px;top:24px;width:44px;height:44px;border-radius:50%;background:var(--accent)"></div>
+        <div style="position:relative;display:flex;flex-direction:column;gap:10px"><div style="width:36px;height:4px;background:var(--accent);border-radius:2px"></div><div style="font-size:14px;color:#E3E8E2">Placeholder · Sep 2026</div><div style="font-family:var(--fh);font-weight:var(--hw);font-size:30px;line-height:1.12;letter-spacing:-.01em;max-width:22ch;text-wrap:balance">News headline placeholder about the 2027 season</div></div>
+      </a>
+      <a href="#" style="grid-column:3/5;grid-row:1;text-decoration:none;color:var(--ink);background:var(--surface);border-radius:var(--rc);box-shadow:inset 0 0 0 1.5px var(--line);overflow:hidden;display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);min-height:0">
+        <img src="assets/photos/whattheydoing.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;min-height:0">
+        <div style="padding:26px;display:flex;flex-direction:column;justify-content:space-between;gap:10px"><div style="display:flex;flex-direction:column;gap:10px"><div style="width:36px;height:4px;background:var(--brand);border-radius:2px"></div><div style="font-size:14px;color:var(--body)">Placeholder · Aug 2026</div></div><div style="font-family:var(--fh);font-weight:var(--hw);font-size:21px;line-height:1.2;text-wrap:pretty">News headline placeholder about a fundraising event</div><div style="font-size:14px;font-weight:600;color:var(--primary)">Read&nbsp;→</div></div>
+      </a>
+      <a href="#" style="grid-column:3/5;grid-row:2;text-decoration:none;color:var(--ink);background:var(--surface);border-radius:var(--rc);box-shadow:inset 0 0 0 1.5px var(--line);overflow:hidden;display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);min-height:0">
+        <img src="assets/photos/underthesea.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;min-height:0">
+        <div style="padding:26px;display:flex;flex-direction:column;justify-content:space-between;gap:10px"><div style="display:flex;flex-direction:column;gap:10px"><div style="width:36px;height:4px;background:var(--secondary);border-radius:2px"></div><div style="font-size:14px;color:var(--body)">Placeholder · Jul 2026</div></div><div style="font-family:var(--fh);font-weight:var(--hw);font-size:21px;line-height:1.2;text-wrap:pretty">News headline placeholder about camp week</div><div style="font-size:14px;font-weight:600;color:var(--primary)">Read&nbsp;→</div></div>
+      </a>
+    </div>
+  </section>
+
+  <footer data-screen-label="Footer" style="background:radial-gradient(ellipse 50% 60% at 100% 0%,rgba(255,255,255,.06),transparent 70%),var(--dark);color:var(--on-dark);font-family:var(--fu);position:relative;overflow:hidden">
+    <div aria-hidden="true" style="position:absolute;left:-180px;bottom:-260px;width:620px;height:620px;border-radius:50%;border:24px solid rgba(255,255,255,.05);border-left-color:transparent;transform:rotate(-30deg);pointer-events:none"></div>
+    <div style="max-width:1240px;margin:0 auto;padding:64px 32px 40px;display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));gap:40px">
+      <div style="display:flex;flex-direction:column;gap:16px;font-size:15px;line-height:1.6;color:var(--on-dark-muted)">
+        <img src="assets/setebaid-mark-2a.png" alt="" style="width:56px;height:56px;display:block">
+        <div>Setebaid Services, Inc.<br>P.O. Box 196, Winfield, PA 17889-0196<br>1157 Westbranch Highway, Winfield, PA 17889</div>
+        <div><a href="#" style="color:var(--on-dark)">(570) 524-9090</a><br><a href="#" style="color:var(--on-dark)">info@setebaidservices.org</a></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:15px"><div style="font-weight:600;margin-bottom:6px">Camps</div><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Harrisburg Diabetic Youth Camp</a><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Camp Setebaid at Mount Luther</a><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Family Camp</a><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Dates &amp; Rates</a></div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:15px"><div style="font-weight:600;margin-bottom:6px">Parents</div><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Campership Fund</a><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Health &amp; safety</a><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Packing list</a><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Parent manual</a></div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:15px"><div style="font-weight:600;margin-bottom:6px">Get involved</div><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Donate</a><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Events</a><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Staff &amp; volunteers</a><a href="#" style="color:var(--on-dark-muted);text-decoration:none">Alumni</a></div>
+    </div>
+    <div style="max-width:1240px;margin:0 auto;padding:24px 32px 40px;border-top:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--on-dark-muted)">
+      <div style="max-width:70ch;line-height:1.6">Setebaid Services® welcomes campers, families and staff of every background and is committed to the health, safety and welfare of everyone at camp.</div>
+      <div>© 2026 Setebaid Services, Inc. · <a href="#" style="color:var(--on-dark-muted)">Privacy</a></div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CARDS = [
+  { id: 'cant', emoji: '💪', bg: 'var(--dark)', fg: 'var(--on-dark)', frontBg: 'color-mix(in oklab, var(--dark) 12%, var(--bg))', frontLine: 'color-mix(in oklab, var(--dark) 24%, var(--bg))', frontAccent: 'var(--ink)', front: '“You can\u2019t do that with diabetes.”', back: 'Ropes course, canoes, archery. Campers find out what they can do, and go home more independent.' },
+  { id: 'only', emoji: '🤝', bg: 'var(--primary)', fg: '#FFFFFF', frontBg: 'color-mix(in oklab, var(--primary) 14%, var(--bg))', frontLine: 'color-mix(in oklab, var(--primary) 26%, var(--bg))', frontAccent: 'var(--primary)', front: 'The only kid in class with a pump.', back: 'Here, everyone has one. Nobody is the only one, and nobody has to explain.' },
+  { id: 'night', emoji: '😴', bg: 'var(--accent)', fg: 'var(--accent-ink)', frontBg: 'color-mix(in oklab, var(--accent) 26%, var(--bg))', frontLine: 'color-mix(in oklab, var(--accent) 48%, var(--bg))', frontAccent: '#86580A', front: 'Someone has to check blood sugar at 2 a.m.', back: 'Our healthcare team lives at camp all week. Parents get a week off, too.' },
+  { id: 'lessons', emoji: '🏕️', bg: 'var(--secondary)', fg: 'var(--secondary-ink)', frontBg: 'color-mix(in oklab, var(--secondary) 26%, var(--bg))', frontLine: 'color-mix(in oklab, var(--secondary) 50%, var(--bg))', frontAccent: '#2C6587', front: 'Diabetes lessons feel like homework.', back: 'Skills are caught, not taught. Coached in the moment, between the swim and the campfire.' }
+];
+class Component extends DCLogic {
+  state = { flipped: {} };
+  gridRef = React.createRef();
+  componentDidMount() {
+    const el = this.gridRef.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    this.io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      this.io.disconnect();
+      this.peek();
+    }, { threshold: 0.4 });
+    this.io.observe(el);
+  }
+  componentWillUnmount() { this.io && this.io.disconnect(); }
+  peek() {
+    const a = 60;
+    const stagger = 110;
+    this.gridRef.current.querySelectorAll('[data-peek]').forEach((n, i) => {
+      n.animate([
+        { transform: 'rotateY(0deg)' },
+        { transform: `rotateY(${a}deg)`, offset: 0.42 },
+        { transform: 'rotateY(-7deg)', offset: 0.78 },
+        { transform: 'rotateY(0deg)' }
+      ], { duration: 720, delay: i * stagger, easing: 'cubic-bezier(.45,0,.25,1)' });
+    });
+  }
+  renderVals() {
+    const { flipped } = this.state;
+    return {
+      gridRef: this.gridRef,
+      cards: CARDS.map(c => ({ ...c, flipped: !!flipped[c.id], tf: flipped[c.id] ? 'rotateY(180deg)' : 'rotateY(0deg)', toggle: () => this.setState(s => ({ flipped: { ...s.flipped, [c.id]: !s.flipped[c.id] } })) }))
+    };
+  }
+}
+</script>
+</body>
+</html>
