@@ -158,13 +158,35 @@ the reused sections.
 **Use freely:** `innerHero`, `storyFeature`, `featureCards`,
 `benefitCards`, `stackedFeatureRows`, `stackedTimeline`,
 `imageCollageFeature`, `headingImage`, `largeSlides`, `bigImageList`,
-`quoteWall`, `teamMembers`, `faqAccordion`, `ctaBanner`, `directorCta`.
+`quoteWall`, `teamMembers`, `faqAccordion`, `ctaBanner`, `directorCta`,
+`flipCards`, `photoStrip`.
 
 **Use only for their named job:** `faqHub` on /parents/faqs.
 `packingChecklist` for the packing list on /parents/before-camp.
-`richTextBlock` for the legal and policy pages (/privacy-policy,
-/terms-of-use, /cookie-policy, /accessibility, /refund-policy); on other
-pages, choose a designed section.
+`pricingTiers` for the camp fees on /dates-and-prices; other pages link
+there. `wordSwap` for the story of the Setebaid name. `richTextBlock` for
+the legal and policy pages (/privacy-policy, /terms-of-use,
+/cookie-policy, /accessibility, /refund-policy); on other pages, choose a
+designed section.
+
+**Layouts.** Six sections have a second look, set in their `layout`
+field (`variant` on `ctaBanner`). The home page uses each one. On other
+pages, use a layout when the content does the same job; otherwise keep
+the default.
+
+- `featureCards`: `grid` (default), or `tilted` for a few large cards
+  with a tilted photo, a date badge and two buttons, e.g. camps.
+- `benefitCards`: `grid` (default), or `ringPhoto` for a round photo
+  beside the heading and up to three short points.
+- `stackedTimeline`: `timeline` (default) for ordered steps, or
+  `dateCards` for up to three dated items, e.g. events. The item's small
+  label shows large, so put the date there.
+- `quoteWall`: `wall` (default), or `track` for one row of quotes that
+  visitors drag sideways.
+- `imageCollageFeature`: `collage` (default), or `bento` for a text card
+  with buttons and three captioned photos, e.g. staff.
+- `ctaBanner` `variant`: `closing` (default) ends a page, `nudge` is a
+  quiet prompt between sections, `photo` is a full-width photo band.
 
 **Text-only pages have no hero.** Legal and policy pages open with the
 page's own title and description, which the site shows as a styled title
@@ -173,34 +195,37 @@ the page's `description` field.
 
 **Do not use:**
 
-- `pricingSingleToggle`: the CAC price panel. The new Pricing section
-  replaces it.
+- `pricingSingleToggle`: the CAC price panel. `pricingTiers` replaces
+  it.
 - `includedExtras`: made for one fee with priced extras. Setebaid prices
   are tiers.
 - `internationalCampersSection` and `journey`: CAC topics (international
   campers, the bus trip). For ordered steps, use `stackedTimeline`.
 - `latestArticles`: a starter section, and the MVP has no news.
 
-**New: Pricing** (prototype "Pricing"). Tier cards (tier name, label,
-short description, price, "Register" button) and the honor-system note.
-It is being built. Look for it in `studio/schemas/blocks/page-builder.ts`.
-Until it is there, put the price content in a `richTextBlock` and write
-"Move to the Pricing section" in the Draft notes. Prices are content in
-Sanity only, never in code: this repository is public.
+**Pricing.** `pricingTiers` holds the tiers (name, label, price, button),
+the honor-system note and the small print. Prices are content in Sanity
+only, never in code: this repository is public.
 
 **Prototype section → section to use** when a page needs the same job:
 
 - Hero → `homeHero` on the home page, `innerHero` on all other pages.
-- Camps → `featureCards`.
-- Why Setebaid → `benefitCards`.
-- Voices → `quoteWall` (it shows Testimonial documents).
-- Staff → `imageCollageFeature`.
-- Donate → `ctaBanner` (no photo; the photo band is a proposal).
-- Events → `stackedTimeline`, with the date as the item's meta.
-- Name story, Turn it around, Photo strip: no match yet. They are home
-  page sections. On other pages, use the closest section above and record
-  a proposal.
+- Name story → `wordSwap`.
+- Turn it around → `flipCards`.
+- Photo strip → `photoStrip`.
+- Camps → `featureCards`, layout `tilted`.
+- Why Setebaid → `benefitCards`, layout `ringPhoto`.
+- Pricing → `pricingTiers`.
+- Voices → `quoteWall`, layout `track`.
+- Events → `stackedTimeline`, layout `dateCards`.
+- Donate → `ctaBanner`, variant `photo`.
+- Staff → `imageCollageFeature`, layout `bento`.
 - News: not in the MVP.
+
+**Testimonials.** `quoteWall` shows Testimonial documents. The home
+page's testimonials (`testimonial-home-*`) are still drafts. Another page
+may show them: reference them the way the home page draft does (a weak
+reference with `_strengthenOnPublish`). Do not edit them.
 
 **Photos.** The camp photos are still being processed. If no fitting photo
 is in Sanity, keep the section, leave the photo empty, and write the photo
