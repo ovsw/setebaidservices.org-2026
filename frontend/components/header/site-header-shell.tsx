@@ -1,33 +1,86 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import type { HeaderTheme } from "./theme";
 
 export const SITE_HEADER_OFFSET_PROPERTY = "--site-header-offset";
 
+/**
+ * The value a hero puts in `data-header-overlay`. An empty value keeps the
+ * configured theme (light text over a photo); "light" asks for dark text,
+ * for a hero on a light ground such as the home page.
+ */
+function readOverlayTheme(): HeaderTheme | null {
+  const overlay = document.querySelector("[data-header-overlay]");
+  if (!overlay) return null;
+  return overlay.getAttribute("data-header-overlay") === "light" ? "light" : "dark";
+}
+
 export function SiteHeaderShell({
   children,
   theme,
 }: {
-  children: ReactNode;
+  /** Receives the theme in effect: the overlay theme at the top, else the configured one. */
+  children: (theme: HeaderTheme) => ReactNode;
   theme: HeaderTheme;
 }) {
   const [visible, setVisible] = useState(true);
   const [atTop, setAtTop] = useState(true);
+  /** True while the bar fades between looks in view. */
+  const [fading, setFading] = useState(false);
+  const [overlayTheme, setOverlayTheme] = useState<HeaderTheme | null>(null);
+  /** Read by the scroll handler, which is set up once. */
+  const lightOverlay = useRef(false);
+  const visibleRef = useRef(true);
+  const atTopRef = useRef(true);
+  const pathname = usePathname();
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
+  // The hero is rendered by the page, so look it up again after navigation.
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const next = readOverlayTheme();
+      lightOverlay.current = next === "light";
+      setOverlayTheme(next);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [pathname]);
+
   useEffect(() => {
     lastScrollY.current = window.scrollY;
+    let fadeTimer: number | undefined;
 
     const update = () => {
       const current = window.scrollY;
       const delta = current - lastScrollY.current;
 
-      setAtTop(current <= 24);
-      if (current <= 8) setVisible(true);
-      else if (Math.abs(delta) >= 8) setVisible(delta < 0 || current < 120);
+      // Over a light hero the see-through bar would cover the hero's text as
+      // soon as the page moves, so it hides on the first scroll down past the
+      // top. Elsewhere it hides after 120px.
+      const hideAfter = lightOverlay.current ? 24 : 120;
+      const nextAtTop = current <= 24;
+      let nextVisible = visibleRef.current;
+      if (current <= 8) nextVisible = true;
+      // Leaving the top over a light hero, it hides in the same frame. Kept
+      // in view for a few more pixels, it would flash dark over the hero.
+      else if (lightOverlay.current && atTopRef.current && !nextAtTop) nextVisible = false;
+      else if (Math.abs(delta) >= 8) nextVisible = delta < 0 || current <= hideAfter;
+
+      // The look changes while the bar stays in view: fade all of it. A bar
+      // that fades in or out changes its colours at once, while unseen.
+      if (visibleRef.current && nextVisible && atTopRef.current !== nextAtTop) {
+        setFading(true);
+        window.clearTimeout(fadeTimer);
+        fadeTimer = window.setTimeout(() => setFading(false), 250);
+      }
+
+      visibleRef.current = nextVisible;
+      atTopRef.current = nextAtTop;
+      setVisible(nextVisible);
+      setAtTop(nextAtTop);
 
       if (Math.abs(delta) >= 8 || current <= 8) lastScrollY.current = current;
       ticking.current = false;
@@ -43,6 +96,7 @@ export function SiteHeaderShell({
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.cancelAnimationFrame(initialFrame);
+      window.clearTimeout(fadeTimer);
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
@@ -57,22 +111,39 @@ export function SiteHeaderShell({
     };
   }, [visible]);
 
+  // At the top the bar takes the overlay's look. A light overlay also keeps
+  // it while the bar fades out, so it never turns dark in view on the way
+  // down; whenever the bar comes back below the top, it is the dark bar.
+  const overlayActive = atTop || (overlayTheme === "light" && !visible);
+  const effectiveTheme = overlayActive && overlayTheme ? overlayTheme : theme;
+
   return (
     <header
       className={cn(
-        "sticky top-0 z-60 w-full border-b transition-[transform,background-color,border-color] duration-300 ease-reveal motion-reduce:transition-none",
-        theme === "dark"
+        "sticky top-0 z-60 w-full border-b ease-reveal motion-reduce:transition-none",
+        // The bar fades in and out in place over 300ms; it never moves.
+        // Colours fade over 200ms, the same as every part inside the bar
+        // (see data-color-fade in globals.css), and only while the bar
+        // stays in view.
+        fading
+          ? "transition-[opacity,background-color,border-color,color] [transition-duration:300ms,200ms,200ms,200ms]"
+          : "transition-opacity duration-300",
+        effectiveTheme === "dark"
           ? "border-birch-bark/15 bg-pine-night text-birch-bark"
           : "border-pine-night/15 bg-birch-bark text-pine-night",
-        visible ? "translate-y-0" : "-translate-y-full",
+        visible ? "opacity-100" : "pointer-events-none opacity-0",
       )}
-      data-at-top={atTop}
+      data-at-top={overlayActive}
+      data-color-fade={fading}
       data-site-header
-      data-theme={theme}
+      data-theme={effectiveTheme}
       data-visible={visible}
-      onFocusCapture={() => setVisible(true)}
+      onFocusCapture={() => {
+        visibleRef.current = true;
+        setVisible(true);
+      }}
     >
-      {children}
+      {children(effectiveTheme)}
     </header>
   );
 }

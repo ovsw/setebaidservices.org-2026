@@ -8,6 +8,7 @@ import { stegaClean } from "next-sanity";
 import Link from "next/link";
 import type { ComponentProps } from "react";
 import styles from "./cta-banner.module.css";
+import CtaBannerPhoto from "./cta-banner-photo";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
@@ -131,7 +132,7 @@ function nudgeCardClass(theme: SectionTheme) {
   return "bg-birch-bark text-pine-night border-pine-night/10";
 }
 
-export default function CtaBanner({
+function CtaBannerBand({
   _key,
   background,
   buttons,
@@ -227,5 +228,13 @@ export default function CtaBanner({
         </div>
       </div>
     </section>
+  );
+}
+
+export default function CtaBanner(props: CtaBannerProps) {
+  return stegaClean(props.variant) === "photo" ? (
+    <CtaBannerPhoto {...props} />
+  ) : (
+    <CtaBannerBand {...props} />
   );
 }

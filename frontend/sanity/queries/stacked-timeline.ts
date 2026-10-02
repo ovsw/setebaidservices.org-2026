@@ -1,4 +1,5 @@
 import { groq } from "next-sanity";
+import { buttonQuery } from "./shared/button";
 import { imageQuery } from "./shared/image";
 import { urlInternalHref } from "./shared/internal-href";
 import { minimalRichTextQuery } from "./shared/minimal-rich-text";
@@ -6,6 +7,7 @@ import { minimalRichTextQuery } from "./shared/minimal-rich-text";
 // @sanity-typegen-ignore
 export const stackedTimelineQuery = groq`
   _type == "stackedTimeline" => {
+    "layout": coalesce(layout, "timeline"),
     eyebrow,
     title[]{
       ${minimalRichTextQuery}
@@ -28,6 +30,9 @@ export const stackedTimelineQuery = groq`
       title,
       meta,
       text,
+      link{
+        ${buttonQuery}
+      },
       image {
         ${imageQuery}
       }

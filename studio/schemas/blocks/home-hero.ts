@@ -1,5 +1,6 @@
 import { Sparkles } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { photoField } from "./shared/photo-field";
 
 const homeHeroStat = defineArrayMember({
   name: "homeHeroStat",
@@ -9,13 +10,13 @@ const homeHeroStat = defineArrayMember({
     defineField({
       name: "value",
       type: "string",
-      description: 'The bold figure or short phrase, e.g. "Est. 1975".',
+      description: 'The bold fact, e.g. "July 11–17, 2027".',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "label",
       type: "string",
-      description: "A one-line explanation shown under the value.",
+      description: 'A short line under the fact, e.g. "Mifflinburg, PA".',
       validation: (rule) => rule.required(),
     }),
   ],
@@ -30,115 +31,75 @@ export default defineType({
   type: "object",
   icon: Sparkles,
   description:
-    "Full-viewport hero with background video, heading, stats bar, and call-to-action buttons. Designed for the home page.",
+    "The home page opener: status line, heading, short message, buttons and facts beside a round photo in the brand ring, with a play button for the camp film.",
   fields: [
+    defineField({
+      name: "status",
+      title: "Status line",
+      type: "string",
+      description:
+        'One short line above the heading, with a marigold dot, e.g. "Registration for summer 2027 is open".',
+    }),
     defineField({
       name: "title",
       title: "Heading",
       type: "minimalRichText",
-      description:
-        "The main heading. Use italic for the accent word or phrase that gets the handwritten style.",
+      description: "The main heading. Use italic for the accent word or phrase.",
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "body",
       title: "Supporting Message",
       type: "simpleRichText",
-      description:
-        "A short paragraph shown below the heading on desktop.",
-    }),
-    defineField({
-      name: "shortBody",
-      title: "Short Body (Mobile)",
-      type: "string",
-      description:
-        "A shorter version of the supporting message shown on small screens. Falls back to the full body if empty.",
+      description: "One or two sentences under the heading.",
     }),
     defineField({
       name: "buttons",
       type: "array",
-      description:
-        "Up to two call-to-action buttons with their chosen styles. On phones they sit side by side above the stats bar. The film button is configured separately below.",
+      description: "Up to two buttons. The first is the main action.",
       of: [defineArrayMember({ type: "button" })],
       validation: (rule) => rule.max(2),
     }),
-    defineField({
-      name: "videoUrl",
-      title: "Background Video URL",
-      type: "url",
-      description:
-        "Direct link to an mp4 video file. Plays muted and looped behind the hero.",
-      validation: (rule) =>
-        rule.uri({ scheme: ["http", "https"] }),
-    }),
-    defineField({
-      name: "disableVideo",
-      title: "Disable Background Video",
-      type: "boolean",
-      initialValue: false,
-      description:
-        "Show the background image instead of the video. Turns the video off without deleting its URL.",
+    photoField({
+      required: true,
+      description: "Shown round, inside the brand ring. Use the hotspot to keep faces in the circle.",
     }),
     defineField({
       name: "filmButton",
       title: "Film Button",
       type: "object",
       description:
-        "Opens the camp film in a lightbox. Sits on the photo on phones and next to the buttons on desktop. Leave the URL empty to hide it.",
+        "The round play button on the photo opens the camp film. The label is the handwritten note beside it. Leave the URL empty to hide both.",
       fields: [
         defineField({
           name: "label",
           title: "Label",
           type: "string",
-          description: 'Shown next to a play icon, e.g. "Watch the film".',
+          description: 'Handwritten note, e.g. "watch a week at camp".',
         }),
         defineField({
           name: "url",
           title: "Film URL",
           type: "url",
-          description: "YouTube or Vimeo link to the film.",
+          description: "YouTube link to the film.",
           validation: (rule) => rule.uri({ scheme: ["http", "https"] }),
         }),
       ],
     }),
     defineField({
-      name: "image",
-      title: "Background Image",
-      type: "image",
-      options: { hotspot: true },
-      description:
-        "Serves as the video poster frame and fallback for visitors without autoplay.",
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alternative Text",
-          type: "string",
-          validation: (rule) =>
-            rule.custom((value, context) => {
-              const parent = context.parent as { asset?: unknown } | undefined;
-              return parent?.asset && !value
-                ? "Describe the image for visitors who cannot see it"
-                : true;
-            }),
-        }),
-      ],
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: "stats",
-      title: "Stats Bar",
+      title: "Facts",
       type: "array",
-      description:
-        "Short facts shown at the bottom of the hero. Each has a bold value and a label.",
+      description: "Two short facts under the buttons. Each has a bold value and a label.",
       of: [homeHeroStat],
-      validation: (rule) => rule.min(1),
+      validation: (rule) => rule.max(3),
     }),
   ],
   preview: {
-    select: { media: "image" },
-    prepare: ({ media }) => ({
+    select: { media: "image", status: "status" },
+    prepare: ({ media, status }) => ({
       title: "Home Hero",
-      subtitle: "Home Hero",
+      subtitle: status || "Home Hero",
       media,
     }),
   },

@@ -4,6 +4,8 @@ import { testimonialReferencesQuery } from "./shared/testimonial-references";
 // @sanity-typegen-ignore
 export const quoteWallQuery = groq`
   _type == "quoteWall" => {
+    "layout": coalesce(layout, "wall"),
+    hint,
     eyebrow,
     heading[]{
       ...

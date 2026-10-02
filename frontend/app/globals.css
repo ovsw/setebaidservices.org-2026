@@ -230,17 +230,34 @@
 /* Overlay header                                                      */
 /* ------------------------------------------------------------------ */
 
-/* When the page opens with a full-bleed hero (marked data-header-overlay),
-   content slides under the nav and the bar is see-through at the top of the
-   page. The background returns once the user scrolls, which is also when the
-   hide-on-scroll behaviour takes over. */
+/* When the page opens with a hero marked data-header-overlay, content slides
+   under the nav and the bar is see-through at the top of the page. The
+   background returns once the user scrolls, which is also when the
+   hide-on-scroll behaviour takes over. A hero on a light ground sets
+   data-header-overlay="light": the shell then shows dark text at the top
+   (see site-header-shell.tsx). Until the shell has hydrated it still carries
+   the configured dark theme, so the bar keeps its dark colour for that
+   moment instead of showing light text over the light hero. */
 body:has([data-header-overlay]) header[data-site-header] {
   margin-bottom: calc(var(--header-height) * -1);
 }
 
-body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
+body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"],
+body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="true"][data-theme="light"] {
   background-color: transparent;
   border-color: transparent;
+}
+
+/* When the bar changes look while in view (see-through at the top, solid
+   below), the shell sets data-color-fade for the length of the fade. Every
+   part of the bar then fades at the bar's own pace, so the logo and the
+   links do not change ahead of the background. */
+@media (prefers-reduced-motion: no-preference) {
+  header[data-site-header][data-color-fade="true"] * {
+    transition-property: color, background-color, border-color, opacity;
+    transition-duration: 200ms;
+    transition-timing-function: var(--ease-standard);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -757,6 +774,44 @@ body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
   --section-surface: var(--color-background);
   background-color: var(--color-background);
   color: var(--color-foreground);
+}
+
+/* Light-field glows. Soft sun, peach and daylight pooled in the corners of
+   a Cream or Sand section, painted as the section's own background image
+   over its field colour. Each placement comes from a prototype section, so
+   neighbouring sections light differently. Dark sections take the band glow
+   instead; see lightGlowClass() in components/blocks/section-theme.ts. */
+@utility glow-sunrise {
+  background-image:
+    radial-gradient(42% 60% at 86% 38%, var(--glow-sun), transparent 72%),
+    radial-gradient(36% 50% at 14% 8%, var(--glow-daylight), transparent 72%),
+    radial-gradient(40% 45% at 58% 100%, var(--glow-peach), transparent 72%);
+}
+
+@utility glow-left {
+  background-image:
+    radial-gradient(38% 70% at 4% 50%, var(--glow-peach), transparent 72%),
+    radial-gradient(30% 60% at 98% 90%, color-mix(in oklab, var(--glow-sun) 60%, transparent), transparent 72%);
+}
+
+@utility glow-right {
+  background-image:
+    radial-gradient(34% 45% at 100% 18%, color-mix(in oklab, var(--glow-sun) 80%, transparent), transparent 72%),
+    radial-gradient(34% 50% at 8% 80%, var(--glow-daylight), transparent 72%);
+}
+
+@utility glow-corners {
+  background-image:
+    radial-gradient(48% 70% at 0% 0%, var(--glow-daylight), transparent 72%),
+    radial-gradient(40% 65% at 100% 100%, var(--glow-sun), transparent 72%),
+    radial-gradient(30% 50% at 55% 100%, var(--glow-peach), transparent 72%);
+}
+
+@utility glow-top {
+  background-image:
+    radial-gradient(44% 40% at 50% 0%, var(--glow-daylight), transparent 72%),
+    radial-gradient(34% 50% at 94% 70%, var(--glow-peach), transparent 72%),
+    radial-gradient(30% 45% at 4% 58%, color-mix(in oklab, var(--glow-sun) 65%, transparent), transparent 72%);
 }
 
 /* ------------------------------------------------------------------ */

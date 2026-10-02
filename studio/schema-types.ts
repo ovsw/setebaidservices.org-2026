@@ -62,6 +62,10 @@ import headingImage from "./schemas/blocks/heading-image";
 import quoteWall from "./schemas/blocks/quote-wall";
 import pricingSingleToggle from "./schemas/blocks/pricing-single-toggle";
 import faqHub from "./schemas/blocks/faq-hub";
+import wordSwap from "./schemas/blocks/word-swap";
+import flipCards from "./schemas/blocks/flip-cards";
+import photoStrip from "./schemas/blocks/photo-strip";
+import pricingTiers from "./schemas/blocks/pricing-tiers";
 // page-builder-generator:block-imports
 import { internationalCampersSection } from "./schemas/blocks/international-campers-section";
 
@@ -126,6 +130,10 @@ export const schemaTypes = [
   quoteWall,
   pricingSingleToggle,
   faqHub,
+  wordSwap,
+  flipCards,
+  photoStrip,
+  pricingTiers,
   // page-builder-generator:block-types
   internationalCampersSection,
 ];

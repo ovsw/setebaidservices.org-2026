@@ -29,7 +29,7 @@ import type { HeaderTheme } from "./theme";
 
 function HamburgerIcon({ open }: { open: boolean }) {
   const bar =
-    "h-[1.5px] w-full origin-center rounded-full bg-current transition-all motion-base motion-reduce:transition-none";
+    "h-[1.5px] w-full origin-center rounded-full bg-current";
 
   return (
     <span aria-hidden="true" className="flex w-4 flex-col gap-1">
@@ -111,7 +111,13 @@ export function MobileNav({
             aria-label="Mobile navigation"
             className="grid content-start gap-1 px-3 py-4"
           >
-            <Accordion collapsible type="single">
+            {/* Sections open and close at once; the shared accordion's slide is
+                switched off here. */}
+            <Accordion
+              className="[&_[data-slot=accordion-content]]:!animate-none"
+              collapsible
+              type="single"
+            >
               {navigation.items.map((item) =>
                 item.kind === "link" ? (
                   <HeaderLink
@@ -127,7 +133,7 @@ export function MobileNav({
                         // The shared accordion tints its chevron with the cream-surface
                         // "muted" token, which disappears on the dark sheet. Retint it
                         // from the sheet's own ink and give it a tap-sized footprint.
-                        "min-h-11 items-center rounded-[var(--radius-md)] px-3 py-2 text-base font-semibold hover:no-underline [&>svg]:size-5 [&>svg]:translate-y-0 [&>svg]:stroke-[2.25]",
+                        "min-h-11 items-center rounded-[var(--radius-md)] px-3 py-2 text-base font-semibold hover:no-underline [&>svg]:size-5 [&>svg]:translate-y-0 [&>svg]:stroke-[2.25] [&>svg]:transition-none",
                         dark
                           ? "hover:bg-birch-bark/6 [&>svg]:text-birch-bark/85"
                           : "hover:bg-cedar/8 [&>svg]:text-ink-muted",
@@ -193,7 +199,7 @@ export function MobileNav({
             <HeaderLink
               className={cn(
                 buttonVariants({ size: "default", variant: "outline" }),
-                "w-full",
+                "w-full hover:translate-y-0",
                 dark &&
                   "border-birch-bark/45 text-birch-bark hover:border-birch-bark/70 hover:bg-birch-bark/8 hover:text-birch-bark",
               )}

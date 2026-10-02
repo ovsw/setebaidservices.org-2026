@@ -22,6 +22,10 @@ export const contentPageBuilderBlockTypes = [
   "headingImage",
   "quoteWall",
   "pricingSingleToggle",
+  "wordSwap",
+  "flipCards",
+  "photoStrip",
+  "pricingTiers",
   // page-builder-generator:content-types
 ] as const;
 

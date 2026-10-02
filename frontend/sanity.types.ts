@@ -101,6 +101,11 @@ export type FeatureCardItemLink = {
   url?: CustomUrl;
 };
 
+export type SecondaryLink = {
+  text?: string;
+  url?: CustomUrl;
+};
+
 export type StackedFeatureRowIcon = {
   name?: string;
   svg?: string;
@@ -166,6 +171,68 @@ export type InternationalCampersSection = {
   link?: CustomUrl;
 };
 
+export type PricingTiers = {
+  _type: "pricingTiers";
+  background?: SectionBackground;
+  eyebrow?: string;
+  title?: MinimalRichText;
+  intro?: string;
+  panelTitle?: string;
+  panelNote?: string;
+  tiers?: Array<{
+    name?: string;
+    label?: string;
+    price?: number;
+    button?: Button;
+    application?: boolean;
+    note?: string;
+    _type: "pricingTier";
+    _key: string;
+  }>;
+  notes?: Array<string>;
+  link?: Button;
+};
+
+export type PhotoStrip = {
+  _type: "photoStrip";
+  background?: SectionBackground;
+  images?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  caption?: string;
+  link?: Button;
+};
+
+export type FlipCards = {
+  _type: "flipCards";
+  background?: SectionBackground;
+  intro?: SimpleRichText;
+  frontLabel?: string;
+  backLabel?: string;
+  turnLabel?: string;
+  cards?: Array<{
+    front?: string;
+    back?: string;
+    emoji?: string;
+    _type: "flipCard";
+    _key: string;
+  }>;
+};
+
+export type WordSwap = {
+  _type: "wordSwap";
+  background?: SectionBackground;
+  struckWord?: string;
+  word?: string;
+  body?: SimpleRichText;
+};
+
 export type FaqHub = {
   _type: "faqHub";
   background?: SectionBackground;
@@ -217,6 +284,8 @@ export type TestimonialReference = {
 export type QuoteWall = {
   _type: "quoteWall";
   background?: SectionBackground;
+  layout?: "wall" | "track";
+  hint?: string;
   eyebrow?: string;
   heading?: MinimalRichText;
   testimonials?: Array<
@@ -356,6 +425,7 @@ export type IncludedExtras = {
 export type StackedTimeline = {
   _type: "stackedTimeline";
   background?: SectionBackground;
+  layout?: "timeline" | "dateCards";
   eyebrow?: string;
   title?: MinimalRichText;
   intro?: string;
@@ -368,6 +438,7 @@ export type StackedTimeline = {
     title?: string;
     meta?: string;
     text?: string;
+    link?: Button;
     image?: StackedTimelineItemImage;
     _type: "stackedTimelineItem";
     _key: string;
@@ -438,6 +509,7 @@ export type StackedFeatureRows = {
 export type FeatureCards = {
   _type: "featureCards";
   background?: SectionBackground;
+  layout?: "grid" | "tilted";
   eyebrow?: string;
   title?: MinimalRichText;
   description?: string;
@@ -450,17 +522,23 @@ export type FeatureCards = {
       title?: string;
       text?: string;
       link?: FeatureCardItemLink;
+      secondaryLink?: SecondaryLink;
+      eyebrow?: string;
+      badgeLabel?: string;
+      badgeValue?: string;
       _type: "featureCardItem";
       _key: string;
     }>;
     _type: "featureCardGroup";
     _key: string;
   }>;
+  link?: Button;
 };
 
 export type ImageCollageFeature = {
   _type: "imageCollageFeature";
   background?: SectionBackground;
+  layout?: "collage" | "bento";
   eyebrow?: string;
   title?: MinimalRichText;
   body?: string;
@@ -476,6 +554,7 @@ export type ImageCollageFeature = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    caption?: string;
     _type: "image";
   };
   secondaryImage?: {
@@ -484,24 +563,36 @@ export type ImageCollageFeature = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    caption?: string;
     _type: "image";
   };
-  cta?: Cta;
-};
-
-export type HomeHero = {
-  _type: "homeHero";
-  title?: MinimalRichText;
-  body?: SimpleRichText;
-  shortBody?: string;
+  tertiaryImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+  };
   buttons?: Array<
     {
       _key: string;
     } & Button
   >;
-  videoUrl?: string;
-  disableVideo?: boolean;
-  filmButton?: FilmButton;
+  cta?: Cta;
+};
+
+export type HomeHero = {
+  _type: "homeHero";
+  status?: string;
+  title?: MinimalRichText;
+  body?: SimpleRichText;
+  buttons?: Array<
+    {
+      _key: string;
+    } & Button
+  >;
   image?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -510,6 +601,7 @@ export type HomeHero = {
     alt?: string;
     _type: "image";
   };
+  filmButton?: FilmButton;
   stats?: Array<{
     value?: string;
     label?: string;
@@ -521,6 +613,17 @@ export type HomeHero = {
 export type BenefitCards = {
   _type: "benefitCards";
   background?: SectionBackground;
+  layout?: "grid" | "ringPhoto";
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  caption?: string;
+  link?: Button;
   eyebrow?: string;
   title?: MinimalRichText;
   intro?: string;
@@ -536,7 +639,16 @@ export type BenefitCards = {
 export type CtaBanner = {
   _type: "ctaBanner";
   background?: SectionBackground;
-  variant?: "closing" | "nudge";
+  variant?: "closing" | "nudge" | "photo";
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  eyebrow?: string;
   title?: string;
   description?: string;
   buttons?: Array<
@@ -871,7 +983,8 @@ export type ButtonLink = {
 
 export type Button = {
   _type: "button";
-  variant?: "default" | "secondary" | "outline" | "ghost" | "link";
+  variant?:
+    "default" | "highlight" | "secondary" | "outline" | "ghost" | "link";
   text?: string;
   icon?: Icon;
   url?: CustomUrl;
@@ -1300,6 +1413,18 @@ export type BlogIndex = {
     | ({
         _key: string;
       } & PricingSingleToggle)
+    | ({
+        _key: string;
+      } & WordSwap)
+    | ({
+        _key: string;
+      } & FlipCards)
+    | ({
+        _key: string;
+      } & PhotoStrip)
+    | ({
+        _key: string;
+      } & PricingTiers)
   >;
   meta?: Meta;
 };
@@ -1382,6 +1507,18 @@ export type HomePage = {
     | ({
         _key: string;
       } & PricingSingleToggle)
+    | ({
+        _key: string;
+      } & WordSwap)
+    | ({
+        _key: string;
+      } & FlipCards)
+    | ({
+        _key: string;
+      } & PhotoStrip)
+    | ({
+        _key: string;
+      } & PricingTiers)
   >;
   meta?: Meta;
 };
@@ -1616,6 +1753,18 @@ export type Page = {
     | ({
         _key: string;
       } & PricingSingleToggle)
+    | ({
+        _key: string;
+      } & WordSwap)
+    | ({
+        _key: string;
+      } & FlipCards)
+    | ({
+        _key: string;
+      } & PhotoStrip)
+    | ({
+        _key: string;
+      } & PricingTiers)
   >;
   meta?: Meta;
 };
@@ -1756,6 +1905,7 @@ export type AllSanitySchemaTypes =
   | FeatureGridItemIcon
   | FeatureCardItemImage
   | FeatureCardItemLink
+  | SecondaryLink
   | StackedFeatureRowIcon
   | StackedFeatureRowLink
   | JourneyStopImage
@@ -1765,6 +1915,10 @@ export type AllSanitySchemaTypes =
   | LargeSlidesSlideImage
   | FilmButton
   | InternationalCampersSection
+  | PricingTiers
+  | PhotoStrip
+  | FlipCards
+  | WordSwap
   | FaqHub
   | PricingSingleToggle
   | TestimonialReference
@@ -1859,7 +2013,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../frontend/sanity/queries/blog-index.ts
 // Variable: BLOG_INDEX_QUERY
-// Query: *[_id == "blogIndex"][0]{    _id,    _type,    title,    description,      blocks[]{    _key,    _type,    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},      _type == "latestArticles" => {    eyebrow,    title,    description,    limit,    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    fallbackImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "articles": *[      _type == "post" && defined(slug.current) && defined(publishedAt) &&      meta.noindex != true &&      seoHideFromLists != true &&      seoNoIndex != true    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{        _id,  title,  slug,  publishedAt,  "excerpt": pt::text(excerpt),  image {  ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }},  category->{_id, title, slug}    }  },      _type == "faqAccordion" => {    eyebrow,    title[]{      ...    },    subtitle,    "faqs": array::compact(faqs[]{      _key,      "_id": @->._id,      "_type": @->._type,      "title": @->.title,      "answer": coalesce(@->.body, @->.richText)[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "storyFeature" => {    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    richText[]{      ...,        markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    keyDetails {      title,      items[]    },    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "teamMembers" => {    presentation,    eyebrow,    title,    richText[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    members[]{      _key,      _type,      "_ref": _ref,      "document": @->{        _id,        _type,        name,        role,        yearsAtCamp,        shortBio,        email,        phone,        sortOrder,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        bio[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }        }      }    }  },      _type == "richTextBlock" => {    eyebrow,    title,    richText[]{        ...,  _type == "block" => {    ...,    children[]{...},    markDefs[]{      ...,      _type in ["customLink", "buttonLink"] => {          "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab      }    }  },  _type == "image" => {    ...,    "resolvedAsset": asset->{      _id,      url,      mimeType,      metadata {        lqip,        dimensions {          width,          height        }      }    }  },  _type == "table" => {    ...,    rows[]{      ...,      cells[]    }  },  _type == "callout" => {    ...,    title,    body  }    }  },      _type == "ctaBanner" => {    variant,    title,    description,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "benefitCards" => {    eyebrow,    title[]{      ...    },    intro,    "cards": array::compact(cards[]{      _key,      _type,      "icon": icon{ name, svg },      title,      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "hero" => {    eyebrow,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "homeHero" => {    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    shortBody,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      icon {        name,        svg      },      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    videoUrl,    disableVideo,    filmButton {      label,      url    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "stats": array::compact(stats[]{      _key,      value,      label    })  },      _type == "imageCollageFeature" => {    eyebrow,    title[]{      ...    },    body,    "points": array::compact(points[]{      _key,      title,      body    }),    primaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    secondaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    cta {      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "featureCards" => {    eyebrow,    title[]{      ...    },    description,    "groups": array::compact(groups[]{      _key,      heading,      description,      "singleRowUpToFour": coalesce(singleRowUpToFour, true),      "cards": array::compact(cards[]{        _key,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        title,        text,        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    })  },      _type == "stackedFeatureRows" => {    eyebrow,    title[]{      ...    },    "rows": array::compact(rows[]{      _key,      "icon": icon{ name, svg },      title,      "items": array::compact(items[]{        _key,        body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        }      }),      link {        text,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),          url.type == "external" => url.external,          url.href        )      }    })  },      _type == "innerHero" => {    eyebrow,    title[]{      ...    },    body,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "facts": array::compact(facts[]{      _key,      value,      label    })  },      _type == "journey" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "stackedTimeline" => {    eyebrow,    title[]{      ...    },    intro,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    "items": array::compact(items[]{      _key,      title,      meta,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "includedExtras" => {    eyebrow,    title[]{      ...    },    intro,    "prices": array::compact(prices[]{      _key,      name,      price,      unit,      note    }),    included {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail      })    },    extras {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail,        price,        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    },    footnote  },      _type == "packingChecklist" => {    eyebrow,    title[]{      ...    },    intro,    "groups": array::compact(groups[]{      _key,      title,      tone,      "items": array::compact(items[]{        _key,        label,        quantity      })    }),    note[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "pdf": pdf.asset->{      _id,      url,      originalFilename,      size    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "bigImageList" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "directorCta" => {    title[]{      ...    },    description,    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "largeSlides" => {    eyebrow,    title[]{      ...    },    intro,    "slides": array::compact(slides[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "headingImage" => {    title,    background,    richText[]{ ... },    image {   ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  } }  },      _type == "quoteWall" => {    eyebrow,    heading[]{      ...    },      testimonials[]{    _key,    _type,    "_ref": _ref,    "document": @->{      _id,      _type,      name,      title,      origin,      rating,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    }  }  },      _type == "pricingSingleToggle" => {    background,    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    intro,    "options": array::compact(options[]{      _key,      name,      price,      unit,      note    }),    "facts": array::compact(facts[]{      _key,      label,      detail    }),    button {      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    footnote  },      _type == "faqHub" => {    eyebrow,    title[]{      ...    },    subtitle,    searchPlaceholder,    emptyState,    "faqs": *[_type == "faq" && defined(category->_id)]      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {        _id,        title,        "answer": body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        },        "answerText": pt::text(body),        order,        "category": category->{          _id,          title,          "slug": slug.current,          order        }      }  },          _type == "internationalCampersSection" => {    eyebrow,    heading[]{      ...    },    description,    linkLabel,    "link": {      "openInNewTab": link.openInNewTab,      "href": select(        link.type == "internal" => select(  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")),        link.type == "external" => link.external,        link.href      )    }  }  },      meta{    title,    description,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  }  }
+// Query: *[_id == "blogIndex"][0]{    _id,    _type,    title,    description,      blocks[]{    _key,    _type,    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},      _type == "latestArticles" => {    eyebrow,    title,    description,    limit,    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    fallbackImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "articles": *[      _type == "post" && defined(slug.current) && defined(publishedAt) &&      meta.noindex != true &&      seoHideFromLists != true &&      seoNoIndex != true    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{        _id,  title,  slug,  publishedAt,  "excerpt": pt::text(excerpt),  image {  ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }},  category->{_id, title, slug}    }  },      _type == "faqAccordion" => {    eyebrow,    title[]{      ...    },    subtitle,    "faqs": array::compact(faqs[]{      _key,      "_id": @->._id,      "_type": @->._type,      "title": @->.title,      "answer": coalesce(@->.body, @->.richText)[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "storyFeature" => {    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    richText[]{      ...,        markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    keyDetails {      title,      items[]    },    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "teamMembers" => {    presentation,    eyebrow,    title,    richText[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    members[]{      _key,      _type,      "_ref": _ref,      "document": @->{        _id,        _type,        name,        role,        yearsAtCamp,        shortBio,        email,        phone,        sortOrder,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        bio[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }        }      }    }  },      _type == "richTextBlock" => {    eyebrow,    title,    richText[]{        ...,  _type == "block" => {    ...,    children[]{...},    markDefs[]{      ...,      _type in ["customLink", "buttonLink"] => {          "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab      }    }  },  _type == "image" => {    ...,    "resolvedAsset": asset->{      _id,      url,      mimeType,      metadata {        lqip,        dimensions {          width,          height        }      }    }  },  _type == "table" => {    ...,    rows[]{      ...,      cells[]    }  },  _type == "callout" => {    ...,    title,    body  }    }  },      _type == "ctaBanner" => {    variant,    eyebrow,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    title,    description,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "benefitCards" => {    "layout": coalesce(layout, "grid"),    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    caption,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    },    eyebrow,    title[]{      ...    },    intro,    "cards": array::compact(cards[]{      _key,      _type,      "icon": icon{ name, svg },      title,      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "hero" => {    eyebrow,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "homeHero" => {    status,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "buttons": array::compact(buttons[]{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }),    filmButton {      label,      url    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "stats": array::compact(stats[]{      _key,      value,      label    })  },      _type == "imageCollageFeature" => {    "layout": coalesce(layout, "collage"),    eyebrow,    title[]{      ...    },    body,    "points": array::compact(points[]{      _key,      title,      body    }),    primaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    secondaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    tertiaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }),    cta {      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "featureCards" => {    "layout": coalesce(layout, "grid"),    eyebrow,    title[]{      ...    },    description,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    },    "groups": array::compact(groups[]{      _key,      heading,      description,      "singleRowUpToFour": coalesce(singleRowUpToFour, true),      "cards": array::compact(cards[]{        _key,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        title,        text,        eyebrow,        badgeLabel,        badgeValue,        secondaryLink {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        },        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    })  },      _type == "stackedFeatureRows" => {    eyebrow,    title[]{      ...    },    "rows": array::compact(rows[]{      _key,      "icon": icon{ name, svg },      title,      "items": array::compact(items[]{        _key,        body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        }      }),      link {        text,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),          url.type == "external" => url.external,          url.href        )      }    })  },      _type == "innerHero" => {    eyebrow,    title[]{      ...    },    body,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "facts": array::compact(facts[]{      _key,      value,      label    })  },      _type == "journey" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "stackedTimeline" => {    "layout": coalesce(layout, "timeline"),    eyebrow,    title[]{      ...    },    intro,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    "items": array::compact(items[]{      _key,      title,      meta,      text,      link{          _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )      },      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "includedExtras" => {    eyebrow,    title[]{      ...    },    intro,    "prices": array::compact(prices[]{      _key,      name,      price,      unit,      note    }),    included {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail      })    },    extras {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail,        price,        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    },    footnote  },      _type == "packingChecklist" => {    eyebrow,    title[]{      ...    },    intro,    "groups": array::compact(groups[]{      _key,      title,      tone,      "items": array::compact(items[]{        _key,        label,        quantity      })    }),    note[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "pdf": pdf.asset->{      _id,      url,      originalFilename,      size    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "bigImageList" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "directorCta" => {    title[]{      ...    },    description,    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "largeSlides" => {    eyebrow,    title[]{      ...    },    intro,    "slides": array::compact(slides[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "headingImage" => {    title,    background,    richText[]{ ... },    image {   ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  } }  },      _type == "quoteWall" => {    "layout": coalesce(layout, "wall"),    hint,    eyebrow,    heading[]{      ...    },      testimonials[]{    _key,    _type,    "_ref": _ref,    "document": @->{      _id,      _type,      name,      title,      origin,      rating,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    }  }  },      _type == "pricingSingleToggle" => {    background,    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    intro,    "options": array::compact(options[]{      _key,      name,      price,      unit,      note    }),    "facts": array::compact(facts[]{      _key,      label,      detail    }),    button {      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    footnote  },      _type == "faqHub" => {    eyebrow,    title[]{      ...    },    subtitle,    searchPlaceholder,    emptyState,    "faqs": *[_type == "faq" && defined(category->_id)]      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {        _id,        title,        "answer": body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        },        "answerText": pt::text(body),        order,        "category": category->{          _id,          title,          "slug": slug.current,          order        }      }  },      _type == "wordSwap" => {    struckWord,    word,    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    }  },      _type == "flipCards" => {    intro[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    frontLabel,    backLabel,    turnLabel,    "cards": array::compact(cards[]{      _key,      front,      back,      emoji    })  },      _type == "photoStrip" => {    "images": array::compact(images[]{      _key,        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }),    caption,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },      _type == "pricingTiers" => {    eyebrow,    title[]{      ...    },    intro,    panelTitle,    panelNote,    "tiers": array::compact(tiers[]{      _key,      name,      label,      price,      button{          _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )      },      application,      note    }),    notes,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },          _type == "internationalCampersSection" => {    eyebrow,    heading[]{      ...    },    description,    linkLabel,    "link": {      "openInNewTab": link.openInNewTab,      "href": select(        link.type == "internal" => select(  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")),        link.type == "external" => link.external,        link.href      )    }  }  },      meta{    title,    description,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  }  }
 export type BLOG_INDEX_QUERY_RESULT =
   | {
       _id: "blogIndex";
@@ -1879,6 +2033,41 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "benefitCards";
             background: SectionBackground | null;
+            layout: "grid" | "ringPhoto";
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            caption: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -1975,7 +2164,27 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "ctaBanner";
             background: SectionBackground | null;
-            variant: "closing" | "nudge" | null;
+            variant: "closing" | "nudge" | "photo" | null;
+            eyebrow: string | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
             title: string | null;
             description: string | null;
             buttons: Array<{
@@ -1983,7 +2192,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -2031,7 +2246,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -2087,6 +2308,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "featureCards";
             background: SectionBackground | null;
+            layout: "grid" | "tilted";
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -2103,6 +2325,20 @@ export type BLOG_INDEX_QUERY_RESULT =
               _key: string;
             }> | null;
             description: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
             groups: Array<{
               _key: string;
               heading: string | null;
@@ -2131,12 +2367,54 @@ export type BLOG_INDEX_QUERY_RESULT =
                 } | null;
                 title: string | null;
                 text: string | null;
+                eyebrow: string | null;
+                badgeLabel: string | null;
+                badgeValue: string | null;
+                secondaryLink: {
+                  text: string | null;
+                  openInNewTab: boolean | null;
+                  href: string | null | "/" | "/stories";
+                } | null;
                 link: {
                   text: string | null;
                   openInNewTab: boolean | null;
                   href: string | null | "/" | "/stories";
                 } | null;
               }> | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "flipCards";
+            background: SectionBackground | null;
+            intro: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            frontLabel: string | null;
+            backLabel: string | null;
+            turnLabel: string | null;
+            cards: Array<{
+              _key: string;
+              front: string | null;
+              back: string | null;
+              emoji: string | null;
             }> | null;
           }
         | {
@@ -2222,7 +2500,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -2289,7 +2573,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -2317,6 +2607,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "imageCollageFeature";
             background: SectionBackground | null;
+            layout: "bento" | "collage";
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -2355,6 +2646,7 @@ export type BLOG_INDEX_QUERY_RESULT =
               hotspot?: SanityImageHotspot;
               crop?: SanityImageCrop;
               alt?: string;
+              caption?: string;
               _type: "image";
             } | null;
             secondaryImage: {
@@ -2374,8 +2666,43 @@ export type BLOG_INDEX_QUERY_RESULT =
               hotspot?: SanityImageHotspot;
               crop?: SanityImageCrop;
               alt?: string;
+              caption?: string;
               _type: "image";
             } | null;
+            tertiaryImage: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              caption?: string;
+              _type: "image";
+            } | null;
+            buttons: Array<{
+              _key: string;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
             cta: {
               text: string | null;
               openInNewTab: boolean | null;
@@ -2460,7 +2787,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -2513,7 +2846,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -2698,7 +3037,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -2832,6 +3177,46 @@ export type BLOG_INDEX_QUERY_RESULT =
           }
         | {
             _key: string;
+            _type: "photoStrip";
+            background: SectionBackground | null;
+            images: Array<{
+              _key: string;
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            }> | null;
+            caption: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
             _type: "pricingSingleToggle";
             background: SectionBackground | null;
             eyebrow: string | null;
@@ -2883,7 +3268,13 @@ export type BLOG_INDEX_QUERY_RESULT =
             button: {
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             } | null;
@@ -2891,8 +3282,70 @@ export type BLOG_INDEX_QUERY_RESULT =
           }
         | {
             _key: string;
+            _type: "pricingTiers";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            panelTitle: string | null;
+            panelNote: string | null;
+            tiers: Array<{
+              _key: string;
+              name: string | null;
+              label: string | null;
+              price: number | null;
+              button: {
+                _key: null;
+                text: string | null;
+                variant:
+                  | "default"
+                  | "ghost"
+                  | "highlight"
+                  | "link"
+                  | "outline"
+                  | "secondary"
+                  | null;
+                openInNewTab: boolean | null;
+                href: string | null | "/" | "/stories";
+              } | null;
+              application: boolean | null;
+              note: string | null;
+            }> | null;
+            notes: Array<string> | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
             _type: "quoteWall";
             background: SectionBackground | null;
+            layout: "track" | "wall";
+            hint: string | null;
             eyebrow: string | null;
             heading: Array<{
               children?: Array<{
@@ -3117,6 +3570,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "stackedTimeline";
             background: SectionBackground | null;
+            layout: "dateCards" | "timeline";
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -3138,7 +3592,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -3147,6 +3607,20 @@ export type BLOG_INDEX_QUERY_RESULT =
               title: string | null;
               meta: string | null;
               text: string | null;
+              link: {
+                _key: null;
+                text: string | null;
+                variant:
+                  | "default"
+                  | "ghost"
+                  | "highlight"
+                  | "link"
+                  | "outline"
+                  | "secondary"
+                  | null;
+                openInNewTab: boolean | null;
+                href: string | null | "/" | "/stories";
+              } | null;
               image: {
                 asset: {
                   _id: string;
@@ -3235,7 +3709,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -3333,6 +3813,33 @@ export type BLOG_INDEX_QUERY_RESULT =
                   _key: string;
                 }> | null;
               };
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "wordSwap";
+            background: SectionBackground | null;
+            struckWord: string | null;
+            word: string | null;
+            body: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
             }> | null;
           }
       > | null;
@@ -3434,6 +3941,41 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "benefitCards";
             background: SectionBackground | null;
+            layout: "grid" | "ringPhoto";
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            caption: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -3530,7 +4072,27 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "ctaBanner";
             background: SectionBackground | null;
-            variant: "closing" | "nudge" | null;
+            variant: "closing" | "nudge" | "photo" | null;
+            eyebrow: string | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
             title: string | null;
             description: string | null;
             buttons: Array<{
@@ -3538,7 +4100,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -3586,7 +4154,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -3642,6 +4216,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "featureCards";
             background: SectionBackground | null;
+            layout: "grid" | "tilted";
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -3658,6 +4233,20 @@ export type BLOG_INDEX_QUERY_RESULT =
               _key: string;
             }> | null;
             description: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
             groups: Array<{
               _key: string;
               heading: string | null;
@@ -3686,12 +4275,54 @@ export type BLOG_INDEX_QUERY_RESULT =
                 } | null;
                 title: string | null;
                 text: string | null;
+                eyebrow: string | null;
+                badgeLabel: string | null;
+                badgeValue: string | null;
+                secondaryLink: {
+                  text: string | null;
+                  openInNewTab: boolean | null;
+                  href: string | null | "/" | "/stories";
+                } | null;
                 link: {
                   text: string | null;
                   openInNewTab: boolean | null;
                   href: string | null | "/" | "/stories";
                 } | null;
               }> | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "flipCards";
+            background: SectionBackground | null;
+            intro: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            frontLabel: string | null;
+            backLabel: string | null;
+            turnLabel: string | null;
+            cards: Array<{
+              _key: string;
+              front: string | null;
+              back: string | null;
+              emoji: string | null;
             }> | null;
           }
         | {
@@ -3777,7 +4408,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -3844,7 +4481,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -3872,6 +4515,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "homeHero";
             background: null;
+            status: string | null;
             title: Array<{
               children?: Array<{
                 marks?: Array<string>;
@@ -3906,22 +4550,20 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "block";
               _key: string;
             }> | null;
-            shortBody: string | null;
             buttons: Array<{
               _key: string;
-              _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
-              icon: {
-                name: string | null;
-                svg: string | null;
-              } | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
-            videoUrl: string | null;
-            disableVideo: boolean | null;
             filmButton: {
               label: string | null;
               url: string | null;
@@ -3954,6 +4596,7 @@ export type BLOG_INDEX_QUERY_RESULT =
         | {
             _key: string;
             _type: "homeHero";
+            status: string | null;
             title: Array<{
               children?: Array<{
                 marks?: Array<string>;
@@ -3988,22 +4631,20 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "block";
               _key: string;
             }> | null;
-            shortBody: string | null;
             buttons: Array<{
               _key: string;
-              _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
-              icon: {
-                name: string | null;
-                svg: string | null;
-              } | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
-            videoUrl: string | null;
-            disableVideo: boolean | null;
             filmButton: {
               label: string | null;
               url: string | null;
@@ -4037,6 +4678,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "imageCollageFeature";
             background: SectionBackground | null;
+            layout: "bento" | "collage";
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -4075,6 +4717,7 @@ export type BLOG_INDEX_QUERY_RESULT =
               hotspot?: SanityImageHotspot;
               crop?: SanityImageCrop;
               alt?: string;
+              caption?: string;
               _type: "image";
             } | null;
             secondaryImage: {
@@ -4094,8 +4737,43 @@ export type BLOG_INDEX_QUERY_RESULT =
               hotspot?: SanityImageHotspot;
               crop?: SanityImageCrop;
               alt?: string;
+              caption?: string;
               _type: "image";
             } | null;
+            tertiaryImage: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              caption?: string;
+              _type: "image";
+            } | null;
+            buttons: Array<{
+              _key: string;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
             cta: {
               text: string | null;
               openInNewTab: boolean | null;
@@ -4311,7 +4989,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -4445,6 +5129,46 @@ export type BLOG_INDEX_QUERY_RESULT =
           }
         | {
             _key: string;
+            _type: "photoStrip";
+            background: SectionBackground | null;
+            images: Array<{
+              _key: string;
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            }> | null;
+            caption: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
             _type: "pricingSingleToggle";
             background: SectionBackground | null;
             eyebrow: string | null;
@@ -4496,7 +5220,13 @@ export type BLOG_INDEX_QUERY_RESULT =
             button: {
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             } | null;
@@ -4504,8 +5234,70 @@ export type BLOG_INDEX_QUERY_RESULT =
           }
         | {
             _key: string;
+            _type: "pricingTiers";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            panelTitle: string | null;
+            panelNote: string | null;
+            tiers: Array<{
+              _key: string;
+              name: string | null;
+              label: string | null;
+              price: number | null;
+              button: {
+                _key: null;
+                text: string | null;
+                variant:
+                  | "default"
+                  | "ghost"
+                  | "highlight"
+                  | "link"
+                  | "outline"
+                  | "secondary"
+                  | null;
+                openInNewTab: boolean | null;
+                href: string | null | "/" | "/stories";
+              } | null;
+              application: boolean | null;
+              note: string | null;
+            }> | null;
+            notes: Array<string> | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
             _type: "quoteWall";
             background: SectionBackground | null;
+            layout: "track" | "wall";
+            hint: string | null;
             eyebrow: string | null;
             heading: Array<{
               children?: Array<{
@@ -4730,6 +5522,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "stackedTimeline";
             background: SectionBackground | null;
+            layout: "dateCards" | "timeline";
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -4751,7 +5544,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -4760,6 +5559,20 @@ export type BLOG_INDEX_QUERY_RESULT =
               title: string | null;
               meta: string | null;
               text: string | null;
+              link: {
+                _key: null;
+                text: string | null;
+                variant:
+                  | "default"
+                  | "ghost"
+                  | "highlight"
+                  | "link"
+                  | "outline"
+                  | "secondary"
+                  | null;
+                openInNewTab: boolean | null;
+                href: string | null | "/" | "/stories";
+              } | null;
               image: {
                 asset: {
                   _id: string;
@@ -4848,7 +5661,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -4948,6 +5767,33 @@ export type BLOG_INDEX_QUERY_RESULT =
               };
             }> | null;
           }
+        | {
+            _key: string;
+            _type: "wordSwap";
+            background: SectionBackground | null;
+            struckWord: string | null;
+            word: string | null;
+            body: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+          }
       > | null;
       meta: {
         title: string | null;
@@ -5008,6 +5854,41 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "benefitCards";
             background: SectionBackground | null;
+            layout: "grid" | "ringPhoto";
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            caption: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -5104,7 +5985,27 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "ctaBanner";
             background: SectionBackground | null;
-            variant: "closing" | "nudge" | null;
+            variant: "closing" | "nudge" | "photo" | null;
+            eyebrow: string | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
             title: string | null;
             description: string | null;
             buttons: Array<{
@@ -5112,7 +6013,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -5160,7 +6067,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -5271,6 +6184,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "featureCards";
             background: SectionBackground | null;
+            layout: "grid" | "tilted";
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -5287,6 +6201,20 @@ export type BLOG_INDEX_QUERY_RESULT =
               _key: string;
             }> | null;
             description: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
             groups: Array<{
               _key: string;
               heading: string | null;
@@ -5315,12 +6243,54 @@ export type BLOG_INDEX_QUERY_RESULT =
                 } | null;
                 title: string | null;
                 text: string | null;
+                eyebrow: string | null;
+                badgeLabel: string | null;
+                badgeValue: string | null;
+                secondaryLink: {
+                  text: string | null;
+                  openInNewTab: boolean | null;
+                  href: string | null | "/" | "/stories";
+                } | null;
                 link: {
                   text: string | null;
                   openInNewTab: boolean | null;
                   href: string | null | "/" | "/stories";
                 } | null;
               }> | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "flipCards";
+            background: SectionBackground | null;
+            intro: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            frontLabel: string | null;
+            backLabel: string | null;
+            turnLabel: string | null;
+            cards: Array<{
+              _key: string;
+              front: string | null;
+              back: string | null;
+              emoji: string | null;
             }> | null;
           }
         | {
@@ -5406,7 +6376,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -5473,7 +6449,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -5501,6 +6483,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "imageCollageFeature";
             background: SectionBackground | null;
+            layout: "bento" | "collage";
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -5539,6 +6522,7 @@ export type BLOG_INDEX_QUERY_RESULT =
               hotspot?: SanityImageHotspot;
               crop?: SanityImageCrop;
               alt?: string;
+              caption?: string;
               _type: "image";
             } | null;
             secondaryImage: {
@@ -5558,8 +6542,43 @@ export type BLOG_INDEX_QUERY_RESULT =
               hotspot?: SanityImageHotspot;
               crop?: SanityImageCrop;
               alt?: string;
+              caption?: string;
               _type: "image";
             } | null;
+            tertiaryImage: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              caption?: string;
+              _type: "image";
+            } | null;
+            buttons: Array<{
+              _key: string;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
             cta: {
               text: string | null;
               openInNewTab: boolean | null;
@@ -5644,7 +6663,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -5697,7 +6722,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -5882,7 +6913,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -6016,6 +7053,46 @@ export type BLOG_INDEX_QUERY_RESULT =
           }
         | {
             _key: string;
+            _type: "photoStrip";
+            background: SectionBackground | null;
+            images: Array<{
+              _key: string;
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            }> | null;
+            caption: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
             _type: "pricingSingleToggle";
             background: SectionBackground | null;
             eyebrow: string | null;
@@ -6067,7 +7144,13 @@ export type BLOG_INDEX_QUERY_RESULT =
             button: {
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             } | null;
@@ -6075,8 +7158,70 @@ export type BLOG_INDEX_QUERY_RESULT =
           }
         | {
             _key: string;
+            _type: "pricingTiers";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            panelTitle: string | null;
+            panelNote: string | null;
+            tiers: Array<{
+              _key: string;
+              name: string | null;
+              label: string | null;
+              price: number | null;
+              button: {
+                _key: null;
+                text: string | null;
+                variant:
+                  | "default"
+                  | "ghost"
+                  | "highlight"
+                  | "link"
+                  | "outline"
+                  | "secondary"
+                  | null;
+                openInNewTab: boolean | null;
+                href: string | null | "/" | "/stories";
+              } | null;
+              application: boolean | null;
+              note: string | null;
+            }> | null;
+            notes: Array<string> | null;
+            link: {
+              _key: null;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
             _type: "quoteWall";
             background: SectionBackground | null;
+            layout: "track" | "wall";
+            hint: string | null;
             eyebrow: string | null;
             heading: Array<{
               children?: Array<{
@@ -6301,6 +7446,7 @@ export type BLOG_INDEX_QUERY_RESULT =
             _key: string;
             _type: "stackedTimeline";
             background: SectionBackground | null;
+            layout: "dateCards" | "timeline";
             eyebrow: string | null;
             title: Array<{
               children?: Array<{
@@ -6322,7 +7468,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -6331,6 +7483,20 @@ export type BLOG_INDEX_QUERY_RESULT =
               title: string | null;
               meta: string | null;
               text: string | null;
+              link: {
+                _key: null;
+                text: string | null;
+                variant:
+                  | "default"
+                  | "ghost"
+                  | "highlight"
+                  | "link"
+                  | "outline"
+                  | "secondary"
+                  | null;
+                openInNewTab: boolean | null;
+                href: string | null | "/" | "/stories";
+              } | null;
               image: {
                 asset: {
                   _id: string;
@@ -6419,7 +7585,13 @@ export type BLOG_INDEX_QUERY_RESULT =
               _type: "button";
               text: string | null;
               variant:
-                "default" | "ghost" | "link" | "outline" | "secondary" | null;
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             }> | null;
@@ -6517,6 +7689,33 @@ export type BLOG_INDEX_QUERY_RESULT =
                   _key: string;
                 }> | null;
               };
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "wordSwap";
+            background: SectionBackground | null;
+            struckWord: string | null;
+            word: string | null;
+            body: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
             }> | null;
           }
       > | null;
@@ -6904,7 +8103,7 @@ export type FOOTER_QUERY_RESULT = {
 
 // Source: ../frontend/sanity/queries/home-page.ts
 // Variable: HOME_PAGE_QUERY
-// Query: *[_id == "homePage" && _type == "homePage"][0]{    _id,    _type,    title,    description,      blocks[]{    _key,    _type,    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},      _type == "latestArticles" => {    eyebrow,    title,    description,    limit,    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    fallbackImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "articles": *[      _type == "post" && defined(slug.current) && defined(publishedAt) &&      meta.noindex != true &&      seoHideFromLists != true &&      seoNoIndex != true    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{        _id,  title,  slug,  publishedAt,  "excerpt": pt::text(excerpt),  image {  ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }},  category->{_id, title, slug}    }  },      _type == "faqAccordion" => {    eyebrow,    title[]{      ...    },    subtitle,    "faqs": array::compact(faqs[]{      _key,      "_id": @->._id,      "_type": @->._type,      "title": @->.title,      "answer": coalesce(@->.body, @->.richText)[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "storyFeature" => {    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    richText[]{      ...,        markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    keyDetails {      title,      items[]    },    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "teamMembers" => {    presentation,    eyebrow,    title,    richText[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    members[]{      _key,      _type,      "_ref": _ref,      "document": @->{        _id,        _type,        name,        role,        yearsAtCamp,        shortBio,        email,        phone,        sortOrder,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        bio[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }        }      }    }  },      _type == "richTextBlock" => {    eyebrow,    title,    richText[]{        ...,  _type == "block" => {    ...,    children[]{...},    markDefs[]{      ...,      _type in ["customLink", "buttonLink"] => {          "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab      }    }  },  _type == "image" => {    ...,    "resolvedAsset": asset->{      _id,      url,      mimeType,      metadata {        lqip,        dimensions {          width,          height        }      }    }  },  _type == "table" => {    ...,    rows[]{      ...,      cells[]    }  },  _type == "callout" => {    ...,    title,    body  }    }  },      _type == "ctaBanner" => {    variant,    title,    description,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "benefitCards" => {    eyebrow,    title[]{      ...    },    intro,    "cards": array::compact(cards[]{      _key,      _type,      "icon": icon{ name, svg },      title,      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "hero" => {    eyebrow,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "homeHero" => {    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    shortBody,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      icon {        name,        svg      },      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    videoUrl,    disableVideo,    filmButton {      label,      url    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "stats": array::compact(stats[]{      _key,      value,      label    })  },      _type == "imageCollageFeature" => {    eyebrow,    title[]{      ...    },    body,    "points": array::compact(points[]{      _key,      title,      body    }),    primaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    secondaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    cta {      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "featureCards" => {    eyebrow,    title[]{      ...    },    description,    "groups": array::compact(groups[]{      _key,      heading,      description,      "singleRowUpToFour": coalesce(singleRowUpToFour, true),      "cards": array::compact(cards[]{        _key,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        title,        text,        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    })  },      _type == "stackedFeatureRows" => {    eyebrow,    title[]{      ...    },    "rows": array::compact(rows[]{      _key,      "icon": icon{ name, svg },      title,      "items": array::compact(items[]{        _key,        body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        }      }),      link {        text,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),          url.type == "external" => url.external,          url.href        )      }    })  },      _type == "innerHero" => {    eyebrow,    title[]{      ...    },    body,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "facts": array::compact(facts[]{      _key,      value,      label    })  },      _type == "journey" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "stackedTimeline" => {    eyebrow,    title[]{      ...    },    intro,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    "items": array::compact(items[]{      _key,      title,      meta,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "includedExtras" => {    eyebrow,    title[]{      ...    },    intro,    "prices": array::compact(prices[]{      _key,      name,      price,      unit,      note    }),    included {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail      })    },    extras {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail,        price,        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    },    footnote  },      _type == "packingChecklist" => {    eyebrow,    title[]{      ...    },    intro,    "groups": array::compact(groups[]{      _key,      title,      tone,      "items": array::compact(items[]{        _key,        label,        quantity      })    }),    note[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "pdf": pdf.asset->{      _id,      url,      originalFilename,      size    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "bigImageList" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "directorCta" => {    title[]{      ...    },    description,    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "largeSlides" => {    eyebrow,    title[]{      ...    },    intro,    "slides": array::compact(slides[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "headingImage" => {    title,    background,    richText[]{ ... },    image {   ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  } }  },      _type == "quoteWall" => {    eyebrow,    heading[]{      ...    },      testimonials[]{    _key,    _type,    "_ref": _ref,    "document": @->{      _id,      _type,      name,      title,      origin,      rating,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    }  }  },      _type == "pricingSingleToggle" => {    background,    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    intro,    "options": array::compact(options[]{      _key,      name,      price,      unit,      note    }),    "facts": array::compact(facts[]{      _key,      label,      detail    }),    button {      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    footnote  },      _type == "faqHub" => {    eyebrow,    title[]{      ...    },    subtitle,    searchPlaceholder,    emptyState,    "faqs": *[_type == "faq" && defined(category->_id)]      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {        _id,        title,        "answer": body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        },        "answerText": pt::text(body),        order,        "category": category->{          _id,          title,          "slug": slug.current,          order        }      }  },          _type == "internationalCampersSection" => {    eyebrow,    heading[]{      ...    },    description,    linkLabel,    "link": {      "openInNewTab": link.openInNewTab,      "href": select(        link.type == "internal" => select(  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")),        link.type == "external" => link.external,        link.href      )    }  }  },      meta{    title,    description,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },  }
+// Query: *[_id == "homePage" && _type == "homePage"][0]{    _id,    _type,    title,    description,      blocks[]{    _key,    _type,    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},      _type == "latestArticles" => {    eyebrow,    title,    description,    limit,    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    fallbackImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "articles": *[      _type == "post" && defined(slug.current) && defined(publishedAt) &&      meta.noindex != true &&      seoHideFromLists != true &&      seoNoIndex != true    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{        _id,  title,  slug,  publishedAt,  "excerpt": pt::text(excerpt),  image {  ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }},  category->{_id, title, slug}    }  },      _type == "faqAccordion" => {    eyebrow,    title[]{      ...    },    subtitle,    "faqs": array::compact(faqs[]{      _key,      "_id": @->._id,      "_type": @->._type,      "title": @->.title,      "answer": coalesce(@->.body, @->.richText)[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "storyFeature" => {    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    richText[]{      ...,        markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    keyDetails {      title,      items[]    },    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "teamMembers" => {    presentation,    eyebrow,    title,    richText[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    members[]{      _key,      _type,      "_ref": _ref,      "document": @->{        _id,        _type,        name,        role,        yearsAtCamp,        shortBio,        email,        phone,        sortOrder,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        bio[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }        }      }    }  },      _type == "richTextBlock" => {    eyebrow,    title,    richText[]{        ...,  _type == "block" => {    ...,    children[]{...},    markDefs[]{      ...,      _type in ["customLink", "buttonLink"] => {          "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab      }    }  },  _type == "image" => {    ...,    "resolvedAsset": asset->{      _id,      url,      mimeType,      metadata {        lqip,        dimensions {          width,          height        }      }    }  },  _type == "table" => {    ...,    rows[]{      ...,      cells[]    }  },  _type == "callout" => {    ...,    title,    body  }    }  },      _type == "ctaBanner" => {    variant,    eyebrow,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    title,    description,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "benefitCards" => {    "layout": coalesce(layout, "grid"),    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    caption,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    },    eyebrow,    title[]{      ...    },    intro,    "cards": array::compact(cards[]{      _key,      _type,      "icon": icon{ name, svg },      title,      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "hero" => {    eyebrow,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "homeHero" => {    status,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "buttons": array::compact(buttons[]{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }),    filmButton {      label,      url    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "stats": array::compact(stats[]{      _key,      value,      label    })  },      _type == "imageCollageFeature" => {    "layout": coalesce(layout, "collage"),    eyebrow,    title[]{      ...    },    body,    "points": array::compact(points[]{      _key,      title,      body    }),    primaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    secondaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    tertiaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }),    cta {      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "featureCards" => {    "layout": coalesce(layout, "grid"),    eyebrow,    title[]{      ...    },    description,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    },    "groups": array::compact(groups[]{      _key,      heading,      description,      "singleRowUpToFour": coalesce(singleRowUpToFour, true),      "cards": array::compact(cards[]{        _key,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        title,        text,        eyebrow,        badgeLabel,        badgeValue,        secondaryLink {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        },        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    })  },      _type == "stackedFeatureRows" => {    eyebrow,    title[]{      ...    },    "rows": array::compact(rows[]{      _key,      "icon": icon{ name, svg },      title,      "items": array::compact(items[]{        _key,        body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        }      }),      link {        text,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),          url.type == "external" => url.external,          url.href        )      }    })  },      _type == "innerHero" => {    eyebrow,    title[]{      ...    },    body,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "facts": array::compact(facts[]{      _key,      value,      label    })  },      _type == "journey" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "stackedTimeline" => {    "layout": coalesce(layout, "timeline"),    eyebrow,    title[]{      ...    },    intro,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    "items": array::compact(items[]{      _key,      title,      meta,      text,      link{          _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )      },      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "includedExtras" => {    eyebrow,    title[]{      ...    },    intro,    "prices": array::compact(prices[]{      _key,      name,      price,      unit,      note    }),    included {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail      })    },    extras {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail,        price,        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    },    footnote  },      _type == "packingChecklist" => {    eyebrow,    title[]{      ...    },    intro,    "groups": array::compact(groups[]{      _key,      title,      tone,      "items": array::compact(items[]{        _key,        label,        quantity      })    }),    note[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "pdf": pdf.asset->{      _id,      url,      originalFilename,      size    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "bigImageList" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "directorCta" => {    title[]{      ...    },    description,    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "largeSlides" => {    eyebrow,    title[]{      ...    },    intro,    "slides": array::compact(slides[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "headingImage" => {    title,    background,    richText[]{ ... },    image {   ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  } }  },      _type == "quoteWall" => {    "layout": coalesce(layout, "wall"),    hint,    eyebrow,    heading[]{      ...    },      testimonials[]{    _key,    _type,    "_ref": _ref,    "document": @->{      _id,      _type,      name,      title,      origin,      rating,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    }  }  },      _type == "pricingSingleToggle" => {    background,    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    intro,    "options": array::compact(options[]{      _key,      name,      price,      unit,      note    }),    "facts": array::compact(facts[]{      _key,      label,      detail    }),    button {      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    footnote  },      _type == "faqHub" => {    eyebrow,    title[]{      ...    },    subtitle,    searchPlaceholder,    emptyState,    "faqs": *[_type == "faq" && defined(category->_id)]      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {        _id,        title,        "answer": body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        },        "answerText": pt::text(body),        order,        "category": category->{          _id,          title,          "slug": slug.current,          order        }      }  },      _type == "wordSwap" => {    struckWord,    word,    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    }  },      _type == "flipCards" => {    intro[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    frontLabel,    backLabel,    turnLabel,    "cards": array::compact(cards[]{      _key,      front,      back,      emoji    })  },      _type == "photoStrip" => {    "images": array::compact(images[]{      _key,        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }),    caption,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },      _type == "pricingTiers" => {    eyebrow,    title[]{      ...    },    intro,    panelTitle,    panelNote,    "tiers": array::compact(tiers[]{      _key,      name,      label,      price,      button{          _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )      },      application,      note    }),    notes,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },          _type == "internationalCampersSection" => {    eyebrow,    heading[]{      ...    },    description,    linkLabel,    "link": {      "openInNewTab": link.openInNewTab,      "href": select(        link.type == "internal" => select(  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")),        link.type == "external" => link.external,        link.href      )    }  }  },      meta{    title,    description,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },  }
 export type HOME_PAGE_QUERY_RESULT = {
   _id: "homePage";
   _type: "homePage";
@@ -6915,6 +8114,41 @@ export type HOME_PAGE_QUERY_RESULT = {
         _key: string;
         _type: "benefitCards";
         background: SectionBackground | null;
+        layout: "grid" | "ringPhoto";
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        caption: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
         eyebrow: string | null;
         title: Array<{
           children?: Array<{
@@ -7011,7 +8245,27 @@ export type HOME_PAGE_QUERY_RESULT = {
         _key: string;
         _type: "ctaBanner";
         background: SectionBackground | null;
-        variant: "closing" | "nudge" | null;
+        variant: "closing" | "nudge" | "photo" | null;
+        eyebrow: string | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
         title: string | null;
         description: string | null;
         buttons: Array<{
@@ -7019,7 +8273,13 @@ export type HOME_PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -7067,7 +8327,13 @@ export type HOME_PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -7123,6 +8389,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         _key: string;
         _type: "featureCards";
         background: SectionBackground | null;
+        layout: "grid" | "tilted";
         eyebrow: string | null;
         title: Array<{
           children?: Array<{
@@ -7139,6 +8406,20 @@ export type HOME_PAGE_QUERY_RESULT = {
           _key: string;
         }> | null;
         description: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
         groups: Array<{
           _key: string;
           heading: string | null;
@@ -7167,12 +8448,54 @@ export type HOME_PAGE_QUERY_RESULT = {
             } | null;
             title: string | null;
             text: string | null;
+            eyebrow: string | null;
+            badgeLabel: string | null;
+            badgeValue: string | null;
+            secondaryLink: {
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
             link: {
               text: string | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             } | null;
           }> | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "flipCards";
+        background: SectionBackground | null;
+        intro: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        frontLabel: string | null;
+        backLabel: string | null;
+        turnLabel: string | null;
+        cards: Array<{
+          _key: string;
+          front: string | null;
+          back: string | null;
+          emoji: string | null;
         }> | null;
       }
     | {
@@ -7258,7 +8581,13 @@ export type HOME_PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -7325,7 +8654,13 @@ export type HOME_PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -7353,6 +8688,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         _key: string;
         _type: "homeHero";
         background: null;
+        status: string | null;
         title: Array<{
           children?: Array<{
             marks?: Array<string>;
@@ -7387,22 +8723,20 @@ export type HOME_PAGE_QUERY_RESULT = {
           _type: "block";
           _key: string;
         }> | null;
-        shortBody: string | null;
         buttons: Array<{
           _key: string;
-          _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
-          icon: {
-            name: string | null;
-            svg: string | null;
-          } | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
-        videoUrl: string | null;
-        disableVideo: boolean | null;
         filmButton: {
           label: string | null;
           url: string | null;
@@ -7435,6 +8769,7 @@ export type HOME_PAGE_QUERY_RESULT = {
     | {
         _key: string;
         _type: "homeHero";
+        status: string | null;
         title: Array<{
           children?: Array<{
             marks?: Array<string>;
@@ -7469,22 +8804,20 @@ export type HOME_PAGE_QUERY_RESULT = {
           _type: "block";
           _key: string;
         }> | null;
-        shortBody: string | null;
         buttons: Array<{
           _key: string;
-          _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
-          icon: {
-            name: string | null;
-            svg: string | null;
-          } | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
-        videoUrl: string | null;
-        disableVideo: boolean | null;
         filmButton: {
           label: string | null;
           url: string | null;
@@ -7518,6 +8851,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         _key: string;
         _type: "imageCollageFeature";
         background: SectionBackground | null;
+        layout: "bento" | "collage";
         eyebrow: string | null;
         title: Array<{
           children?: Array<{
@@ -7556,6 +8890,7 @@ export type HOME_PAGE_QUERY_RESULT = {
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt?: string;
+          caption?: string;
           _type: "image";
         } | null;
         secondaryImage: {
@@ -7575,8 +8910,43 @@ export type HOME_PAGE_QUERY_RESULT = {
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt?: string;
+          caption?: string;
           _type: "image";
         } | null;
+        tertiaryImage: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          caption?: string;
+          _type: "image";
+        } | null;
+        buttons: Array<{
+          _key: string;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        }> | null;
         cta: {
           text: string | null;
           openInNewTab: boolean | null;
@@ -7792,7 +9162,13 @@ export type HOME_PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -7926,6 +9302,46 @@ export type HOME_PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "photoStrip";
+        background: SectionBackground | null;
+        images: Array<{
+          _key: string;
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        }> | null;
+        caption: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+      }
+    | {
+        _key: string;
         _type: "pricingSingleToggle";
         background: SectionBackground | null;
         eyebrow: string | null;
@@ -7977,7 +9393,13 @@ export type HOME_PAGE_QUERY_RESULT = {
         button: {
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         } | null;
@@ -7985,8 +9407,70 @@ export type HOME_PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "pricingTiers";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        intro: string | null;
+        panelTitle: string | null;
+        panelNote: string | null;
+        tiers: Array<{
+          _key: string;
+          name: string | null;
+          label: string | null;
+          price: number | null;
+          button: {
+            _key: null;
+            text: string | null;
+            variant:
+              | "default"
+              | "ghost"
+              | "highlight"
+              | "link"
+              | "outline"
+              | "secondary"
+              | null;
+            openInNewTab: boolean | null;
+            href: string | null | "/" | "/stories";
+          } | null;
+          application: boolean | null;
+          note: string | null;
+        }> | null;
+        notes: Array<string> | null;
+        link: {
+          _key: null;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+      }
+    | {
+        _key: string;
         _type: "quoteWall";
         background: SectionBackground | null;
+        layout: "track" | "wall";
+        hint: string | null;
         eyebrow: string | null;
         heading: Array<{
           children?: Array<{
@@ -8211,6 +9695,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         _key: string;
         _type: "stackedTimeline";
         background: SectionBackground | null;
+        layout: "dateCards" | "timeline";
         eyebrow: string | null;
         title: Array<{
           children?: Array<{
@@ -8232,7 +9717,13 @@ export type HOME_PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -8241,6 +9732,20 @@ export type HOME_PAGE_QUERY_RESULT = {
           title: string | null;
           meta: string | null;
           text: string | null;
+          link: {
+            _key: null;
+            text: string | null;
+            variant:
+              | "default"
+              | "ghost"
+              | "highlight"
+              | "link"
+              | "outline"
+              | "secondary"
+              | null;
+            openInNewTab: boolean | null;
+            href: string | null | "/" | "/stories";
+          } | null;
           image: {
             asset: {
               _id: string;
@@ -8329,7 +9834,13 @@ export type HOME_PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -8420,6 +9931,33 @@ export type HOME_PAGE_QUERY_RESULT = {
               _key: string;
             }> | null;
           };
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "wordSwap";
+        background: SectionBackground | null;
+        struckWord: string | null;
+        word: string | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
         }> | null;
       }
   > | null;
@@ -8530,7 +10068,7 @@ export type CATEGORY_OG_IMAGE_QUERY_RESULT = {
 
 // Source: ../frontend/sanity/queries/page.ts
 // Variable: PAGE_QUERY
-// Query: *[_type == "page" && slug.current in [$slug, "/" + $slug, $slug + "/", "/" + $slug + "/"]][0]{    _id,    _type,    title,    description,    "slug": slug.current,      blocks[]{    _key,    _type,    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},      _type == "latestArticles" => {    eyebrow,    title,    description,    limit,    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    fallbackImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "articles": *[      _type == "post" && defined(slug.current) && defined(publishedAt) &&      meta.noindex != true &&      seoHideFromLists != true &&      seoNoIndex != true    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{        _id,  title,  slug,  publishedAt,  "excerpt": pt::text(excerpt),  image {  ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }},  category->{_id, title, slug}    }  },      _type == "faqAccordion" => {    eyebrow,    title[]{      ...    },    subtitle,    "faqs": array::compact(faqs[]{      _key,      "_id": @->._id,      "_type": @->._type,      "title": @->.title,      "answer": coalesce(@->.body, @->.richText)[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "storyFeature" => {    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    richText[]{      ...,        markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    keyDetails {      title,      items[]    },    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "teamMembers" => {    presentation,    eyebrow,    title,    richText[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    members[]{      _key,      _type,      "_ref": _ref,      "document": @->{        _id,        _type,        name,        role,        yearsAtCamp,        shortBio,        email,        phone,        sortOrder,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        bio[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }        }      }    }  },      _type == "richTextBlock" => {    eyebrow,    title,    richText[]{        ...,  _type == "block" => {    ...,    children[]{...},    markDefs[]{      ...,      _type in ["customLink", "buttonLink"] => {          "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab      }    }  },  _type == "image" => {    ...,    "resolvedAsset": asset->{      _id,      url,      mimeType,      metadata {        lqip,        dimensions {          width,          height        }      }    }  },  _type == "table" => {    ...,    rows[]{      ...,      cells[]    }  },  _type == "callout" => {    ...,    title,    body  }    }  },      _type == "ctaBanner" => {    variant,    title,    description,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "benefitCards" => {    eyebrow,    title[]{      ...    },    intro,    "cards": array::compact(cards[]{      _key,      _type,      "icon": icon{ name, svg },      title,      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "hero" => {    eyebrow,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "homeHero" => {    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    shortBody,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      icon {        name,        svg      },      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    videoUrl,    disableVideo,    filmButton {      label,      url    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "stats": array::compact(stats[]{      _key,      value,      label    })  },      _type == "imageCollageFeature" => {    eyebrow,    title[]{      ...    },    body,    "points": array::compact(points[]{      _key,      title,      body    }),    primaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    secondaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    cta {      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "featureCards" => {    eyebrow,    title[]{      ...    },    description,    "groups": array::compact(groups[]{      _key,      heading,      description,      "singleRowUpToFour": coalesce(singleRowUpToFour, true),      "cards": array::compact(cards[]{        _key,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        title,        text,        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    })  },      _type == "stackedFeatureRows" => {    eyebrow,    title[]{      ...    },    "rows": array::compact(rows[]{      _key,      "icon": icon{ name, svg },      title,      "items": array::compact(items[]{        _key,        body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        }      }),      link {        text,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),          url.type == "external" => url.external,          url.href        )      }    })  },      _type == "innerHero" => {    eyebrow,    title[]{      ...    },    body,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "facts": array::compact(facts[]{      _key,      value,      label    })  },      _type == "journey" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "stackedTimeline" => {    eyebrow,    title[]{      ...    },    intro,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    "items": array::compact(items[]{      _key,      title,      meta,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "includedExtras" => {    eyebrow,    title[]{      ...    },    intro,    "prices": array::compact(prices[]{      _key,      name,      price,      unit,      note    }),    included {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail      })    },    extras {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail,        price,        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    },    footnote  },      _type == "packingChecklist" => {    eyebrow,    title[]{      ...    },    intro,    "groups": array::compact(groups[]{      _key,      title,      tone,      "items": array::compact(items[]{        _key,        label,        quantity      })    }),    note[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "pdf": pdf.asset->{      _id,      url,      originalFilename,      size    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "bigImageList" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "directorCta" => {    title[]{      ...    },    description,    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "largeSlides" => {    eyebrow,    title[]{      ...    },    intro,    "slides": array::compact(slides[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "headingImage" => {    title,    background,    richText[]{ ... },    image {   ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  } }  },      _type == "quoteWall" => {    eyebrow,    heading[]{      ...    },      testimonials[]{    _key,    _type,    "_ref": _ref,    "document": @->{      _id,      _type,      name,      title,      origin,      rating,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    }  }  },      _type == "pricingSingleToggle" => {    background,    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    intro,    "options": array::compact(options[]{      _key,      name,      price,      unit,      note    }),    "facts": array::compact(facts[]{      _key,      label,      detail    }),    button {      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    footnote  },      _type == "faqHub" => {    eyebrow,    title[]{      ...    },    subtitle,    searchPlaceholder,    emptyState,    "faqs": *[_type == "faq" && defined(category->_id)]      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {        _id,        title,        "answer": body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        },        "answerText": pt::text(body),        order,        "category": category->{          _id,          title,          "slug": slug.current,          order        }      }  },          _type == "internationalCampersSection" => {    eyebrow,    heading[]{      ...    },    description,    linkLabel,    "link": {      "openInNewTab": link.openInNewTab,      "href": select(        link.type == "internal" => select(  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")),        link.type == "external" => link.external,        link.href      )    }  }  },      meta{    title,    description,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },  }
+// Query: *[_type == "page" && slug.current in [$slug, "/" + $slug, $slug + "/", "/" + $slug + "/"]][0]{    _id,    _type,    title,    description,    "slug": slug.current,      blocks[]{    _key,    _type,    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},      _type == "latestArticles" => {    eyebrow,    title,    description,    limit,    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    fallbackImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "articles": *[      _type == "post" && defined(slug.current) && defined(publishedAt) &&      meta.noindex != true &&      seoHideFromLists != true &&      seoNoIndex != true    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{        _id,  title,  slug,  publishedAt,  "excerpt": pt::text(excerpt),  image {  ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }},  category->{_id, title, slug}    }  },      _type == "faqAccordion" => {    eyebrow,    title[]{      ...    },    subtitle,    "faqs": array::compact(faqs[]{      _key,      "_id": @->._id,      "_type": @->._type,      "title": @->.title,      "answer": coalesce(@->.body, @->.richText)[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "storyFeature" => {    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    richText[]{      ...,        markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    keyDetails {      title,      items[]    },    buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "teamMembers" => {    presentation,    eyebrow,    title,    richText[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    members[]{      _key,      _type,      "_ref": _ref,      "document": @->{        _id,        _type,        name,        role,        yearsAtCamp,        shortBio,        email,        phone,        sortOrder,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        bio[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }        }      }    }  },      _type == "richTextBlock" => {    eyebrow,    title,    richText[]{        ...,  _type == "block" => {    ...,    children[]{...},    markDefs[]{      ...,      _type in ["customLink", "buttonLink"] => {          "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab      }    }  },  _type == "image" => {    ...,    "resolvedAsset": asset->{      _id,      url,      mimeType,      metadata {        lqip,        dimensions {          width,          height        }      }    }  },  _type == "table" => {    ...,    rows[]{      ...,      cells[]    }  },  _type == "callout" => {    ...,    title,    body  }    }  },      _type == "ctaBanner" => {    variant,    eyebrow,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    title,    description,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "benefitCards" => {    "layout": coalesce(layout, "grid"),    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    caption,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    },    eyebrow,    title[]{      ...    },    intro,    "cards": array::compact(cards[]{      _key,      _type,      "icon": icon{ name, svg },      title,      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "hero" => {    eyebrow,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "homeHero" => {    status,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "buttons": array::compact(buttons[]{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }),    filmButton {      label,      url    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "stats": array::compact(stats[]{      _key,      value,      label    })  },      _type == "imageCollageFeature" => {    "layout": coalesce(layout, "collage"),    eyebrow,    title[]{      ...    },    body,    "points": array::compact(points[]{      _key,      title,      body    }),    primaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    secondaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    tertiaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }),    cta {      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "featureCards" => {    "layout": coalesce(layout, "grid"),    eyebrow,    title[]{      ...    },    description,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    },    "groups": array::compact(groups[]{      _key,      heading,      description,      "singleRowUpToFour": coalesce(singleRowUpToFour, true),      "cards": array::compact(cards[]{        _key,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        title,        text,        eyebrow,        badgeLabel,        badgeValue,        secondaryLink {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        },        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    })  },      _type == "stackedFeatureRows" => {    eyebrow,    title[]{      ...    },    "rows": array::compact(rows[]{      _key,      "icon": icon{ name, svg },      title,      "items": array::compact(items[]{        _key,        body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        }      }),      link {        text,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),          url.type == "external" => url.external,          url.href        )      }    })  },      _type == "innerHero" => {    eyebrow,    title[]{      ...    },    body,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "facts": array::compact(facts[]{      _key,      value,      label    })  },      _type == "journey" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "stackedTimeline" => {    "layout": coalesce(layout, "timeline"),    eyebrow,    title[]{      ...    },    intro,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    "items": array::compact(items[]{      _key,      title,      meta,      text,      link{          _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )      },      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "includedExtras" => {    eyebrow,    title[]{      ...    },    intro,    "prices": array::compact(prices[]{      _key,      name,      price,      unit,      note    }),    included {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail      })    },    extras {      heading,      note,      "items": array::compact(items[]{        _key,        label,        detail,        price,        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    },    footnote  },      _type == "packingChecklist" => {    eyebrow,    title[]{      ...    },    intro,    "groups": array::compact(groups[]{      _key,      title,      tone,      "items": array::compact(items[]{        _key,        label,        quantity      })    }),    note[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "pdf": pdf.asset->{      _id,      url,      originalFilename,      size    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "bigImageList" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "directorCta" => {    title[]{      ...    },    description,    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "largeSlides" => {    eyebrow,    title[]{      ...    },    intro,    "slides": array::compact(slides[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "headingImage" => {    title,    background,    richText[]{ ... },    image {   ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  } }  },      _type == "quoteWall" => {    "layout": coalesce(layout, "wall"),    hint,    eyebrow,    heading[]{      ...    },      testimonials[]{    _key,    _type,    "_ref": _ref,    "document": @->{      _id,      _type,      name,      title,      origin,      rating,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    }  }  },      _type == "pricingSingleToggle" => {    background,    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    intro,    "options": array::compact(options[]{      _key,      name,      price,      unit,      note    }),    "facts": array::compact(facts[]{      _key,      label,      detail    }),    button {      text,      variant,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    footnote  },      _type == "faqHub" => {    eyebrow,    title[]{      ...    },    subtitle,    searchPlaceholder,    emptyState,    "faqs": *[_type == "faq" && defined(category->_id)]      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {        _id,        title,        "answer": body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        },        "answerText": pt::text(body),        order,        "category": category->{          _id,          title,          "slug": slug.current,          order        }      }  },      _type == "wordSwap" => {    struckWord,    word,    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    }  },      _type == "flipCards" => {    intro[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    frontLabel,    backLabel,    turnLabel,    "cards": array::compact(cards[]{      _key,      front,      back,      emoji    })  },      _type == "photoStrip" => {    "images": array::compact(images[]{      _key,        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }),    caption,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },      _type == "pricingTiers" => {    eyebrow,    title[]{      ...    },    intro,    panelTitle,    panelNote,    "tiers": array::compact(tiers[]{      _key,      name,      label,      price,      button{          _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )      },      application,      note    }),    notes,    link{        _key,  text,  variant,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },          _type == "internationalCampersSection" => {    eyebrow,    heading[]{      ...    },    description,    linkLabel,    "link": {      "openInNewTab": link.openInNewTab,      "href": select(        link.type == "internal" => select(  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")),        link.type == "external" => link.external,        link.href      )    }  }  },      meta{    title,    description,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },  }
 export type PAGE_QUERY_RESULT = {
   _id: string;
   _type: "page";
@@ -8542,6 +10080,41 @@ export type PAGE_QUERY_RESULT = {
         _key: string;
         _type: "benefitCards";
         background: SectionBackground | null;
+        layout: "grid" | "ringPhoto";
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        caption: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
         eyebrow: string | null;
         title: Array<{
           children?: Array<{
@@ -8638,7 +10211,27 @@ export type PAGE_QUERY_RESULT = {
         _key: string;
         _type: "ctaBanner";
         background: SectionBackground | null;
-        variant: "closing" | "nudge" | null;
+        variant: "closing" | "nudge" | "photo" | null;
+        eyebrow: string | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
         title: string | null;
         description: string | null;
         buttons: Array<{
@@ -8646,7 +10239,13 @@ export type PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -8694,7 +10293,13 @@ export type PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -8805,6 +10410,7 @@ export type PAGE_QUERY_RESULT = {
         _key: string;
         _type: "featureCards";
         background: SectionBackground | null;
+        layout: "grid" | "tilted";
         eyebrow: string | null;
         title: Array<{
           children?: Array<{
@@ -8821,6 +10427,20 @@ export type PAGE_QUERY_RESULT = {
           _key: string;
         }> | null;
         description: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
         groups: Array<{
           _key: string;
           heading: string | null;
@@ -8849,12 +10469,54 @@ export type PAGE_QUERY_RESULT = {
             } | null;
             title: string | null;
             text: string | null;
+            eyebrow: string | null;
+            badgeLabel: string | null;
+            badgeValue: string | null;
+            secondaryLink: {
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
             link: {
               text: string | null;
               openInNewTab: boolean | null;
               href: string | null | "/" | "/stories";
             } | null;
           }> | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "flipCards";
+        background: SectionBackground | null;
+        intro: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        frontLabel: string | null;
+        backLabel: string | null;
+        turnLabel: string | null;
+        cards: Array<{
+          _key: string;
+          front: string | null;
+          back: string | null;
+          emoji: string | null;
         }> | null;
       }
     | {
@@ -8940,7 +10602,13 @@ export type PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -9007,7 +10675,13 @@ export type PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -9035,6 +10709,7 @@ export type PAGE_QUERY_RESULT = {
         _key: string;
         _type: "imageCollageFeature";
         background: SectionBackground | null;
+        layout: "bento" | "collage";
         eyebrow: string | null;
         title: Array<{
           children?: Array<{
@@ -9073,6 +10748,7 @@ export type PAGE_QUERY_RESULT = {
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt?: string;
+          caption?: string;
           _type: "image";
         } | null;
         secondaryImage: {
@@ -9092,8 +10768,43 @@ export type PAGE_QUERY_RESULT = {
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt?: string;
+          caption?: string;
           _type: "image";
         } | null;
+        tertiaryImage: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          caption?: string;
+          _type: "image";
+        } | null;
+        buttons: Array<{
+          _key: string;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        }> | null;
         cta: {
           text: string | null;
           openInNewTab: boolean | null;
@@ -9178,7 +10889,13 @@ export type PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -9231,7 +10948,13 @@ export type PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -9416,7 +11139,13 @@ export type PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -9550,6 +11279,46 @@ export type PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "photoStrip";
+        background: SectionBackground | null;
+        images: Array<{
+          _key: string;
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        }> | null;
+        caption: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+      }
+    | {
+        _key: string;
         _type: "pricingSingleToggle";
         background: SectionBackground | null;
         eyebrow: string | null;
@@ -9601,7 +11370,13 @@ export type PAGE_QUERY_RESULT = {
         button: {
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         } | null;
@@ -9609,8 +11384,70 @@ export type PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "pricingTiers";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        intro: string | null;
+        panelTitle: string | null;
+        panelNote: string | null;
+        tiers: Array<{
+          _key: string;
+          name: string | null;
+          label: string | null;
+          price: number | null;
+          button: {
+            _key: null;
+            text: string | null;
+            variant:
+              | "default"
+              | "ghost"
+              | "highlight"
+              | "link"
+              | "outline"
+              | "secondary"
+              | null;
+            openInNewTab: boolean | null;
+            href: string | null | "/" | "/stories";
+          } | null;
+          application: boolean | null;
+          note: string | null;
+        }> | null;
+        notes: Array<string> | null;
+        link: {
+          _key: null;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+      }
+    | {
+        _key: string;
         _type: "quoteWall";
         background: SectionBackground | null;
+        layout: "track" | "wall";
+        hint: string | null;
         eyebrow: string | null;
         heading: Array<{
           children?: Array<{
@@ -9835,6 +11672,7 @@ export type PAGE_QUERY_RESULT = {
         _key: string;
         _type: "stackedTimeline";
         background: SectionBackground | null;
+        layout: "dateCards" | "timeline";
         eyebrow: string | null;
         title: Array<{
           children?: Array<{
@@ -9856,7 +11694,13 @@ export type PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -9865,6 +11709,20 @@ export type PAGE_QUERY_RESULT = {
           title: string | null;
           meta: string | null;
           text: string | null;
+          link: {
+            _key: null;
+            text: string | null;
+            variant:
+              | "default"
+              | "ghost"
+              | "highlight"
+              | "link"
+              | "outline"
+              | "secondary"
+              | null;
+            openInNewTab: boolean | null;
+            href: string | null | "/" | "/stories";
+          } | null;
           image: {
             asset: {
               _id: string;
@@ -9953,7 +11811,13 @@ export type PAGE_QUERY_RESULT = {
           _type: "button";
           text: string | null;
           variant:
-            "default" | "ghost" | "link" | "outline" | "secondary" | null;
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
           openInNewTab: boolean | null;
           href: string | null | "/" | "/stories";
         }> | null;
@@ -10044,6 +11908,33 @@ export type PAGE_QUERY_RESULT = {
               _key: string;
             }> | null;
           };
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "wordSwap";
+        background: SectionBackground | null;
+        struckWord: string | null;
+        word: string | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
         }> | null;
       }
   > | null;
@@ -10581,7 +12472,7 @@ export type SEO_SETTINGS_QUERY_RESULT = {
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    '\n  *[_id == "blogIndex"][0]{\n    _id,\n    _type,\n    title,\n    description,\n    \n  blocks[]{\n    _key,\n    _type,\n    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},\n    \n  _type == "latestArticles" => {\n    eyebrow,\n    title,\n    description,\n    limit,\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    fallbackImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "articles": *[\n      _type == "post" && defined(slug.current) && defined(publishedAt) &&\n      meta.noindex != true &&\n      seoHideFromLists != true &&\n      seoNoIndex != true\n    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n    }\n  }\n,\n    \n  _type == "faqAccordion" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    "faqs": array::compact(faqs[]{\n      _key,\n      "_id": @->._id,\n      "_type": @->._type,\n      "title": @->.title,\n      "answer": coalesce(@->.body, @->.richText)[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "storyFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    richText[]{\n      ...,\n      \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n    },\n    keyDetails {\n      title,\n      items[]\n    },\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "teamMembers" => {\n    presentation,\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    members[]{\n      _key,\n      _type,\n      "_ref": _ref,\n      "document": @->{\n        _id,\n        _type,\n        name,\n        role,\n        yearsAtCamp,\n        shortBio,\n        email,\n        phone,\n        sortOrder,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        bio[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n        }\n      }\n    }\n  }\n,\n    \n  _type == "richTextBlock" => {\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  _type == "block" => {\n    ...,\n    children[]{...},\n    markDefs[]{\n      ...,\n      _type in ["customLink", "buttonLink"] => {\n        \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n      }\n    }\n  },\n  _type == "image" => {\n    ...,\n    "resolvedAsset": asset->{\n      _id,\n      url,\n      mimeType,\n      metadata {\n        lqip,\n        dimensions {\n          width,\n          height\n        }\n      }\n    }\n  },\n  _type == "table" => {\n    ...,\n    rows[]{\n      ...,\n      cells[]\n    }\n  },\n  _type == "callout" => {\n    ...,\n    title,\n    body\n  }\n\n    }\n  }\n,\n    \n  _type == "ctaBanner" => {\n    variant,\n    title,\n    description,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "benefitCards" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "cards": array::compact(cards[]{\n      _key,\n      _type,\n      "icon": icon{ name, svg },\n      title,\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "hero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "homeHero" => {\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    shortBody,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      icon {\n        name,\n        svg\n      },\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    videoUrl,\n    disableVideo,\n    filmButton {\n      label,\n      url\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "stats": array::compact(stats[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "imageCollageFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "points": array::compact(points[]{\n      _key,\n      title,\n      body\n    }),\n    primaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    secondaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    cta {\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "featureCards" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    description,\n    "groups": array::compact(groups[]{\n      _key,\n      heading,\n      description,\n      "singleRowUpToFour": coalesce(singleRowUpToFour, true),\n      "cards": array::compact(cards[]{\n        _key,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        title,\n        text,\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    })\n  }\n,\n    \n  _type == "stackedFeatureRows" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    "rows": array::compact(rows[]{\n      _key,\n      "icon": icon{ name, svg },\n      title,\n      "items": array::compact(items[]{\n        _key,\n        body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        }\n      }),\n      link {\n        text,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n          url.type == "external" => url.external,\n          url.href\n        )\n      }\n    })\n  }\n,\n    \n  _type == "innerHero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "facts": array::compact(facts[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "journey" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "stackedTimeline" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    "items": array::compact(items[]{\n      _key,\n      title,\n      meta,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "includedExtras" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "prices": array::compact(prices[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    included {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail\n      })\n    },\n    extras {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail,\n        price,\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    },\n    footnote\n  }\n,\n    \n  _type == "packingChecklist" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "groups": array::compact(groups[]{\n      _key,\n      title,\n      tone,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        quantity\n      })\n    }),\n    note[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "pdf": pdf.asset->{\n      _id,\n      url,\n      originalFilename,\n      size\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "bigImageList" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "directorCta" => {\n    title[]{\n      ...\n    },\n    description,\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "largeSlides" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "slides": array::compact(slides[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "headingImage" => {\n    title,\n    background,\n    richText[]{ ... },\n    image { \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n }\n  }\n,\n    \n  _type == "quoteWall" => {\n    eyebrow,\n    heading[]{\n      ...\n    },\n    \n  testimonials[]{\n    _key,\n    _type,\n    "_ref": _ref,\n    "document": @->{\n      _id,\n      _type,\n      name,\n      title,\n      origin,\n      rating,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    }\n  }\n\n  }\n,\n    \n  _type == "pricingSingleToggle" => {\n    background,\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    intro,\n    "options": array::compact(options[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    "facts": array::compact(facts[]{\n      _key,\n      label,\n      detail\n    }),\n    button {\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    footnote\n  }\n,\n    \n  _type == "faqHub" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    searchPlaceholder,\n    emptyState,\n    "faqs": *[_type == "faq" && defined(category->_id)]\n      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {\n        _id,\n        title,\n        "answer": body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        },\n        "answerText": pt::text(body),\n        order,\n        "category": category->{\n          _id,\n          title,\n          "slug": slug.current,\n          order\n        }\n      }\n  }\n,\n    \n    \n  _type == "internationalCampersSection" => {\n    eyebrow,\n    heading[]{\n      ...\n    },\n    description,\n    linkLabel,\n    "link": {\n      "openInNewTab": link.openInNewTab,\n      "href": select(\n        link.type == "internal" => select(\n  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",\n  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",\n  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")\n),\n        link.type == "external" => link.external,\n        link.href\n      )\n    }\n  }\n\n  }\n,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n\n  }\n': BLOG_INDEX_QUERY_RESULT;
+    '\n  *[_id == "blogIndex"][0]{\n    _id,\n    _type,\n    title,\n    description,\n    \n  blocks[]{\n    _key,\n    _type,\n    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},\n    \n  _type == "latestArticles" => {\n    eyebrow,\n    title,\n    description,\n    limit,\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    fallbackImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "articles": *[\n      _type == "post" && defined(slug.current) && defined(publishedAt) &&\n      meta.noindex != true &&\n      seoHideFromLists != true &&\n      seoNoIndex != true\n    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n    }\n  }\n,\n    \n  _type == "faqAccordion" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    "faqs": array::compact(faqs[]{\n      _key,\n      "_id": @->._id,\n      "_type": @->._type,\n      "title": @->.title,\n      "answer": coalesce(@->.body, @->.richText)[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "storyFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    richText[]{\n      ...,\n      \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n    },\n    keyDetails {\n      title,\n      items[]\n    },\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "teamMembers" => {\n    presentation,\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    members[]{\n      _key,\n      _type,\n      "_ref": _ref,\n      "document": @->{\n        _id,\n        _type,\n        name,\n        role,\n        yearsAtCamp,\n        shortBio,\n        email,\n        phone,\n        sortOrder,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        bio[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n        }\n      }\n    }\n  }\n,\n    \n  _type == "richTextBlock" => {\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  _type == "block" => {\n    ...,\n    children[]{...},\n    markDefs[]{\n      ...,\n      _type in ["customLink", "buttonLink"] => {\n        \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n      }\n    }\n  },\n  _type == "image" => {\n    ...,\n    "resolvedAsset": asset->{\n      _id,\n      url,\n      mimeType,\n      metadata {\n        lqip,\n        dimensions {\n          width,\n          height\n        }\n      }\n    }\n  },\n  _type == "table" => {\n    ...,\n    rows[]{\n      ...,\n      cells[]\n    }\n  },\n  _type == "callout" => {\n    ...,\n    title,\n    body\n  }\n\n    }\n  }\n,\n    \n  _type == "ctaBanner" => {\n    variant,\n    eyebrow,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    title,\n    description,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "benefitCards" => {\n    "layout": coalesce(layout, "grid"),\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    caption,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    },\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "cards": array::compact(cards[]{\n      _key,\n      _type,\n      "icon": icon{ name, svg },\n      title,\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "hero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "homeHero" => {\n    status,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "buttons": array::compact(buttons[]{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }),\n    filmButton {\n      label,\n      url\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "stats": array::compact(stats[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "imageCollageFeature" => {\n    "layout": coalesce(layout, "collage"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "points": array::compact(points[]{\n      _key,\n      title,\n      body\n    }),\n    primaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    secondaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    tertiaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }),\n    cta {\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "featureCards" => {\n    "layout": coalesce(layout, "grid"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    description,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    },\n    "groups": array::compact(groups[]{\n      _key,\n      heading,\n      description,\n      "singleRowUpToFour": coalesce(singleRowUpToFour, true),\n      "cards": array::compact(cards[]{\n        _key,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        title,\n        text,\n        eyebrow,\n        badgeLabel,\n        badgeValue,\n        secondaryLink {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        },\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    })\n  }\n,\n    \n  _type == "stackedFeatureRows" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    "rows": array::compact(rows[]{\n      _key,\n      "icon": icon{ name, svg },\n      title,\n      "items": array::compact(items[]{\n        _key,\n        body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        }\n      }),\n      link {\n        text,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n          url.type == "external" => url.external,\n          url.href\n        )\n      }\n    })\n  }\n,\n    \n  _type == "innerHero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "facts": array::compact(facts[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "journey" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "stackedTimeline" => {\n    "layout": coalesce(layout, "timeline"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    "items": array::compact(items[]{\n      _key,\n      title,\n      meta,\n      text,\n      link{\n        \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n      },\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "includedExtras" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "prices": array::compact(prices[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    included {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail\n      })\n    },\n    extras {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail,\n        price,\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    },\n    footnote\n  }\n,\n    \n  _type == "packingChecklist" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "groups": array::compact(groups[]{\n      _key,\n      title,\n      tone,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        quantity\n      })\n    }),\n    note[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "pdf": pdf.asset->{\n      _id,\n      url,\n      originalFilename,\n      size\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "bigImageList" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "directorCta" => {\n    title[]{\n      ...\n    },\n    description,\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "largeSlides" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "slides": array::compact(slides[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "headingImage" => {\n    title,\n    background,\n    richText[]{ ... },\n    image { \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n }\n  }\n,\n    \n  _type == "quoteWall" => {\n    "layout": coalesce(layout, "wall"),\n    hint,\n    eyebrow,\n    heading[]{\n      ...\n    },\n    \n  testimonials[]{\n    _key,\n    _type,\n    "_ref": _ref,\n    "document": @->{\n      _id,\n      _type,\n      name,\n      title,\n      origin,\n      rating,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    }\n  }\n\n  }\n,\n    \n  _type == "pricingSingleToggle" => {\n    background,\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    intro,\n    "options": array::compact(options[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    "facts": array::compact(facts[]{\n      _key,\n      label,\n      detail\n    }),\n    button {\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    footnote\n  }\n,\n    \n  _type == "faqHub" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    searchPlaceholder,\n    emptyState,\n    "faqs": *[_type == "faq" && defined(category->_id)]\n      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {\n        _id,\n        title,\n        "answer": body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        },\n        "answerText": pt::text(body),\n        order,\n        "category": category->{\n          _id,\n          title,\n          "slug": slug.current,\n          order\n        }\n      }\n  }\n,\n    \n  _type == "wordSwap" => {\n    struckWord,\n    word,\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    }\n  }\n,\n    \n  _type == "flipCards" => {\n    intro[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    frontLabel,\n    backLabel,\n    turnLabel,\n    "cards": array::compact(cards[]{\n      _key,\n      front,\n      back,\n      emoji\n    })\n  }\n,\n    \n  _type == "photoStrip" => {\n    "images": array::compact(images[]{\n      _key,\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }),\n    caption,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n  _type == "pricingTiers" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    panelTitle,\n    panelNote,\n    "tiers": array::compact(tiers[]{\n      _key,\n      name,\n      label,\n      price,\n      button{\n        \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n      },\n      application,\n      note\n    }),\n    notes,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n    \n  _type == "internationalCampersSection" => {\n    eyebrow,\n    heading[]{\n      ...\n    },\n    description,\n    linkLabel,\n    "link": {\n      "openInNewTab": link.openInNewTab,\n      "href": select(\n        link.type == "internal" => select(\n  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",\n  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",\n  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")\n),\n        link.type == "external" => link.external,\n        link.href\n      )\n    }\n  }\n\n  }\n,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n\n  }\n': BLOG_INDEX_QUERY_RESULT;
     '\n  *[_type == "post" && defined(slug.current) && defined(publishedAt)] | order(publishedAt desc, _createdAt desc, _id asc)[0]{\n    \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n  }\n': LATEST_POST_QUERY_RESULT;
     '\n  *[_type == "post" && defined(slug.current) && defined(publishedAt) && _id != $latestPostId]\n    | order(publishedAt desc, _createdAt desc, _id asc)[$start...$end]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n    }\n': REGULAR_POSTS_QUERY_RESULT;
     '\n  count(*[_type == "post" && defined(slug.current) && defined(publishedAt) && _id != $latestPostId])\n': REGULAR_POSTS_COUNT_QUERY_RESULT;
@@ -10593,13 +12484,13 @@ declare global {
     '\n  count(*[_type == "post" && defined(slug.current) && defined(publishedAt) && category._ref == $categoryId])\n': CATEGORY_POSTS_COUNT_QUERY_RESULT;
     '\n  *[\n    _type == "category"\n    && defined(slug.current)\n  ]{\n    "slug": slug.current,\n    "publishedPostCount": count(*[_type == "post" && defined(slug.current) && defined(publishedAt) && category._ref == ^._id])\n  }\n': CATEGORY_STATIC_PARAMS_QUERY_RESULT;
     '\n  *[_type == "footer" && _id == "footer"][0]{\n    _id,\n    eyebrow,\n    heading,\n    accent,\n    actions[]{\n  _key,\n  label,\n  destination{\n  openInNewTab,\n  "href": select(\n    kind == "internal" => select(\n      internal->_id == "homePage" || internal->_type == "homePage" => "/",\n      internal->_id == "blogIndex" => "/stories",\n      internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")\n    ),\n    kind == "external" => external\n  )\n}\n},\n    logos[]{\n      _key,\n      alt,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      destination{\n  openInNewTab,\n  "href": select(\n    kind == "internal" => select(\n      internal->_id == "homePage" || internal->_type == "homePage" => "/",\n      internal->_id == "blogIndex" => "/stories",\n      internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")\n    ),\n    kind == "external" => external\n  )\n}\n    },\n    contactLinks[]{\n      _key,\n      icon,\n      label,\n      destination{\n  openInNewTab,\n  "href": select(\n    kind == "internal" => select(\n      internal->_id == "homePage" || internal->_type == "homePage" => "/",\n      internal->_id == "blogIndex" => "/stories",\n      internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")\n    ),\n    kind == "external" => external\n  )\n}\n    },\n    columns[]{\n      _key,\n      heading,\n      links[]{\n  _key,\n  label,\n  destination{\n  openInNewTab,\n  "href": select(\n    kind == "internal" => select(\n      internal->_id == "homePage" || internal->_type == "homePage" => "/",\n      internal->_id == "blogIndex" => "/stories",\n      internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")\n    ),\n    kind == "external" => external\n  )\n}\n}\n    },\n    "legalLinks": coalesce(legalLinks, compliance.legalLinks)[]{\n  _key,\n  label,\n  destination{\n  openInNewTab,\n  "href": select(\n    kind == "internal" => select(\n      internal->_id == "homePage" || internal->_type == "homePage" => "/",\n      internal->_id == "blogIndex" => "/stories",\n      internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n      defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")\n    ),\n    kind == "external" => external\n  )\n}\n},\n    "copyrightStartYear": coalesce(copyrightStartYear, compliance.copyrightStartYear),\n    "copyrightOwner": coalesce(copyrightOwner, compliance.copyrightOwner),\n    charityStatement\n  }\n': FOOTER_QUERY_RESULT;
-    '\n  *[_id == "homePage" && _type == "homePage"][0]{\n    _id,\n    _type,\n    title,\n    description,\n    \n  blocks[]{\n    _key,\n    _type,\n    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},\n    \n  _type == "latestArticles" => {\n    eyebrow,\n    title,\n    description,\n    limit,\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    fallbackImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "articles": *[\n      _type == "post" && defined(slug.current) && defined(publishedAt) &&\n      meta.noindex != true &&\n      seoHideFromLists != true &&\n      seoNoIndex != true\n    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n    }\n  }\n,\n    \n  _type == "faqAccordion" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    "faqs": array::compact(faqs[]{\n      _key,\n      "_id": @->._id,\n      "_type": @->._type,\n      "title": @->.title,\n      "answer": coalesce(@->.body, @->.richText)[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "storyFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    richText[]{\n      ...,\n      \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n    },\n    keyDetails {\n      title,\n      items[]\n    },\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "teamMembers" => {\n    presentation,\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    members[]{\n      _key,\n      _type,\n      "_ref": _ref,\n      "document": @->{\n        _id,\n        _type,\n        name,\n        role,\n        yearsAtCamp,\n        shortBio,\n        email,\n        phone,\n        sortOrder,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        bio[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n        }\n      }\n    }\n  }\n,\n    \n  _type == "richTextBlock" => {\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  _type == "block" => {\n    ...,\n    children[]{...},\n    markDefs[]{\n      ...,\n      _type in ["customLink", "buttonLink"] => {\n        \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n      }\n    }\n  },\n  _type == "image" => {\n    ...,\n    "resolvedAsset": asset->{\n      _id,\n      url,\n      mimeType,\n      metadata {\n        lqip,\n        dimensions {\n          width,\n          height\n        }\n      }\n    }\n  },\n  _type == "table" => {\n    ...,\n    rows[]{\n      ...,\n      cells[]\n    }\n  },\n  _type == "callout" => {\n    ...,\n    title,\n    body\n  }\n\n    }\n  }\n,\n    \n  _type == "ctaBanner" => {\n    variant,\n    title,\n    description,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "benefitCards" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "cards": array::compact(cards[]{\n      _key,\n      _type,\n      "icon": icon{ name, svg },\n      title,\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "hero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "homeHero" => {\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    shortBody,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      icon {\n        name,\n        svg\n      },\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    videoUrl,\n    disableVideo,\n    filmButton {\n      label,\n      url\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "stats": array::compact(stats[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "imageCollageFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "points": array::compact(points[]{\n      _key,\n      title,\n      body\n    }),\n    primaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    secondaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    cta {\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "featureCards" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    description,\n    "groups": array::compact(groups[]{\n      _key,\n      heading,\n      description,\n      "singleRowUpToFour": coalesce(singleRowUpToFour, true),\n      "cards": array::compact(cards[]{\n        _key,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        title,\n        text,\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    })\n  }\n,\n    \n  _type == "stackedFeatureRows" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    "rows": array::compact(rows[]{\n      _key,\n      "icon": icon{ name, svg },\n      title,\n      "items": array::compact(items[]{\n        _key,\n        body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        }\n      }),\n      link {\n        text,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n          url.type == "external" => url.external,\n          url.href\n        )\n      }\n    })\n  }\n,\n    \n  _type == "innerHero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "facts": array::compact(facts[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "journey" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "stackedTimeline" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    "items": array::compact(items[]{\n      _key,\n      title,\n      meta,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "includedExtras" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "prices": array::compact(prices[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    included {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail\n      })\n    },\n    extras {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail,\n        price,\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    },\n    footnote\n  }\n,\n    \n  _type == "packingChecklist" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "groups": array::compact(groups[]{\n      _key,\n      title,\n      tone,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        quantity\n      })\n    }),\n    note[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "pdf": pdf.asset->{\n      _id,\n      url,\n      originalFilename,\n      size\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "bigImageList" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "directorCta" => {\n    title[]{\n      ...\n    },\n    description,\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "largeSlides" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "slides": array::compact(slides[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "headingImage" => {\n    title,\n    background,\n    richText[]{ ... },\n    image { \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n }\n  }\n,\n    \n  _type == "quoteWall" => {\n    eyebrow,\n    heading[]{\n      ...\n    },\n    \n  testimonials[]{\n    _key,\n    _type,\n    "_ref": _ref,\n    "document": @->{\n      _id,\n      _type,\n      name,\n      title,\n      origin,\n      rating,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    }\n  }\n\n  }\n,\n    \n  _type == "pricingSingleToggle" => {\n    background,\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    intro,\n    "options": array::compact(options[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    "facts": array::compact(facts[]{\n      _key,\n      label,\n      detail\n    }),\n    button {\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    footnote\n  }\n,\n    \n  _type == "faqHub" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    searchPlaceholder,\n    emptyState,\n    "faqs": *[_type == "faq" && defined(category->_id)]\n      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {\n        _id,\n        title,\n        "answer": body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        },\n        "answerText": pt::text(body),\n        order,\n        "category": category->{\n          _id,\n          title,\n          "slug": slug.current,\n          order\n        }\n      }\n  }\n,\n    \n    \n  _type == "internationalCampersSection" => {\n    eyebrow,\n    heading[]{\n      ...\n    },\n    description,\n    linkLabel,\n    "link": {\n      "openInNewTab": link.openInNewTab,\n      "href": select(\n        link.type == "internal" => select(\n  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",\n  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",\n  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")\n),\n        link.type == "external" => link.external,\n        link.href\n      )\n    }\n  }\n\n  }\n,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n  }\n': HOME_PAGE_QUERY_RESULT;
+    '\n  *[_id == "homePage" && _type == "homePage"][0]{\n    _id,\n    _type,\n    title,\n    description,\n    \n  blocks[]{\n    _key,\n    _type,\n    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},\n    \n  _type == "latestArticles" => {\n    eyebrow,\n    title,\n    description,\n    limit,\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    fallbackImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "articles": *[\n      _type == "post" && defined(slug.current) && defined(publishedAt) &&\n      meta.noindex != true &&\n      seoHideFromLists != true &&\n      seoNoIndex != true\n    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n    }\n  }\n,\n    \n  _type == "faqAccordion" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    "faqs": array::compact(faqs[]{\n      _key,\n      "_id": @->._id,\n      "_type": @->._type,\n      "title": @->.title,\n      "answer": coalesce(@->.body, @->.richText)[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "storyFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    richText[]{\n      ...,\n      \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n    },\n    keyDetails {\n      title,\n      items[]\n    },\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "teamMembers" => {\n    presentation,\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    members[]{\n      _key,\n      _type,\n      "_ref": _ref,\n      "document": @->{\n        _id,\n        _type,\n        name,\n        role,\n        yearsAtCamp,\n        shortBio,\n        email,\n        phone,\n        sortOrder,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        bio[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n        }\n      }\n    }\n  }\n,\n    \n  _type == "richTextBlock" => {\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  _type == "block" => {\n    ...,\n    children[]{...},\n    markDefs[]{\n      ...,\n      _type in ["customLink", "buttonLink"] => {\n        \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n      }\n    }\n  },\n  _type == "image" => {\n    ...,\n    "resolvedAsset": asset->{\n      _id,\n      url,\n      mimeType,\n      metadata {\n        lqip,\n        dimensions {\n          width,\n          height\n        }\n      }\n    }\n  },\n  _type == "table" => {\n    ...,\n    rows[]{\n      ...,\n      cells[]\n    }\n  },\n  _type == "callout" => {\n    ...,\n    title,\n    body\n  }\n\n    }\n  }\n,\n    \n  _type == "ctaBanner" => {\n    variant,\n    eyebrow,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    title,\n    description,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "benefitCards" => {\n    "layout": coalesce(layout, "grid"),\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    caption,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    },\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "cards": array::compact(cards[]{\n      _key,\n      _type,\n      "icon": icon{ name, svg },\n      title,\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "hero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "homeHero" => {\n    status,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "buttons": array::compact(buttons[]{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }),\n    filmButton {\n      label,\n      url\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "stats": array::compact(stats[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "imageCollageFeature" => {\n    "layout": coalesce(layout, "collage"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "points": array::compact(points[]{\n      _key,\n      title,\n      body\n    }),\n    primaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    secondaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    tertiaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }),\n    cta {\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "featureCards" => {\n    "layout": coalesce(layout, "grid"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    description,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    },\n    "groups": array::compact(groups[]{\n      _key,\n      heading,\n      description,\n      "singleRowUpToFour": coalesce(singleRowUpToFour, true),\n      "cards": array::compact(cards[]{\n        _key,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        title,\n        text,\n        eyebrow,\n        badgeLabel,\n        badgeValue,\n        secondaryLink {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        },\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    })\n  }\n,\n    \n  _type == "stackedFeatureRows" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    "rows": array::compact(rows[]{\n      _key,\n      "icon": icon{ name, svg },\n      title,\n      "items": array::compact(items[]{\n        _key,\n        body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        }\n      }),\n      link {\n        text,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n          url.type == "external" => url.external,\n          url.href\n        )\n      }\n    })\n  }\n,\n    \n  _type == "innerHero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "facts": array::compact(facts[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "journey" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "stackedTimeline" => {\n    "layout": coalesce(layout, "timeline"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    "items": array::compact(items[]{\n      _key,\n      title,\n      meta,\n      text,\n      link{\n        \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n      },\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "includedExtras" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "prices": array::compact(prices[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    included {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail\n      })\n    },\n    extras {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail,\n        price,\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    },\n    footnote\n  }\n,\n    \n  _type == "packingChecklist" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "groups": array::compact(groups[]{\n      _key,\n      title,\n      tone,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        quantity\n      })\n    }),\n    note[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "pdf": pdf.asset->{\n      _id,\n      url,\n      originalFilename,\n      size\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "bigImageList" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "directorCta" => {\n    title[]{\n      ...\n    },\n    description,\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "largeSlides" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "slides": array::compact(slides[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "headingImage" => {\n    title,\n    background,\n    richText[]{ ... },\n    image { \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n }\n  }\n,\n    \n  _type == "quoteWall" => {\n    "layout": coalesce(layout, "wall"),\n    hint,\n    eyebrow,\n    heading[]{\n      ...\n    },\n    \n  testimonials[]{\n    _key,\n    _type,\n    "_ref": _ref,\n    "document": @->{\n      _id,\n      _type,\n      name,\n      title,\n      origin,\n      rating,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    }\n  }\n\n  }\n,\n    \n  _type == "pricingSingleToggle" => {\n    background,\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    intro,\n    "options": array::compact(options[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    "facts": array::compact(facts[]{\n      _key,\n      label,\n      detail\n    }),\n    button {\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    footnote\n  }\n,\n    \n  _type == "faqHub" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    searchPlaceholder,\n    emptyState,\n    "faqs": *[_type == "faq" && defined(category->_id)]\n      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {\n        _id,\n        title,\n        "answer": body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        },\n        "answerText": pt::text(body),\n        order,\n        "category": category->{\n          _id,\n          title,\n          "slug": slug.current,\n          order\n        }\n      }\n  }\n,\n    \n  _type == "wordSwap" => {\n    struckWord,\n    word,\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    }\n  }\n,\n    \n  _type == "flipCards" => {\n    intro[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    frontLabel,\n    backLabel,\n    turnLabel,\n    "cards": array::compact(cards[]{\n      _key,\n      front,\n      back,\n      emoji\n    })\n  }\n,\n    \n  _type == "photoStrip" => {\n    "images": array::compact(images[]{\n      _key,\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }),\n    caption,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n  _type == "pricingTiers" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    panelTitle,\n    panelNote,\n    "tiers": array::compact(tiers[]{\n      _key,\n      name,\n      label,\n      price,\n      button{\n        \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n      },\n      application,\n      note\n    }),\n    notes,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n    \n  _type == "internationalCampersSection" => {\n    eyebrow,\n    heading[]{\n      ...\n    },\n    description,\n    linkLabel,\n    "link": {\n      "openInNewTab": link.openInNewTab,\n      "href": select(\n        link.type == "internal" => select(\n  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",\n  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",\n  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")\n),\n        link.type == "external" => link.external,\n        link.href\n      )\n    }\n  }\n\n  }\n,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n  }\n': HOME_PAGE_QUERY_RESULT;
     '\n  *[_type == "navigation" && _id == "navigation"][0]{\n    _id,\n    items[]{\n      _key,\n      _type == "navigationLink" => {\n        "kind": "link",\n        label,\n        destination{\n  openInNewTab,\n  "href": select(\n    kind == "internal" => select(\n      internal->_id == "blogIndex" => "/stories",\n      select(\n  internal->_id == "homePage" || internal->_type == "homePage" => "/",\n  internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n  internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n  defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")\n)\n    ),\n    kind == "external" => external\n  )\n}\n      },\n      _type == "navigationGroup" => {\n        "kind": "group",\n        label,\n        links[]{\n          _key,\n          label,\n          description,\n          // Legacy documents store the icon as a bare string name; surface it\n          // as {name, svg: null} so the link survives until the doc is re-saved.\n          "icon": select(\n            defined(icon.name) => icon{ name, svg },\n            defined(icon) => { "name": icon, "svg": null }\n          ),\n          destination{\n  openInNewTab,\n  "href": select(\n    kind == "internal" => select(\n      internal->_id == "blogIndex" => "/stories",\n      select(\n  internal->_id == "homePage" || internal->_type == "homePage" => "/",\n  internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n  internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n  defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")\n)\n    ),\n    kind == "external" => external\n  )\n}\n        }\n      }\n    },\n    actions[]{\n      _key,\n      label,\n      destination{\n  openInNewTab,\n  "href": select(\n    kind == "internal" => select(\n      internal->_id == "blogIndex" => "/stories",\n      select(\n  internal->_id == "homePage" || internal->_type == "homePage" => "/",\n  internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n  internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),\n  defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")\n)\n    ),\n    kind == "external" => external\n  )\n}\n    }\n  }\n': NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "homePage" && _type == "homePage"][0]{\n    "overrideTitle": meta.title,\n    title\n  }\n': HOME_PAGE_OG_IMAGE_QUERY_RESULT;
     '\n  *[_type == "page" && slug.current in [$slug, "/" + $slug, $slug + "/", "/" + $slug + "/"]][0]{\n    "title": coalesce(title, meta.title)\n  }\n': PAGE_OG_IMAGE_QUERY_RESULT;
     '\n  *[_id == "blogIndex" && _type == "blogIndex"][0]{\n    "title": coalesce(title, meta.title)\n  }\n': BLOG_INDEX_OG_IMAGE_QUERY_RESULT;
     '\n  *[_type == "category" && slug.current == $slug][0]{\n    "title": coalesce(title, meta.title)\n  }\n': CATEGORY_OG_IMAGE_QUERY_RESULT;
-    '\n  *[_type == "page" && slug.current in [$slug, "/" + $slug, $slug + "/", "/" + $slug + "/"]][0]{\n    _id,\n    _type,\n    title,\n    description,\n    "slug": slug.current,\n    \n  blocks[]{\n    _key,\n    _type,\n    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},\n    \n  _type == "latestArticles" => {\n    eyebrow,\n    title,\n    description,\n    limit,\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    fallbackImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "articles": *[\n      _type == "post" && defined(slug.current) && defined(publishedAt) &&\n      meta.noindex != true &&\n      seoHideFromLists != true &&\n      seoNoIndex != true\n    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n    }\n  }\n,\n    \n  _type == "faqAccordion" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    "faqs": array::compact(faqs[]{\n      _key,\n      "_id": @->._id,\n      "_type": @->._type,\n      "title": @->.title,\n      "answer": coalesce(@->.body, @->.richText)[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "storyFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    richText[]{\n      ...,\n      \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n    },\n    keyDetails {\n      title,\n      items[]\n    },\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "teamMembers" => {\n    presentation,\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    members[]{\n      _key,\n      _type,\n      "_ref": _ref,\n      "document": @->{\n        _id,\n        _type,\n        name,\n        role,\n        yearsAtCamp,\n        shortBio,\n        email,\n        phone,\n        sortOrder,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        bio[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n        }\n      }\n    }\n  }\n,\n    \n  _type == "richTextBlock" => {\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  _type == "block" => {\n    ...,\n    children[]{...},\n    markDefs[]{\n      ...,\n      _type in ["customLink", "buttonLink"] => {\n        \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n      }\n    }\n  },\n  _type == "image" => {\n    ...,\n    "resolvedAsset": asset->{\n      _id,\n      url,\n      mimeType,\n      metadata {\n        lqip,\n        dimensions {\n          width,\n          height\n        }\n      }\n    }\n  },\n  _type == "table" => {\n    ...,\n    rows[]{\n      ...,\n      cells[]\n    }\n  },\n  _type == "callout" => {\n    ...,\n    title,\n    body\n  }\n\n    }\n  }\n,\n    \n  _type == "ctaBanner" => {\n    variant,\n    title,\n    description,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "benefitCards" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "cards": array::compact(cards[]{\n      _key,\n      _type,\n      "icon": icon{ name, svg },\n      title,\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "hero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "homeHero" => {\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    shortBody,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      icon {\n        name,\n        svg\n      },\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    videoUrl,\n    disableVideo,\n    filmButton {\n      label,\n      url\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "stats": array::compact(stats[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "imageCollageFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "points": array::compact(points[]{\n      _key,\n      title,\n      body\n    }),\n    primaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    secondaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    cta {\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "featureCards" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    description,\n    "groups": array::compact(groups[]{\n      _key,\n      heading,\n      description,\n      "singleRowUpToFour": coalesce(singleRowUpToFour, true),\n      "cards": array::compact(cards[]{\n        _key,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        title,\n        text,\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    })\n  }\n,\n    \n  _type == "stackedFeatureRows" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    "rows": array::compact(rows[]{\n      _key,\n      "icon": icon{ name, svg },\n      title,\n      "items": array::compact(items[]{\n        _key,\n        body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        }\n      }),\n      link {\n        text,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n          url.type == "external" => url.external,\n          url.href\n        )\n      }\n    })\n  }\n,\n    \n  _type == "innerHero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "facts": array::compact(facts[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "journey" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "stackedTimeline" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    "items": array::compact(items[]{\n      _key,\n      title,\n      meta,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "includedExtras" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "prices": array::compact(prices[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    included {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail\n      })\n    },\n    extras {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail,\n        price,\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    },\n    footnote\n  }\n,\n    \n  _type == "packingChecklist" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "groups": array::compact(groups[]{\n      _key,\n      title,\n      tone,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        quantity\n      })\n    }),\n    note[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "pdf": pdf.asset->{\n      _id,\n      url,\n      originalFilename,\n      size\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "bigImageList" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "directorCta" => {\n    title[]{\n      ...\n    },\n    description,\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "largeSlides" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "slides": array::compact(slides[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "headingImage" => {\n    title,\n    background,\n    richText[]{ ... },\n    image { \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n }\n  }\n,\n    \n  _type == "quoteWall" => {\n    eyebrow,\n    heading[]{\n      ...\n    },\n    \n  testimonials[]{\n    _key,\n    _type,\n    "_ref": _ref,\n    "document": @->{\n      _id,\n      _type,\n      name,\n      title,\n      origin,\n      rating,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    }\n  }\n\n  }\n,\n    \n  _type == "pricingSingleToggle" => {\n    background,\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    intro,\n    "options": array::compact(options[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    "facts": array::compact(facts[]{\n      _key,\n      label,\n      detail\n    }),\n    button {\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    footnote\n  }\n,\n    \n  _type == "faqHub" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    searchPlaceholder,\n    emptyState,\n    "faqs": *[_type == "faq" && defined(category->_id)]\n      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {\n        _id,\n        title,\n        "answer": body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        },\n        "answerText": pt::text(body),\n        order,\n        "category": category->{\n          _id,\n          title,\n          "slug": slug.current,\n          order\n        }\n      }\n  }\n,\n    \n    \n  _type == "internationalCampersSection" => {\n    eyebrow,\n    heading[]{\n      ...\n    },\n    description,\n    linkLabel,\n    "link": {\n      "openInNewTab": link.openInNewTab,\n      "href": select(\n        link.type == "internal" => select(\n  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",\n  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",\n  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")\n),\n        link.type == "external" => link.external,\n        link.href\n      )\n    }\n  }\n\n  }\n,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n  }\n': PAGE_QUERY_RESULT;
+    '\n  *[_type == "page" && slug.current in [$slug, "/" + $slug, $slug + "/", "/" + $slug + "/"]][0]{\n    _id,\n    _type,\n    title,\n    description,\n    "slug": slug.current,\n    \n  blocks[]{\n    _key,\n    _type,\n    !(_type in ["hero", "homeHero", "innerHero", "internationalCampersSection"]) => {background},\n    \n  _type == "latestArticles" => {\n    eyebrow,\n    title,\n    description,\n    limit,\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    fallbackImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "articles": *[\n      _type == "post" && defined(slug.current) && defined(publishedAt) &&\n      meta.noindex != true &&\n      seoHideFromLists != true &&\n      seoNoIndex != true\n    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n    }\n  }\n,\n    \n  _type == "faqAccordion" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    "faqs": array::compact(faqs[]{\n      _key,\n      "_id": @->._id,\n      "_type": @->._type,\n      "title": @->.title,\n      "answer": coalesce(@->.body, @->.richText)[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "storyFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    richText[]{\n      ...,\n      \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n    },\n    keyDetails {\n      title,\n      items[]\n    },\n    buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "teamMembers" => {\n    presentation,\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    members[]{\n      _key,\n      _type,\n      "_ref": _ref,\n      "document": @->{\n        _id,\n        _type,\n        name,\n        role,\n        yearsAtCamp,\n        shortBio,\n        email,\n        phone,\n        sortOrder,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        bio[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n        }\n      }\n    }\n  }\n,\n    \n  _type == "richTextBlock" => {\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  _type == "block" => {\n    ...,\n    children[]{...},\n    markDefs[]{\n      ...,\n      _type in ["customLink", "buttonLink"] => {\n        \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n      }\n    }\n  },\n  _type == "image" => {\n    ...,\n    "resolvedAsset": asset->{\n      _id,\n      url,\n      mimeType,\n      metadata {\n        lqip,\n        dimensions {\n          width,\n          height\n        }\n      }\n    }\n  },\n  _type == "table" => {\n    ...,\n    rows[]{\n      ...,\n      cells[]\n    }\n  },\n  _type == "callout" => {\n    ...,\n    title,\n    body\n  }\n\n    }\n  }\n,\n    \n  _type == "ctaBanner" => {\n    variant,\n    eyebrow,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    title,\n    description,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "benefitCards" => {\n    "layout": coalesce(layout, "grid"),\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    caption,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    },\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "cards": array::compact(cards[]{\n      _key,\n      _type,\n      "icon": icon{ name, svg },\n      title,\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "hero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "homeHero" => {\n    status,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "buttons": array::compact(buttons[]{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }),\n    filmButton {\n      label,\n      url\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "stats": array::compact(stats[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "imageCollageFeature" => {\n    "layout": coalesce(layout, "collage"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "points": array::compact(points[]{\n      _key,\n      title,\n      body\n    }),\n    primaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    secondaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    tertiaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }),\n    cta {\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "featureCards" => {\n    "layout": coalesce(layout, "grid"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    description,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    },\n    "groups": array::compact(groups[]{\n      _key,\n      heading,\n      description,\n      "singleRowUpToFour": coalesce(singleRowUpToFour, true),\n      "cards": array::compact(cards[]{\n        _key,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        title,\n        text,\n        eyebrow,\n        badgeLabel,\n        badgeValue,\n        secondaryLink {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        },\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    })\n  }\n,\n    \n  _type == "stackedFeatureRows" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    "rows": array::compact(rows[]{\n      _key,\n      "icon": icon{ name, svg },\n      title,\n      "items": array::compact(items[]{\n        _key,\n        body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        }\n      }),\n      link {\n        text,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n          url.type == "external" => url.external,\n          url.href\n        )\n      }\n    })\n  }\n,\n    \n  _type == "innerHero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "facts": array::compact(facts[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "journey" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "stackedTimeline" => {\n    "layout": coalesce(layout, "timeline"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    "items": array::compact(items[]{\n      _key,\n      title,\n      meta,\n      text,\n      link{\n        \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n      },\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "includedExtras" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "prices": array::compact(prices[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    included {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail\n      })\n    },\n    extras {\n      heading,\n      note,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        detail,\n        price,\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    },\n    footnote\n  }\n,\n    \n  _type == "packingChecklist" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "groups": array::compact(groups[]{\n      _key,\n      title,\n      tone,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        quantity\n      })\n    }),\n    note[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "pdf": pdf.asset->{\n      _id,\n      url,\n      originalFilename,\n      size\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "bigImageList" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "directorCta" => {\n    title[]{\n      ...\n    },\n    description,\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "largeSlides" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "slides": array::compact(slides[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "headingImage" => {\n    title,\n    background,\n    richText[]{ ... },\n    image { \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n }\n  }\n,\n    \n  _type == "quoteWall" => {\n    "layout": coalesce(layout, "wall"),\n    hint,\n    eyebrow,\n    heading[]{\n      ...\n    },\n    \n  testimonials[]{\n    _key,\n    _type,\n    "_ref": _ref,\n    "document": @->{\n      _id,\n      _type,\n      name,\n      title,\n      origin,\n      rating,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    }\n  }\n\n  }\n,\n    \n  _type == "pricingSingleToggle" => {\n    background,\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    intro,\n    "options": array::compact(options[]{\n      _key,\n      name,\n      price,\n      unit,\n      note\n    }),\n    "facts": array::compact(facts[]{\n      _key,\n      label,\n      detail\n    }),\n    button {\n      text,\n      variant,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    footnote\n  }\n,\n    \n  _type == "faqHub" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    searchPlaceholder,\n    emptyState,\n    "faqs": *[_type == "faq" && defined(category->_id)]\n      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {\n        _id,\n        title,\n        "answer": body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        },\n        "answerText": pt::text(body),\n        order,\n        "category": category->{\n          _id,\n          title,\n          "slug": slug.current,\n          order\n        }\n      }\n  }\n,\n    \n  _type == "wordSwap" => {\n    struckWord,\n    word,\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    }\n  }\n,\n    \n  _type == "flipCards" => {\n    intro[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    frontLabel,\n    backLabel,\n    turnLabel,\n    "cards": array::compact(cards[]{\n      _key,\n      front,\n      back,\n      emoji\n    })\n  }\n,\n    \n  _type == "photoStrip" => {\n    "images": array::compact(images[]{\n      _key,\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }),\n    caption,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n  _type == "pricingTiers" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    panelTitle,\n    panelNote,\n    "tiers": array::compact(tiers[]{\n      _key,\n      name,\n      label,\n      price,\n      button{\n        \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n      },\n      application,\n      note\n    }),\n    notes,\n    link{\n      \n  _key,\n  text,\n  variant,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n    \n  _type == "internationalCampersSection" => {\n    eyebrow,\n    heading[]{\n      ...\n    },\n    description,\n    linkLabel,\n    "link": {\n      "openInNewTab": link.openInNewTab,\n      "href": select(\n        link.type == "internal" => select(\n  link.internal->_id == "homePage" || link.internal->_type == "homePage" => "/",\n  link.internal->_id == "blogIndex" || link.internal->_type == "blogIndex" => "/stories",\n  link.internal->_type == "post" && defined(link.internal->slug.current) => "/stories/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  link.internal->_type == "category" && defined(link.internal->slug.current) => "/stories/category/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/"),\n  defined(link.internal->slug.current) => "/" + array::join(string::split(link.internal->slug.current, "/")[@ != ""], "/")\n),\n        link.type == "external" => link.external,\n        link.href\n      )\n    }\n  }\n\n  }\n,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n  }\n': PAGE_QUERY_RESULT;
     '*[_type == "page" && defined(slug)]{slug}': PAGES_SLUGS_QUERY_RESULT;
     '{\n    // richTextContent V2\n    _id,\n    _type,\n    title,\n    slug,\n    publishedAt,\n    "excerpt": pt::text(excerpt),\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    body[]{\n      \n  ...,\n  _type == "block" => {\n    ...,\n    children[]{...},\n    markDefs[]{\n      ...,\n      _type in ["customLink", "buttonLink"] => {\n        \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n      }\n    }\n  },\n  _type == "image" => {\n    ...,\n    "resolvedAsset": asset->{\n      _id,\n      url,\n      mimeType,\n      metadata {\n        lqip,\n        dimensions {\n          width,\n          height\n        }\n      }\n    }\n  },\n  _type == "table" => {\n    ...,\n    rows[]{\n      ...,\n      cells[]\n    }\n  },\n  _type == "callout" => {\n    ...,\n    title,\n    body\n  }\n\n    },\n    author->{\n      _id,\n      _type,\n      name,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    },\n    category->{\n      _id,\n      _type,\n      title,\n      slug\n    },\n    _createdAt,\n    _updatedAt,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n}': POST_PROJECTION_RESULT;
     '*[_type == "post" && slug.current in [$slug, "/" + $slug, $slug + "/", "/" + $slug + "/"]][0]{\n    // richTextContent V2\n    _id,\n    _type,\n    title,\n    slug,\n    publishedAt,\n    "excerpt": pt::text(excerpt),\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    body[]{\n      \n  ...,\n  _type == "block" => {\n    ...,\n    children[]{...},\n    markDefs[]{\n      ...,\n      _type in ["customLink", "buttonLink"] => {\n        \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n      }\n    }\n  },\n  _type == "image" => {\n    ...,\n    "resolvedAsset": asset->{\n      _id,\n      url,\n      mimeType,\n      metadata {\n        lqip,\n        dimensions {\n          width,\n          height\n        }\n      }\n    }\n  },\n  _type == "table" => {\n    ...,\n    rows[]{\n      ...,\n      cells[]\n    }\n  },\n  _type == "callout" => {\n    ...,\n    title,\n    body\n  }\n\n    },\n    author->{\n      _id,\n      _type,\n      name,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    },\n    category->{\n      _id,\n      _type,\n      title,\n      slug\n    },\n    _createdAt,\n    _updatedAt,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n}': POST_QUERY_RESULT;

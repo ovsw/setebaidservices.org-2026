@@ -16,3 +16,20 @@ export function sectionThemeClass(theme: SectionTheme | null | undefined) {
     (!theme || theme === "white") && "field-cream",
   );
 }
+
+export type LightGlow = "sunrise" | "left" | "right" | "corners" | "top";
+
+/**
+ * The light-field glow for a section, or nothing on the Forest field, where
+ * the band glow in globals.css lights the section instead.
+ */
+export function lightGlowClass(theme: SectionTheme | null | undefined, glow: LightGlow) {
+  if (theme === "green") return undefined;
+  return {
+    sunrise: "glow-sunrise",
+    left: "glow-left",
+    right: "glow-right",
+    corners: "glow-corners",
+    top: "glow-top",
+  }[glow];
+}

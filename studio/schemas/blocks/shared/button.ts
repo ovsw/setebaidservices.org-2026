@@ -19,6 +19,7 @@ export default defineType({
         layout: "radio",
         list: [
           { title: "Default", value: "default" },
+          { title: "Highlight (marigold, for giving)", value: "highlight" },
           { title: "Secondary", value: "secondary" },
           { title: "Outline", value: "outline" },
           { title: "Ghost", value: "ghost" },

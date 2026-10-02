@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { HeaderBrand } from "./brand";
 import { CallDirectorsAction } from "./call-directors-action";
@@ -17,10 +19,11 @@ export function Header({
   model: HeaderModel;
   theme?: HeaderTheme;
 }) {
-  const brand = <HeaderBrand brand={model.brand} theme={theme} />;
-
   return (
     <SiteHeaderShell theme={theme}>
+      {(theme) => {
+        const brand = <HeaderBrand brand={model.brand} theme={theme} />;
+        return (
       <div className="container-content flex h-(--header-height) items-center justify-between gap-3 xl:gap-5">
         <Link
           aria-label={`${model.brand.label} home page`}
@@ -39,6 +42,7 @@ export function Header({
                     size: "compact",
                     variant: "outline",
                   }),
+                  "hover:translate-y-0",
                   theme === "dark" &&
                     "border-birch-bark/45 text-birch-bark hover:border-birch-bark/70 hover:bg-birch-bark/8 hover:text-birch-bark",
                 )}
@@ -53,6 +57,8 @@ export function Header({
           <MobileNav brand={brand} navigation={model.navigation} theme={theme} />
         </div>
       </div>
+        );
+      }}
     </SiteHeaderShell>
   );
 }

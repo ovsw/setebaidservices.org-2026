@@ -28,6 +28,11 @@ const item = defineArrayMember({
       validation: (rule) => rule.required().max(180),
     }),
     defineField({
+      name: "link",
+      type: "button",
+      description: "Date cards layout only. The whole card links here; the label shows at its foot.",
+    }),
+    defineField({
       name: "image",
       title: "Photo",
       type: "image",
@@ -64,6 +69,20 @@ export default defineType({
   fields: [
     sectionBackgroundField,
     defineField({
+      name: "layout",
+      type: "string",
+      description:
+        "Timeline: a sticky intro beside numbered cards, in order. Date cards: up to three coloured cards that lead with the small label set large, e.g. a date. The first button shows as a text link beside the heading.",
+      initialValue: "timeline",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Timeline", value: "timeline" },
+          { title: "Date cards", value: "dateCards" },
+        ],
+      },
+    }),
+    defineField({
       name: "eyebrow",
       type: "string",
       description: "Optional short label shown above the heading.",
@@ -96,7 +115,18 @@ export default defineType({
       type: "array",
       description: "Cards are shown in the order listed here, first to last.",
       of: [item],
-      validation: (rule) => rule.required().min(2).max(8),
+      validation: (rule) =>
+        rule
+          .required()
+          .min(2)
+          .max(8)
+          // The date cards layout shows the first three cards only.
+          .custom((items, context) =>
+            (context.parent as { layout?: string } | undefined)?.layout === "dateCards" &&
+            (items?.length ?? 0) > 3
+              ? "Date cards show up to three cards. Remove the extra cards or choose Timeline."
+              : true,
+          ),
     }),
   ],
   preview: {
