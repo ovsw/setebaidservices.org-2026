@@ -40,7 +40,7 @@ export function photoField({
         validation: (rule) =>
           rule.custom((value, context) => {
             const parent = context.parent as { asset?: unknown } | undefined;
-            return parent?.asset && !value
+            return parent?.asset && !value?.trim()
               ? "Describe the image for visitors who cannot see it"
               : true;
           }),

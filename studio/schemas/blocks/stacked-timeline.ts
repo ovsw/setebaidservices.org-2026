@@ -115,7 +115,18 @@ export default defineType({
       type: "array",
       description: "Cards are shown in the order listed here, first to last.",
       of: [item],
-      validation: (rule) => rule.required().min(2).max(8),
+      validation: (rule) =>
+        rule
+          .required()
+          .min(2)
+          .max(8)
+          // The date cards layout shows the first three cards only.
+          .custom((items, context) =>
+            (context.parent as { layout?: string } | undefined)?.layout === "dateCards" &&
+            (items?.length ?? 0) > 3
+              ? "Date cards show up to three cards. Remove the extra cards or choose Timeline."
+              : true,
+          ),
     }),
   ],
   preview: {
