@@ -59,3 +59,5 @@ studio/backups/
 # ProcessWire exports hold user accounts, password hashes and private emails. Keep local only.
 /source/
 /pre-bootstrap/source/
+scripts/__pycache__/
+
