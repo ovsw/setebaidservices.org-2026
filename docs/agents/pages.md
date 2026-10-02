@@ -159,7 +159,8 @@ the reused sections.
 `benefitCards`, `stackedFeatureRows`, `stackedTimeline`,
 `imageCollageFeature`, `headingImage`, `largeSlides`, `bigImageList`,
 `quoteWall`, `teamMembers`, `faqAccordion`, `ctaBanner`, `directorCta`,
-`flipCards`, `photoStrip`.
+`flipCards`. `photoStrip` holds only photos: use it only when at least
+three fitting photos are in Sanity.
 
 **Use only for their named job:** `faqHub` on /parents/faqs.
 `packingChecklist` for the packing list on /parents/before-camp.
