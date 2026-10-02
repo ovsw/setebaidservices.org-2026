@@ -124,7 +124,7 @@ function BenefitCardsGrid({
             <p
               className={cn(
                 "mb-5 text-eyebrow",
-                cream ? "text-cedar" : "text-campfire-amber",
+                cream ? "text-cedar-deep" : "text-campfire-amber",
               )}
               data-sanity={dataAttribute?.("eyebrow")}
             >
