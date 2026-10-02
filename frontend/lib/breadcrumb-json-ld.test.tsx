@@ -13,7 +13,7 @@ describe("BreadcrumbJsonLd", () => {
         [
           { name: " Home ", path: "/" },
           { name: " Blog ", path: "/stories/" },
-          { name: " Article ", path: "blog/article/" },
+          { name: " Article ", path: "stories/article/" },
         ],
         "https://example.com/",
       ),
