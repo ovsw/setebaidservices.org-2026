@@ -31,13 +31,13 @@ describe("BreadcrumbJsonLd", () => {
           "@type": "ListItem",
           position: 2,
           name: "Blog",
-          item: "https://example.com/blog",
+          item: "https://example.com/stories",
         },
         {
           "@type": "ListItem",
           position: 3,
           name: "Article",
-          item: "https://example.com/blog/article",
+          item: "https://example.com/stories/article",
         },
       ],
     });
