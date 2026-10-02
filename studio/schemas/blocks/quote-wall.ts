@@ -24,6 +24,26 @@ export default defineType({
   fields: [
     sectionBackgroundField,
     defineField({
+      name: "layout",
+      type: "string",
+      description:
+        "Wall: every quote as a card in columns. Track: one row of coloured quote cards that visitors drag sideways; the first quote with a photo is the large card in the middle.",
+      initialValue: "wall",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Wall", value: "wall" },
+          { title: "Track", value: "track" },
+        ],
+      },
+    }),
+    defineField({
+      name: "hint",
+      type: "string",
+      description: 'Track only. The handwritten hint beside the heading, e.g. "drag for more stories".',
+      hidden: ({ parent }) => (parent as { layout?: string } | undefined)?.layout !== "track",
+    }),
+    defineField({
       name: "eyebrow",
       title: "Eyebrow",
       type: "string",

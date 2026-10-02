@@ -31,6 +31,10 @@ import HeadingImage from "@/components/blocks/heading-image";
 import QuoteWall from "@/components/blocks/quote-wall";
 import PricingSingleToggle from "@/components/blocks/pricing-single-toggle";
 import FaqHub from "@/components/blocks/faq-hub";
+import WordSwap from "@/components/blocks/word-swap";
+import FlipCards from "@/components/blocks/flip-cards";
+import PhotoStrip from "@/components/blocks/photo-strip";
+import PricingTiers from "@/components/blocks/pricing-tiers";
 // page-builder-generator:component-imports
 import InternationalCampersSection from "@/components/blocks/international-campers-section";
 import { dataset, projectId } from "@/sanity/lib/env";
@@ -78,6 +82,10 @@ const serverFieldEditingBlockTypes = new Set<Block["_type"]>([
   "quoteWall",
   "pricingSingleToggle",
   "faqHub",
+  "wordSwap",
+  "flipCards",
+  "photoStrip",
+  "pricingTiers",
   // page-builder-generator:editing-types
   "internationalCampersSection",
 ]);
@@ -111,6 +119,10 @@ const componentMap: Partial<{
   quoteWall: QuoteWall,
   pricingSingleToggle: PricingSingleToggle,
   faqHub: FaqHub,
+  wordSwap: WordSwap,
+  flipCards: FlipCards,
+  photoStrip: PhotoStrip,
+  pricingTiers: PricingTiers,
   // page-builder-generator:component-map
   internationalCampersSection: InternationalCampersSection,
 };

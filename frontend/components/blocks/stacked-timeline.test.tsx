@@ -25,6 +25,7 @@ function item(
     title,
     meta: null,
     text: `${title} in one line.`,
+    link: null,
     image: null,
     ...overrides,
   };
@@ -48,6 +49,7 @@ const items: TimelineItem[] = [
 const block: ComponentProps<typeof StackedTimeline> = {
   _key: "trip",
   _type: "stackedTimeline",
+  layout: "timeline",
   background: "green",
   eyebrow: "Getting there",
   title: [

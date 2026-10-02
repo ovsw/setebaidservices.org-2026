@@ -28,7 +28,7 @@ export function CallDirectorsCard({
     <Link
       aria-label={`${label} at ${phone}`}
       className={cn(
-        "group grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-[var(--radius-lg)] border p-4 transition-[background-color,border-color,translate] motion-base hover:-translate-y-0.5 active:translate-y-0 focus-ring motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+        "group grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-[var(--radius-lg)] border p-4 transition-[background-color,border-color] motion-base focus-ring motion-reduce:transition-none",
         dark
           ? "border-birch-bark/12 bg-forest-panel hover:border-birch-bark/28"
           : "border-pine-night/10 bg-birch-bark-bright hover:border-cedar/45",
@@ -40,7 +40,7 @@ export function CallDirectorsCard({
       <Image
         alt=""
         className={cn(
-          "size-14 rounded-full border-2 object-cover transition-transform motion-base group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100",
+          "size-14 rounded-full border-2 object-cover",
           dark ? "border-birch-bark/25" : "border-pine-night/15",
         )}
         height={56}
@@ -70,7 +70,7 @@ export function CallDirectorsCard({
       </span>
       <span
         aria-hidden="true"
-        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-campfire-amber text-pine-night transition-[background-color,transform] motion-base group-hover:bg-campfire-amber-deep group-hover:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-campfire-amber text-pine-night transition-colors motion-base group-hover:bg-campfire-amber-deep motion-reduce:transition-none"
       >
         <Phone className="size-5" strokeWidth={2.25} />
       </span>

@@ -1,6 +1,10 @@
 import { Megaphone } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { photoField } from "./shared/photo-field";
 import { sectionBackgroundField } from "./shared/section-background";
+
+const isPhoto = (parent: unknown) =>
+  (parent as { variant?: string } | undefined)?.variant === "photo";
 
 export default defineType({
   name: "ctaBanner",
@@ -16,15 +20,28 @@ export default defineType({
       title: "Weight",
       type: "string",
       description:
-        "Closing: the full-width band that ends a page. Nudge: a quiet in-page prompt between sections.",
+        "Closing: the full-width band that ends a page. Nudge: a quiet in-page prompt between sections. Photo band: a full-width photo with the text on a dark fade.",
       initialValue: "closing",
       options: {
         layout: "radio",
         list: [
           { title: "Closing band", value: "closing" },
           { title: "In-page nudge", value: "nudge" },
+          { title: "Photo band", value: "photo" },
         ],
       },
+    }),
+    photoField({
+      description:
+        "Photo band only. Fills the band; the text sits on the lower part, so keep faces in the upper half.",
+      requiredWhen: isPhoto,
+      showWhen: isPhoto,
+    }),
+    defineField({
+      name: "eyebrow",
+      type: "string",
+      description: "Photo band only. Short uppercase label above the heading.",
+      hidden: ({ parent }) => !isPhoto(parent),
     }),
     defineField({
       name: "title",
@@ -50,7 +67,12 @@ export default defineType({
     select: { title: "title", variant: "variant" },
     prepare: ({ title, variant }) => ({
       title: title || "Untitled Call to Action",
-      subtitle: variant === "nudge" ? "Call to Action · nudge" : "Call to Action · closing band",
+      subtitle:
+        variant === "nudge"
+          ? "Call to Action · nudge"
+          : variant === "photo"
+            ? "Call to Action · photo band"
+            : "Call to Action · closing band",
     }),
   },
 });

@@ -9,7 +9,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
 import { sectionThemeClass } from "./section-theme";
+import { hotspotPosition } from "./section-parts";
 import styles from "./image-collage-feature.module.css";
+import ImageCollageBento from "./image-collage-bento";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
@@ -25,20 +27,7 @@ type ImageCollageFeatureProps = Extract<
 type CollageImage = NonNullable<ImageCollageFeatureProps["primaryImage"]>;
 
 export function getHotspotPosition(image: CollageImage) {
-  if (image.hotspot?.x == null || image.hotspot.y == null) return undefined;
-
-  const crop = image.crop;
-  const visibleWidth = 1 - (crop?.left ?? 0) - (crop?.right ?? 0);
-  const visibleHeight = 1 - (crop?.top ?? 0) - (crop?.bottom ?? 0);
-
-  if (visibleWidth <= 0 || visibleHeight <= 0) return undefined;
-
-  const x = ((image.hotspot.x - (crop?.left ?? 0)) / visibleWidth) * 100;
-  const y = ((image.hotspot.y - (crop?.top ?? 0)) / visibleHeight) * 100;
-  const clamp = (value: number) =>
-    Number(Math.min(100, Math.max(0, value)).toFixed(4));
-
-  return `${clamp(x)}% ${clamp(y)}%`;
+  return hotspotPosition(image);
 }
 
 const headingComponents: PortableTextComponents = {
@@ -53,7 +42,7 @@ const headingComponents: PortableTextComponents = {
   },
 };
 
-export default function ImageCollageFeature({
+function ImageCollageCollage({
   _key,
   background,
   body,
@@ -217,5 +206,13 @@ export default function ImageCollageFeature({
         </div>
       </div>
     </section>
+  );
+}
+
+export default function ImageCollageFeature(props: ImageCollageFeatureProps) {
+  return stegaClean(props.layout) === "bento" ? (
+    <ImageCollageBento {...props} />
+  ) : (
+    <ImageCollageCollage {...props} />
   );
 }

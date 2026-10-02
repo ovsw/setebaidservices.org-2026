@@ -34,7 +34,7 @@ export function CallDirectorsAction({
     >
       <Image
         alt=""
-        className="size-10 rounded-full border-2 border-campfire-amber object-cover transition-transform motion-base group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+        className="size-10 rounded-full border-2 border-campfire-amber object-cover"
         height={40}
         src={portrait}
         width={40}

@@ -9,6 +9,7 @@ import Link from "next/link";
 import { stegaClean } from "next-sanity";
 import styles from "./feature-cards.module.css";
 import { sectionThemeClass } from "./section-theme";
+import FeatureCardsTilted from "./feature-cards-tilted";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
@@ -76,7 +77,7 @@ export function getFeatureCardColumnCount(
   return cardCount === 3 || cardCount === 5 || cardCount === 6 ? 3 : 2;
 }
 
-export default function FeatureCards({
+function FeatureCardsGrid({
   _key,
   dataAttribute,
   description,
@@ -328,5 +329,13 @@ export default function FeatureCards({
         </div>
       </div>
     </section>
+  );
+}
+
+export default function FeatureCards(props: FeatureCardsProps) {
+  return stegaClean(props.layout) === "tilted" ? (
+    <FeatureCardsTilted {...props} />
+  ) : (
+    <FeatureCardsGrid {...props} />
   );
 }

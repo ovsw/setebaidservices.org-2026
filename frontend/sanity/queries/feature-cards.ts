@@ -1,15 +1,20 @@
 import { groq } from "next-sanity";
+import { buttonQuery } from "./shared/button";
 import { imageQuery } from "./shared/image";
 import { urlInternalHref } from "./shared/internal-href";
 
 // @sanity-typegen-ignore
 export const featureCardsQuery = groq`
   _type == "featureCards" => {
+    "layout": coalesce(layout, "grid"),
     eyebrow,
     title[]{
       ...
     },
     description,
+    link{
+      ${buttonQuery}
+    },
     "groups": array::compact(groups[]{
       _key,
       heading,
@@ -22,6 +27,18 @@ export const featureCardsQuery = groq`
         },
         title,
         text,
+        eyebrow,
+        badgeLabel,
+        badgeValue,
+        secondaryLink {
+          text,
+          "openInNewTab": url.openInNewTab,
+          "href": select(
+            url.type == "internal" => ${urlInternalHref},
+            url.type == "external" => url.external,
+            url.href
+          )
+        },
         link {
           text,
           "openInNewTab": url.openInNewTab,

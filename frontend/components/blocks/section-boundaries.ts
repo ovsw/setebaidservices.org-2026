@@ -47,10 +47,11 @@ export type SectionTrait = {
  * Static trait table. `Record` (not `Partial`) so that a new block type in
  * the union fails typecheck until it gets an entry here.
  *
- * Heroes are declared `photo`: `homeHero` and `innerHero` always render a
- * photo, and `hero` renders a photo when one is set and a pine-night glow
- * otherwise. Because a hero forces an edge below it regardless, the exact
- * value never changes a boundary; `photo` records what the design intends.
+ * Heroes are declared `photo`: `innerHero` always renders a photo, and `hero`
+ * renders a photo when one is set and a pine-night glow otherwise.
+ * `homeHero` sits on the Cream field beside a round photo, so it is `white`.
+ * Because a hero forces an edge below it regardless, the exact value never
+ * changes a boundary; it records what the design intends.
  */
 export const sectionTraits: Record<Block["_type"], SectionTrait> = {
   benefitCards: {},
@@ -63,7 +64,7 @@ export const sectionTraits: Record<Block["_type"], SectionTrait> = {
   featureCards: { tuck: true },
   hero: { background: "photo", hero: true },
   headingImage: {},
-  homeHero: { background: "photo", hero: true },
+  homeHero: { background: "white", hero: true },
   imageCollageFeature: {},
   includedExtras: {},
   innerHero: { background: "photo", hero: true },
@@ -78,7 +79,10 @@ export const sectionTraits: Record<Block["_type"], SectionTrait> = {
   storyFeature: { alternate: true },
   teamMembers: {},
   quoteWall: {},
-
+  wordSwap: {},
+  flipCards: {},
+  photoStrip: {},
+  pricingTiers: {},
 };
 
 export type SectionBoundary = {

@@ -22,6 +22,10 @@ import { headingImageQuery } from "./heading-image";
 import { quoteWallQuery } from "./quote-wall";
 import { pricingSingleToggleQuery } from "./pricing-single-toggle";
 import { faqHubQuery } from "./faq-hub";
+import { wordSwapQuery } from "./word-swap";
+import { flipCardsQuery } from "./flip-cards";
+import { photoStripQuery } from "./photo-strip";
+import { pricingTiersQuery } from "./pricing-tiers";
 // page-builder-generator:query-imports
 import { internationalCampersSectionQuery } from "./international-campers-section";
 
@@ -54,6 +58,10 @@ export const pageBuilderQuery = `
     ${quoteWallQuery},
     ${pricingSingleToggleQuery},
     ${faqHubQuery},
+    ${wordSwapQuery},
+    ${flipCardsQuery},
+    ${photoStripQuery},
+    ${pricingTiersQuery},
     ${"" /* page-builder-generator:query-spreads */}
     ${internationalCampersSectionQuery}
   }

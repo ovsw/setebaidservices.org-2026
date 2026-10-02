@@ -1,5 +1,6 @@
 import { LayoutGrid } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { photoField } from "./shared/photo-field";
 import { sectionBackgroundField } from "./shared/section-background";
 import NavigationIconInput, {
   createNavigationIconPreview,
@@ -84,6 +85,37 @@ export default defineType({
     "A reusable grid for features, services, reasons, or benefits.",
   fields: [
     sectionBackgroundField,
+    defineField({
+      name: "layout",
+      type: "string",
+      description:
+        "Grid: icon tiles in a hairline grid. Round photo: a round photo in the brand ring beside the heading and short points under coloured rules.",
+      initialValue: "grid",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Grid", value: "grid" },
+          { title: "Round photo", value: "ringPhoto" },
+        ],
+      },
+    }),
+    photoField({
+      description: "Round photo layout only.",
+      requiredWhen: (parent) => (parent as { layout?: string } | undefined)?.layout === "ringPhoto",
+      showWhen: (parent) => (parent as { layout?: string } | undefined)?.layout === "ringPhoto",
+    }),
+    defineField({
+      name: "caption",
+      type: "string",
+      description: "Round photo layout only. The handwritten caption under the photo.",
+      hidden: ({ parent }) => (parent as { layout?: string } | undefined)?.layout !== "ringPhoto",
+    }),
+    defineField({
+      name: "link",
+      type: "button",
+      description: "Round photo layout only. Optional text link under the points.",
+      hidden: ({ parent }) => (parent as { layout?: string } | undefined)?.layout !== "ringPhoto",
+    }),
     defineField({
       name: "eyebrow",
       type: "string",

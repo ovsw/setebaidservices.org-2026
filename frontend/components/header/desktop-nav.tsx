@@ -29,16 +29,6 @@ const TWO_COLUMN_MIN_LINKS = 6;
 const VIEWPORT_EDGE_GAP = 16;
 const CLOSE_DELAY_MS = 120;
 
-type PanelPlacement = {
-  x: number;
-  height: number | null;
-};
-
-type ActiveGroup = {
-  key: string;
-  animate: boolean;
-};
-
 function GroupPanelContent({
   label,
   links,
@@ -95,7 +85,7 @@ function GroupPanelContent({
                     <ChevronRight
                       aria-hidden="true"
                       className={cn(
-                        "size-4 shrink-0 opacity-0 transition-all motion-fast group-hover/nav-link:translate-x-0.5 group-hover/nav-link:opacity-100",
+                        "size-4 shrink-0 opacity-0 transition-opacity motion-fast group-hover/nav-link:opacity-100",
                         dark ? "text-campfire-amber" : "text-cedar",
                       )}
                     />
@@ -127,10 +117,10 @@ export function DesktopNav({
   navigation: HeaderNavigationModel;
   theme: HeaderTheme;
 }) {
-  const [active, setActive] = useState<ActiveGroup | null>(null);
-  const [placement, setPlacement] = useState<PanelPlacement | null>(null);
-  const [contentNode, setContentNode] = useState<HTMLDivElement | null>(null);
-  const hasPlacement = useRef(false);
+  /** The key of the open group. */
+  const [active, setActive] = useState<string | null>(null);
+  /** The open panel's left edge, relative to the nav. */
+  const [panelX, setPanelX] = useState(0);
   const navRef = useRef<HTMLElement>(null);
   const triggerRefs = useRef(new Map<string, HTMLButtonElement>());
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -146,7 +136,7 @@ export function DesktopNav({
       ),
     [navigation.items],
   );
-  const activeItem = groups.find((group) => group.key === active?.key) ?? null;
+  const activeItem = groups.find((group) => group.key === active) ?? null;
   const panelWidth =
     activeItem && activeItem.links.length >= TWO_COLUMN_MIN_LINKS
       ? TWO_COLUMN_PANEL_WIDTH
@@ -158,13 +148,9 @@ export function DesktopNav({
   }, []);
 
   const openGroup = useCallback(
-    (key: string, animate: boolean) => {
+    (key: string) => {
       cancelClose();
-      setActive((current) =>
-        current?.key === key
-          ? current
-          : { key, animate: animate && hasPlacement.current },
-      );
+      setActive(key);
     },
     [cancelClose],
   );
@@ -182,13 +168,10 @@ export function DesktopNav({
   useEffect(() => cancelClose, [cancelClose]);
 
   useLayoutEffect(() => {
-    if (!active) {
-      hasPlacement.current = false;
-      return;
-    }
+    if (!active) return;
 
     const nav = navRef.current;
-    const trigger = triggerRefs.current.get(active.key);
+    const trigger = triggerRefs.current.get(active);
     if (!nav || !trigger) return;
 
     const measure = () => {
@@ -203,22 +186,15 @@ export function DesktopNav({
         Math.max(centeredX, minX),
         maxX,
       );
-      const measuredHeight = contentNode?.offsetHeight ?? 0;
-      const height = measuredHeight > 0 ? measuredHeight : null;
-
-      setPlacement((current) =>
-        current?.x === x && current.height === height ? current : { x, height },
-      );
-      hasPlacement.current = true;
+      setPanelX(x);
     };
 
     measure();
     if (typeof ResizeObserver === "undefined") return;
     const observer = new ResizeObserver(measure);
     observer.observe(nav);
-    if (contentNode) observer.observe(contentNode);
     return () => observer.disconnect();
-  }, [active, contentNode, panelWidth]);
+  }, [active, panelWidth]);
 
   const onBlur = (event: FocusEvent<HTMLElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) closeGroup();
@@ -227,15 +203,13 @@ export function DesktopNav({
   const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (event.key !== "Escape" || !active) return;
     event.preventDefault();
-    const trigger = triggerRefs.current.get(active.key);
+    const trigger = triggerRefs.current.get(active);
     closeGroup();
     trigger?.focus();
   };
 
-  const animated = Boolean(active?.animate) && !prefersReducedMotion;
-  const morph = animated
-    ? { damping: 30, mass: 0.6, stiffness: 380, type: "spring" as const }
-    : { duration: 0 };
+  // Panels only fade. Moving between groups, the old panel fades out where
+  // it is and the new one fades in under its own trigger; nothing slides.
   const fade = { duration: prefersReducedMotion ? 0 : 0.14 };
   // The open trigger and its panel are one surface, so they share a colour.
   const panelSurfaceClassName = dark
@@ -270,7 +244,7 @@ export function DesktopNav({
           );
         }
 
-        const isActive = active?.key === item.key;
+        const isActive = active === item.key;
         return (
           <button
             aria-controls={isActive ? panelId : undefined}
@@ -290,9 +264,9 @@ export function DesktopNav({
                 event.detail === 0 || pointerType === "touch" || pointerType === "pen";
 
               if (canToggle && isActive) closeGroup();
-              else openGroup(item.key, false);
+              else openGroup(item.key);
             }}
-            onMouseEnter={() => openGroup(item.key, true)}
+            onMouseEnter={() => openGroup(item.key)}
             ref={(node) => {
               if (node) triggerRefs.current.set(item.key, node);
               else triggerRefs.current.delete(item.key);
@@ -303,7 +277,7 @@ export function DesktopNav({
             <ChevronDown
               aria-hidden="true"
               className={cn(
-                "size-3 shrink-0 -translate-y-px transition-transform motion-fast motion-reduce:transition-none",
+                "size-3 shrink-0 -translate-y-px",
                 isActive && "rotate-180",
               )}
             />
@@ -314,18 +288,18 @@ export function DesktopNav({
       <AnimatePresence>
         {activeItem ? (
           <motion.div
-            animate={{ opacity: 1, x: placement?.x ?? 0, y: 0 }}
-            className="absolute top-full left-0 z-70 pt-1.5"
-            exit={{ opacity: 0, transition: fade, y: -4 }}
+            animate={{ opacity: 1 }}
+            className="absolute top-full z-70 pt-1.5"
+            exit={{ opacity: 0 }}
             id={panelId}
-            initial={{ opacity: 0, x: placement?.x ?? 0, y: -4 }}
+            initial={{ opacity: 0 }}
+            key={activeItem.key}
             onMouseEnter={cancelClose}
             onMouseLeave={scheduleClose}
-            style={{ width: panelWidth }}
-            transition={{ opacity: fade, x: morph, y: fade }}
+            style={{ left: panelX, width: panelWidth }}
+            transition={fade}
           >
-            <motion.div
-              animate={{ height: placement?.height ?? "auto" }}
+            <div
               className={cn(
                 "relative overflow-hidden rounded-[var(--radius-md)] border",
                 panelSurfaceClassName,
@@ -333,26 +307,13 @@ export function DesktopNav({
                   ? "border-birch-bark/15 shadow-lift"
                   : "border-pine-night/12 shadow-card-rest-cream",
               )}
-              initial={false}
-              transition={morph}
             >
-              <AnimatePresence initial={false} mode="wait">
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  initial={{ opacity: animated ? 0 : 1 }}
-                  key={activeItem.key}
-                  ref={setContentNode}
-                  transition={{ duration: prefersReducedMotion || !animated ? 0 : 0.16 }}
-                >
-                  <GroupPanelContent
-                    label={activeItem.label}
-                    links={activeItem.links}
-                    theme={theme}
-                  />
-                </motion.div>
-              </AnimatePresence>
-            </motion.div>
+              <GroupPanelContent
+                label={activeItem.label}
+                links={activeItem.links}
+                theme={theme}
+              />
+            </div>
           </motion.div>
         ) : null}
       </AnimatePresence>

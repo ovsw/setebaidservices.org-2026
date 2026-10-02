@@ -63,6 +63,30 @@ const featureCard = defineArrayMember({
       validation: (rule) => rule.required(),
     }),
     featureCardLink,
+    defineField({
+      ...featureCardLink,
+      name: "secondaryLink",
+      title: "Second link",
+      description: "Tilted layout only. Shown as an outline button beside the first.",
+      validation: undefined,
+    }),
+    defineField({
+      name: "eyebrow",
+      type: "string",
+      description: 'Tilted layout only. Short uppercase label above the title, e.g. "Ages 7–13".',
+    }),
+    defineField({
+      name: "badgeLabel",
+      title: "Badge label",
+      type: "string",
+      description: 'Tilted layout only. Small text in the badge on the photo, e.g. "JUL".',
+    }),
+    defineField({
+      name: "badgeValue",
+      title: "Badge value",
+      type: "string",
+      description: 'Tilted layout only. Large text in the badge, e.g. "11–17".',
+    }),
   ],
   preview: {
     select: { media: "image", title: "title", subtitle: "text" },
@@ -80,7 +104,7 @@ const featureCardGroup = defineArrayMember({
     defineField({
       name: "heading",
       type: "string",
-      validation: (rule) => rule.required(),
+      description: "Shown above the row in the numbered grid. The tilted layout does not show it.",
     }),
     defineField({
       name: "description",
@@ -130,6 +154,20 @@ export default defineType({
   fields: [
     sectionBackgroundField,
     defineField({
+      name: "layout",
+      type: "string",
+      description:
+        "Numbered grid: linked image cards in rows. Tilted photos: large cards with a tilted photo, a date badge and two buttons.",
+      initialValue: "grid",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Numbered grid", value: "grid" },
+          { title: "Tilted photos", value: "tilted" },
+        ],
+      },
+    }),
+    defineField({
       name: "eyebrow",
       type: "string",
       description: "Optional short label shown above the heading.",
@@ -152,7 +190,25 @@ export default defineType({
       title: "Rows",
       type: "array",
       of: [featureCardGroup],
-      validation: (rule) => rule.required().min(1).max(2),
+      validation: (rule) =>
+        rule
+          .required()
+          .min(1)
+          .max(2)
+          .custom((groups, context) => {
+            const layout = (context.parent as { layout?: string } | undefined)?.layout;
+            if (layout === "tilted") return true;
+            const missing = (groups as { heading?: string }[] | undefined)?.some(
+              (group) => !group?.heading?.trim(),
+            );
+            return missing ? "Give every row a heading" : true;
+          }),
+    }),
+    defineField({
+      name: "link",
+      type: "button",
+      description: "Tilted layout only. Optional text link beside the heading.",
+      hidden: ({ parent }) => (parent as { layout?: string } | undefined)?.layout !== "tilted",
     }),
   ],
   preview: {

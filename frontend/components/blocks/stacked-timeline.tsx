@@ -10,6 +10,7 @@ import { stegaClean } from "next-sanity";
 import type { ComponentProps } from "react";
 import styles from "./stacked-timeline.module.css";
 import { sectionThemeClass } from "./section-theme";
+import StackedTimelineDateCards from "./stacked-timeline-date-cards";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
@@ -125,7 +126,7 @@ function TimelineButtons({
   );
 }
 
-export default function StackedTimeline({
+function StackedTimelineList({
   _key,
   buttons,
   dataAttribute,
@@ -276,5 +277,13 @@ export default function StackedTimeline({
         </div>
       </div>
     </section>
+  );
+}
+
+export default function StackedTimeline(props: StackedTimelineProps) {
+  return stegaClean(props.layout) === "dateCards" ? (
+    <StackedTimelineDateCards {...props} />
+  ) : (
+    <StackedTimelineList {...props} />
   );
 }

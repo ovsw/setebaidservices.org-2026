@@ -12,6 +12,7 @@ import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import QuoteWallDialog from "./quote-wall-dialog";
 import QuoteWallList from "./quote-wall-list";
+import QuoteWallTrack from "./quote-wall-track";
 import styles from "./quote-wall.module.css";
 
 type PageBlock =
@@ -172,7 +173,7 @@ function QuoteCard({
  * clamped with a "Read the full quote" dialog, and the wall shows the first
  * nine cards with a "Show more" button for the rest.
  */
-export default function QuoteWall({
+function QuoteWallColumns({
   _key,
   background,
   dataAttribute,
@@ -255,5 +256,13 @@ export default function QuoteWall({
         />
       </div>
     </section>
+  );
+}
+
+export default function QuoteWall(props: QuoteWallProps) {
+  return stegaClean(props.layout) === "track" ? (
+    <QuoteWallTrack {...props} />
+  ) : (
+    <QuoteWallColumns {...props} />
   );
 }
