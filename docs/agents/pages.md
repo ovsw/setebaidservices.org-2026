@@ -166,6 +166,11 @@ the reused sections.
 /terms-of-use, /cookie-policy, /accessibility, /refund-policy); on other
 pages, choose a designed section.
 
+**Text-only pages have no hero.** Legal and policy pages open with the
+page's own title and description, which the site shows as a styled title
+header. Do not add an `innerHero` without a photo. Write the short intro in
+the page's `description` field.
+
 **Do not use:**
 
 - `pricingSingleToggle`: the CAC price panel. The new Pricing section
