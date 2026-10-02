@@ -26,7 +26,7 @@ type BenefitCardsProps = Extract<PageBlock, { _type: "benefitCards" }> & {
  */
 type Field = { cream: boolean };
 
-function headingComponents({ cream }: Field): PortableTextComponents {
+function headingComponents(): PortableTextComponents {
   return {
     block: { normal: ({ children }) => <>{children}</> },
     marks: {
@@ -135,7 +135,7 @@ export default function BenefitCards({
             data-sanity={dataAttribute?.("title")}
             id={headingId}
           >
-            <PortableText components={headingComponents({ cream })} value={title} />
+            <PortableText components={headingComponents()} value={title} />
           </h2>
           {hasText(intro) ? (
             <p

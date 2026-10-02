@@ -44,9 +44,7 @@ const fields = {
   },
 } as const;
 
-type Field = (typeof fields)[keyof typeof fields];
-
-function headingComponents(field: Field): PortableTextComponents {
+function headingComponents(): PortableTextComponents {
   return {
     block: { normal: ({ children }) => <>{children}</> },
     marks: {
@@ -152,7 +150,7 @@ export default function FeatureCards({
             data-sanity={dataAttribute?.("title")}
             id={headingId}
           >
-            <PortableText components={headingComponents(field)} value={title} />
+            <PortableText components={headingComponents()} value={title} />
           </h2>
 
           {hasText(description) ? (

@@ -11,5 +11,7 @@ export default defineConfig([
     "build/**",
     "next-env.d.ts",
     "sanity.types.ts",
+    // Claude Design prototypes and their generated runtime: reference only.
+    "prototype/**",
   ]),
 ]);
