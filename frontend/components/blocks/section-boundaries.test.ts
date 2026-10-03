@@ -59,7 +59,7 @@ describe("resolveSectionBoundaries", () => {
     ]);
   });
 
-  it("gives each section one shape and alternates the shapes up from the footer", () => {
+  it("gives each section one shape and alternates the shapes down from the top", () => {
     const result = resolveSectionBoundaries([
       block("benefitCards", "green"),
       block("faqAccordion", "cream"),
@@ -68,12 +68,12 @@ describe("resolveSectionBoundaries", () => {
       block("bigImageList", "green"),
       block("teamMembers", "white"),
     ]);
-    // Edges: straight, tuck, straight, smile, straight, straight, footer tuck.
+    // Edges: straight, smile, straight, tuck, straight, straight, footer tuck.
     expect(result.map(({ smileAbove, tuck }) => ({ smileAbove, tuck }))).toEqual([
       { smileAbove: false, tuck: false },
-      { smileAbove: false, tuck: true },
-      { smileAbove: false, tuck: false },
       { smileAbove: true, tuck: false },
+      { smileAbove: false, tuck: false },
+      { smileAbove: false, tuck: true },
       { smileAbove: false, tuck: false },
       { smileAbove: false, tuck: false },
     ]);
@@ -175,6 +175,15 @@ describe("resolveSectionBoundaries smile", () => {
       smiles([block("homeHero"), block("wordSwap", "green"), block("richTextBlock", "white")])[0]
         .smileBelow,
     ).toBe(true);
+  });
+
+  it("keeps the smile below the home hero when a lower section moves", () => {
+    const top = [block("homeHero"), block("wordSwap", "green"), block("flipCards", "white")];
+    const tail = [block("stackedTimeline", "cream"), block("richTextBlock", "white")];
+    const quotesLast = [...top, block("pricingTiers", "white"), block("quoteWall", "green"), ...tail];
+    const quotesFirst = [...top, block("quoteWall", "green"), block("pricingTiers", "white"), ...tail];
+    expect(smiles(quotesLast)[0].smileBelow).toBe(true);
+    expect(smiles(quotesFirst)[0].smileBelow).toBe(true);
   });
 });
 
