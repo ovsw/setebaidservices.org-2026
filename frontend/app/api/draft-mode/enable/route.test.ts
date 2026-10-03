@@ -43,16 +43,39 @@ describe("draft mode enable route", () => {
   });
 
   it("uses the Sanity draft-mode handler when the read token is configured", async () => {
-    const handler = vi.fn(() => new Response("enabled"));
+    const handler = vi.fn((request: Request) => {
+      void request;
+      return new Response("enabled");
+    });
     defineEnableDraftMode.mockReturnValue({ GET: handler });
     tokenState.value = "read-token";
 
     const { GET } = await loadRoute();
+    const response = await GET(
+      new Request(
+        "https://example.com/api/draft-mode/enable?sanity-preview-secret=abc",
+        {
+          headers: {
+            "sec-fetch-dest": "iframe",
+            "sec-fetch-site": "cross-site",
+          },
+        },
+      ),
+    );
 
     expect(withConfig).toHaveBeenCalledWith({ token: "read-token" });
     expect(defineEnableDraftMode).toHaveBeenCalledWith({
       client: { configured: true },
     });
-    expect(GET).toBe(handler);
+    await expect(response.text()).resolves.toBe("enabled");
+
+    // The iframe signal is hidden so the cookies stay unpartitioned and reach
+    // Presentation's "Open preview" window.
+    const forwarded = handler.mock.calls[0][0];
+    expect(forwarded.url).toBe(
+      "https://example.com/api/draft-mode/enable?sanity-preview-secret=abc",
+    );
+    expect(forwarded.headers.get("sec-fetch-dest")).toBeNull();
+    expect(forwarded.headers.get("sec-fetch-site")).toBe("cross-site");
   });
 });

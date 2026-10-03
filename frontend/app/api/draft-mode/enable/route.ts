@@ -16,4 +16,14 @@ const draftModeHandler = token
       },
     };
 
-export const { GET } = draftModeHandler;
+// next-sanity (13.1.3+) gives draft-mode cookies the CHIPS `Partitioned`
+// attribute when Presentation enables them in its cross-site iframe. A
+// partitioned cookie stays inside that iframe, so Presentation's "Open preview"
+// window (a top-level tab) loads without draft mode. Hiding the iframe signal
+// restores unpartitioned SameSite=None cookies, which Chromium shares with the
+// window. Safari rejects those cookies in the iframe; editors use Chromium.
+export async function GET(request: Request) {
+  const headers = new Headers(request.headers);
+  headers.delete("sec-fetch-dest");
+  return draftModeHandler.GET(new Request(request.url, { headers }));
+}
