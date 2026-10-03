@@ -22,7 +22,6 @@ test("the shared blocks field exactly matches its authoritative inventory", () =
     [...pageBuilderBlockTypes],
   );
   assert.deepEqual([...pageBuilderBlockTypes], [
-    "hero",
     "innerHero",
     "faqHub",
     "richTextBlock",
@@ -31,21 +30,17 @@ test("the shared blocks field exactly matches its authoritative inventory", () =
     "imageCollageFeature",
     "featureCards",
     "stackedFeatureRows",
-    "internationalCampersSection",
     "latestArticles",
     "faqAccordion",
     "teamMembers",
     "ctaBanner",
-    "journey",
     "stackedTimeline",
-    "includedExtras",
     "packingChecklist",
     "bigImageList",
     "directorCta",
     "largeSlides",
     "headingImage",
     "quoteWall",
-    "pricingSingleToggle",
     "wordSwap",
     "flipCards",
     "photoStrip",
@@ -81,10 +76,7 @@ test("the blocks insert menu offers list and grid views with known previews", ()
     getPageBuilderPreviewImageUrl("innerHero"),
     "/static/images/preview/innerHero.jpg",
   );
-  assert.equal(
-    getPageBuilderPreviewImageUrl("hero"),
-    "/static/images/preview/hero.jpg",
-  );
+  assert.equal(getPageBuilderPreviewImageUrl("unknownSection"), undefined);
 });
 
 test("blogIndex uses the singleton configuration", () => {

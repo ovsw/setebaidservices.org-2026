@@ -8,7 +8,6 @@ import FeatureCards, {
   getFeatureCardColumnCount,
   getFeatureCardImageUrl,
 } from "./feature-cards";
-import Hero from "./hero";
 import { getHotspotPosition } from "./image-collage-feature";
 import RichTextBlock from "./rich-text-block";
 import StoryFeature from "./story-feature";
@@ -307,98 +306,6 @@ describe("core Page Builder sections", () => {
         },
       }),
     ).toBe("50% 50%");
-  });
-
-  it("renders the page header with its accent phrase and safe action", () => {
-    const hero = {
-      _key: "hero",
-      _type: "hero",
-      body: [paragraph("hero-body", "A useful supporting message.")],
-      buttons: [
-        {
-          _key: "work",
-          _type: "button",
-          href: "/work",
-          openInNewTab: false,
-          text: "See our work",
-          variant: "default",
-        },
-      ],
-      eyebrow: "Summer camp",
-      image: null,
-      title: [
-        {
-          _key: "hero-title",
-          _type: "block",
-          children: [
-            {
-              _key: "hero-title-text",
-              _type: "span",
-              marks: [],
-              text: "Life on ",
-            },
-            {
-              _key: "hero-title-accent",
-              _type: "span",
-              marks: ["em"],
-              text: "the island.",
-            },
-          ],
-          markDefs: [],
-          style: "normal",
-        },
-      ],
-    } as unknown as ComponentProps<typeof Hero>;
-    render(
-      <Hero {...hero} />,
-    );
-
-    expect(
-      screen.getByRole("heading", { name: "Life on the island." }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "See our work" })).toHaveAttribute(
-      "href",
-      "/work",
-    );
-  });
-
-  it("renders inline links in the page header copy", () => {
-    const hero = {
-      _key: "hero",
-      _type: "hero",
-      body: [
-        {
-          ...paragraph("hero-body", "Learn more"),
-          children: [
-            {
-              _key: "hero-body-span",
-              _type: "span",
-              marks: ["learn-link"],
-              text: "Learn more",
-            },
-          ],
-          markDefs: [
-            {
-              _key: "learn-link",
-              _type: "customLink",
-              href: "/learn",
-              openInNewTab: false,
-            },
-          ],
-        },
-      ],
-      buttons: [],
-      eyebrow: null,
-      image: null,
-      title: [paragraph("hero-title", "Camp")],
-    } as unknown as ComponentProps<typeof Hero>;
-
-    render(<Hero {...hero} />);
-
-    expect(screen.getByRole("link", { name: "Learn more" })).toHaveAttribute(
-      "href",
-      "/learn",
-    );
   });
 
   it("renders rich text and a closing call to action", () => {

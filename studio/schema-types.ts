@@ -37,8 +37,6 @@ import {
   blogPostSidebarAction,
 } from "./schemas/blocks/shared/blog-post-sidebar";
 // Schema UI objects
-import hero from "./schemas/blocks/hero";
-import hero1 from "./schemas/blocks/hero/hero-1";
 import latestArticles from "./schemas/blocks/latest-articles";
 import faqAccordion from "./schemas/blocks/faq-accordion";
 import storyFeature from "./schemas/blocks/story-feature";
@@ -51,23 +49,19 @@ import imageCollageFeature from "./schemas/blocks/image-collage-feature";
 import featureCards from "./schemas/blocks/feature-cards";
 import stackedFeatureRows from "./schemas/blocks/stacked-feature-rows";
 import innerHero from "./schemas/blocks/inner-hero";
-import journey from "./schemas/blocks/journey";
 import stackedTimeline from "./schemas/blocks/stacked-timeline";
-import includedExtras from "./schemas/blocks/included-extras";
 import packingChecklist from "./schemas/blocks/packing-checklist";
 import bigImageList from "./schemas/blocks/big-image-list";
 import directorCta from "./schemas/blocks/director-cta";
 import largeSlides from "./schemas/blocks/large-slides";
 import headingImage from "./schemas/blocks/heading-image";
 import quoteWall from "./schemas/blocks/quote-wall";
-import pricingSingleToggle from "./schemas/blocks/pricing-single-toggle";
 import faqHub from "./schemas/blocks/faq-hub";
 import wordSwap from "./schemas/blocks/word-swap";
 import flipCards from "./schemas/blocks/flip-cards";
 import photoStrip from "./schemas/blocks/photo-strip";
 import pricingTiers from "./schemas/blocks/pricing-tiers";
 // page-builder-generator:block-imports
-import { internationalCampersSection } from "./schemas/blocks/international-campers-section";
 
 export const schemaTypes = [
   // documents
@@ -105,8 +99,6 @@ export const schemaTypes = [
   blogPostSidebarAction,
   blogPostSidebar,
   // blocks
-  hero,
-  hero1,
   latestArticles,
   faqAccordion,
   storyFeature,
@@ -119,21 +111,17 @@ export const schemaTypes = [
   featureCards,
   stackedFeatureRows,
   innerHero,
-  journey,
   stackedTimeline,
-  includedExtras,
   packingChecklist,
   bigImageList,
   directorCta,
   largeSlides,
   headingImage,
   quoteWall,
-  pricingSingleToggle,
   faqHub,
   wordSwap,
   flipCards,
   photoStrip,
   pricingTiers,
   // page-builder-generator:block-types
-  internationalCampersSection,
 ];

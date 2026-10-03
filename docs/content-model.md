@@ -29,11 +29,11 @@ accepts.
 
 - On every page type (content sections): `richTextBlock`, `benefitCards`,
   `storyFeature`, `imageCollageFeature`, `featureCards`, `stackedFeatureRows`,
-  `internationalCampersSection`, `latestArticles`, `faqAccordion`,
-  `teamMembers`, `ctaBanner`, `journey`, `stackedTimeline`, `includedExtras`,
-  `packingChecklist`, `bigImageList`, `directorCta`, `largeSlides`,
-  `headingImage`, `quoteWall`, `pricingSingleToggle`.
-- `hero` on every page type; `innerHero` on pages and the blog index.
+  `latestArticles`, `faqAccordion`, `teamMembers`, `ctaBanner`,
+  `stackedTimeline`, `packingChecklist`, `bigImageList`, `directorCta`,
+  `largeSlides`, `headingImage`, `quoteWall`, `wordSwap`, `flipCards`,
+  `photoStrip`, `pricingTiers`.
+- `innerHero` on pages and the blog index.
 - `faqHub` on pages only.
 - `homeHero` on the home page only.
 

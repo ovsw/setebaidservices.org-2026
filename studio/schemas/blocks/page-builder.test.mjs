@@ -28,7 +28,7 @@ test("counts the inner hero as a hero: one per page, first position", () => {
     "The Hero section must be the first section",
   );
   assert.equal(
-    validateBlocks([{ _type: "innerHero" }, { _type: "hero" }]),
+    validateBlocks([{ _type: "innerHero" }, { _type: "innerHero" }]),
     "Add no more than one Hero section",
   );
 });
@@ -37,7 +37,5 @@ test("counts the inner hero as a hero: one per page, first position", () => {
 test("keeps a light final section between content and footer", () => {
   assert.equal(validateBlocks([{ _type: "quoteWall", background: "green" }]),
     "Choose White or Cream for the final section above the footer.");
-  assert.equal(validateBlocks([{ _type: "internationalCampersSection" }]),
-    "Add a White or Cream section after the globe, before the footer.");
-  assert.equal(validateBlocks([{ _type: "internationalCampersSection" }, { _type: "directorCta", background: "cream" }]), true);
+  assert.equal(validateBlocks([{ _type: "quoteWall", background: "green" }, { _type: "directorCta", background: "cream" }]), true);
 });

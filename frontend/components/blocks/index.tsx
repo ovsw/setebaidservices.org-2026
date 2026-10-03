@@ -14,29 +14,24 @@ import TeamMembers from "@/components/blocks/team-members";
 import RichTextBlock from "@/components/blocks/rich-text-block";
 import CtaBanner from "@/components/blocks/cta-banner";
 import BenefitCards from "@/components/blocks/benefit-cards";
-import Hero from "@/components/blocks/hero";
 import HomeHero from "@/components/blocks/home-hero";
 import ImageCollageFeature from "@/components/blocks/image-collage-feature";
 import FeatureCards from "@/components/blocks/feature-cards";
 import StackedFeatureRows from "@/components/blocks/stacked-feature-rows";
 import InnerHero from "@/components/blocks/inner-hero";
-import Journey from "@/components/blocks/journey";
 import StackedTimeline from "@/components/blocks/stacked-timeline";
-import IncludedExtras from "@/components/blocks/included-extras";
 import PackingChecklist from "@/components/blocks/packing-checklist";
 import BigImageList from "@/components/blocks/big-image-list";
 import DirectorCta from "@/components/blocks/director-cta";
 import LargeSlides from "@/components/blocks/large-slides";
 import HeadingImage from "@/components/blocks/heading-image";
 import QuoteWall from "@/components/blocks/quote-wall";
-import PricingSingleToggle from "@/components/blocks/pricing-single-toggle";
 import FaqHub from "@/components/blocks/faq-hub";
 import WordSwap from "@/components/blocks/word-swap";
 import FlipCards from "@/components/blocks/flip-cards";
 import PhotoStrip from "@/components/blocks/photo-strip";
 import PricingTiers from "@/components/blocks/pricing-tiers";
 // page-builder-generator:component-imports
-import InternationalCampersSection from "@/components/blocks/international-campers-section";
 import { dataset, projectId } from "@/sanity/lib/env";
 import type { BlogListing } from "@/lib/blog-index";
 
@@ -65,29 +60,24 @@ const serverFieldEditingBlockTypes = new Set<Block["_type"]>([
   "richTextBlock",
   "ctaBanner",
   "benefitCards",
-  "hero",
   "homeHero",
   "imageCollageFeature",
   "featureCards",
   "stackedFeatureRows",
   "innerHero",
-  "journey",
   "stackedTimeline",
-  "includedExtras",
   "packingChecklist",
   "bigImageList",
   "directorCta",
   "largeSlides",
   "headingImage",
   "quoteWall",
-  "pricingSingleToggle",
   "faqHub",
   "wordSwap",
   "flipCards",
   "photoStrip",
   "pricingTiers",
   // page-builder-generator:editing-types
-  "internationalCampersSection",
 ]);
 
 const componentMap: Partial<{
@@ -102,29 +92,24 @@ const componentMap: Partial<{
   richTextBlock: RichTextBlock,
   ctaBanner: CtaBanner,
   benefitCards: BenefitCards,
-  hero: Hero,
   homeHero: HomeHero,
   imageCollageFeature: ImageCollageFeature,
   featureCards: FeatureCards,
   stackedFeatureRows: StackedFeatureRows,
   innerHero: InnerHero,
-  journey: Journey,
   stackedTimeline: StackedTimeline,
-  includedExtras: IncludedExtras,
   packingChecklist: PackingChecklist,
   bigImageList: BigImageList,
   directorCta: DirectorCta,
   largeSlides: LargeSlides,
   headingImage: HeadingImage,
   quoteWall: QuoteWall,
-  pricingSingleToggle: PricingSingleToggle,
   faqHub: FaqHub,
   wordSwap: WordSwap,
   flipCards: FlipCards,
   photoStrip: PhotoStrip,
   pricingTiers: PricingTiers,
   // page-builder-generator:component-map
-  internationalCampersSection: InternationalCampersSection,
 };
 
 export default function Blocks({
