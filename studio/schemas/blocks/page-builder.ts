@@ -7,21 +7,17 @@ export const contentPageBuilderBlockTypes = [
   "imageCollageFeature",
   "featureCards",
   "stackedFeatureRows",
-  "internationalCampersSection",
   "latestArticles",
   "faqAccordion",
   "teamMembers",
   "ctaBanner",
-  "journey",
   "stackedTimeline",
-  "includedExtras",
   "packingChecklist",
   "bigImageList",
   "directorCta",
   "largeSlides",
   "headingImage",
   "quoteWall",
-  "pricingSingleToggle",
   "wordSwap",
   "flipCards",
   "photoStrip",
@@ -40,7 +36,6 @@ const homeOnlyPageBuilderBlockTypes = [
 ] as const;
 
 export const generalPageBuilderBlockTypes = [
-  "hero",
   "innerHero",
   ...generalOnlyPageBuilderBlockTypes,
   ...contentPageBuilderBlockTypes,
@@ -48,12 +43,10 @@ export const generalPageBuilderBlockTypes = [
 
 export const pageBuilderBlockTypes = generalPageBuilderBlockTypes;
 export const blogIndexPageBuilderBlockTypes = [
-  "hero",
   "innerHero",
   ...contentPageBuilderBlockTypes,
 ] as const;
 export const homePagePageBuilderBlockTypes = [
-  "hero",
   ...homeOnlyPageBuilderBlockTypes,
   ...contentPageBuilderBlockTypes,
 ] as const;
@@ -63,7 +56,6 @@ type PageBuilderBlockType =
   | (typeof homePagePageBuilderBlockTypes)[number];
 
 const pageBuilderPreviewBlockTypes = new Set<PageBuilderBlockType>([
-  "hero",
   "homeHero",
   "innerHero",
   "richTextBlock",
@@ -72,21 +64,22 @@ const pageBuilderPreviewBlockTypes = new Set<PageBuilderBlockType>([
   "imageCollageFeature",
   "featureCards",
   "stackedFeatureRows",
-  "internationalCampersSection",
-  "journey",
   "latestArticles",
   "faqAccordion",
   "teamMembers",
   "ctaBanner",
   "stackedTimeline",
-  "includedExtras",
   "packingChecklist",
   "bigImageList",
   "directorCta",
   "largeSlides",
   "headingImage",
-  "pricingSingleToggle",
   "faqHub",
+  "quoteWall",
+  "wordSwap",
+  "flipCards",
+  "photoStrip",
+  "pricingTiers",
   // page-builder-generator:preview-types
 ]);
 
@@ -97,7 +90,7 @@ export function getPageBuilderPreviewImageUrl(schemaTypeName: string) {
 }
 
 /** Every block type that opens a page. One per page, always first. */
-export const heroBlockTypes = new Set(["hero", "homeHero", "innerHero"]);
+export const heroBlockTypes = new Set(["homeHero", "innerHero"]);
 
 /**
  * Every block type that lists FAQs. One per page, hub or curated, so the
@@ -124,9 +117,6 @@ export function validateBlocks(
   if (teamCount > 1) return "Add no more than one Team Members section";
   const final = blocks?.at(-1);
   if (final?.background === "green") return "Choose White or Cream for the final section above the footer.";
-  if (final?._type === "internationalCampersSection") {
-    return "Add a White or Cream section after the globe, before the footer.";
-  }
   return true;
 }
 
@@ -186,10 +176,7 @@ function createBlocksField(
         "stackedFeatureRows",
         "faqAccordion",
         "faqHub",
-        "journey",
         "stackedTimeline",
-        "includedExtras",
-        "pricingSingleToggle",
         "packingChecklist",
       ],
     },
@@ -202,11 +189,7 @@ function createBlocksField(
       name: "camp-info",
       title: "Camp Info",
       of: [
-        "internationalCampersSection",
-        "includedExtras",
-        "pricingSingleToggle",
         "packingChecklist",
-        "journey",
       ],
     },
   ];

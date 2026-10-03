@@ -37,7 +37,6 @@ function PageContent({
 }) {
   const blocks = page.blocks ?? [];
   const needsTitleHeader =
-    blocks[0]?._type !== "hero" &&
     blocks[0]?._type !== "innerHero" &&
     stegaClean(page.title)?.trim();
   const firstBlock = blocks[0];

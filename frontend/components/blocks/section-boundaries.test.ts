@@ -63,7 +63,7 @@ describe("resolveSectionBoundaries", () => {
     const result = resolveSectionBoundaries([
       block("benefitCards", "green"),
       block("faqAccordion", "cream"),
-      block("journey", "green"),
+      block("packingChecklist", "green"),
       block("richTextBlock", "white"),
       block("bigImageList", "green"),
       block("teamMembers", "white"),
@@ -115,20 +115,6 @@ describe("resolveSectionBoundaries", () => {
     expect(result[0].seamBottom).toBe(false);
     expect(result[1].seamTop).toBe(false);
   });
-
-  it("compares a fixed-background section by its trait, not the editor field", () => {
-    const result = resolveSectionBoundaries([
-      block("internationalCampersSection"),
-      { ...block("internationalCampersSection"), _key: "internationalCampersSection-second" } as Block,
-    ]);
-    expect(result[0].background).toBe("night");
-    expect(result[1].background).toBe("night");
-    // Same colour: the lower tucker has nothing to curve against, so it seams.
-    expect(result[0].seamBottom).toBe(true);
-    expect(result[1].seamTop).toBe(true);
-    expect(result[1].tuck).toBe(false);
-    expect(result[0].tuckBelow).toBe(false);
-  });
 });
 
 describe("resolveSectionBoundaries smile", () => {
@@ -157,7 +143,7 @@ describe("resolveSectionBoundaries smile", () => {
     const result = resolveSectionBoundaries([
       block("benefitCards", "white"),
       block("faqAccordion", "cream"),
-      block("journey", "cream"),
+      block("packingChecklist", "cream"),
       block("richTextBlock", "white"),
       block("teamMembers", "green"),
       block("bigImageList", "white"),
@@ -190,12 +176,6 @@ describe("resolveSectionBoundaries smile", () => {
         .smileBelow,
     ).toBe(true);
   });
-
-  it("does not smile between Green and Night, which share a colour", () => {
-    expect(
-      smiles([block("wordSwap", "green"), block("internationalCampersSection")])[1].smileAbove,
-    ).toBe(false);
-  });
 });
 
 describe("resolveSectionBands layer", () => {
@@ -204,7 +184,7 @@ describe("resolveSectionBands layer", () => {
       resolveSectionBoundaries([
         block("benefitCards", "cream"),
         block("faqAccordion", "white"),
-        block("journey", "green"),
+        block("packingChecklist", "green"),
         block("ctaBanner", "cream"),
       ]),
     );

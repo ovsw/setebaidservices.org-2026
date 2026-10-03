@@ -196,12 +196,6 @@ the page's `description` field.
 
 **Do not use:**
 
-- `pricingSingleToggle`: the CAC price panel. `pricingTiers` replaces
-  it.
-- `includedExtras`: made for one fee with priced extras. Setebaid prices
-  are tiers.
-- `internationalCampersSection` and `journey`: CAC topics (international
-  campers, the bus trip). For ordered steps, use `stackedTimeline`.
 - `latestArticles`: a starter section, and the MVP has no news.
 
 **Pricing.** `pricingTiers` holds the tiers (name, label, price, button),

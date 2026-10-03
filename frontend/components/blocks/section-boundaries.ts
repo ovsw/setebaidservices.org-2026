@@ -46,8 +46,7 @@ export type SectionTrait = {
  * Static trait table. `Record` (not `Partial`) so that a new block type in
  * the union fails typecheck until it gets an entry here.
  *
- * Heroes are declared `photo`: `innerHero` always renders a photo, and `hero`
- * renders a photo when one is set and a pine-night glow otherwise.
+ * `innerHero` is declared `photo` because it always renders a photo.
  * `homeHero` sits on the Cream field beside a round photo, so it is `white`.
  * Because a hero forces an edge below it regardless, the exact value never
  * changes a boundary; it records what the design intends.
@@ -59,16 +58,11 @@ export const sectionTraits: Record<Block["_type"], SectionTrait> = {
   directorCta: { tuck: true },
   faqAccordion: {},
   faqHub: {},
-  pricingSingleToggle: {},
   featureCards: { tuck: true },
-  hero: { background: "photo", hero: true },
   headingImage: {},
   homeHero: { background: "white", hero: true },
   imageCollageFeature: {},
-  includedExtras: {},
   innerHero: { background: "photo", hero: true },
-  internationalCampersSection: { background: "night", tuck: true },
-  journey: {},
   largeSlides: {},
   latestArticles: {},
   packingChecklist: {},
@@ -107,11 +101,7 @@ export type SectionBoundary = {
  * omits `background` for these, so the type guard below has to exclude them
  * by `_type`; keep this list and the table's `background` entries in step.
  */
-type FixedBackgroundType =
-  | "hero"
-  | "homeHero"
-  | "innerHero"
-  | "internationalCampersSection";
+type FixedBackgroundType = "homeHero" | "innerHero";
 
 /** Blocks whose GROQ projection carries the editor `background` field. */
 export type EditorBackgroundBlock = Exclude<Block, { _type: FixedBackgroundType }>;
@@ -159,14 +149,12 @@ export function resolveEditorBackground(block: Block, isFinal: boolean): EditorB
             : [
                   "bigImageList",
                   "directorCta",
-                  "journey",
                   "largeSlides",
                   "packingChecklist",
                 ].includes(block._type)
               ? "green"
               : [
                     "imageCollageFeature",
-                    "includedExtras",
                     "stackedFeatureRows",
                   ].includes(block._type)
                 ? "cream"

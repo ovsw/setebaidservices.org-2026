@@ -43,7 +43,7 @@ const fallbackListingSection: Extract<BlogIndexBlock, { _type: "latestArticles" 
  */
 export function withBlogListingSection(blocks: BlogIndexBlock[]) {
   if (blocks.some((block) => block._type === "latestArticles")) return blocks;
-  const heroCount = blocks[0]?._type === "hero" || blocks[0]?._type === "innerHero" ? 1 : 0;
+  const heroCount = blocks[0]?._type === "innerHero" ? 1 : 0;
   return [
     ...blocks.slice(0, heroCount),
     fallbackListingSection,
@@ -82,7 +82,7 @@ export async function BlogIndexRoute({
   }
   const blocks = withBlogListingSection(blogIndex.blocks ?? []);
   const hasHero = blocks.some(
-    (block) => block._type === "hero" || block._type === "innerHero",
+    (block) => block._type === "innerHero",
   );
 
   return (
