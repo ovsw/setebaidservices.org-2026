@@ -38,8 +38,11 @@ lower section's rounded top overlaps the upper one). A section, or a run of
 seam-joined sections, touches at most one shape, so a shaped edge is always
 followed by a straight one. The
 shapes alternate down the page: smile, straight, tuck, straight, smile. The
-footer always tucks, so the edge above the last section is straight and the
-last shape before the footer is a smile. Exceptions:
+count starts at the top of the page, so the first shape is a smile, and a
+section lower on the page never changes a shape above it. The footer always
+tucks, so the edge above the last section is straight. The footer does not
+take part in the count: when the last shape is a tuck, the page ends with two
+tucks. Exceptions:
 
 - A full-width photo section that is not a hero meets both neighbours at
   straight edges, with square corners.

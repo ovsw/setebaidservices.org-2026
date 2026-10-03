@@ -217,10 +217,11 @@ const isShape = (edge: SectionEdge | "free" | undefined) =>
  *   sections) touches at most one shape, so a free edge next to a shaped
  *   edge stays straight; the rest
  *   are shaped, and shapes alternate down the page: smile, tuck, smile. The
- *   shapes between two tucks (a forced tuck or the footer) are planned
- *   backwards from the lower tuck, so the shape before it is a smile. Where
- *   such a run has an even length, two shapes of one kind meet; that is the
- *   one case the alternation cannot avoid;
+ *   count starts at the top of the page and again below a forced tuck, so
+ *   the first shape is a smile, and a section lower on the page never
+ *   changes a shape above it. The footer's tuck does not take part in the
+ *   count, so when the last shape is a tuck, two tucks meet at the bottom of
+ *   the page; that is the one case the alternation cannot avoid;
  * - consecutive sections of one alternating type, each with a photo, form a
  *   run, and odd positions in that run render mirrored. Background never
  *   affects run membership: an editor may alternate cream and green inside a
@@ -274,18 +275,17 @@ export function resolveSectionBoundaries(blocks: readonly Block[]): SectionBound
     edges[index] = shape ? "smile" : "straight";
     if (shape) shapes.push(index);
   });
-  // Third pass: shapes alternate. Each run of free shapes alternates
-  // backwards from the tuck below it, so the shape just above a tuck is a
-  // smile.
-  let run: number[] = [];
+  // Third pass: shapes alternate down the page. The count starts at the top
+  // of the page and again below each forced tuck, and the first shape is a
+  // smile. The footer's tuck does not take part, so a change lower on the
+  // page never changes a shape above it.
+  let position = 0;
   edges.forEach((edge, index) => {
     if (shapes.includes(index)) {
-      run.push(index);
+      edges[index] = position % 2 === 0 ? "smile" : "tuck";
+      position += 1;
     } else if (edge === "tuck") {
-      run.forEach((edgeIndex, position) => {
-        edges[edgeIndex] = (run.length - 1 - position) % 2 === 0 ? "smile" : "tuck";
-      });
-      run = [];
+      position = 0;
     }
   });
 
