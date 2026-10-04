@@ -2,7 +2,9 @@
 
 Status: awaiting confirmation (2026-09-26). Written by the Impeccable `shape` step. No code and no direction contract yet.
 
-Visual world chosen by the user: **The Nightly Gallery** (Impeccable direction round, seed key `fa5dfdaf`, re-roll 1, the pick card). Visitor mode: **Persuade**.
+> **Update 2026-10-04:** the visual world is **Sunlit Camp**, not The Nightly Gallery. Its design system is `frontend/DESIGN.md`. Section 3 below describes the earlier Nightly Gallery pick and is replaced by `frontend/DESIGN.md`. The rest of this brief still applies.
+
+Visual world: **Sunlit Camp** (see `frontend/DESIGN.md`). The first pick, The Nightly Gallery (Impeccable direction round, seed key `fa5dfdaf`, re-roll 1), is replaced. Visitor mode: **Persuade**.
 
 ## 1. Job and audience
 
@@ -19,7 +21,7 @@ Visual world chosen by the user: **The Nightly Gallery** (Impeccable direction r
 - **Product truth in one line:** "Summer camp for kids who just happen to have diabetes." Diabetes education is built into ordinary camp fun, and campers go home more independent.
 - **Not invented, ever:** testimonials, statistics, camper counts, staff names, accreditations, medical claims.
 
-## 3. Selected direction
+## 3. Selected direction (replaced: see `frontend/DESIGN.md`, Sunlit Camp)
 
 - **Visual authority:** none exists yet. This is a new world. DESIGN.md is written at the end of the build from the built page, not before it.
 - **Thesis:** the photographs are the page. The homepage is a camp week seen the way parents actually see it: big pictures stamped by day and activity, newest first. This is the daily gallery a parent refreshes every night of camp week, hoping to see their own kid smiling.
