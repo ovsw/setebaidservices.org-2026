@@ -12,8 +12,12 @@ current site, rewritten and much better, plus all legal pages, plus the
 event landing pages (`/go/{channel}`) behind the QR-code cards. Those
 landing pages are the main reason for the sprint.
 
-- MVP pages are the rows with Launch = "MVP" and Status other than
-  "Remove". Rows with Launch = "Final" are later releases.
+- MVP pages are the cards outside Backlog on the board (see "Page
+  record"). Their plan documents in "Page plans" say "Launch: MVP".
+- "Final" pages are later releases. Their cards sit in Backlog, and their
+  plan documents say "Launch: Final". Work on Final pages is blocked until
+  the MVP ships: do not take a Backlog card or move it out of Backlog
+  before then (Ovi, 2026-10-06).
 - No lead magnets in the MVP: no quizzes, no parent's guide, no giveaway,
   no "talk to a camp parent". No other new features (no full staff roster,
   no impact graphs, no referral kit, no "Get involved" hub).
@@ -24,41 +28,80 @@ landing pages are the main reason for the sprint.
 - Unconfirmed facts never block a plan or a draft. A button whose target
   does not exist in the MVP is a blocker: point it at an MVP page.
 
+## Stage use (Ovi, 2026-10-06)
+
+The pages go through all the stages in "Stages" in the page record below.
+On 2026-10-06, 27 of the 34 MVP pages are in ❣️ Client Review, 4 in 👁️‍🗨️ Internal Review
+and 3 in 🏗️ To Build: `/go/events` first (live before the cards are
+printed for October 11), then `/go/doctor` and `/go/nurse`. The three
+`/go` cards share one plan document, titled with all three paths.
+
+<!-- ovs-workflow-setup:page-record:start -->
 ## Page record
 
-- **System:** the Miro site map table, read and written with the Miro MCP:
-  https://miro.com/app/board/uXjVHivCMTQ=/?moveToWidget=3458764685507184567 .
-  One row per page; find a row by its "Path" column. The table's "Parent"
-  link column can only be read with `canvas_read_as_svg`, not with
-  `table_list_rows`, and cannot be written by the tools.
-- **Columns used:** "Path", "Page", "Launch", "Status" (new, keep, rewrite,
-  merge, remove), "Audience", "Job of the page", "Parent path", "Section",
-  "Page Type", "Plan steps", "Old pages", "Open question", "Content Doc"
-  (the plan Doc link), "Workflow Step".
-- **Workflow Step:** To Plan → To Build → Internal Review → Client Review →
-  Approved (or Rejected).
-  - `/page-plan`: a row is "To Build" once its plan Doc is linked. Plans
-    are not reviewed in Internal Review.
-  - `/page-draft`: the row stays "To Build" while the draft is written;
-    at handover it moves to "Internal Review", where Ovi reviews the draft.
-  - `/page-polish`: runs after Ovi's internal review, on rows in "Internal
-    Review" that Ovi hands over. It does not change the status; Ovi moves
-    the row to "Client Review" after his look.
-- **Taking a page:** Ovi, or one coordinating session, assigns each page to
-  one run. Do not take a page you were not given; no untargeted runs.
-- **Handover notes:** in the page's plan Doc (the "Content Doc" link), in a
-  tab named "Draft notes" (`/page-draft`) or "Polish notes"
-  (`/page-polish`). Add the tab with `gws docs documents batchUpdate` and
-  `addDocumentTab`; write into it with `insertText` using its `tabId`.
-- If the Miro MCP is not available in the session, do the content work,
-  then tell Ovi the row and the status it needs.
+The template in `/ovs-workflow-setup` owns this part. A setup run replaces
+it with the template's current version; edit the template, not this part.
+
+- **System:** Basecamp project Setebaid Services (`49045472`), card table
+  "MVP Website Pages Workflow" (`10375886757`):
+  https://app.basecamp.com/6230954/buckets/49045472/card_tables/10375886757
+  One card per page. The card title is the page path.
+- **Stages** are the board's columns; a card's column is its page's stage.
+  All of them, each with its name as the board shows it (emoji included)
+  and its `id`: Backlog (`10375886777`), 📘 To Plan (`10375886804`), 🏗️ To Build
+  (`10375886835`), 👁️‍🗨️ Internal Review (`10375886815`), ❣️ Client Review
+  (`10375886845`), ✅ Accepted (`10375886826`), ❌ Rejected (`10375886791`).
+  Move cards by `id`. The rest of this file and the page skills name a
+  stage without its emoji.
+- **Logins:** page-card work uses Clark, the agents' Basecamp user (person
+  `52809522`): add `--profile claude` to every `basecamp` command for
+  this work. Ovi is person `52614802`.
+- **The card is the client's.** Clients see the card table. The card holds
+  only a short description (what the page is, what to check, the page
+  link), subtasks for the facts the client confirms, and the client's
+  comments. Plans and agent notes never go on the card.
+- **Taking a page:** read the card's assignees. If Clark is assigned,
+  another run has the page: stop and tell Ovi. Otherwise assign Clark,
+  read the card again, and start only if Clark is now assigned.
+- **Assignment shows whose turn it is:** Clark while a run works; at
+  handover, remove Clark and assign Ovi; at Client Review, the client's
+  reviewer.
+- **Stage moves:**
+  - `/page-plan`: the card moves to To Build once its plan document exists.
+  - `/page-draft`: the card stays in To Build while the draft is written;
+    at handover it moves to Internal Review, assigned to Ovi.
+  - `/page-polish`: the card keeps its stage; at the end, assign Ovi.
+  - Only Ovi moves a card to Client Review. With the move: publish the
+    page and every document it references, write the card's short
+    description and page link, add the facts to confirm as subtasks, and
+    assign the client's reviewer.
+  - The client moves an approved card to Accepted. An approval by comment
+    or email counts too.
+- **Subtasks:** a subtask assigned to Clark is work for a run; a subtask
+  assigned to the client is for the client.
+- **Comments on a card:** Clark posts only short status notes ("Fixed: …")
+  after Ovi asks; never questions or promises to the client.
+- **Plan documents:** one Basecamp document per page in the team-only
+  folder "Page plans" (`10375939268`), titled with the page path. The
+  page facts come first (reader, the page's job, status new / rewrite /
+  keep / merge, old pages, launch), then the plan. Find a plan by its
+  title; the card never links to it, because clients cannot open it.
+- **Handover notes:** comments on the page's plan document, headed "Draft
+  notes" (`/page-draft`) or "Polish notes" (`/page-polish`).
+- **Page link for clients:** the hosted Studio's Presentation view of the
+  published page, never the website directly:
+  `https://setebaid.sanity.studio/presentation?preview=<URL-encoded page path>&perspective=published`
+  Clients need a Sanity login to open it; Ovi sends the invitations.
+<!-- ovs-workflow-setup:page-record:end -->
 
 ## Plan
 
-- **Plan Docs:** Google Drive folder "Setebaid 2026 Redesign — Page Plans",
-  https://drive.google.com/drive/folders/1KcKQUrknr5GJTMQtP1H8OPC24TUGph_u
-  (folder id `1KcKQUrknr5GJTMQtP1H8OPC24TUGph_u`). Each row's "Content Doc"
-  links its plan.
+- **Plan documents:** in Basecamp, see "Page record". Every page has one,
+  "Final" pages too. They were moved on 2026-10-06 from the Miro site map
+  (now retired; its columns are the "Page facts" list at the top of each
+  document) and from the Google Docs in "Setebaid 2026 Redesign — Page
+  Plans" (now a read-only archive; their "Draft notes" and "Polish notes"
+  tabs are comments on the documents). Edit the Basecamp documents only.
 - **Topic map:** `docs/content/topic-map.md`. Which page owns each topic,
   where each old page's content goes, and the content conflicts (C1–C20).
 
@@ -142,6 +185,12 @@ Every plan and every draft uses these exact words. Do not invent variants.
   likely has diabetes. Treat every form entry as private health
   information: no ad tracking on form pages or /go pages, and no form
   answers sent to analytics.
+
+## Client review
+
+- **Client's reviewer(s) in Basecamp:** not set yet. Setebaid people join
+  the Basecamp project on 2026-10-07; until then, client subtasks stay
+  unassigned.
 
 ## Sections (Ovi, 2026-10-02)
 
@@ -232,3 +281,6 @@ not fill it with a photo that does not fit. A later photo pass fills it.
 
 Project `o36mi5w4`, dataset `production` (see `docs/agents/sanity-cli.md`).
 Verify against the Sanity MCP target before any write.
+
+- Hosted Studio: https://setebaid.sanity.studio. Local Studio for agents:
+  the port in `.worktree-ports.json` after `pnpm dev:worktree`.
