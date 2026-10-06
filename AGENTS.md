@@ -167,8 +167,6 @@ globally) hold the process. This project's facts for them (page record,
 release scope, readers, wording, Sanity target) are in
 `docs/agents/pages.md`. `/ovs-workflow-setup` sets up and checks that file
 and the Basecamp board; run it when a page skill stops on a missing setup
-item. `/ovs-workflow-setup` sets up and checks that file
-and the Basecamp board; run it when a page skill stops on a missing setup
 item.
 
 ### Page Builder work
