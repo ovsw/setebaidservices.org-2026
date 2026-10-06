@@ -28,10 +28,9 @@ landing pages are the main reason for the sprint.
 - Unconfirmed facts never block a plan or a draft. A button whose target
   does not exist in the MVP is a blocker: point it at an MVP page.
 
-## Stages (Ovi, 2026-10-06)
+## Stage use (Ovi, 2026-10-06)
 
-The stages are the board's columns, in workflow order: Backlog, 📘 To Plan, 🏗️ To Build,
-👁️‍🗨️ Internal Review, ❣️ Client Review, ✅ Accepted, ❌ Rejected.
+The pages go through all the stages in "Stages" in the page record below.
 On 2026-10-06, 27 of the 34 MVP pages are in ❣️ Client Review, 4 in 👁️‍🗨️ Internal Review
 and 3 in 🏗️ To Build: `/go/events` first (live before the cards are
 printed for October 11), then `/go/doctor` and `/go/nurse`. The three
@@ -47,11 +46,13 @@ it with the template's current version; edit the template, not this part.
   "MVP Website Pages Workflow" (`10375886757`):
   https://app.basecamp.com/6230954/buckets/49045472/card_tables/10375886757
   One card per page. The card title is the page path.
-- **Columns** (name on the board, `id`): Backlog (`10375886777`), 📘 To Plan
-  (`10375886804`), 🏗️ To Build (`10375886835`), 👁️‍🗨️ Internal Review (`10375886815`),
-  ❣️ Client Review (`10375886845`), ✅ Accepted (`10375886826`), ❌ Rejected
-  (`10375886791`). Move cards by column id. The rest of this file names
-  a column without its emoji.
+- **Stages** are the board's columns; a card's column is its page's stage.
+  All of them, each with its name as the board shows it (emoji included)
+  and its `id`: Backlog (`10375886777`), 📘 To Plan (`10375886804`), 🏗️ To Build
+  (`10375886835`), 👁️‍🗨️ Internal Review (`10375886815`), ❣️ Client Review
+  (`10375886845`), ✅ Accepted (`10375886826`), ❌ Rejected (`10375886791`).
+  Move cards by `id`. The rest of this file and the page skills name a
+  stage without its emoji.
 - **Logins:** page-card work uses Clark, the agents' Basecamp user (person
   `52809522`): add `--profile claude` to every `basecamp` command for
   this work. Ovi is person `52614802`.
@@ -65,11 +66,11 @@ it with the template's current version; edit the template, not this part.
 - **Assignment shows whose turn it is:** Clark while a run works; at
   handover, remove Clark and assign Ovi; at Client Review, the client's
   reviewer.
-- **Statuses** (the card's column):
+- **Stage moves:**
   - `/page-plan`: the card moves to To Build once its plan document exists.
   - `/page-draft`: the card stays in To Build while the draft is written;
     at handover it moves to Internal Review, assigned to Ovi.
-  - `/page-polish`: the card keeps its column; at the end, assign Ovi.
+  - `/page-polish`: the card keeps its stage; at the end, assign Ovi.
   - Only Ovi moves a card to Client Review. With the move: publish the
     page and every document it references, write the card's short
     description and page link, add the facts to confirm as subtasks, and
