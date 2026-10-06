@@ -31,8 +31,10 @@ landing pages are the main reason for the sprint.
 ## Stages (proposed by `/ovs-workflow-setup`, 2026-10-06; Ovi to confirm)
 
 All stages: Plan, Draft, Polish, Internal Review, send to client review.
-On 2026-10-06, 27 of the 32 MVP pages are in Client Review, 4 in Internal
-Review and `/go/{channel}` in To Build.
+On 2026-10-06, 27 of the 34 MVP pages are in Client Review, 4 in Internal
+Review and 3 in To Build: `/go/events` first (live before the cards are
+printed for October 11), then `/go/doctor` and `/go/nurse`. The three
+`/go` cards share one plan document, titled with all three paths.
 
 <!-- ovs-workflow-setup:page-record:start -->
 ## Page record
