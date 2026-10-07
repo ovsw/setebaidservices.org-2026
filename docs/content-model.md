@@ -35,7 +35,7 @@ accepts.
   `photoStrip`, `pricingTiers`.
 - `innerHero` on pages and the blog index.
 - `faqHub` on pages only.
-- `homeHero` on the home page only.
+- `homeHero` on the home page and on pages, not on the blog index.
 
 Several sections still carry names from the copied code base. They are
 presentation layouts, not topics; use them for any content that fits their

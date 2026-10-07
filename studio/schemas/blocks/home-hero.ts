@@ -29,7 +29,7 @@ export default defineType({
   type: "object",
   icon: Sparkles,
   description:
-    "The home page opener: status line, heading, short message, buttons and facts beside a round photo in the brand ring, with a play button for the camp film.",
+    "A calm opener for the home page and landing pages: status line, heading, short message, buttons and facts beside a round photo in the brand ring, with a play button for the camp film.",
   fields: [
     defineField({
       name: "status",
