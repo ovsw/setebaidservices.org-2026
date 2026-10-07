@@ -78,6 +78,11 @@ export function SiteFooter({
   dataAttribute?: (path: string) => string | undefined;
   model: FooterModel;
 }) {
+  // The first logo is the site lockup beside the contact block; the rest are
+  // affiliation and historic marks, uploaded as one-colour cream artwork so
+  // they read on the dark footer without a light box behind them.
+  const [siteLogo, ...markLogos] = model.logos;
+
   return (
     <footer
       className="relative z-[1] -mt-(--section-overlap) rounded-t-section bg-pine-night px-content-x pb-8 pt-16 text-birch-bark/75 phone:pb-10 phone:pt-[100px]"
@@ -118,24 +123,22 @@ export function SiteFooter({
             aria-label={`${siteName} contact information`}
             className="col-span-full min-[1280px]:col-span-1"
           >
-            <div className="mb-[26px] flex items-center gap-3">
-              {model.logos.map((logo) => (
-                <FooterLink key={logo.key} link={logo.link}>
-                  <span className="flex h-[72px] items-center justify-center">
-                    <Image
-                      alt={logo.alt}
-                      className="max-h-[72px] w-auto max-w-[220px] object-contain"
-                      data-sanity={dataAttribute?.(
-                        `logos[_key==\"${logo.key}\"].image`,
-                      )}
-                      height={logo.image.height}
-                      sizes="220px"
-                      src={logo.image.src}
-                      width={logo.image.width}
-                    />
-                  </span>
-                </FooterLink>
-              ))}
+            <div className="mb-[26px] flex items-center">
+              <FooterLink link={siteLogo.link}>
+                <span className="flex h-[72px] items-center justify-center">
+                  <Image
+                    alt={siteLogo.alt}
+                    className="max-h-[72px] w-auto max-w-[220px] object-contain"
+                    data-sanity={dataAttribute?.(
+                      `logos[_key==\"${siteLogo.key}\"].image`,
+                    )}
+                    height={siteLogo.image.height}
+                    sizes="220px"
+                    src={siteLogo.image.src}
+                    width={siteLogo.image.width}
+                  />
+                </span>
+              </FooterLink>
             </div>
             <ul className="grid grid-cols-[20px_1fr] items-start gap-x-3.5 gap-y-3">
               {model.contactLinks.map(({ icon, link }) => {
@@ -169,6 +172,36 @@ export function SiteFooter({
             <FooterColumn column={column} key={column.key} />
           ))}
         </div>
+
+        {markLogos.length ? (
+          <ul
+            aria-label="Affiliations and history"
+            className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 border-b border-birch-bark/15 py-10 tablet:justify-between"
+            data-sanity={dataAttribute?.("logos")}
+          >
+            {/* Each item points at its array entry, so editors can drag the
+                marks into a new order in Presentation. */}
+            {markLogos.map((logo) => (
+              <li
+                data-sanity={dataAttribute?.(`logos[_key==\"${logo.key}\"]`)}
+                key={logo.key}
+              >
+                <FooterLink link={logo.link}>
+                  <span className="flex h-14 items-center opacity-80 transition-opacity duration-200 hover:opacity-100 tablet:h-[72px]">
+                    <Image
+                      alt={logo.alt}
+                      className="h-full w-auto max-w-[140px] object-contain"
+                      height={logo.image.height}
+                      sizes="140px"
+                      src={logo.image.src}
+                      width={logo.image.width}
+                    />
+                  </span>
+                </FooterLink>
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
         <div className="flex flex-wrap items-center gap-x-[26px] gap-y-3 pt-7 text-[14px] text-birch-bark/75">
           <p className="desktop:mr-auto">

@@ -48,7 +48,6 @@ export default function FaqHub({
   const cream = stegaClean(background) !== "green";
   const sectionKey = stegaClean(_key);
   const headingId = `faq-hub-${sectionKey}-title`;
-  const answerComponents = faqAnswerComponents(cream);
 
   const items: FaqHubBrowserItem[] = (faqs ?? []).flatMap((faq) => {
     const question = stegaClean(faq.title)?.trim();
@@ -61,7 +60,7 @@ export default function FaqHub({
         title: faq.title,
         answerText: stegaClean(faq.answerText) ?? "",
         answer: faq.answer?.length ? (
-          <PortableText components={answerComponents} value={faq.answer} />
+          <PortableText components={faqAnswerComponents} value={faq.answer} />
         ) : null,
       },
     ];

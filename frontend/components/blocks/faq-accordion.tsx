@@ -61,7 +61,6 @@ export default function FaqAccordion({
     },
   };
 
-  const answerComponents = faqAnswerComponents(cream);
 
   return (
     <section
@@ -125,7 +124,7 @@ export default function FaqAccordion({
                   value={value}
                 >
                   {faq.answer?.length ? (
-                    <PortableText components={answerComponents} value={faq.answer} />
+                    <PortableText components={faqAnswerComponents} value={faq.answer} />
                   ) : null}
                 </FaqAccordionItem>
               );

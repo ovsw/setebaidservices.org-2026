@@ -30,7 +30,7 @@ const fields = {
     hairline: "bg-birch-bark/15",
     card: "bg-forest-floor hover:bg-forest-panel",
     cardText: "text-birch-bark/65",
-    link: "text-moss hover:text-sunlit-moss",
+    link: "text-link hover:text-foreground",
   },
   cream: {
     section: "text-pine-night",
@@ -41,7 +41,7 @@ const fields = {
     hairline: "bg-pine-night/15",
     card: "bg-birch-bark hover:bg-birch-bark-bright",
     cardText: "text-ink-muted",
-    link: "text-cedar hover:text-cedar-deep",
+    link: "text-link hover:text-foreground",
   },
 } as const;
 

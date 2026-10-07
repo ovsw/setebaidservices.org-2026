@@ -30,13 +30,13 @@ const fields = {
   dark: {
     description: "text-birch-bark/70",
     eyebrow: "text-campfire-amber",
-    link: "text-moss hover:text-sunlit-moss",
+    link: "text-link hover:text-foreground",
     muted: "text-birch-bark/70",
   },
   light: {
     description: "text-ink-muted",
     eyebrow: "text-cedar",
-    link: "text-cedar hover:text-cedar-deep",
+    link: "text-link hover:text-foreground",
     muted: "text-ink-muted",
   },
 } as const;
