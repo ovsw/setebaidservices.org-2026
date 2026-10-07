@@ -5,6 +5,7 @@ colors:
   cream: "#FBF7EC"
   white: "#FFFFFF"
   sand: "#F1E7CE"
+  card: "#FDFBF5"
   ink: "#1C3B2C"
   ink-soft: "#3E5A4B"
   mist: "#CFD9D0"
@@ -51,10 +52,15 @@ typography:
     lineHeight: 1.15
     letterSpacing: "-0.015em"
   quote:
-    fontFamily: "Work Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.125rem"
-    fontWeight: 700
-    lineHeight: 1.4
+    fontFamily: "Merriweather, Georgia, serif"
+    fontSize: "1.0625rem"
+    fontWeight: 400
+    lineHeight: 1.6
+  quote-lg:
+    fontFamily: "Merriweather, Georgia, serif"
+    fontSize: "clamp(1.1875rem, 1.05rem + 0.4vw, 1.375rem)"
+    fontWeight: 400
+    lineHeight: 1.5
   lead:
     fontFamily: "Merriweather, Georgia, serif"
     fontSize: "clamp(1.125rem, 1rem + 0.4vw, 1.25rem)"
@@ -133,7 +139,7 @@ components:
     padding: "16px 28px"
     height: "52px"
   card-light:
-    backgroundColor: "{colors.white}"
+    backgroundColor: "{colors.card}"
     textColor: "{colors.ink}"
     rounded: "{rounded.md}"
     padding: "32px"
@@ -192,11 +198,11 @@ Colour has two layers, both in `frontend/app/globals.css`:
 - **Marigold** (#F2B93D): the warm accent. Donate and other giving buttons, the date badge, highlight fills, links and the accent phrase on the dark field, decorative dots. Always set ink on top of it (6.9:1). **Marigold Deep** (#E0A529) is its hover. **Marigold Ink** (#86580A) is marigold as small text on light.
 
 ### Tertiary
-- **Lake Sky** (#7CBBDD): the cool second colour. Quote and event card fills, rules, the Tier IV campership strip tint. Ink on top (5.9:1). **Lake Ink** (#2C6587) is lake sky as small text on light.
+- **Lake Sky** (#7CBBDD): the cool second colour. Event card fills, rules, the Tier IV campership strip tint. Ink on top (5.9:1). **Lake Ink** (#2C6587) is lake sky as small text on light.
 
 ### Neutral
 - **Cream** (#FBF7EC): the page ground and the default field. Text colour on the dark field.
-- **White** (#FFFFFF): cards, the pricing panel, inputs, popovers.
+- **White** (#FFFFFF): popovers, menus and inputs, and text on camp green. Never a card fill: on a light field it reads as a hole in the page.
 - **Sand** (#F1E7CE): the second light field and quiet fills; photo placeholders.
 - **Ink** (#1C3B2C): headings and primary text, and the dark field ("Forest").
 - **Ink Soft** (#3E5A4B): body and secondary text on light fields (7.1:1 on cream).
@@ -246,7 +252,7 @@ A field is a section background. Editors pick Cream, Sand or Forest for each sec
 | `background` | cream | sand | ink |
 | `foreground` | ink | ink | cream |
 | `muted-foreground` | ink soft | ink soft | mist |
-| `card` | white | white | cream 7% over ink |
+| `card` | white 50% over cream | cream 60% into sand | cream 7% over ink |
 | `border`, `input` | line | line | line on dark |
 | `ring` | camp green | camp green deep | marigold |
 | `link` | camp green | camp green deep | marigold |
@@ -259,6 +265,8 @@ A field is a section background. Editors pick Cream, Sand or Forest for each sec
 **The Ink-on-Colour Rule.** Marigold, lake sky and sand always carry ink text: use `highlight-foreground` and the `card-*` utilities. Only camp green, camp green deep, error and ink (the Forest field and `fill-deep`) carry light text.
 
 **The Big Green Rule.** Logo green (`mark`, and `emphasis` on Cream) is for marks, rings, rules and heading-size words. Small green text uses `text-link`, which is camp green on Cream and camp green deep on Sand. Never use `text-emphasis` or `text-mark` for small text.
+
+**The Soft Card Rule.** A card is one soft step lighter than its field, the way the Forest card is cream 7% over ink. Never a stark white card or a white hover on a light field; use `bg-card`, which the field sets.
 
 **The Sun Rule.** Marigold is the sun: one or two `highlight` or `card-warm` elements per screen (a Donate button, a badge, a dot). A page where everything is marigold has no sun.
 
@@ -277,7 +285,7 @@ A field is a section background. Editors pick Cream, Sand or Forest for each sec
 - **Title** (800, 22px, 1.2, -0.01em): card, event and news titles. Utility `text-title`.
 - **Figure** (800, 40px, 1, tabular numbers): a date that anchors a card. Utility `text-figure`.
 - **Statement** (800, clamp 20px to 26px, 1.15) and **Statement Small** (700, clamp 18px to 22px, 1.3): short claims inside a card. Utilities `text-statement`, `text-statement-sm`.
-- **Quote** (700, 18px, 1.4): testimonial text, in Work Sans. Utility `text-quote`.
+- **Quote** (Merriweather 400, 17px, 1.6): testimonial text. **Quote Large** (Merriweather 400, clamp 19px to 22px, 1.5) for a short quote that carries its card alone. Utilities `text-quote`, `text-quote-lg`.
 - **Lead** (Merriweather 400, clamp 18px to 20px, 1.6): the paragraph under a hero or section headline, 40 to 64ch wide. Utility `text-lead`.
 - **Body** (Merriweather 400, 16px, 1.7): running text, at most about 65ch. Utility `text-body`.
 - **Small** (Merriweather 400, 15px, 1.6): card blurbs and notes under a table. Utility `text-small`.
@@ -371,7 +379,7 @@ An optional eyebrow (uppercase, `text-link`), 16px, then a headline in `text-for
 Caveat 600 at 24 to 28px, rotated 2 to 3 degrees, in `text-muted-foreground`, or white on photos. It can carry a hand-drawn arrow (2px stroke, round caps) that points at what it describes. Used for photo captions, quote signatures and margin asides ("watch a week at camp").
 
 ### Cards / Containers
-- **Light card:** `bg-card` with `text-card-foreground`, 12px corners, 32px padding. Flat at rest (level 1); it takes `shadow-raised` only when it floats over another layer, as in the image collage.
+- **Light card:** `bg-card` with `text-card-foreground`, one soft step lighter than the field, 12px corners, 32px padding. Flat at rest (level 1); it takes `shadow-raised` only when it floats over another layer, as in the image collage.
 - **Fill cards:** `card-quiet`, `card-warm`, `card-cool`, `card-deep` or `card-bold`, 28px padding and no border. Inside, use the ordinary job tokens (`text-foreground`, `text-muted-foreground`, `text-link`); the card utility makes them right for its fill. In a row, the fills alternate so no two neighbours match.
 - **Photo tile:** 12px corners, the photo covers the tile, a dark gradient at the bottom carries a white note.
 
@@ -385,7 +393,7 @@ A `bg-card` panel with rows of: tier eyebrow and name, a 44px bar that shows wha
 A card that turns over on click (0.8s, `--ease-flip`). The front is a fill card with a "worry" statement and a Caveat "turn it around" note with the turn icon. The back is a solid fill with the camp answer. When the row first scrolls into view, the cards peek open in sequence, unless the visitor prefers reduced motion.
 
 ### Quote cards
-Fill cards with a large quote mark (Work Sans 800, 56px, `text-mark` on `fill-quiet`, otherwise the fill's foreground), the quote in the Quote role, and a Caveat signature over a Label role line. One featured quote per row is a larger light card with a round portrait.
+Soft cards (`bg-card`), never colour fills: a wall of marigold, lake and sand cards reads as primitive and fights the Sun Rule. Each card has a large quote mark (Work Sans 800, 56px, `text-emphasis`), the quote in the Quote role (Quote Large for short quotes), and a Caveat signature over a Label role line in `text-muted-foreground`. A portrait is optional: a 44px circle beside the signature when the testimonial has a photo, nothing when it does not. In the track layout the cards form a horizontal masonry of two rows; the quote's length sets the card's width, and the second row starts further in so the seams never line up.
 
 ### Inputs / Fields (provisional; not in the prototype)
 `bg-card` fill, 1.5px `border-input` border, 8px corners, Work Sans 16px `text-card-foreground`. Focus: border and 2px ring in `ring`. Error: border and message in `destructive`, linked with `aria-describedby`.

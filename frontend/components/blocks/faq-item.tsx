@@ -18,19 +18,17 @@ import type { ReactNode } from "react";
  * birch tints.
  */
 
-export function faqAnswerComponents(cream: boolean): PortableTextComponents {
-  return {
-    ...simpleRichTextComponents,
-    marks: {
-      ...simpleRichTextComponents?.marks,
-      customLink: createCustomLinkMarkRenderer(
-        cream
-          ? "font-medium text-cedar underline decoration-cedar/30 underline-offset-4 hover:text-cedar-deep hover:decoration-cedar-deep"
-          : "font-medium text-moss underline decoration-moss/30 underline-offset-4 hover:text-sunlit-moss hover:decoration-sunlit-moss",
-      ),
-    },
-  };
-}
+// `text-link` follows the field: camp green on Cream, camp green deep on
+// Sand, marigold on Forest.
+export const faqAnswerComponents: PortableTextComponents = {
+  ...simpleRichTextComponents,
+  marks: {
+    ...simpleRichTextComponents?.marks,
+    customLink: createCustomLinkMarkRenderer(
+      "font-medium text-link underline decoration-link/40 underline-offset-4 hover:decoration-link",
+    ),
+  },
+};
 
 export function faqRuleClass(cream: boolean) {
   return cream ? "border-pine-night/14" : "border-birch-bark/16";

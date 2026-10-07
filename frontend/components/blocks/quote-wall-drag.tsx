@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 
 /**
  * A sideways-scrolling row that a mouse can drag. Touch and trackpads scroll
- * it natively. On load it scrolls so the column marked `data-featured` starts
- * at the content edge. A click that ends a drag is swallowed, so dragging
+ * it natively. A click that ends a drag is swallowed, so dragging
  * across a link does not follow it.
  */
 export default function QuoteWallDrag({
@@ -18,14 +17,6 @@ export default function QuoteWallDrag({
   const ref = useRef<HTMLDivElement>(null);
   const drag = useRef<{ left: number; moved: boolean; x: number } | null>(null);
   const wasDrag = useRef(false);
-
-  useEffect(() => {
-    const track = ref.current;
-    const row = track?.firstElementChild as HTMLElement | null;
-    const featured = row?.querySelector<HTMLElement>("[data-featured]");
-    if (!track || !row || !featured) return;
-    track.scrollLeft = featured.offsetLeft - parseFloat(getComputedStyle(row).paddingLeft);
-  }, []);
 
   return (
     <div

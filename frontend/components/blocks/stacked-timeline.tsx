@@ -30,7 +30,7 @@ const fields = {
     body: "text-birch-bark/72",
     label: "text-birch-bark/60",
     number: "text-campfire-amber/80",
-    card: "border-birch-bark/12 bg-forest-panel",
+    card: "bg-card",
     media: "bg-pine-night",
     onDark: true,
   },
@@ -40,7 +40,7 @@ const fields = {
     body: "text-ink-muted",
     label: "text-ink-muted",
     number: "text-cedar",
-    card: "border-pine-night/12 bg-birch-bark-bright",
+    card: "bg-card",
     media: "bg-pine-night/10",
     onDark: false,
   },
@@ -199,7 +199,7 @@ function StackedTimelineList({
                   aria-describedby={textId}
                   aria-labelledby={labelId}
                   className={cn(
-                    "focus-ring rounded-xl border p-2",
+                    "focus-ring rounded-xl p-2",
                     field.card,
                     styles.reveal,
                   )}

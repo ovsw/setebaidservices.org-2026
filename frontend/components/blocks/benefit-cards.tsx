@@ -26,7 +26,6 @@ type BenefitCardsProps = Extract<PageBlock, { _type: "benefitCards" }> & {
  * icon sits in a pill outline, marigold on the forest field and Cedar on
  * cream.
  */
-type Field = { cream: boolean };
 
 function headingComponents(): PortableTextComponents {
   return {
@@ -44,19 +43,17 @@ function headingComponents(): PortableTextComponents {
   };
 }
 
-function bodyComponents({ cream }: Field): PortableTextComponents {
-  return {
-    ...simpleRichTextComponents,
-    marks: {
-      ...simpleRichTextComponents?.marks,
-      customLink: createCustomLinkMarkRenderer(
-        cream
-          ? "font-medium text-cedar underline decoration-cedar/30 underline-offset-4 hover:text-cedar-deep hover:decoration-cedar-deep"
-          : "font-medium text-sunlit-moss underline decoration-sunlit-moss/40 underline-offset-4 hover:text-cream hover:decoration-cream",
-      ),
-    },
-  };
-}
+// `text-link` follows the field: camp green on Cream, camp green deep on
+// Sand, marigold on Forest.
+const bodyComponents: PortableTextComponents = {
+  ...simpleRichTextComponents,
+  marks: {
+    ...simpleRichTextComponents?.marks,
+    customLink: createCustomLinkMarkRenderer(
+      "font-medium text-link underline decoration-link/40 underline-offset-4 hover:decoration-link",
+    ),
+  },
+};
 
 function hasText(value?: string | null) {
   return Boolean(stegaClean(value)?.trim());
@@ -230,7 +227,7 @@ function BenefitCardsGrid({
                     data-sanity={dataAttribute?.(`${cardPath}.body`)}
                   >
                     <PortableText
-                      components={bodyComponents({ cream })}
+                      components={bodyComponents}
                       value={card.body}
                     />
                   </div>

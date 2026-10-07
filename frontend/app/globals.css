@@ -59,7 +59,10 @@
   --color-foreground: var(--brand-ink); /* headings and primary text */
   --color-muted: var(--brand-sand); /* quiet fill: placeholders, table stripes */
   --color-muted-foreground: var(--brand-ink-soft); /* body and secondary text */
-  --color-card: var(--brand-white); /* cards and panels on this field */
+  /* Cards are one soft step lighter than the field, never stark white:
+     half white over cream here, cream into sand on Sand, cream into ink on
+     Forest. */
+  --color-card: color-mix(in oklab, var(--brand-white) 50%, var(--brand-cream));
   --color-card-foreground: var(--brand-ink);
   --color-popover: var(--brand-white);
   --color-popover-foreground: var(--brand-ink);
@@ -652,12 +655,23 @@ body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] 
   letter-spacing: -0.005em;
 }
 
-/* Quote — testimonial text */
+/* Quote — testimonial text. A quote is a sentence, so it reads in
+   Merriweather (The Sentence Rule); Quote Large is for short quotes that
+   carry a card on their own. */
 @utility text-quote {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 1.4;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+@utility text-quote-lg {
+  font-family: var(--font-body);
+  font-size: clamp(1.1875rem, 1.05rem + 0.4vw, 1.375rem);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
   text-wrap: pretty;
 }
 
@@ -799,7 +813,7 @@ body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] 
   --color-foreground: var(--brand-ink);
   --color-muted: var(--brand-sand);
   --color-muted-foreground: var(--brand-ink-soft);
-  --color-card: var(--brand-white);
+  --color-card: color-mix(in oklab, var(--brand-white) 50%, var(--brand-cream));
   --color-card-foreground: var(--brand-ink);
   --color-popover: var(--brand-white);
   --color-popover-foreground: var(--brand-ink);
@@ -825,7 +839,7 @@ body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] 
   --color-foreground: var(--brand-ink);
   --color-muted: var(--brand-cream);
   --color-muted-foreground: var(--brand-ink-soft);
-  --color-card: var(--brand-white);
+  --color-card: color-mix(in oklab, var(--brand-cream) 60%, var(--brand-sand));
   --color-card-foreground: var(--brand-ink);
   --color-popover: var(--brand-white);
   --color-popover-foreground: var(--brand-ink);

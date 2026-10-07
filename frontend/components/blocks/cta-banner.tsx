@@ -1,4 +1,4 @@
-import { sectionThemeClass, type SectionTheme } from "./section-theme";
+import { sectionThemeClass } from "./section-theme";
 import { Button } from "@/components/ui/button";
 import { getSafeLinkHref } from "@/lib/safe-href";
 import { cn } from "@/lib/utils";
@@ -122,16 +122,6 @@ function CtaButtons({
   );
 }
 
-/**
- * The nudge card must contrast with the field it sits on: a cream card on
- * the white field, a white card on cream, a Forest Panel on green.
- */
-function nudgeCardClass(theme: SectionTheme) {
-  if (theme === "green") return "bg-forest-panel text-birch-bark border-birch-bark/12";
-  if (theme === "cream") return "bg-birch-bark-bright text-pine-night border-pine-night/10";
-  return "bg-birch-bark text-pine-night border-pine-night/10";
-}
-
 function CtaBannerBand({
   _key,
   background,
@@ -159,8 +149,8 @@ function CtaBannerBand({
         <div className="container-content">
           <div
             className={cn(
-              "grid gap-7 rounded-xl border px-6 py-7 sm:px-[38px] sm:py-[34px] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-0",
-              nudgeCardClass(theme),
+              // A flat card fill from the field, no outline (DESIGN.md § Elevation).
+              "grid gap-7 rounded-xl bg-card px-6 py-7 text-card-foreground sm:px-[38px] sm:py-[34px] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-0",
               styles.reveal,
             )}
           >

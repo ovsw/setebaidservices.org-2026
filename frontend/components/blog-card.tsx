@@ -19,13 +19,13 @@ export type PostCardTone = "dark" | "light";
 
 const tones = {
   dark: {
-    card: "border-birch-bark/15 bg-forest-panel",
+    card: "bg-card",
     eyebrow: "text-campfire-amber",
     media: "bg-pine-night",
     muted: "text-birch-bark/70",
   },
   light: {
-    card: "border-pine-night/12 bg-birch-bark-bright",
+    card: "bg-card",
     eyebrow: "text-cedar",
     media: "bg-birch-bark",
     muted: "text-ink-muted",
@@ -38,7 +38,7 @@ const tones = {
  * shows the focus ring while its link has keyboard focus.
  */
 const cardShell =
-  "group/post relative flex flex-col overflow-hidden rounded-lg border transition-[translate,box-shadow] motion-base hover:-translate-y-0.5 hover:shadow-interactive-lift has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-campfire-amber motion-reduce:transition-none motion-reduce:hover:translate-y-0";
+  "group/post relative flex flex-col overflow-hidden rounded-lg transition-[translate,box-shadow] motion-base hover:-translate-y-0.5 hover:shadow-interactive-lift has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-campfire-amber motion-reduce:transition-none motion-reduce:hover:translate-y-0";
 const stretchedLink = "outline-none after:absolute after:inset-0";
 
 function getPostHref(post: BlogPost) {
