@@ -147,7 +147,7 @@ export default function HomeHero({
                 <button
                   aria-label={filmLabel}
                   className="focus-ring absolute bottom-[44px] left-1 flex size-20 cursor-pointer items-center justify-center rounded-full bg-highlight shadow-[0_0_0_8px_var(--color-background)] transition-transform motion-base hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100 lg:bottom-[58px] lg:left-1.5 lg:size-[100px]"
-                  data-sanity={dataAttribute?.("filmButton")}
+                  data-sanity={dataAttribute?.("filmButton.url")}
                   type="button"
                 >
                   <span
@@ -174,7 +174,12 @@ export default function HomeHero({
                 <path d="M34 60 C 20 58, 13 38, 18 4" />
                 <path d="M12 11 L18 3 L24 11" />
               </svg>
-              <span className="w-[6.5em] origin-top-left -rotate-3 text-note leading-none">
+              {/* The arrow stays click-through; the note itself takes pointer
+                  events so Presentation can open its field on click. */}
+              <span
+                className="pointer-events-auto w-[6.5em] origin-top-left -rotate-3 text-note leading-none"
+                data-sanity={dataAttribute?.("filmButton.label")}
+              >
                 {filmButton?.label}
               </span>
             </div>
