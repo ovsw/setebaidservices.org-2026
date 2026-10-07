@@ -23,6 +23,7 @@ test("the shared blocks field exactly matches its authoritative inventory", () =
   );
   assert.deepEqual([...pageBuilderBlockTypes], [
     "innerHero",
+    "homeHero",
     "faqHub",
     "richTextBlock",
     "benefitCards",
@@ -50,13 +51,13 @@ test("the shared blocks field exactly matches its authoritative inventory", () =
   assert.equal(new Set(pageBuilderBlockTypes).size, pageBuilderBlockTypes.length);
 });
 
-test("the homepage alone offers the homepage hero", () => {
+test("the homepage and pages offer the homepage hero", () => {
   assert.deepEqual(
     homePageBlocksField.of.filter(({ hidden }) => !hidden).map(({ type }) => type),
     [...homePagePageBuilderBlockTypes],
   );
   assert.equal(homePagePageBuilderBlockTypes.includes("homeHero"), true);
-  assert.equal(pageBuilderBlockTypes.includes("homeHero"), false);
+  assert.equal(pageBuilderBlockTypes.includes("homeHero"), true);
 });
 
 test("the blocks insert menu offers list and grid views with known previews", () => {

@@ -345,9 +345,12 @@ body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] 
 
 /* Band surface. The dispatcher wraps each run of seam-joined sections in a
    band (see resolveSectionBands). Dark bands carry one glow and one grain
-   overlay that span the whole run, so the texture never restarts at a seam.
-   The band does not paint a background: sections keep their own colour, the
-   overlay sits above them and blends in. flow-root stops a leading tucker's
+   layer that span the whole run, so the texture never restarts at a seam.
+   The layers sit underneath the content (z-index -1 inside the band's own
+   stacking context): the glow layer paints the band's ground colour, and
+   the Forest sections in the band are see-through so it shows behind their
+   text. Over the content, the glow and grain muddied text and cards.
+   flow-root stops a leading tucker's
    negative margin from collapsing through the band, so the band box starts
    at the boundary and the tucker overflows above it; the overlay reaches
    up by the same overlap and rounds its corners to the tucker's shape.
@@ -361,6 +364,7 @@ body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] 
 [data-band="green"],
 [data-band="night"] {
   display: flow-root;
+  isolation: isolate;
 }
 
 [data-band="green"]::before,
@@ -370,8 +374,13 @@ body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] 
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: -1;
   pointer-events: none;
+}
+
+/* The band's ground shows through its Forest sections (see above). */
+:is([data-band="green"], [data-band="night"]) > div > .field-forest {
+  background-color: transparent;
 }
 
 /* Sunlit dark field: marigold light in the top-right corner, a green glow
@@ -379,14 +388,15 @@ body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] 
    per band, so a long run gets one sweep rather than a glow per section.
    The radii and the vertical offsets follow the page width (vw), never the
    band height, so the glows keep their shape on a tall band and stay in
-   their corners. */
+   their corners. The layer also paints the ground, so --glow-intensity
+   scales the glow colours, not the layer's opacity. */
 [data-band="green"]::before,
 [data-band="night"]::before {
-  opacity: var(--glow-intensity);
+  background-color: var(--brand-ink);
   background-image:
-    radial-gradient(40vw 44vw at 92% 4rem, var(--band-glow), transparent 72%),
-    radial-gradient(50vw 54vw at 0% 100%, var(--band-glow-green), transparent 72%),
-    radial-gradient(60vw 39vw at 55% calc(100% + 10vw), var(--band-shade), transparent 72%);
+    radial-gradient(40vw 44vw at 92% 4rem, color-mix(in oklab, var(--band-glow) calc(var(--glow-intensity) * 100%), transparent), transparent 72%),
+    radial-gradient(50vw 54vw at 0% 100%, color-mix(in oklab, var(--band-glow-green) calc(var(--glow-intensity) * 100%), transparent), transparent 72%),
+    radial-gradient(60vw 39vw at 55% calc(100% + 10vw), color-mix(in oklab, var(--band-shade) calc(var(--glow-intensity) * 100%), transparent), transparent 72%);
 }
 
 [data-band="green"]::after,
@@ -427,9 +437,11 @@ body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] 
   background-color: var(--brand-sand);
 }
 
+/* A dark band's glow layer reaches down over the curve and paints its
+   ground there, under the masked shape. */
 [data-band="green"] > [data-smile],
 [data-band="night"] > [data-smile] {
-  background-color: var(--brand-ink);
+  background-color: transparent;
 }
 
 [data-band-smile]::before,

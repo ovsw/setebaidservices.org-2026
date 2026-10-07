@@ -20,6 +20,11 @@ export type Icon = {
   svg?: string;
 };
 
+export type FilmButton = {
+  label?: string;
+  url?: string;
+};
+
 export type KeyDetails = {
   title?: string;
   items?: Array<string>;
@@ -117,11 +122,6 @@ export type LargeSlidesSlideImage = {
   crop?: SanityImageCrop;
   alt?: string;
   _type: "image";
-};
-
-export type FilmButton = {
-  label?: string;
-  url?: string;
 };
 
 export type PricingTiers = {
@@ -1503,6 +1503,9 @@ export type Page = {
       } & InnerHero)
     | ({
         _key: string;
+      } & HomeHero)
+    | ({
+        _key: string;
       } & FaqHub)
     | ({
         _key: string;
@@ -1696,6 +1699,7 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Icon
+  | FilmButton
   | KeyDetails
   | Cta
   | Meta
@@ -1711,7 +1715,6 @@ export type AllSanitySchemaTypes =
   | StackedTimelineItemImage
   | BigImageListStopImage
   | LargeSlidesSlideImage
-  | FilmButton
   | PricingTiers
   | PhotoStrip
   | FlipCards
@@ -5402,6 +5405,169 @@ export type BLOG_INDEX_QUERY_RESULT =
           }
         | {
             _key: string;
+            _type: "homeHero";
+            background: null;
+            status: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            body: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            buttons: Array<{
+              _key: string;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
+            filmButton: {
+              label: string | null;
+              url: string | null;
+            } | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            stats: Array<{
+              _key: string;
+              value: string | null;
+              label: string | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "homeHero";
+            status: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            body: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            buttons: Array<{
+              _key: string;
+              text: string | null;
+              variant:
+                | "default"
+                | "ghost"
+                | "highlight"
+                | "link"
+                | "outline"
+                | "secondary"
+                | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
+            filmButton: {
+              label: string | null;
+              url: string | null;
+            } | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            stats: Array<{
+              _key: string;
+              value: string | null;
+              label: string | null;
+            }> | null;
+          }
+        | {
+            _key: string;
             _type: "imageCollageFeature";
             background: SectionBackground | null;
             layout: "bento" | "collage";
@@ -8900,6 +9066,169 @@ export type PAGE_QUERY_RESULT = {
           alt?: string;
           _type: "image";
         } | null;
+      }
+    | {
+        _key: string;
+        _type: "homeHero";
+        background: null;
+        status: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        buttons: Array<{
+          _key: string;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        }> | null;
+        filmButton: {
+          label: string | null;
+          url: string | null;
+        } | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        stats: Array<{
+          _key: string;
+          value: string | null;
+          label: string | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "homeHero";
+        status: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        buttons: Array<{
+          _key: string;
+          text: string | null;
+          variant:
+            | "default"
+            | "ghost"
+            | "highlight"
+            | "link"
+            | "outline"
+            | "secondary"
+            | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        }> | null;
+        filmButton: {
+          label: string | null;
+          url: string | null;
+        } | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        stats: Array<{
+          _key: string;
+          value: string | null;
+          label: string | null;
+        }> | null;
       }
     | {
         _key: string;

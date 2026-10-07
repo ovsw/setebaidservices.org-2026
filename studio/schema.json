@@ -24,6 +24,29 @@
   },
   {
     "type": "type",
+    "name": "filmButton",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "label": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "url": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
     "name": "keyDetails",
     "value": {
       "type": "object",
@@ -552,29 +575,6 @@
             "type": "string",
             "value": "image"
           }
-        }
-      }
-    }
-  },
-  {
-    "type": "type",
-    "name": "filmButton",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "label": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "url": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
         }
       }
     }
@@ -8989,6 +8989,21 @@
                 "rest": {
                   "type": "inline",
                   "name": "innerHero"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "homeHero"
                 }
               },
               {

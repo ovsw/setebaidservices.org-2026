@@ -21,7 +21,8 @@ type BenefitCardsProps = Extract<PageBlock, { _type: "benefitCards" }> & {
  * Feature Grid — hairline-grid tiles (The Hairline Grid).
  *
  * 1px gaps over a translucent background draw the grid; tiles have no
- * radius or border of their own and never lift, they tint on hover. The
+ * radius or border of their own and never lift; on hover they take the
+ * field's opaque card colour. The
  * icon sits in a pill outline, marigold on the forest field and Cedar on
  * cream.
  */
@@ -175,10 +176,11 @@ function BenefitCardsGrid({
                 className={cn(
                   // min-w-0 lets a card narrower than its longest word (an
                   // email address in a title) instead of widening the grid.
-                  "flex h-full min-w-0 flex-col gap-5 p-7 transition-colors duration-300 lg:p-8",
-                  cream
-                    ? "bg-birch-bark hover:bg-pine-night/5"
-                    : "bg-forest-floor hover:bg-white/5",
+                  "flex h-full min-w-0 flex-col gap-5 p-7 transition-colors duration-300 hover:bg-card lg:p-8",
+                  // The field's card colour is opaque: a translucent hover
+                  // let the hairline fill behind the grid show through and
+                  // muddied the tile.
+                  cream ? "bg-birch-bark" : "bg-forest-floor",
                   index === cards.length - 1 && lastTileClass,
                 )}
                 key={card._key}

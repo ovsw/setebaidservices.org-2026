@@ -31,12 +31,13 @@ const generalOnlyPageBuilderBlockTypes = [
 ] as const;
 
 const homeOnlyPageBuilderBlockTypes = [
-  "homeHero",
   // page-builder-generator:home-types
 ] as const;
 
 export const generalPageBuilderBlockTypes = [
   "innerHero",
+  // The calm home opener also suits landing pages, such as /go/events.
+  "homeHero",
   ...generalOnlyPageBuilderBlockTypes,
   ...contentPageBuilderBlockTypes,
 ] as const;
@@ -47,6 +48,7 @@ export const blogIndexPageBuilderBlockTypes = [
   ...contentPageBuilderBlockTypes,
 ] as const;
 export const homePagePageBuilderBlockTypes = [
+  "homeHero",
   ...homeOnlyPageBuilderBlockTypes,
   ...contentPageBuilderBlockTypes,
 ] as const;

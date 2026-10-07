@@ -38,6 +38,7 @@ function PageContent({
   const blocks = page.blocks ?? [];
   const needsTitleHeader =
     blocks[0]?._type !== "innerHero" &&
+    blocks[0]?._type !== "homeHero" &&
     stegaClean(page.title)?.trim();
   const firstBlock = blocks[0];
   const firstBackground =

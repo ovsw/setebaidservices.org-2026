@@ -266,7 +266,9 @@ only, never in code: this repository is public.
 
 **Prototype section → section to use** when a page needs the same job:
 
-- Hero → `homeHero` on the home page, `innerHero` on all other pages.
+- Hero → `homeHero` on the home page and on the `/go` landing pages
+  (Ovi, 2026-10-07: a big photo at the top overwhelms a visitor from a
+  QR card), `innerHero` on all other pages.
 - Name story → `wordSwap`.
 - Turn it around → `flipCards`.
 - Photo strip → `photoStrip`.
