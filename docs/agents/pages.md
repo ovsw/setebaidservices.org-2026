@@ -58,8 +58,9 @@ it with the template's current version; edit the template, not this part.
   this work. Ovi is person `52614802`.
 - **The card is the client's.** Clients see the card table. The card holds
   only a short description (the plan link, what the page is, what to
-  check, the page link), subtasks for the facts the client confirms, and
-  the client's comments. Plan text and agent notes never go on the card.
+  check, the page link), subtasks for the facts the client confirms, the
+  page strategy comment, and the client's comments. Plan text and agent
+  notes stay in the plan document.
 - **Taking a page:** read the card's assignees. If Clark is assigned,
   another run has the page: stop and tell Ovi. Otherwise assign Clark,
   read the card again, and start only if Clark is now assigned.
@@ -79,8 +80,11 @@ it with the template's current version; edit the template, not this part.
     or email counts too.
 - **Subtasks:** a subtask assigned to Clark is work for a run; a subtask
   assigned to the client is for the client.
-- **Comments on a card:** Clark posts only short status notes ("Fixed: …")
-  after Ovi asks; never questions or promises to the client.
+- **Comments on a card:** Clark posts the page strategy comment at
+  `/page-draft` handover, a short "Updated:" note when `/page-polish`
+  changes the page's order, and short status notes ("Fixed: …") after Ovi
+  asks. Every Clark comment is written for the client: no questions or
+  promises to the client.
 - **Plan documents:** one Basecamp document per page in the team-only
   folder "Page plans" (`10375939268`), titled with the page path. The
   page facts come first (reader, the page's job, status new / rewrite /
@@ -138,6 +142,10 @@ it with the template's current version; edit the template, not this part.
   the outcome, then "nonprofit", then "donors pay most of the cost". The
   price page and long texts may use value first, then $3,700 as the
   anchor, then the tiers. Use "$50" only if the tier numbers support it.
+- Short messages show the lowest price early, with the financial help,
+  never the full cost (Ovi, 2026-10-07). Families assume a camp for
+  children with diabetes is out of their reach and leave before they ask;
+  showing what almost nobody pays scares them away and hurts the brand.
 - Registration and donations happen in Camp Brain. The site links out. No
   live "spots left" count. Network for Good is gone.
 - Never name the experts or authors whose marketing methods we use.
