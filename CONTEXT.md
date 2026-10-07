@@ -56,7 +56,15 @@ Content available to public Website visitors.
 
 **Redirect**
 
-A permanent route from an old public URL to its current destination.
+A route from one public URL to a current page: permanent (301) for an old URL, temporary (302) for a QR redirect.
+
+**QR redirect**
+
+A redirect with a Source name, from a printed `/go/` address. It adds the UTM tags `utm_source` (the Source), `utm_medium=qr-card` and `utm_campaign` (the campaign tag), and is always temporary, so its target page can change without reprinting the code.
+
+**Source**
+
+The name of the card or page that brought a visitor, for example `chop-nurses`. It travels as `utm_source`.
 
 ## Ownership rules
 

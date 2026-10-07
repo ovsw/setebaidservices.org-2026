@@ -5,6 +5,7 @@ import { getPresentationPath } from "../../presentation/routes";
 import {
   validateRedirectDestinationReference,
   validateRedirectSource,
+  validateRedirectTag,
 } from "../validation/redirect-rules";
 
 export default defineType({
@@ -13,7 +14,7 @@ export default defineType({
   type: "document",
   icon: TrendingUpDown,
   description:
-    "Send an old internal path to a current one after the next frontend build.",
+    "Send an old internal path or a printed QR address to a current page after the next frontend build.",
   fields: [
     defineField({
       name: "status",
@@ -34,7 +35,8 @@ export default defineType({
       name: "source",
       title: "Source",
       type: "slug",
-      description: "The old internal path, starting with /.",
+      description:
+        "The old internal path, starting with /. For a QR redirect, the printed address, starting with /go/.",
       validation: (Rule) => [
         Rule.required(),
         Rule.custom(validateRedirectSource),
@@ -68,6 +70,23 @@ export default defineType({
       initialValue: undefined,
     }),
     defineField({
+      name: "utmSource",
+      title: "Source name",
+      type: "string",
+      description:
+        "For a QR redirect only: the name of the printed card, for example chop-nurses. " +
+        "Visitors arrive tagged with it and with medium qr-card. " +
+        "A QR redirect is always temporary (302), so you can change its destination later.",
+      validation: (Rule) => Rule.custom(validateRedirectTag("utmSource")),
+    }),
+    defineField({
+      name: "utmCampaign",
+      title: "Campaign tag",
+      type: "string",
+      description: "For a QR redirect only: the season, for example fall-2026-events.",
+      validation: (Rule) => Rule.custom(validateRedirectTag("utmCampaign")),
+    }),
+    defineField({
       name: "permanent",
       title: "Redirect type",
       type: "string",
@@ -80,6 +99,7 @@ export default defineType({
         layout: "radio",
       },
       initialValue: "true",
+      hidden: ({ document }) => Boolean(document?.utmSource),
       validation: (Rule) => Rule.required(),
     }),
   ],
@@ -92,6 +112,7 @@ export default defineType({
       permanent: "permanent",
       source: "source.current",
       status: "status",
+      utmSource: "utmSource",
     },
     prepare: ({
       destinationId,
@@ -101,6 +122,7 @@ export default defineType({
       permanent,
       source,
       status,
+      utmSource,
     }) => {
       const destination =
         getPresentationPath(
@@ -113,7 +135,9 @@ export default defineType({
 
       return {
         title: `${source || "Untitled"} → ${destination || "Untitled"}`,
-        subtitle: `${permanent === "false" ? "302 temporary" : "301 permanent"}, ${status || "inactive"}`,
+        subtitle: utmSource
+          ? `QR ${utmSource}, 302 temporary, ${status || "inactive"}`
+          : `${permanent === "false" ? "302 temporary" : "301 permanent"}, ${status || "inactive"}`,
         media: TrendingUpDown,
       };
     },

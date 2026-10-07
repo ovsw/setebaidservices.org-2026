@@ -92,3 +92,85 @@ test("rejects unsafe paths and application-owned sources", () => {
     /missing a valid internal/,
   );
 });
+
+test("tags QR redirects and always makes them temporary", () => {
+  assert.deepEqual(
+    compileNextRedirects([
+      {
+        source: { current: "/go/chop-nurses" },
+        destination: "/go/events",
+        permanent: "true",
+        utmSource: "chop-nurses",
+        utmCampaign: "fall-2026-events",
+      },
+      {
+        source: "/go/t1d-summit",
+        destination: "/go/events",
+        permanent: "false",
+        utmSource: "t1d-summit",
+        utmCampaign: "fall-2026-events",
+      },
+    ]),
+    [
+      {
+        source: "/go/chop-nurses",
+        destination:
+          "/go/events?utm_source=chop-nurses&utm_medium=qr-card&utm_campaign=fall-2026-events",
+        statusCode: 302,
+      },
+      {
+        source: "/go/t1d-summit",
+        destination:
+          "/go/events?utm_source=t1d-summit&utm_medium=qr-card&utm_campaign=fall-2026-events",
+        statusCode: 302,
+      },
+    ],
+  );
+});
+
+test("rejects invalid QR tags and QR sources outside /go/", () => {
+  for (const tags of [
+    { utmSource: "Chop Nurses", utmCampaign: "fall-2026" },
+    { utmSource: "chop&x=1", utmCampaign: "fall-2026" },
+    { utmSource: "chop-nurses", utmCampaign: "fall 2026" },
+    { utmSource: "chop-nurses" },
+    { utmCampaign: "fall-2026" },
+  ]) {
+    assert.throws(
+      () => compileNextRedirects([{ source: "/go/chop", destination: "/target", ...tags }]),
+      /invalid source name or campaign tag/,
+      JSON.stringify(tags),
+    );
+  }
+  assert.throws(
+    () =>
+      compileNextRedirects([
+        { source: "/chop", destination: "/target", utmSource: "chop", utmCampaign: "fall" },
+      ]),
+    /must start with \/go\//,
+  );
+});
+
+test("keeps conflict and chain rules for QR redirects", () => {
+  const qr = { utmSource: "chop", utmCampaign: "fall" };
+  assert.throws(
+    () =>
+      compileNextRedirects([
+        { source: "/go/chop", destination: "/target", ...qr },
+        { source: "/go/chop", destination: "/target", ...qr, utmCampaign: "spring" },
+      ]),
+    /Conflicting redirects/,
+  );
+  assert.throws(
+    () =>
+      compileNextRedirects([
+        { source: "/go/chop", destination: "/go/old", ...qr },
+        { source: "/go/old", destination: "/target" },
+      ]),
+    /chain or cycle/,
+  );
+  assert.throws(
+    () => compileNextRedirects([{ source: "/go/chop", destination: "/go/chop", ...qr }]),
+    /source and destination are the same/,
+  );
+});

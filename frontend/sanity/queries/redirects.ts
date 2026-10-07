@@ -19,6 +19,8 @@ export const REDIRECTS_QUERY = defineQuery(/* groq */ `
       defined(destinationReference._ref) => ${redirectDestinationPath},
       destination.current
     ),
-    permanent
+    permanent,
+    utmSource,
+    utmCampaign
   }
 `);
