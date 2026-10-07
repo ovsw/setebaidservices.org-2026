@@ -90,7 +90,7 @@ export default defineType({
       type: "array",
       description: "Two short facts under the buttons. Each has a bold value and a label.",
       of: [homeHeroStat],
-      validation: (rule) => rule.max(3),
+      validation: (rule) => rule.max(2),
     }),
   ],
   preview: {
