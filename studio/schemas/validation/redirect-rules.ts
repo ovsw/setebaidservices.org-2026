@@ -2,6 +2,7 @@ import type { ValidationContext } from "sanity";
 
 import {
   isApplicationPath,
+  isRouteSlug,
   normalizePublicPath,
 } from "../../../shared/content-routes.ts";
 import { getPresentationPath } from "../../presentation/routes.ts";
@@ -14,6 +15,8 @@ export type RedirectRecord = {
   permanent?: "false" | "true" | boolean;
   source?: { current?: string } | string;
   status?: string;
+  utmCampaign?: string;
+  utmSource?: string;
 };
 
 type LiveRoute = {
@@ -28,6 +31,7 @@ type RedirectValidationData = {
 };
 
 const LIVE_SYSTEM_PATHS = new Set(["/", "/stories"]);
+const TAG_FORMAT_HINT = "Use only lowercase letters, digits and dashes";
 const MISSING_DESTINATION_ERROR =
   "Can't redirect to a non-existent or non-published page. " +
   "No published page with this slug exists. Please create one.";
@@ -110,7 +114,12 @@ export function getRedirectValidationIssues({
   const destinationValue = readRedirectPath(current.destination);
   const source = normalizeRedirectPath(sourceValue);
   const destination = normalizeRedirectPath(destinationValue);
-  const errors: { destination?: string; source?: string } = {};
+  const errors: {
+    destination?: string;
+    source?: string;
+    utmCampaign?: string;
+    utmSource?: string;
+  } = {};
 
   if (sourceValue && (!sourceValue.trim().startsWith("/") || !source)) {
     errors.source = "The source must be an internal path that starts with /";
@@ -186,6 +195,26 @@ export function getRedirectValidationIssues({
     }
   }
 
+  const { utmCampaign, utmSource } = current;
+  if (utmSource) {
+    if (!isRouteSlug(utmSource)) {
+      errors.utmSource = `${TAG_FORMAT_HINT}, for example chop-nurses`;
+    } else if (redirects.some((redirect) => redirect.utmSource === utmSource)) {
+      errors.utmSource = "Another redirect already uses this source name";
+    }
+    if (!utmCampaign) errors.utmCampaign = "A QR redirect needs a campaign tag";
+    if (source && !source.startsWith("/go/") && !errors.source) {
+      errors.source = "A QR redirect's source must start with /go/";
+    }
+  }
+  if (utmCampaign) {
+    if (!isRouteSlug(utmCampaign)) {
+      errors.utmCampaign = `${TAG_FORMAT_HINT}, for example fall-2026-events`;
+    } else if (!utmSource) {
+      errors.utmCampaign = "Add a source name, or clear the campaign tag";
+    }
+  }
+
   const destinationExists =
     destination &&
     (LIVE_SYSTEM_PATHS.has(destination) ||
@@ -236,7 +265,8 @@ async function requestValidationData(context: ValidationContext) {
         source,
         destination,
         destinationReference,
-        permanent
+        permanent,
+        utmSource
       },
       "liveRoutes": *[
         _type in ["page", "post", "category", "homePage", "blogIndex"] &&
@@ -319,4 +349,19 @@ export async function validateRedirectDestinationReference(
       ...data,
     }).errors.destination ?? true
   );
+}
+
+export function validateRedirectTag(field: "utmCampaign" | "utmSource") {
+  return async (value: unknown, context: ValidationContext) => {
+    const data = await fetchValidationData(context);
+    return (
+      getRedirectValidationIssues({
+        current: {
+          ...currentRedirect(context, data.liveRoutes),
+          [field]: value as string | undefined,
+        },
+        ...data,
+      }).errors[field] ?? true
+    );
+  };
 }

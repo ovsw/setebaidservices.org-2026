@@ -129,3 +129,59 @@ test("rejects missing destinations and unsafe paths", () => {
     );
   }
 });
+
+test("accepts a QR redirect with a source name and campaign tag", () => {
+  assert.deepEqual(
+    issues(
+      {
+        source: "/go/chop-nurses",
+        destination: "/go/events",
+        utmSource: "chop-nurses",
+        utmCampaign: "fall-2026-events",
+      },
+      [{ source: "/go/t1d-summit", destination: "/go/events", utmSource: "t1d-summit" }],
+      [{ path: "/go/events", type: "page" }],
+    ),
+    { errors: {} },
+  );
+});
+
+test("rejects invalid or duplicate QR tags and QR sources outside /go/", () => {
+  const routes = [{ path: "/target", type: "page" }];
+  const qr = { destination: "/target", utmSource: "chop", utmCampaign: "fall" };
+
+  for (const utmSource of ["Chop", "chop nurses", "chop_nurses", "-chop"]) {
+    assert.match(
+      issues({ ...qr, source: "/go/x", utmSource }, [], routes).errors.utmSource,
+      /lowercase letters, digits and dashes/,
+      utmSource,
+    );
+  }
+  assert.match(
+    issues({ ...qr, source: "/go/x", utmCampaign: "Fall 2026" }, [], routes).errors
+      .utmCampaign,
+    /lowercase letters, digits and dashes/,
+  );
+  assert.match(
+    issues(
+      { ...qr, source: "/go/x" },
+      [{ source: "/go/y", destination: "/target", status: "inactive", utmSource: "chop" }],
+      routes,
+    ).errors.utmSource,
+    /already uses this source name/,
+  );
+  assert.match(
+    issues({ ...qr, source: "/chop" }, [], routes).errors.source,
+    /must start with \/go\//,
+  );
+  assert.match(
+    issues({ ...qr, source: "/go/x", utmCampaign: undefined }, [], routes).errors
+      .utmCampaign,
+    /needs a campaign tag/,
+  );
+  assert.match(
+    issues({ ...qr, source: "/go/x", utmSource: undefined }, [], routes).errors
+      .utmCampaign,
+    /Add a source name/,
+  );
+});

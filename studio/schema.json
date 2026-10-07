@@ -6078,6 +6078,20 @@
         },
         "optional": true
       },
+      "utmSource": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "utmCampaign": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "permanent": {
         "type": "objectAttribute",
         "value": {
