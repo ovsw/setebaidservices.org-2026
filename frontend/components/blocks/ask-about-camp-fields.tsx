@@ -14,6 +14,7 @@ import {
   validateAskAboutCamp,
 } from "@/lib/ask-about-camp";
 import { currentVisitSource } from "@/lib/visit-source";
+import { Check } from "lucide-react";
 import Link from "next/link";
 import {
   type FormEvent,
@@ -63,7 +64,7 @@ function TextField({
   const id = `ask-about-camp-${name}`;
   return (
     <div className="flex flex-col gap-2">
-      <Label className="text-base font-semibold leading-snug" htmlFor={id}>
+      <Label className="text-[15px] font-semibold leading-snug" htmlFor={id}>
         {label}
         {optional ? <span className="font-normal text-muted-foreground"> (optional)</span> : null}
       </Label>
@@ -71,14 +72,14 @@ function TextField({
         aria-describedby={error ? `${id}-error` : undefined}
         aria-invalid={error ? true : undefined}
         autoComplete={autoComplete}
-        className="bg-background"
+        className="border-[1.5px] bg-popover text-popover-foreground"
         id={id}
         name={name}
         required={!optional}
         type={type}
       />
       {error ? (
-        <p className="text-sm font-medium text-destructive" id={`${id}-error`}>
+        <p className="font-ui text-sm/[1.4] font-medium text-destructive" id={`${id}-error`}>
           {error}
         </p>
       ) : null}
@@ -167,7 +168,8 @@ export function AskAboutCampFields({
     startTransition(() => formAction(formData));
   }
 
-  const panel = "rounded-card border border-border bg-popover p-6 text-popover-foreground shadow-raised sm:p-8";
+  // A soft card: one step lighter than the field, flat at rest.
+  const panel = "rounded-card border-[1.5px] border-border bg-card p-6 text-card-foreground sm:p-10";
 
   if (state.status === "sent") {
     return (
@@ -193,35 +195,39 @@ export function AskAboutCampFields({
     // The panel keeps the light field's colours on every background, so
     // the labels, borders and error text stay readable on Forest.
     <div className="field-cream rounded-card">
-      <form className={`${panel} relative flex flex-col gap-6`} noValidate onSubmit={submit} ref={formRef}>
-        <TextField autoComplete="name" error={errors.name} label="Your name" name="name" />
-        <div className="grid gap-6 sm:grid-cols-2">
-          <TextField autoComplete="tel" error={errors.phone} label="Phone" name="phone" type="tel" />
-          <TextField autoComplete="email" error={errors.email} label="Email" name="email" type="email" />
+      <form className={`${panel} relative flex flex-col gap-10`} noValidate onSubmit={submit} ref={formRef}>
+        {/* Groups: how to reach you, your child, your questions, send. */}
+        <div className="flex flex-col gap-5">
+          <TextField autoComplete="name" error={errors.name} label="Your name" name="name" />
+          <div className="grid gap-5 md:grid-cols-2">
+            <TextField autoComplete="tel" error={errors.phone} label="Phone" name="phone" type="tel" />
+            <TextField autoComplete="email" error={errors.email} label="Email" name="email" type="email" />
+          </div>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2">
           <TextField error={errors.childAge} label="Your child's age" name="childAge" />
           <TextField error={errors.bestTime} label="Best time to call" name="bestTime" optional />
         </div>
 
-        <fieldset className="flex flex-col gap-1">
-          <legend className="mb-2 text-base font-semibold leading-snug">
+        <fieldset>
+          <legend className="mb-4 text-[15px] font-semibold leading-snug">
             What would you like to know?
             <span className="font-normal text-muted-foreground"> (optional)</span>
           </legend>
-          <div className="grid gap-x-6 sm:grid-cols-2" data-sanity={editing.topics}>
+          <div className="flex flex-wrap gap-2.5" data-sanity={editing.topics}>
             {[...choices, director].map((choice) => (
               <label
-                className="flex min-h-11 cursor-pointer items-center gap-3 text-base leading-snug"
+                className="group inline-flex min-h-11 cursor-pointer select-none items-center gap-2 rounded-pill border-[1.5px] border-border bg-popover px-4 font-ui text-[15px] leading-snug text-popover-foreground transition-colors motion-fast hover:border-link/50 has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring"
                 key={choice.value}
               >
                 <input
-                  className="size-5 shrink-0 accent-(--color-primary) focus-ring"
+                  className="sr-only"
                   name="interests"
                   ref={choice === director ? directorRef : undefined}
                   type="checkbox"
                   value={choice.value}
                 />
+                <Check aria-hidden="true" className="-ml-1 hidden size-4 group-has-[:checked]:block" />
                 {choice.label}
               </label>
             ))}
@@ -257,11 +263,11 @@ export function AskAboutCampFields({
           </div>
         ) : null}
 
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-          <Button className="w-full sm:w-auto" disabled={pending} type="submit">
+        <div className="flex flex-col gap-4">
+          <Button className="w-full sm:w-auto sm:self-start" disabled={pending} type="submit">
             {pending ? "Sending…" : "Send my request"}
           </Button>
-          <p className="text-pretty text-sm/[1.5] text-muted-foreground">
+          <p className="max-w-[52ch] text-pretty text-sm/[1.6] text-muted-foreground">
             <span data-sanity={editing.privacyLine}>{privacyLine}</span>{" "}
             <Link className="text-link underline underline-offset-4" href="/privacy-policy">
               Privacy policy
