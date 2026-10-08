@@ -40,29 +40,31 @@ export function HeaderBrand({
 
   // Both logos stay in the page, stacked, so a theme change fades between
   // two loaded images instead of blanking while the other file downloads.
-  const logos =
+  // The header-light variant picks the one in view, so the right logo shows
+  // from the first paint; both load at once, as either may be the one.
+  const pair =
     brand.light && brand.dark && brand.light.src !== brand.dark.src
-      ? [brand.light, brand.dark]
-      : active
-        ? [active]
-        : [];
+      ? { dark: brand.dark, light: brand.light }
+      : null;
+  const logos = pair ? [pair.light, pair.dark] : active ? [active] : [];
 
   return (
     <span className="grid gap-[7px] whitespace-nowrap">
       {logos.length ? (
         <span className="grid">
-          {logos.map((logo) => {
-            const shown = logo === active;
-            return (
-              <Logo
-                alt={shown ? brand.label : ""}
-                className={cn("col-start-1 row-start-1", !shown && "opacity-0")}
-                key={logo.src}
-                logo={logo}
-                priority={shown}
-              />
-            );
-          })}
+          {logos.map((logo) => (
+            <Logo
+              alt={logo === active ? brand.label : ""}
+              className={cn(
+                "col-start-1 row-start-1",
+                pair && logo === pair.dark && "header-light:opacity-0",
+                pair && logo === pair.light && "opacity-0 header-light:opacity-100",
+              )}
+              key={logo.src}
+              logo={logo}
+              priority
+            />
+          ))}
         </span>
       ) : (
         <span>{brand.label}</span>

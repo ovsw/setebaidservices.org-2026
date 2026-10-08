@@ -32,7 +32,7 @@ export function Header({
         >
           {brand}
         </Link>
-        <DesktopNav navigation={model.navigation} theme={theme} />
+        <DesktopNav navigation={model.navigation} />
         <div className="hidden shrink-0 items-center gap-4 xl:flex">
           {/* The last action is the bar's main call to action: marigold on
               the dark bar, camp green on the light one. The rest are
@@ -47,9 +47,12 @@ export function Header({
                     variant: primary ? (theme === "dark" ? "highlight" : "primary") : "outline",
                   }),
                   "hover:translate-y-0",
-                  !primary &&
-                    theme === "dark" &&
+                  // The outline is retinted for the dark bar; the light look
+                  // restores the outline variant's own colours.
+                  !primary && [
                     "border-birch-bark/45 text-birch-bark hover:border-birch-bark/70 hover:bg-birch-bark/8 hover:text-birch-bark",
+                    "header-light:border-border header-light:text-foreground header-light:hover:border-link/50 header-light:hover:bg-card header-light:hover:text-card-foreground",
+                  ],
                 )}
                 data-header-cta={primary ? "" : undefined}
                 key={action.key}
@@ -57,7 +60,7 @@ export function Header({
               />
             );
           })}
-          <CallDirectorsAction theme={theme} />
+          <CallDirectorsAction />
         </div>
         <div className="flex shrink-0 items-center xl:hidden">
           <MobileNav brand={brand} navigation={model.navigation} theme={theme} />

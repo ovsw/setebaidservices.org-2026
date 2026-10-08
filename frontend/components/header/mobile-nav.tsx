@@ -64,9 +64,11 @@ export function MobileNav({
           aria-label={open ? "Close menu" : "Open menu"}
           className={cn(
             "border bg-transparent hover:shadow-none",
-            dark
-              ? "border-birch-bark/45 text-birch-bark hover:bg-birch-bark/8 hover:text-birch-bark"
-              : "border-pine-night/25 text-pine-night hover:bg-cedar/8 hover:text-pine-night",
+            // The button sits in the bar, so it follows the bar's look from
+            // the first paint (header-light, globals.css). The sheet opens
+            // only after the page's script runs, so it can follow `theme`.
+            "border-birch-bark/45 text-birch-bark hover:bg-birch-bark/8 hover:text-birch-bark",
+            "header-light:border-pine-night/25 header-light:text-pine-night header-light:hover:bg-cedar/8 header-light:hover:text-pine-night",
           )}
           size="icon"
           variant="ghost"
@@ -81,6 +83,8 @@ export function MobileNav({
             ? "border-birch-bark/15 bg-forest-floor text-birch-bark"
             : "border-pine-night/15 bg-birch-bark text-pine-night",
         )}
+        data-header-sheet
+        data-theme={theme}
         showCloseButton={false}
       >
         <SheetHeader

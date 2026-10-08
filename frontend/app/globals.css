@@ -248,24 +248,38 @@
    under the nav and the bar is see-through at the top of the page. The
    background returns once the user scrolls, which is also when the
    hide-on-scroll behaviour takes over. A hero on a light ground sets
-   data-header-overlay="light": the shell then shows dark text at the top
-   (see site-header-shell.tsx). Until the shell has hydrated it still carries
-   the configured dark theme, so the bar keeps its dark colour for that
-   moment instead of showing light text over the light hero. */
+   data-header-overlay="light": the bar then shows dark text at the top.
+   These rules read the hero from the page itself, so the bar paints in its
+   right look on the first frame, before the shell's script has run. */
 body:has([data-header-overlay]) header[data-site-header] {
   margin-bottom: calc((var(--header-height) + var(--header-gap)) * -1);
 }
 
-body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"],
-body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="true"][data-theme="light"] {
+body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] {
   background-color: transparent;
   border-color: transparent;
   box-shadow: none;
 }
 
+body:has([data-header-overlay="light"]) header[data-site-header][data-at-top="true"] {
+  color: var(--color-pine-night);
+}
+
+/* The bar's light look, for the parts inside it and the mobile menu sheet:
+   the light theme, or the top of a page whose hero asks for dark text. The
+   last selector holds from the first paint, before the shell has set
+   data-theme. Write the dark look as the plain classes and the light look
+   with this variant. */
+@custom-variant header-light {
+  :is([data-site-header], [data-header-sheet])[data-theme="light"] &,
+  body:has([data-header-overlay="light"]) [data-site-header][data-at-top="true"] & {
+    @slot;
+  }
+}
+
 /* While the bar is see-through, its main action is camp green whatever the
    bar's theme. On the solid dark bar it turns marigold (site-header.tsx). */
-body:has([data-header-overlay=""]) header[data-site-header][data-at-top="true"] [data-header-cta] {
+body:has([data-header-overlay]) header[data-site-header][data-at-top="true"] [data-header-cta] {
   background-color: var(--color-primary);
   color: var(--color-primary-foreground);
 
