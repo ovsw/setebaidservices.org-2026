@@ -14,7 +14,7 @@ export default defineType({
   type: "document",
   icon: TrendingUpDown,
   description:
-    "Send an old internal path or a printed QR address to a current page after the next frontend build.",
+    "Send an old internal path or a printed QR address to a current page. It is live a few minutes after you publish.",
   fields: [
     defineField({
       name: "status",
