@@ -42,7 +42,7 @@ export default function AskAboutCampForm({
       {/* The "Talk to the director" link lands here; the form ticks that choice. */}
       <span className="absolute top-0 scroll-mt-28" id={DIRECTOR_HASH.slice(1)} />
       <div className="container-content">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
           <header className="lg:pt-4">
             <h2
               className="text-headline font-display font-extrabold text-balance"

@@ -20,7 +20,7 @@ export const askAboutCampSchema = z.object({
     .min(1, "Enter your phone number.")
     .refine(
       (value) => /^[0-9+()\-. ]*$/.test(value) && value.replace(/\D/g, "").length >= 7,
-      "Enter a phone number with at least 7 digits, for example 610-555-0123.",
+      "Enter a phone number with at least 7 digits.",
     ),
   email: text(200)
     .min(1, "Enter your email address.")
