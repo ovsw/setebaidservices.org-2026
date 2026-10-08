@@ -52,11 +52,11 @@ export default function DirectorCta({
   const portrait = image?.asset?._id ? image : undefined;
   const portraitWidth = portrait?.asset?.metadata?.dimensions?.width ?? 1;
   const portraitHeight = portrait?.asset?.metadata?.dimensions?.height ?? 1;
-  const actions = (buttons ?? []).slice(0, 2).flatMap((button, index) => {
+  const actions = (buttons ?? []).slice(0, 2).flatMap((button) => {
     const href = getSafeLinkHref(button.href);
     const label = stegaClean(button.text)?.trim();
     if (!href || !label) return [];
-    return [{ button, href, index, label }];
+    return [{ button, href, label }];
   });
 
   return (
@@ -90,7 +90,7 @@ export default function DirectorCta({
                 className="mt-[26px] flex flex-col gap-3 lg:mt-[34px] lg:flex-row lg:flex-wrap"
                 data-sanity={dataAttribute?.("buttons")}
               >
-                {actions.map(({ button, href, index, label }) => {
+                {actions.map(({ button, href, label }, index) => {
                   const openInNewTab = Boolean(stegaClean(button.openInNewTab));
                   return (
                     <Button

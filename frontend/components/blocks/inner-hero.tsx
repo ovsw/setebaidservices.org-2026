@@ -61,7 +61,10 @@ export default function InnerHero({
 
   const cleanKey = stegaClean(_key);
   const headingId = `inner-hero-${cleanKey}-title`;
-  const ctaButtons = buttons?.slice(0, 2) ?? [];
+  // Only renderable buttons count, so the first one shown is the main action.
+  const ctaButtons = (buttons ?? [])
+    .filter((button) => getSafeLinkHref(button.href) && stegaClean(button.text)?.trim())
+    .slice(0, 2);
   const factList = facts?.slice(0, 4) ?? [];
   const hasImage = Boolean(image?.asset?._id);
 
