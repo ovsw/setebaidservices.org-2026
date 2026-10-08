@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import { Suspense } from "react";
 import {
   readTeamDashboardSession,
   TEAM_DASHBOARD_COOKIE,
@@ -12,29 +11,26 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function TeamDashboardPage() {
-  return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
-      <Suspense fallback={null}>
-        <TeamDashboard />
-      </Suspense>
-    </main>
-  );
-}
+// The session is read before anything renders, so the page has no prerendered
+// shell. Without a shell, every response is built for one person and sent as
+// `private, no-store`; with one, Vercel marks the shell publicly cacheable.
+export const instant = false;
 
-async function TeamDashboard() {
+export default async function TeamDashboardPage() {
   const session = readTeamDashboardSession(
     (await cookies()).get(TEAM_DASHBOARD_COOKIE)?.value,
   );
 
-  if (!session) {
-    return <p className="text-lg">Open this from the Studio.</p>;
-  }
-
   return (
-    <>
-      <h1 className="text-3xl font-semibold">Team dashboard</h1>
-      <p className="mt-4 text-lg">You are signed in.</p>
-    </>
+    <main className="mx-auto max-w-3xl px-6 py-16">
+      {session ? (
+        <>
+          <h1 className="text-3xl font-semibold">Team dashboard</h1>
+          <p className="mt-4 text-lg">You are signed in.</p>
+        </>
+      ) : (
+        <p className="text-lg">Open this from the Studio.</p>
+      )}
+    </main>
   );
 }
