@@ -299,7 +299,7 @@ trigger_set() {
     return 0
   fi
   local body
-  body=$(NAME="$1" VALUE="$2" jq -nc '{variables: [{name: env.NAME, value: env.VALUE}], override: true}')
+  body=$(NAME="$1" VALUE="$2" jq -nc '{variables: {(env.NAME): env.VALUE}, override: true}')
   http_call "$(saved TRIGGER_VARIABLES_KEY)" POST \
     "$TRIGGER_API/projects/$(saved TRIGGER_PROJECT_REF)/envvars/prod/import" "$body"
   if [[ "$HTTP_STATUS" == 200 ]]; then
