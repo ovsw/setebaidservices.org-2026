@@ -60,6 +60,7 @@ import wordSwap from "./schemas/blocks/word-swap";
 import flipCards from "./schemas/blocks/flip-cards";
 import photoStrip from "./schemas/blocks/photo-strip";
 import pricingTiers from "./schemas/blocks/pricing-tiers";
+import askAboutCampForm from "./schemas/blocks/ask-about-camp-form";
 // page-builder-generator:block-imports
 
 export const schemaTypes = [
@@ -121,5 +122,6 @@ export const schemaTypes = [
   flipCards,
   photoStrip,
   pricingTiers,
+  askAboutCampForm,
   // page-builder-generator:block-types
 ];

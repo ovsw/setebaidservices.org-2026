@@ -22,6 +22,7 @@ import { wordSwapQuery } from "./word-swap";
 import { flipCardsQuery } from "./flip-cards";
 import { photoStripQuery } from "./photo-strip";
 import { pricingTiersQuery } from "./pricing-tiers";
+import { askAboutCampFormQuery } from "./ask-about-camp-form";
 // page-builder-generator:query-imports
 
 export const pageBuilderQuery = `
@@ -53,6 +54,7 @@ export const pageBuilderQuery = `
     ${flipCardsQuery},
     ${photoStripQuery},
     ${pricingTiersQuery},
+    ${askAboutCampFormQuery},
     ${"" /* page-builder-generator:query-spreads */}
   }
 `;
