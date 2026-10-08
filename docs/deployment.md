@@ -46,6 +46,63 @@ terminal. Direct CLI deployment bypasses the guard.
 
 Studio deployment remains manual. Vercel deployment uses the existing project configuration and credentials.
 
+## Accounts and keys for the QR mechanism
+
+The QR mechanism (spec #43) needs accounts and keys that only Ovi can create.
+A guided script walks through them, one section at a time:
+
+```bash
+pnpm setup:qr          # shows the sections and asks which to run
+pnpm setup:qr a b      # runs sections a and b only
+```
+
+| Section | What it sets up | Unblocks | Phase |
+| --- | --- | --- | --- |
+| a | Vercel Web Analytics, and the Web Analytics Plus add-on for the Studio ROVST team | #49 | 1 |
+| b | A Vercel deploy hook on `main`, and a Sanity webhook that calls it when a published Redirect is created, changed or deleted | #48 | 1 |
+| c | A Formspark workspace (upgraded, for API access), the "Ask about camp" form, and an API token that can read and delete submissions | #50, #52 | 2 |
+| d | A Trigger.dev project, two Production keys, and failure alerts by email | #51, #52, #53 | 2 |
+| e | A Neon project on the Free plan, and its pooled connection string | #51, #54 | 2 |
+| f | A Vercel API token that the analytics copy job uses | #53 | 2 |
+| g | An encryption key for form entries, generated on this computer | #51 | 2 |
+
+Each section ends with a check that the service accepts the new key. Where a
+service has no API for the check (Web Analytics Plus, Trigger.dev alerts), the
+script asks you to confirm what the dashboard shows.
+
+The script needs `node`, `jq`, the Vercel CLI (logged in with access to the
+Studio ROVST team), `psql` for section e, and `openssl` for section g. Section b
+reads `SANITY_AUTH_TOKEN` from `studio/.env.local` to create the Sanity webhook.
+
+### Where the keys go
+
+The script never prints a secret and never writes one into the repository.
+
+| Variable | Vercel (Production, Preview) | Trigger.dev (prod) | Section |
+| --- | --- | --- | --- |
+| `FORMSPARK_FORM_ID` | yes | yes | c |
+| `FORMSPARK_API_TOKEN` | | yes | c |
+| `TRIGGER_SECRET_KEY` (the "Trigger only" key) | yes | | d |
+| `DATABASE_URL` | yes | yes | e |
+| `VERCEL_ANALYTICS_TOKEN` | | yes | f |
+| `VERCEL_PROJECT_ID`, `VERCEL_TEAM_ID` | | yes | f |
+| `FORM_ENCRYPTION_KEY` | yes | yes | g |
+
+Vercel stores each one as a sensitive variable. New values reach the Website
+with its next deployment.
+
+The script also keeps every value in `~/.config/setebaid/qr-mechanism.env`,
+outside git and readable only by you. Set `QR_SETUP_ENV_FILE` to use another
+path. A re-run offers the saved values, so press Enter to keep them. The file
+also holds two values that go nowhere else: the deploy hook URL, and the
+Trigger.dev "Variables only" key that lets the script write Trigger.dev
+variables.
+
+Sections c, e, f and g write to Trigger.dev only after section d has run.
+Section d copies every value that is already saved, so the order does not
+matter. Section g keeps the saved encryption key unless you choose to replace
+it, because a new key makes requests that still wait for a retry unreadable.
+
 ## Before the first production deploy
 
 - Run `pnpm verify`.
