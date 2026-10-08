@@ -16,3 +16,5 @@ export const PAGE_QUERY = groq`
 `;
 
 export const PAGES_SLUGS_QUERY = groq`*[_type == "page" && defined(slug)]{slug}`;
+
+export const PAGE_EXISTS_QUERY = groq`count(*[_type == "page" && ${ROOT_SLUG_FILTER}]) > 0`;

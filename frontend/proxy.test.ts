@@ -4,6 +4,7 @@ import { NextRequest } from "next/server";
 import { config } from "@/proxy";
 import { BLOG_CATEGORY_POST_COUNTS_QUERY } from "@/sanity/queries/blog-index";
 import { publishedPostFilter } from "@/sanity/queries/blog-post-listing";
+import { PAGE_EXISTS_QUERY } from "@/sanity/queries/page";
 
 const { fetchMock } = vi.hoisted(() => ({ fetchMock: vi.fn() }));
 
@@ -42,7 +43,10 @@ describe("blog post count cache", () => {
 
     expect(response.status).toBe(200);
     expect(fetchMock).not.toHaveBeenCalled();
-    expect(config.matcher).toEqual(["/((?!_next|api|.*\\..*).*)"]);
+    expect(config.matcher).toEqual([
+      "/((?!_next|api|.*\\..*).*)",
+      "/go/:path*",
+    ]);
   });
 
   test("does not query Sanity for validated draft-mode pagination", async () => {
@@ -296,5 +300,79 @@ describe("blog post count cache", () => {
 
   test("builds category counts from the shared published-post filter", () => {
     expect(BLOG_CATEGORY_POST_COUNTS_QUERY).toContain(publishedPostFilter);
+  });
+});
+
+describe("unknown /go addresses", () => {
+  beforeEach(() => {
+    fetchMock.mockReset();
+    vi.resetModules();
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  async function requestGo(path: string, init?: { headers: HeadersInit }) {
+    const { proxy: freshProxy } = await import("@/proxy");
+    return freshProxy(new NextRequest(`https://www.example.com${path}`, init));
+  }
+
+  test("sends an unknown code to Ask about camp with its tags", async () => {
+    fetchMock.mockResolvedValueOnce(false);
+
+    const response = await requestGo("/go/spring-fair/");
+
+    expect(fetchMock).toHaveBeenCalledWith(PAGE_EXISTS_QUERY, {
+      slug: "go/spring-fair",
+    });
+    expect(response.status).toBe(302);
+    expect(response.headers.get("location")).toBe(
+      "https://www.example.com/ask-about-camp?utm_source=spring-fair&utm_medium=qr-card",
+    );
+  });
+
+  test("passes a published /go page through", async () => {
+    fetchMock.mockResolvedValueOnce(true);
+
+    const response = await requestGo("/go/events");
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("location")).toBeNull();
+  });
+
+  test.each([
+    "/go/Spring_Fair",
+    "/go/caf%C3%A9",
+    "/go/fair/2026",
+    "/go/card.png",
+  ])("tags the badly formed code %s as unknown", async (path) => {
+    fetchMock.mockResolvedValue(false);
+
+    const response = await requestGo(path);
+
+    expect(response.status).toBe(302);
+    expect(response.headers.get("location")).toBe(
+      "https://www.example.com/ask-about-camp?utm_source=unknown&utm_medium=qr-card",
+    );
+  });
+
+  test("leaves draft-only /go pages to the page renderer in draft mode", async () => {
+    vi.stubEnv("__NEXT_PREVIEW_MODE_ID", "preview-id");
+
+    const response = await requestGo("/go/new-card", {
+      headers: { cookie: "__prerender_bypass=preview-id" },
+    });
+
+    expect(response.status).toBe(200);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  test("fails open when Sanity cannot answer", async () => {
+    fetchMock.mockRejectedValueOnce(new Error("Sanity unavailable"));
+
+    const response = await requestGo("/go/events");
+
+    expect(response.status).toBe(200);
   });
 });
