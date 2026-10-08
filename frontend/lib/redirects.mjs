@@ -4,7 +4,7 @@ import {
   normalizePublicPath,
 } from "../../shared/content-routes.ts";
 
-const QR_MEDIUM = "qr-card";
+export const QR_MEDIUM = "qr-card";
 
 function normalizePath(value) {
   return typeof value === "string" ? normalizePublicPath(value) : "";

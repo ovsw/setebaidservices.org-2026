@@ -3,15 +3,23 @@ import {
   isBlogPageOutOfRange,
   parseBlogPageSegment,
 } from "@/lib/blog-index";
+import { QR_MEDIUM } from "@/lib/redirects.mjs";
+import { isPageSlug } from "@/lib/routes";
 import { client } from "@/sanity/lib/client";
 import {
   BLOG_CATEGORY_POST_COUNTS_QUERY,
   ELIGIBLE_BLOG_POSTS_COUNT_QUERY,
 } from "@/sanity/queries/blog-index";
-import type { ELIGIBLE_BLOG_POSTS_COUNT_QUERY_RESULT } from "@/sanity.types";
+import { PAGE_EXISTS_QUERY } from "@/sanity/queries/page";
+import type {
+  ELIGIBLE_BLOG_POSTS_COUNT_QUERY_RESULT,
+  PAGE_EXISTS_QUERY_RESULT,
+} from "@/sanity.types";
 import { NextRequest, NextResponse } from "next/server";
 
 const BLOG_POST_COUNT_TTL_MS = 60_000;
+const GO_FALLBACK_PATH = "/ask-about-camp";
+const GO_CODE_PATTERN = /^[a-z0-9-]+$/;
 
 let blogPostCountCache:
   | { expiresAt: number; value: number }
@@ -106,7 +114,44 @@ function hasValidatedDraftMode(request: NextRequest) {
   );
 }
 
+/**
+ * A /go/ address with no published page and no QR redirect still reaches the
+ * family: it lands on Ask about camp, tagged with its code. QR redirects run
+ * before the proxy, so they never get here.
+ */
+async function routeGoAddress(request: NextRequest) {
+  const segments = request.nextUrl.pathname.split("/").filter(Boolean);
+  if (segments.length < 2 || hasValidatedDraftMode(request)) {
+    return NextResponse.next();
+  }
+
+  const slug = segments.join("/");
+  if (isPageSlug(slug)) {
+    try {
+      const pageExists = await client.fetch<PAGE_EXISTS_QUERY_RESULT>(
+        PAGE_EXISTS_QUERY,
+        { slug },
+      );
+      if (pageExists) return NextResponse.next();
+    } catch {
+      return NextResponse.next();
+    }
+  }
+
+  const code = segments.slice(1).join("/");
+  const destination = new URL(GO_FALLBACK_PATH, request.url);
+  destination.search = new URLSearchParams({
+    utm_source: GO_CODE_PATTERN.test(code) ? code : "unknown",
+    utm_medium: QR_MEDIUM,
+  }).toString();
+  return NextResponse.redirect(destination, 302);
+}
+
 export async function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith("/go/")) {
+    return routeGoAddress(request);
+  }
+
   if (!request.nextUrl.pathname.startsWith("/stories/")) {
     return NextResponse.next();
   }
@@ -156,5 +201,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|.*\\..*).*)"],
+  matcher: ["/((?!_next|api|.*\\..*).*)", "/go/:path*"],
 };
