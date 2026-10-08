@@ -130,6 +130,26 @@ Section d copies every value that is already saved, so the order does not
 matter. Section g keeps the saved encryption key unless you choose to replace
 it, because a new key makes requests that still wait for a retry unreadable.
 
+### Form entries in Neon
+
+Each "Ask about camp" request goes on two paths at the same time: to
+Formspark, which emails the office, and, encrypted, to the Trigger.dev task
+`store-form-entry`, which writes it to Neon and retries for about two and a
+half hours. The request counts as sent when one path accepts it. A run that
+fails for good sends the Trigger.dev failure alert from section d.
+
+After sections d, e and g have run, and again after each change under
+`frontend/db/migrations` or `frontend/trigger`:
+
+```bash
+pnpm db:migrate                                   # creates or updates the Neon tables
+TRIGGER_PROJECT_REF=proj_... pnpm trigger:deploy  # needs `npx trigger.dev login` one time
+```
+
+`pnpm db:migrate` reads `DATABASE_URL` from the file that `pnpm setup:qr`
+keeps. It applies each file in `frontend/db/migrations` one time, in name
+order.
+
 ## Before the first production deploy
 
 - Run `pnpm verify`.
