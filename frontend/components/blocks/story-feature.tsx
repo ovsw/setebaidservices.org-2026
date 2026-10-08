@@ -9,20 +9,20 @@ import { Check } from "lucide-react";
 import { stegaClean } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
-import type { ComponentProps } from "react";
 import styles from "./story-feature.module.css";
 import { sectionThemeClass } from "./section-theme";
+import { buttonVariantAt, type PageButtonContext } from "./section-parts";
 
 type StoryFeatureBlock = Extract<
   NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number],
   { _type: "storyFeature" }
 >;
 
-type StoryFeatureProps = StoryFeatureBlock & {
-  dataAttribute?: (path: string) => string | undefined;
-};
+type StoryFeatureProps = StoryFeatureBlock &
+  PageButtonContext & {
+    dataAttribute?: (path: string) => string | undefined;
+  };
 
-type ButtonVariant = NonNullable<ComponentProps<typeof Button>["variant"]>;
 
 /*
  * Story feature — one photo, one story, one or two actions.
@@ -123,18 +123,14 @@ function richTextComponents(field: Field): Partial<PortableTextComponents> {
   };
 }
 
-function getButtonVariant(variant?: string | null): ButtonVariant {
-  const cleanVariant = stegaClean(variant);
-  return cleanVariant === "secondary" || cleanVariant === "outline"
-    ? "outline"
-    : "primary";
-}
-
 function StoryButtons({
   buttons,
   dataAttribute,
   field,
-}: Readonly<Pick<StoryFeatureProps, "buttons" | "dataAttribute"> & { field: Field }>) {
+  giving,
+}: Readonly<
+  Pick<StoryFeatureProps, "buttons" | "dataAttribute" | "giving"> & { field: Field }
+>) {
   const links = (buttons ?? []).flatMap((button, index) => {
     const href = getSafeLinkHref(button.href);
     const label = stegaClean(button.text)?.trim();
@@ -149,12 +145,12 @@ function StoryButtons({
       className="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
       data-sanity={dataAttribute?.("buttons")}
     >
-      {links.slice(0, 2).map((button) => (
+      {links.slice(0, 2).map((button, index) => (
         <Button
           asChild
           key={button.key}
           onDark={field.onDark}
-          variant={getButtonVariant(button.variant)}
+          variant={buttonVariantAt(["primary", "outline"], index, giving)}
         >
           <Link
             data-sanity={dataAttribute?.(`buttons[_key=="${button._key}"]`)}
@@ -225,6 +221,7 @@ export default function StoryFeature({
   buttons,
   dataAttribute,
   eyebrow,
+  giving,
   image,
   keyDetails,
   richText,
@@ -305,7 +302,12 @@ export default function StoryFeature({
           ) : null}
 
           <KeyDetails dataAttribute={dataAttribute} details={keyDetails} field={field} />
-          <StoryButtons buttons={buttons} dataAttribute={dataAttribute} field={field} />
+          <StoryButtons
+            buttons={buttons}
+            dataAttribute={dataAttribute}
+            field={field}
+            giving={giving}
+          />
         </div>
       </div>
     </section>

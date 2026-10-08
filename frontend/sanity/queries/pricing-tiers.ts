@@ -17,9 +17,9 @@ export const pricingTiersQuery = groq`
       name,
       label,
       price,
-      button{
+      "buttons": array::compact(buttons[]{
         ${buttonQuery}
-      },
+      }),
       application,
       note
     }),

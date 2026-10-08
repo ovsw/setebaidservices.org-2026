@@ -14,7 +14,6 @@ export const innerHeroQuery = groq`
       _key,
       _type,
       text,
-      variant,
       "openInNewTab": url.openInNewTab,
       "href": select(
         url.type == "internal" => ${urlInternalHref},

@@ -9,14 +9,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
 import styles from "./director-cta.module.css";
+import { buttonVariantAt, type PageButtonContext } from "./section-parts";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type DirectorCtaProps = Extract<PageBlock, { _type: "directorCta" }> & {
-  dataAttribute?: (path: string) => string | undefined;
-};
+type DirectorCtaProps = Extract<PageBlock, { _type: "directorCta" }> &
+  PageButtonContext & {
+    dataAttribute?: (path: string) => string | undefined;
+  };
 
 const headingComponents: PortableTextComponents = {
   block: { normal: ({ children }) => <>{children}</> },
@@ -36,6 +38,7 @@ export default function DirectorCta({
   buttons,
   dataAttribute,
   description,
+  giving,
   image,
   title,
 }: DirectorCtaProps) {
@@ -49,11 +52,11 @@ export default function DirectorCta({
   const portrait = image?.asset?._id ? image : undefined;
   const portraitWidth = portrait?.asset?.metadata?.dimensions?.width ?? 1;
   const portraitHeight = portrait?.asset?.metadata?.dimensions?.height ?? 1;
-  const actions = (buttons ?? []).slice(0, 2).flatMap((button, index) => {
+  const actions = (buttons ?? []).slice(0, 2).flatMap((button) => {
     const href = getSafeLinkHref(button.href);
     const label = stegaClean(button.text)?.trim();
     if (!href || !label) return [];
-    return [{ button, href, index, label }];
+    return [{ button, href, label }];
   });
 
   return (
@@ -87,7 +90,7 @@ export default function DirectorCta({
                 className="mt-[26px] flex flex-col gap-3 lg:mt-[34px] lg:flex-row lg:flex-wrap"
                 data-sanity={dataAttribute?.("buttons")}
               >
-                {actions.map(({ button, href, index, label }) => {
+                {actions.map(({ button, href, label }, index) => {
                   const openInNewTab = Boolean(stegaClean(button.openInNewTab));
                   return (
                     <Button
@@ -95,7 +98,7 @@ export default function DirectorCta({
                       className="w-full lg:w-auto"
                       key={button._key ?? `${href}-${index}`}
                       onDark={onDark}
-                      variant={index === 0 ? "default" : "outline"}
+                      variant={buttonVariantAt(["primary", "outline"], index, giving)}
                     >
                       <Link
                         data-sanity={dataAttribute?.(`buttons[_key=="${button._key}"]`)}

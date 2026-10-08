@@ -1,9 +1,7 @@
 import HomeHeroVideoLightbox from "@/components/blocks/home-hero-video-lightbox";
-import type { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { HOME_PAGE_QUERY_RESULT, PAGE_QUERY_RESULT } from "@/sanity.types";
 import { stegaClean } from "next-sanity";
-import type { ComponentProps } from "react";
 import {
   BodyText,
   HeadingText,
@@ -12,6 +10,7 @@ import {
   SectionButtons,
   SectionImage,
   type DataAttribute,
+  type PageButtonContext,
 } from "./section-parts";
 import { sectionThemeClass } from "./section-theme";
 
@@ -19,31 +18,10 @@ type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type HomeHeroProps = Extract<PageBlock, { _type: "homeHero" }> & {
-  dataAttribute?: DataAttribute;
-};
-
-type ButtonVariant = NonNullable<ComponentProps<typeof Button>["variant"]>;
-
-/** Button style for the photo heroes (`hero`, `innerHero`), which sit on a photo. */
-export function resolveHomeHeroButtonVariant(
-  variant: string | null | undefined,
-  index: number,
-): ButtonVariant {
-  const cleanVariant = stegaClean(variant);
-
-  if (
-    cleanVariant === "default" ||
-    cleanVariant === "secondary" ||
-    cleanVariant === "outline" ||
-    cleanVariant === "ghost" ||
-    cleanVariant === "link"
-  ) {
-    return cleanVariant;
-  }
-
-  return index === 0 ? "outline" : "ghost";
-}
+type HomeHeroProps = Extract<PageBlock, { _type: "homeHero" }> &
+  PageButtonContext & {
+    dataAttribute?: DataAttribute;
+  };
 
 /*
  * Home Hero (prototype "Hero"): on the Cream field, the status line,
@@ -57,6 +35,8 @@ export default function HomeHero({
   buttons,
   dataAttribute,
   filmButton,
+  giving,
+  homePage,
   image,
   stats,
   status,
@@ -110,8 +90,10 @@ export default function HomeHero({
           <SectionButtons
             buttons={buttons}
             dataAttribute={dataAttribute}
-            fallbackVariants={["primary", "highlight"]}
+            giving={giving}
             size="hero"
+            // On the home page the second action is Donate, in marigold.
+            variants={homePage ? ["primary", "highlight"] : ["primary", "outline"]}
           />
           {stats?.length ? (
             <dl

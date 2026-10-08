@@ -2,7 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
-import { resolveHomeHeroButtonVariant } from "@/components/blocks/home-hero";
+import {
+  buttonVariantAt,
+  type PageButtonContext,
+} from "@/components/blocks/section-parts";
 import { Button } from "@/components/ui/button";
 import { getSafeLinkHref } from "@/lib/safe-href";
 import { urlFor } from "@/sanity/lib/image";
@@ -14,9 +17,10 @@ type PageBlock =
 
 type InnerHeroBlock = Extract<PageBlock, { _type: "innerHero" }>;
 
-type InnerHeroProps = InnerHeroBlock & {
-  dataAttribute?: (path: string) => string | undefined;
-};
+type InnerHeroProps = InnerHeroBlock &
+  PageButtonContext & {
+    dataAttribute?: (path: string) => string | undefined;
+  };
 
 /*
  * Inner Hero — the pared-down home hero for interior pages.
@@ -49,6 +53,7 @@ export default function InnerHero({
   dataAttribute,
   eyebrow,
   facts,
+  giving,
   image,
   title,
 }: InnerHeroProps) {
@@ -56,7 +61,10 @@ export default function InnerHero({
 
   const cleanKey = stegaClean(_key);
   const headingId = `inner-hero-${cleanKey}-title`;
-  const ctaButtons = buttons?.slice(0, 2) ?? [];
+  // Only renderable buttons count, so the first one shown is the main action.
+  const ctaButtons = (buttons ?? [])
+    .filter((button) => getSafeLinkHref(button.href) && stegaClean(button.text)?.trim())
+    .slice(0, 2);
   const factList = facts?.slice(0, 4) ?? [];
   const hasImage = Boolean(image?.asset?._id);
 
@@ -163,7 +171,7 @@ export default function InnerHero({
                     key={button._key}
                     lift={false}
                     onDark
-                    variant={resolveHomeHeroButtonVariant(button.variant, index)}
+                    variant={buttonVariantAt(["primary", "outline"], index, giving)}
                   >
                     <Link
                       data-sanity={dataAttribute?.(

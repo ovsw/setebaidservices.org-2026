@@ -30,15 +30,9 @@ export const featureCardsQuery = groq`
         eyebrow,
         badgeLabel,
         badgeValue,
-        secondaryLink {
-          text,
-          "openInNewTab": url.openInNewTab,
-          "href": select(
-            url.type == "internal" => ${urlInternalHref},
-            url.type == "external" => url.external,
-            url.href
-          )
-        },
+        "buttons": array::compact(buttons[]{
+          ${buttonQuery}
+        }),
         link {
           text,
           "openInNewTab": url.openInNewTab,

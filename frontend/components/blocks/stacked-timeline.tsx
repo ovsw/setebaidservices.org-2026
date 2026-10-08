@@ -7,21 +7,21 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
-import type { ComponentProps } from "react";
 import styles from "./stacked-timeline.module.css";
 import { sectionThemeClass } from "./section-theme";
+import { buttonVariantAt, type PageButtonContext } from "./section-parts";
 import StackedTimelineDateCards from "./stacked-timeline-date-cards";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type StackedTimelineProps = Extract<PageBlock, { _type: "stackedTimeline" }> & {
-  dataAttribute?: (path: string) => string | undefined;
-};
+type StackedTimelineProps = Extract<PageBlock, { _type: "stackedTimeline" }> &
+  PageButtonContext & {
+    dataAttribute?: (path: string) => string | undefined;
+  };
 
 type TimelineItem = NonNullable<StackedTimelineProps["items"]>[number];
-type ButtonVariant = NonNullable<ComponentProps<typeof Button>["variant"]>;
 
 const fields = {
   dark: {
@@ -70,13 +70,6 @@ function formatNumber(index: number) {
   return String(index + 1).padStart(2, "0");
 }
 
-function getButtonVariant(variant?: string | null): ButtonVariant {
-  const cleanVariant = stegaClean(variant);
-  return cleanVariant === "secondary" || cleanVariant === "outline"
-    ? "outline"
-    : "primary";
-}
-
 /**
  * Cards the renderer can show: title and one line are required by the schema
  * and by the renderer, so a half-filled card never breaks the sequence.
@@ -92,7 +85,10 @@ function TimelineButtons({
   buttons,
   dataAttribute,
   field,
-}: Readonly<Pick<StackedTimelineProps, "buttons" | "dataAttribute"> & { field: Field }>) {
+  giving,
+}: Readonly<
+  Pick<StackedTimelineProps, "buttons" | "dataAttribute" | "giving"> & { field: Field }
+>) {
   const links = (buttons ?? []).flatMap((button, index) => {
     const href = getSafeLinkHref(button.href);
     if (!href) return [];
@@ -106,12 +102,12 @@ function TimelineButtons({
       className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
       data-sanity={dataAttribute?.("buttons")}
     >
-      {links.slice(0, 2).map((button) => (
+      {links.slice(0, 2).map((button, index) => (
         <Button
           asChild
           key={button.key}
           onDark={field.onDark}
-          variant={getButtonVariant(button.variant)}
+          variant={buttonVariantAt(["primary", "outline"], index, giving)}
         >
           <Link
             href={button.href}
@@ -131,6 +127,7 @@ function StackedTimelineList({
   buttons,
   dataAttribute,
   eyebrow,
+  giving,
   intro,
   items,
   title,
@@ -177,7 +174,12 @@ function StackedTimelineList({
                 {intro}
               </p>
             ) : null}
-            <TimelineButtons buttons={buttons} dataAttribute={dataAttribute} field={field} />
+            <TimelineButtons
+              buttons={buttons}
+              dataAttribute={dataAttribute}
+              field={field}
+              giving={giving}
+            />
           </header>
 
           <ol

@@ -18,13 +18,6 @@ type RichTextBlockComponents = Extract<
   Record<string, unknown>
 >;
 
-function getButtonVariant(value: unknown) {
-  const variant = stegaClean(value);
-  return variant === "secondary" || variant === "outline" || variant === "link"
-    ? variant
-    : "default";
-}
-
 type HeadingTag = "h2" | "h3" | "h4" | "h5" | "h6";
 
 function createHeadingComponent(
@@ -86,7 +79,7 @@ export const richTextContentComponents: PortableTextProps["components"] = {
       return href ? (
         <Link
           className={cn(
-            buttonVariants({ variant: getButtonVariant(value.variant) }),
+            buttonVariants({ variant: "primary" }),
             "my-2 no-underline",
           )}
           href={href}

@@ -36,6 +36,9 @@ function PageContent({
   stega: boolean;
 }) {
   const blocks = page.blocks ?? [];
+  // The Donate page and the pages under it ask for gifts: there the main
+  // action of every button list is marigold.
+  const isGivingPage = /^\/*donate(\/|$)/.test(stegaClean(page.slug) ?? "");
   const needsTitleHeader =
     blocks[0]?._type !== "innerHero" &&
     blocks[0]?._type !== "homeHero" &&
@@ -96,6 +99,7 @@ function PageContent({
       <Blocks
         blocks={blocks}
         documentId={page._id}
+        giving={isGivingPage}
         perspective={perspective}
         stega={stega}
       />

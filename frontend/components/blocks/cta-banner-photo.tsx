@@ -73,7 +73,7 @@ export default function CtaBannerPhoto({
           ) : null}
         </div>
         <div className="flex flex-col items-start gap-4" data-sanity={dataAttribute?.("buttons")}>
-          <SectionButtonLink arrow button={main} fallbackVariant="highlight" size="hero" />
+          <SectionButtonLink arrow button={main} size="hero" variant="highlight" />
           {secondaryLink ? (
             <Link
               className="focus-ring font-ui text-base font-semibold text-foreground underline hover:text-highlight"
