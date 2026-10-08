@@ -67,6 +67,9 @@ importers:
       '@sanity/image-url':
         specifier: ^2.1.1
         version: 2.1.1
+      '@sanity/preview-url-secret':
+        specifier: ^4.1.2
+        version: 4.1.2(@sanity/client@7.26.2)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1

@@ -9,6 +9,7 @@ import { resolve } from "./presentation/resolve";
 import { openInPresentationAction } from "./presentation/open-in-presentation";
 import { isPresentationDocumentType } from "./presentation/routes";
 import { structure } from "./structure";
+import { teamDashboardTool } from "./tools/team-dashboard";
 import {
   singletonDocumentActions,
   singletonDocumentTypes,
@@ -90,4 +91,5 @@ export default defineConfig({
     visionTool({ defaultApiVersion: apiVersion }),
     media(),
   ],
+  tools: (prev) => [...prev, teamDashboardTool(SANITY_STUDIO_PREVIEW_URL)],
 });
