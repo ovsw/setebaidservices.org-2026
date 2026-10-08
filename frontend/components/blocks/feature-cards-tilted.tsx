@@ -6,9 +6,10 @@ import {
   HeadingText,
   hasImage,
   hasText,
-  SectionButtonLink,
+  SectionButtons,
   SectionImage,
   type DataAttribute,
+  type PageButtonContext,
 } from "./section-parts";
 import { lightGlowClass, sectionThemeClass } from "./section-theme";
 
@@ -16,9 +17,10 @@ type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type FeatureCardsProps = Extract<PageBlock, { _type: "featureCards" }> & {
-  dataAttribute?: DataAttribute;
-};
+type FeatureCardsProps = Extract<PageBlock, { _type: "featureCards" }> &
+  PageButtonContext & {
+    dataAttribute?: DataAttribute;
+  };
 
 /*
  * Feature Cards, tilted layout (prototype "Camps"): large cards with a
@@ -33,6 +35,7 @@ export default function FeatureCardsTilted({
   _key,
   background,
   dataAttribute,
+  giving,
   groups,
   link,
   title,
@@ -130,18 +133,13 @@ export default function FeatureCardsTilted({
                       {card.text}
                     </p>
                   ) : null}
-                  <div className="mt-1 flex flex-wrap items-center gap-3">
-                    <SectionButtonLink
-                      arrow
-                      button={card.link}
-                      dataSanity={cardData?.("link")}
-                    />
-                    <SectionButtonLink
-                      button={card.secondaryLink}
-                      dataSanity={cardData?.("secondaryLink")}
-                      fallbackVariant="outline"
-                    />
-                  </div>
+                  <SectionButtons
+                    buttons={card.buttons}
+                    className="mt-1"
+                    dataAttribute={dataAttribute}
+                    giving={giving}
+                    path={`${card.path}.buttons`}
+                  />
                 </div>
               </article>
             );

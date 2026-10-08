@@ -10,24 +10,6 @@ export default defineType({
   type: "object",
   fields: [
     defineField({
-      name: "variant",
-      type: "string",
-      hidden: ({ document }) =>
-        document?._type === "blogPostSettings" || document?._type === "settings",
-      initialValue: "default",
-      options: {
-        layout: "radio",
-        list: [
-          { title: "Default", value: "default" },
-          { title: "Highlight (marigold, for giving)", value: "highlight" },
-          { title: "Secondary", value: "secondary" },
-          { title: "Outline", value: "outline" },
-          { title: "Ghost", value: "ghost" },
-          { title: "Link", value: "link" },
-        ],
-      },
-    }),
-    defineField({
       name: "text",
       title: "Button Text",
       type: "string",

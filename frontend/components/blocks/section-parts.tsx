@@ -150,34 +150,30 @@ export type SectionButton = {
   href?: string | null;
   openInNewTab?: boolean | null;
   text?: string | null;
-  variant?: string | null;
 };
 
-const BUTTON_VARIANTS = new Set([
-  "primary",
-  "highlight",
-  "outline",
-  "secondary",
-  "ghost",
-  "link",
-]);
+/** What the page tells its sections about their buttons. */
+export type PageButtonContext = {
+  /** A giving page, under /donate: each list's main action is marigold. */
+  giving?: boolean;
+  /** The home page. */
+  homePage?: boolean;
+};
 
-type ButtonVariant =
-  | "primary"
-  | "highlight"
-  | "outline"
-  | "secondary"
-  | "ghost"
-  | "link";
+export type ButtonVariant = "primary" | "highlight" | "outline" | "ghost" | "link";
 
-export function resolveButtonVariant(
-  variant: string | null | undefined,
-  fallback: ButtonVariant,
+/**
+ * The style of the button at `index` in a section's button list. Editors
+ * choose only the order; the section sets the style of each position, and
+ * the last style repeats. On a giving page the main action is marigold.
+ */
+export function buttonVariantAt(
+  variants: readonly ButtonVariant[],
+  index: number,
+  giving = false,
 ): ButtonVariant {
-  const value = stegaClean(variant);
-  if (value === "default") return "primary";
-  if (value === "copper") return "highlight";
-  return value && BUTTON_VARIANTS.has(value) ? (value as ButtonVariant) : fallback;
+  if (giving && index === 0) return "highlight";
+  return variants[Math.min(index, variants.length - 1)] ?? "outline";
 }
 
 export function resolveButton(button: SectionButton | null | undefined) {
@@ -197,17 +193,17 @@ export function SectionButtonLink({
   button,
   className,
   dataSanity,
-  fallbackVariant = "primary",
   onDark,
   size = "default",
+  variant = "primary",
 }: {
   arrow?: boolean;
   button: SectionButton | null | undefined;
   className?: string;
   dataSanity?: string;
-  fallbackVariant?: ButtonVariant;
   onDark?: boolean;
   size?: "default" | "hero" | "compact";
+  variant?: ButtonVariant;
 }) {
   const action = resolveButton(button);
   if (!action) return null;
@@ -220,7 +216,7 @@ export function SectionButtonLink({
       )}
       onDark={onDark}
       size={size}
-      variant={resolveButtonVariant(button?.variant, fallbackVariant)}
+      variant={variant}
     >
       <Link
         data-sanity={dataSanity}
@@ -244,18 +240,20 @@ export function SectionButtons({
   buttons,
   className,
   dataAttribute,
-  fallbackVariants = ["primary", "outline"],
+  giving,
   onDark,
   path = "buttons",
   size,
+  variants = ["primary", "outline"],
 }: {
   buttons?: SectionButton[] | null;
   className?: string;
   dataAttribute?: DataAttribute;
-  fallbackVariants?: ButtonVariant[];
+  giving?: boolean;
   onDark?: boolean;
   path?: string;
   size?: "default" | "hero" | "compact";
+  variants?: readonly ButtonVariant[];
 }) {
   const valid = (buttons ?? []).filter((button) => resolveButton(button));
   if (!valid.length) return null;
@@ -269,10 +267,10 @@ export function SectionButtons({
           arrow={index === 0}
           button={button}
           dataSanity={dataAttribute?.(`${path}[_key=="${button._key}"]`)}
-          fallbackVariant={fallbackVariants[index] ?? "outline"}
           key={button._key ?? index}
           onDark={onDark}
           size={size}
+          variant={buttonVariantAt(variants, index, giving)}
         />
       ))}
     </div>

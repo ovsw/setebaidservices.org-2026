@@ -26,8 +26,12 @@ const tier = defineArrayMember({
       validation: (rule) => rule.required().min(0).integer(),
     }),
     defineField({
-      name: "button",
-      type: "button",
+      name: "buttons",
+      type: "array",
+      description:
+        "One button. Its style follows the tier: an application tier gets the main style.",
+      of: [defineArrayMember({ type: "button" })],
+      validation: (rule) => rule.max(1),
     }),
     defineField({
       name: "application",

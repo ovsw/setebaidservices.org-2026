@@ -1,6 +1,14 @@
 import { Images } from "lucide-react";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType, type Path } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+
+/** Whether the Feature Cards section that holds the field at `path` is tilted. */
+function isTiltedSection(document: unknown, path: Path | undefined) {
+  const sectionKey = (path?.[1] as { _key?: string } | undefined)?._key;
+  const blocks = (document as { blocks?: { _key?: string; layout?: string }[] } | undefined)
+    ?.blocks;
+  return blocks?.find((block) => block._key === sectionKey)?.layout === "tilted";
+}
 
 const featureCardLink = defineField({
   name: "link",
@@ -19,7 +27,12 @@ const featureCardLink = defineField({
       validation: (rule) => rule.required(),
     }),
   ],
-  validation: (rule) => rule.required(),
+  description: "Numbered grid only. The whole card links here.",
+  hidden: ({ document, path }) => isTiltedSection(document, path),
+  validation: (rule) =>
+    rule.custom((value, context) =>
+      value || isTiltedSection(context.document, context.path) ? true : "Required",
+    ),
 });
 
 const featureCard = defineArrayMember({
@@ -61,11 +74,12 @@ const featureCard = defineArrayMember({
     }),
     featureCardLink,
     defineField({
-      ...featureCardLink,
-      name: "secondaryLink",
-      title: "Second link",
-      description: "Tilted layout only. Shown as an outline button beside the first.",
-      validation: undefined,
+      name: "buttons",
+      type: "array",
+      description: "Tilted photos only. Up to two buttons. The first is the main action.",
+      of: [defineArrayMember({ type: "button" })],
+      hidden: ({ document, path }) => !isTiltedSection(document, path),
+      validation: (rule) => rule.max(2),
     }),
     defineField({
       name: "eyebrow",
@@ -154,7 +168,7 @@ export default defineType({
       name: "layout",
       type: "string",
       description:
-        "Numbered grid: linked image cards in rows. Tilted photos: large cards with a tilted photo, a date badge and two buttons.",
+        "Numbered grid: linked image cards in rows. Tilted photos: large cards with a tilted photo, a date badge and up to two buttons.",
       initialValue: "grid",
       options: {
         layout: "radio",

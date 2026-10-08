@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
 import { sectionThemeClass } from "./section-theme";
-import { hotspotPosition } from "./section-parts";
+import { hotspotPosition, type PageButtonContext } from "./section-parts";
 import styles from "./image-collage-feature.module.css";
 import ImageCollageBento from "./image-collage-bento";
 
@@ -20,9 +20,10 @@ type PageBlock =
 type ImageCollageFeatureProps = Extract<
   PageBlock,
   { _type: "imageCollageFeature" }
-> & {
-  dataAttribute?: (path: string) => string | undefined;
-};
+> &
+  PageButtonContext & {
+    dataAttribute?: (path: string) => string | undefined;
+  };
 
 type CollageImage = NonNullable<ImageCollageFeatureProps["primaryImage"]>;
 

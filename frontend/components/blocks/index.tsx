@@ -34,6 +34,7 @@ import PricingTiers from "@/components/blocks/pricing-tiers";
 // page-builder-generator:component-imports
 import { dataset, projectId } from "@/sanity/lib/env";
 import type { BlogListing } from "@/lib/blog-index";
+import type { PageButtonContext } from "@/components/blocks/section-parts";
 
 type BlockEditingProps = {
   dataAttribute?: (path: string) => string | undefined;
@@ -46,6 +47,9 @@ type BlockEditingProps = {
     path: string,
   ) => string | undefined;
 };
+
+/** Page context every section receives; see PageButtonContext. */
+type BlockPageContextProps = PageButtonContext;
 
 /** Page data a route hands to one section type. */
 type BlockPageDataProps = {
@@ -117,6 +121,7 @@ export default function Blocks({
   blogListing,
   documentId,
   documentType = "page",
+  giving = false,
   stega,
 }: {
   blocks: Block[];
@@ -124,6 +129,8 @@ export default function Blocks({
   blogListing?: BlogListing;
   documentId: string;
   documentType?: "blogIndex" | "homePage" | "page";
+  /** A giving page, under /donate. */
+  giving?: boolean;
   perspective: LivePerspective;
   stega: boolean;
 }) {
@@ -133,10 +140,14 @@ export default function Blocks({
   const sections = (blocks ?? []).filter((block) => block._type in componentMap);
   const boundaries = resolveSectionBoundaries(sections);
   const bands = resolveSectionBands(boundaries);
+  const pageContext: BlockPageContextProps = {
+    giving,
+    homePage: documentType === "homePage",
+  };
 
   const wrappers = sections.map((block, index) => {
         const Component = componentMap[block._type] as React.ComponentType<
-          Block & BlockEditingProps & BlockPageDataProps
+          Block & BlockEditingProps & BlockPageContextProps & BlockPageDataProps
         >;
 
         const blockPath = `blocks[_key=="${block._key}"]`;
@@ -225,7 +236,12 @@ export default function Blocks({
             suppressHydrationWarning
             key={block._key}
           >
-            <Component {...themedBlock} {...editingProps} {...pageDataProps} />
+            <Component
+              {...themedBlock}
+              {...editingProps}
+              {...pageContext}
+              {...pageDataProps}
+            />
           </div>
         );
       });

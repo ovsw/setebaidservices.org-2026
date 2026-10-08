@@ -10,14 +10,16 @@ import { stegaClean } from "next-sanity";
 import styles from "./feature-cards.module.css";
 import { sectionThemeClass } from "./section-theme";
 import FeatureCardsTilted from "./feature-cards-tilted";
+import type { PageButtonContext } from "./section-parts";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type FeatureCardsProps = Extract<PageBlock, { _type: "featureCards" }> & {
-  dataAttribute?: (path: string) => string | undefined;
-};
+type FeatureCardsProps = Extract<PageBlock, { _type: "featureCards" }> &
+  PageButtonContext & {
+    dataAttribute?: (path: string) => string | undefined;
+  };
 
 /** Field-dependent colour recipes so the two variants stay in one component. */
 const fields = {

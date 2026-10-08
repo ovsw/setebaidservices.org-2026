@@ -345,30 +345,6 @@
   },
   {
     "type": "type",
-    "name": "secondaryLink",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "text": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "url": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "customUrl"
-          },
-          "optional": true
-        }
-      }
-    }
-  },
-  {
-    "type": "type",
     "name": "stackedFeatureRow.icon",
     "value": {
       "type": "object",
@@ -664,11 +640,25 @@
                   },
                   "optional": true
                 },
-                "button": {
+                "buttons": {
                   "type": "objectAttribute",
                   "value": {
-                    "type": "inline",
-                    "name": "button"
+                    "type": "array",
+                    "of": {
+                      "type": "object",
+                      "attributes": {
+                        "_key": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "rest": {
+                        "type": "inline",
+                        "name": "button"
+                      }
+                    }
                   },
                   "optional": true
                 },
@@ -2412,11 +2402,25 @@
                           },
                           "optional": true
                         },
-                        "secondaryLink": {
+                        "buttons": {
                           "type": "objectAttribute",
                           "value": {
-                            "type": "inline",
-                            "name": "secondaryLink"
+                            "type": "array",
+                            "of": {
+                              "type": "object",
+                              "attributes": {
+                                "_key": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "rest": {
+                                "type": "inline",
+                                "name": "button"
+                              }
+                            }
                           },
                           "optional": true
                         },
@@ -4860,31 +4864,6 @@
             "value": "buttonLink"
           }
         },
-        "variant": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "default"
-              },
-              {
-                "type": "string",
-                "value": "secondary"
-              },
-              {
-                "type": "string",
-                "value": "outline"
-              },
-              {
-                "type": "string",
-                "value": "link"
-              }
-            ]
-          },
-          "optional": true
-        },
         "customLink": {
           "type": "objectAttribute",
           "value": {
@@ -4908,39 +4887,6 @@
             "type": "string",
             "value": "button"
           }
-        },
-        "variant": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "default"
-              },
-              {
-                "type": "string",
-                "value": "highlight"
-              },
-              {
-                "type": "string",
-                "value": "secondary"
-              },
-              {
-                "type": "string",
-                "value": "outline"
-              },
-              {
-                "type": "string",
-                "value": "ghost"
-              },
-              {
-                "type": "string",
-                "value": "link"
-              }
-            ]
-          },
-          "optional": true
         },
         "text": {
           "type": "objectAttribute",
@@ -5192,43 +5138,6 @@
     }
   },
   {
-    "name": "button-variant",
-    "type": "type",
-    "value": {
-      "type": "union",
-      "of": [
-        {
-          "type": "string",
-          "value": "default"
-        },
-        {
-          "type": "string",
-          "value": "highlight"
-        },
-        {
-          "type": "string",
-          "value": "outline"
-        },
-        {
-          "type": "string",
-          "value": "secondary"
-        },
-        {
-          "type": "string",
-          "value": "ghost"
-        },
-        {
-          "type": "string",
-          "value": "link"
-        },
-        {
-          "type": "string",
-          "value": "destructive"
-        }
-      ]
-    }
-  },
-  {
     "name": "sectionBackground",
     "type": "type",
     "value": {
@@ -5345,14 +5254,6 @@
           "type": "objectAttribute",
           "value": {
             "type": "boolean"
-          },
-          "optional": true
-        },
-        "buttonVariant": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "button-variant"
           },
           "optional": true
         }

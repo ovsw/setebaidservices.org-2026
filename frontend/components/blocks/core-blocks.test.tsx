@@ -335,7 +335,6 @@ describe("core Page Builder sections", () => {
           href: "/contact",
           openInNewTab: false,
           text: "Start a conversation",
-          variant: "default",
         },
       ],
       description: "Tell us what you are working through.",

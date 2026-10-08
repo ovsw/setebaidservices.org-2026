@@ -171,9 +171,11 @@ export default function PricingTiers({
                   </span>
                   <SectionButtonLink
                     arrow
-                    button={tier.button}
+                    button={tier.buttons?.[0]}
                     className={cn("w-full", !application && "bg-card")}
-                    fallbackVariant={application ? "primary" : "outline"}
+                    dataSanity={dataAttribute?.(`${tierPath}.buttons`)}
+                    // The tier sets the style: the application tier leads.
+                    variant={application ? "primary" : "outline"}
                   />
                 </div>
                 {hasText(tier.note) ? (

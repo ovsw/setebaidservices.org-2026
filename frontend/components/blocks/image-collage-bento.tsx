@@ -8,6 +8,7 @@ import {
   SectionButtons,
   SectionImage,
   type DataAttribute,
+  type PageButtonContext,
 } from "./section-parts";
 import { lightGlowClass, sectionThemeClass } from "./section-theme";
 
@@ -15,9 +16,10 @@ type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type ImageCollageFeatureProps = Extract<PageBlock, { _type: "imageCollageFeature" }> & {
-  dataAttribute?: DataAttribute;
-};
+type ImageCollageFeatureProps = Extract<PageBlock, { _type: "imageCollageFeature" }> &
+  PageButtonContext & {
+    dataAttribute?: DataAttribute;
+  };
 
 /*
  * Image Collage, bento layout (prototype "Staff"): a four-column grid. The
@@ -53,6 +55,7 @@ export default function ImageCollageBento({
   buttons,
   dataAttribute,
   eyebrow,
+  giving,
   primaryImage,
   secondaryImage,
   tertiaryImage,
@@ -99,7 +102,7 @@ export default function ImageCollageBento({
               </p>
             ) : null}
           </div>
-          <SectionButtons buttons={buttons} dataAttribute={dataAttribute} />
+          <SectionButtons buttons={buttons} dataAttribute={dataAttribute} giving={giving} />
         </div>
         {CELLS.map((cell, index) => {
           const photo = photos[index];

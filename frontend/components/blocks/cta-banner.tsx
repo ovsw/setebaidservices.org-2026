@@ -6,9 +6,9 @@ import type { HOME_PAGE_QUERY_RESULT, PAGE_QUERY_RESULT } from "@/sanity.types";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { stegaClean } from "next-sanity";
 import Link from "next/link";
-import type { ComponentProps } from "react";
 import styles from "./cta-banner.module.css";
 import CtaBannerPhoto from "./cta-banner-photo";
+import { buttonVariantAt, type PageButtonContext } from "./section-parts";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
@@ -16,9 +16,10 @@ type PageBlock =
 
 type CtaBannerBlock = Extract<PageBlock, { _type: "ctaBanner" }>;
 
-type CtaBannerProps = CtaBannerBlock & {
-  dataAttribute?: (path: string) => string | undefined;
-};
+type CtaBannerProps = CtaBannerBlock &
+  PageButtonContext & {
+    dataAttribute?: (path: string) => string | undefined;
+  };
 
 /*
  * CTA Banner — the handoff block, in two weights.
@@ -33,26 +34,6 @@ type CtaBannerProps = CtaBannerBlock & {
  * on scroll; reduced motion skips it.
  */
 
-type ButtonVariant = NonNullable<ComponentProps<typeof Button>["variant"]>;
-
-/** An editor's stored button variant wins when it is one we render. */
-function resolveCtaButtonVariant(
-  variant: string | null | undefined,
-  index: number,
-): ButtonVariant {
-  const cleanVariant = stegaClean(variant);
-  if (
-    cleanVariant === "default" ||
-    cleanVariant === "secondary" ||
-    cleanVariant === "outline" ||
-    cleanVariant === "ghost" ||
-    cleanVariant === "link"
-  ) {
-    return cleanVariant;
-  }
-  return index === 0 ? "default" : "outline";
-}
-
 export function resolveCtaBannerVariant(variant?: string | null) {
   return stegaClean(variant) === "nudge" ? "nudge" : "closing";
 }
@@ -60,10 +41,12 @@ export function resolveCtaBannerVariant(variant?: string | null) {
 function CtaButtons({
   buttons,
   dataAttribute,
+  giving,
   onDark,
 }: Readonly<{
   buttons: CtaBannerProps["buttons"];
   dataAttribute?: CtaBannerProps["dataAttribute"];
+  giving?: boolean;
   onDark: boolean;
 }>) {
   const actions = (buttons ?? []).slice(0, 2).flatMap((button, index) => {
@@ -76,13 +59,12 @@ function CtaButtons({
         label: stegaClean(button.text)?.trim() || "Learn more",
         openInNewTab: Boolean(stegaClean(button.openInNewTab)),
         path: `buttons[_key=="${button._key}"]`,
-        storedVariant: button.variant,
       },
     ];
-  }).map(({ storedVariant, ...action }, index) => ({
+  }).map((action, index) => ({
     ...action,
     primary: index === 0,
-    variant: resolveCtaButtonVariant(storedVariant, index),
+    variant: buttonVariantAt(["primary", "outline"], index, giving),
   }));
 
   if (!actions.length) return null;
@@ -128,6 +110,7 @@ function CtaBannerBand({
   buttons,
   dataAttribute,
   description,
+  giving,
   title,
   variant,
 }: CtaBannerProps) {
@@ -175,6 +158,7 @@ function CtaBannerBand({
               <CtaButtons
                 buttons={buttons}
                 dataAttribute={dataAttribute}
+                giving={giving}
                 onDark={theme === "green"}
               />
             </div>
@@ -214,7 +198,12 @@ function CtaBannerBand({
           ) : null}
         </div>
         <div className="lg:col-span-4 lg:flex lg:justify-end">
-          <CtaButtons buttons={buttons} dataAttribute={dataAttribute} onDark={theme === "green"} />
+          <CtaButtons
+            buttons={buttons}
+            dataAttribute={dataAttribute}
+            giving={giving}
+            onDark={theme === "green"}
+          />
         </div>
       </div>
     </section>
