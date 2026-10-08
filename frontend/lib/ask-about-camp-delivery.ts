@@ -1,12 +1,15 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
+import { tasks } from "@trigger.dev/sdk";
 import {
   HONEYPOT_FIELD,
   type AskAboutCampRequest,
   type AskAboutCampResult,
   validateAskAboutCamp,
 } from "@/lib/ask-about-camp";
+import { type EncryptedFormEntry, encryptFormEntry } from "@/lib/form-entry-crypto";
 import { isRouteSlug } from "@/lib/routes";
+import type { storeFormEntryTask } from "@/trigger/store-form-entry";
 
 /** A request ready to deliver: the parent's answers plus where and when it came from. */
 export type AskAboutCampEntry = AskAboutCampRequest & {
@@ -42,8 +45,9 @@ export function formsparkPayload(entry: AskAboutCampEntry) {
   };
 }
 
-export function createFormsparkClient(formId: string): FormsparkClient {
+export function createFormsparkClient(formId: string | undefined): FormsparkClient {
   return async (entry) => {
+    if (!formId) throw new Error("FORMSPARK_FORM_ID is not set");
     const response = await fetch(`https://submit-form.com/${encodeURIComponent(formId)}`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -51,6 +55,27 @@ export function createFormsparkClient(formId: string): FormsparkClient {
       signal: AbortSignal.timeout(10_000),
     });
     if (!response.ok) throw new Error(`Formspark answered HTTP ${response.status}`);
+  };
+}
+
+/** Hands one encrypted entry to the store task, or throws. */
+export type TriggerClient = (payload: EncryptedFormEntry) => Promise<void>;
+
+export function createTriggerClient(secretKey: string | undefined): TriggerClient {
+  return async (payload) => {
+    if (!secretKey) throw new Error("TRIGGER_SECRET_KEY is not set");
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const timeout = new Promise<never>((_, reject) => {
+      timer = setTimeout(() => reject(new Error("Trigger.dev did not answer in 10 seconds")), 10_000);
+    });
+    try {
+      await Promise.race([
+        tasks.trigger<typeof storeFormEntryTask>("store-form-entry", payload),
+        timeout,
+      ]);
+    } finally {
+      clearTimeout(timer);
+    }
   };
 }
 
@@ -80,6 +105,11 @@ export function createSubmitLimiter({ limit, windowMs }: { limit: number; window
 export type SubmitLimiter = ReturnType<typeof createSubmitLimiter>;
 
 export type AskAboutCampDeps = {
+  /** Path A: the store task, which writes the entry to Neon. */
+  trigger: TriggerClient;
+  /** The key that encrypts the entry for path A. */
+  encryptionKey: string;
+  /** Path B: Formspark, which emails the office. */
   formspark: FormsparkClient;
   allow: SubmitLimiter;
   now?: () => Date;
@@ -100,14 +130,27 @@ function pageField(formData: FormData) {
     : "unknown";
 }
 
+function reason(error: unknown) {
+  return error instanceof Error ? error.message : "unknown error";
+}
+
 /**
- * Check a sent form and deliver it. The visitor key identifies one visitor
- * for the send limit; it is not stored.
+ * Check a sent form and deliver it on two paths at the same time: encrypted
+ * to the store task, and to Formspark. It is sent when at least one path
+ * accepts it. The visitor key identifies one visitor for the send limit; it
+ * is not stored.
  */
 export async function submitAskAboutCamp(
   formData: FormData,
   visitor: string,
-  { formspark, allow, now = () => new Date(), newId = randomUUID }: AskAboutCampDeps,
+  {
+    trigger,
+    encryptionKey,
+    formspark,
+    allow,
+    now = () => new Date(),
+    newId = randomUUID,
+  }: AskAboutCampDeps,
 ): Promise<AskAboutCampResult> {
   const honeypot = formData.get(HONEYPOT_FIELD);
   if (typeof honeypot === "string" && honeypot.trim()) return { status: "failed" };
@@ -128,15 +171,18 @@ export async function submitAskAboutCamp(
   const campaign = slugField(formData, "campaign");
   if (campaign) entry.campaign = campaign;
 
-  try {
-    await formspark(entry);
-    return { status: "sent" };
-  } catch (error) {
-    // Log the reason only: the entry holds the family's details.
-    console.error(
-      `Ask about camp ${entry.submissionId} was not delivered:`,
-      error instanceof Error ? error.message : "unknown error",
-    );
-    return { status: "failed" };
+  const [stored, mailed] = await Promise.allSettled([
+    (async () => trigger(encryptFormEntry(entry, encryptionKey)))(),
+    formspark(entry),
+  ]);
+  // Log the reason only: the entry holds the family's details.
+  if (stored.status === "rejected") {
+    console.error(`Ask about camp ${entry.submissionId} did not reach Trigger.dev:`, reason(stored.reason));
   }
+  if (mailed.status === "rejected") {
+    console.error(`Ask about camp ${entry.submissionId} did not reach Formspark:`, reason(mailed.reason));
+  }
+  return stored.status === "fulfilled" || mailed.status === "fulfilled"
+    ? { status: "sent" }
+    : { status: "failed" };
 }

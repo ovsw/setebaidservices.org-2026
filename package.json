@@ -22,6 +22,8 @@
     "legacy:page": "pnpm --dir studio legacy:page",
     "setup:sanity-cors": "node --env-file=studio/.env.local --env-file=studio/.env.production scripts/setup-sanity-cors.mjs",
     "setup:qr": "bash scripts/setup-qr-mechanism.sh",
+    "db:migrate": "pnpm --dir frontend db:migrate",
+    "trigger:deploy": "pnpm --dir frontend trigger:deploy",
     "page-builder:new": "node scripts/create-page-builder-block.mjs",
     "impeccable:live": "\"$HOME/.claude/skills/impeccable/scripts/impeccable\" live --target frontend",
     "impeccable:stop": "\"$HOME/.claude/skills/impeccable/scripts/impeccable\" live-server stop",
