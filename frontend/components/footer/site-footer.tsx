@@ -1,7 +1,9 @@
 import Image from "next/image";
+import { stegaClean } from "next-sanity";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { siteName } from "@/lib/site-name";
 import { FooterLink } from "./footer-link";
+import { FooterMarkLogos } from "./footer-mark-logos";
 import { FooterIcon, socialIconFor } from "./icons";
 import type {
   FooterColumnModel,
@@ -174,22 +176,18 @@ export function SiteFooter({
         </div>
 
         {markLogos.length ? (
-          <ul
-            aria-label="Affiliations and history"
-            className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 border-b border-birch-bark/15 py-10 tablet:justify-between"
-            data-sanity={dataAttribute?.("logos")}
-          >
-            {/* Each item points at its array entry, so editors can drag the
-                marks into a new order in Presentation. */}
-            {markLogos.map((logo) => (
-              <li
-                data-sanity={dataAttribute?.(`logos[_key==\"${logo.key}\"]`)}
-                key={logo.key}
-              >
+          <FooterMarkLogos
+            dataSanity={dataAttribute?.("logos")}
+            items={markLogos.map((logo) => ({
+              key: logo.key,
+              dataSanity: dataAttribute?.(`logos[_key==\"${logo.key}\"]`),
+              node: (
                 <FooterLink link={logo.link}>
                   <span className="flex h-14 items-center opacity-80 transition-opacity duration-200 hover:opacity-100 tablet:h-[72px]">
+                    {/* An encoded alt gives the image its own overlay on top
+                        of the item's, which blocks dragging the item. */}
                     <Image
-                      alt={logo.alt}
+                      alt={stegaClean(logo.alt)}
                       className="h-full w-auto max-w-[140px] object-contain"
                       height={logo.image.height}
                       sizes="140px"
@@ -198,9 +196,9 @@ export function SiteFooter({
                     />
                   </span>
                 </FooterLink>
-              </li>
-            ))}
-          </ul>
+              ),
+            }))}
+          />
         ) : null}
 
         <div className="flex flex-wrap items-center gap-x-[26px] gap-y-3 pt-7 text-[14px] text-birch-bark/75">
