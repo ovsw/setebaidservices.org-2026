@@ -21,7 +21,34 @@ The Website and Studio are separate applications.
 5. A ruleset on `main` requires the GitHub `Release gate` check before a pull
    request can merge. Repository admins may bypass it; do not.
 
-Vercel may create preview deployments for pull requests. Production deploys come only from verified revisions merged into `main`.
+Vercel may create preview deployments for pull requests. Production deploys come only from verified revisions merged into `main`, or from a rebuild of `main` when a redirect changes (below).
+
+## Redirects go live on publish
+
+The Website compiles the published Redirect documents into its redirect rules
+at build time, so they run before any site code. A Sanity webhook starts a new
+production build when a published redirect changes. The change is live a few
+minutes after you publish, when that build is ready.
+
+| Setting | Value |
+| --- | --- |
+| Vercel deploy hook | Name `sanity-redirects`, branch `main`, in the project's Git settings |
+| Sanity webhook | Name "Rebuild the Website when a redirect changes", in the project's API settings |
+| Dataset | `production` |
+| Trigger | Create, update and delete |
+| Filter | `_type == "redirect"` |
+| Drafts and versions | Off, so draft edits do not start a deploy |
+| Projection | `{_id}` |
+| HTTP method | `POST`, to the deploy hook URL |
+
+The deploy hook URL is a secret: anyone who has it can start a deploy. It is
+kept only in Vercel, in the Sanity webhook, and in the local setup file (see
+[Where the keys go](#where-the-keys-go)). Section b of `pnpm setup:qr` creates
+both settings and checks them; re-run it to check them again.
+
+To confirm that it works, publish a change to a redirect. A new production
+deployment from the hook `sanity-redirects` appears in Vercel within a few
+seconds. When it is ready, the changed rule works on the Website.
 
 ## Studio on Sanity
 
