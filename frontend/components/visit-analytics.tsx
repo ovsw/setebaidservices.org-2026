@@ -20,6 +20,12 @@ function restoreLandingTags(event: BeforeSendEvent) {
 
 /** Events carry only the Source and the page: never personal data. */
 function trackVisitEvent(name: "qr_scan" | "call_tap" | "email_tap") {
+  // <Analytics> mounts after this component's effect and creates the event
+  // queue only then; `track` drops events sent before it. This is Vercel's
+  // documented queue snippet for pages without the package.
+  window.va ??= (...params) => {
+    (window.vaq ??= []).push(params);
+  };
   track(name, {
     source: currentVisitSource().source,
     page: window.location.pathname,
