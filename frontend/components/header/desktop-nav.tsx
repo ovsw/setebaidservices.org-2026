@@ -21,7 +21,6 @@ import type {
   HeaderNavigationModel,
 } from "./model";
 import { NavigationIcon } from "./navigation-icon";
-import type { HeaderTheme } from "./theme";
 
 const SINGLE_COLUMN_PANEL_WIDTH = 300;
 const TWO_COLUMN_PANEL_WIDTH = 580;
@@ -32,13 +31,10 @@ const CLOSE_DELAY_MS = 120;
 function GroupPanelContent({
   label,
   links,
-  theme,
 }: {
   label: string;
   links: HeaderChildLinkModel[];
-  theme: HeaderTheme;
 }) {
-  const dark = theme === "dark";
   const firstColumnLength = Math.ceil(links.length / 2);
   const columns =
     links.length >= TWO_COLUMN_MIN_LINKS
@@ -48,10 +44,7 @@ function GroupPanelContent({
   return (
     <div className="p-3">
       <p
-        className={cn(
-          "text-label mb-2 px-2",
-          dark ? "text-birch-bark/55" : "text-ink-muted",
-        )}
+        className="text-label mb-2 px-2 text-birch-bark/55 header-light:text-ink-muted"
       >
         {label}
       </p>
@@ -62,7 +55,7 @@ function GroupPanelContent({
               <HeaderLink
                 className={cn(
                   "group/nav-link flex items-start gap-3 rounded-[var(--radius-md)] px-2 py-2.5 transition-colors motion-fast focus-ring",
-                  dark ? "hover:bg-birch-bark/6" : "hover:bg-cedar/8",
+                  "hover:bg-birch-bark/6 header-light:hover:bg-cedar/8",
                 )}
                 key={child.key}
                 link={child.link}
@@ -71,10 +64,7 @@ function GroupPanelContent({
                     the library default, so a column of items stays light. */}
                 {child.icon ? (
                   <span
-                    className={cn(
-                      "mt-px flex shrink-0 [&_svg]:size-5 [&_svg]:stroke-[1.6]",
-                      dark ? "text-highlight" : "text-primary",
-                    )}
+                    className="mt-px flex shrink-0 text-highlight header-light:text-primary [&_svg]:size-5 [&_svg]:stroke-[1.6]"
                   >
                     <NavigationIcon icon={child.icon} />
                   </span>
@@ -84,19 +74,11 @@ function GroupPanelContent({
                     {child.label}
                     <ChevronRight
                       aria-hidden="true"
-                      className={cn(
-                        "size-4 shrink-0 opacity-0 transition-opacity motion-fast group-hover/nav-link:opacity-100",
-                        dark ? "text-campfire-amber" : "text-cedar",
-                      )}
+                      className="size-4 shrink-0 text-campfire-amber opacity-0 transition-opacity motion-fast group-hover/nav-link:opacity-100 header-light:text-cedar"
                     />
                   </span>
                   {child.description ? (
-                    <span
-                      className={cn(
-                        "text-sm leading-snug",
-                        dark ? "text-birch-bark/65" : "text-ink-muted",
-                      )}
-                    >
+                    <span className="text-sm leading-snug text-birch-bark/65 header-light:text-ink-muted">
                       {child.description}
                     </span>
                   ) : null}
@@ -110,13 +92,7 @@ function GroupPanelContent({
   );
 }
 
-export function DesktopNav({
-  navigation,
-  theme,
-}: {
-  navigation: HeaderNavigationModel;
-  theme: HeaderTheme;
-}) {
+export function DesktopNav({ navigation }: { navigation: HeaderNavigationModel }) {
   /** The key of the open group. */
   const [active, setActive] = useState<string | null>(null);
   /** The open panel's left edge, relative to the nav. */
@@ -126,7 +102,6 @@ export function DesktopNav({
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefersReducedMotion = useReducedMotion();
   const panelId = useId();
-  const dark = theme === "dark";
 
   const groups = useMemo(
     () =>
@@ -213,17 +188,17 @@ export function DesktopNav({
   const fade = { duration: prefersReducedMotion ? 0 : 0.14 };
   // The open trigger and its panel are one surface, so they share a colour.
   // On dark it is the bar's ink, lifted a touch toward cream so the panel
-  // still reads as its own layer.
-  const panelSurfaceClassName = dark
-    ? "bg-[color-mix(in_oklab,var(--color-fill-deep)_94%,var(--color-background))] text-birch-bark"
-    : "bg-birch-bark-bright text-pine-night";
+  // still reads as its own layer. Every colour here follows the bar's look
+  // through the header-light variant (globals.css), so the bar paints right
+  // before the page's script runs.
+  const panelSurfaceClassName =
+    "bg-[color-mix(in_oklab,var(--color-fill-deep)_94%,var(--color-background))] text-birch-bark header-light:bg-birch-bark-bright header-light:text-pine-night";
   const primaryLinkClassName = cn(
     // px-2 -mx-1 keeps the same flow width as the old px-1 while giving the
     // hover pill room around the label.
     "-mx-1 flex min-h-11 items-center whitespace-nowrap rounded-control px-2 text-[15px] font-medium transition-colors motion-fast focus-ring",
-    dark
-      ? "text-birch-bark/85 hover:bg-birch-bark/8 hover:text-birch-bark"
-      : "text-ink-soft hover:bg-cedar/10 hover:text-cedar-deep",
+    "text-birch-bark/85 hover:bg-birch-bark/8 hover:text-birch-bark",
+    "header-light:text-ink-soft header-light:hover:bg-cedar/10 header-light:hover:text-cedar-deep",
   );
 
   return (
@@ -256,7 +231,7 @@ export function DesktopNav({
               "mx-0 gap-1.5 px-2.5",
               isActive && [
                 panelSurfaceClassName,
-                dark ? "hover:text-birch-bark" : "hover:text-pine-night",
+                "hover:text-birch-bark header-light:hover:text-pine-night",
               ],
             )}
             key={item.key}
@@ -305,14 +280,12 @@ export function DesktopNav({
               className={cn(
                 "relative overflow-hidden rounded-[var(--radius-md)] border",
                 panelSurfaceClassName,
-                "shadow-overlay",
-                dark ? "border-birch-bark/15" : "border-pine-night/12",
+                "shadow-overlay border-birch-bark/15 header-light:border-pine-night/12",
               )}
             >
               <GroupPanelContent
                 label={activeItem.label}
                 links={activeItem.links}
-                theme={theme}
               />
             </div>
           </motion.div>

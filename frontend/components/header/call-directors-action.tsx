@@ -3,20 +3,16 @@ import Link from "next/link";
 import type { MouseEventHandler } from "react";
 import { cn } from "@/lib/utils";
 import { CALL_DIRECTORS } from "./call-directors";
-import type { HeaderTheme } from "./theme";
 
 export function CallDirectorsAction({
   className,
   onClick,
-  theme,
 }: {
   className?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
-  theme: HeaderTheme;
 }) {
   if (!CALL_DIRECTORS) return null;
   const { href, label, phone, portrait } = CALL_DIRECTORS;
-  const dark = theme === "dark";
 
   return (
     <Link
@@ -26,7 +22,7 @@ export function CallDirectorsAction({
         // Hover pill lives on a pseudo-element so it can extend past the
         // link's box without growing the header row.
         "before:absolute before:-inset-x-1.5 before:-inset-y-1.5 before:-z-10 before:rounded-control before:opacity-0 before:transition-opacity before:motion-fast hover:before:opacity-100 motion-reduce:before:transition-none",
-        dark ? "before:bg-birch-bark/8" : "before:bg-cedar/10",
+        "before:bg-birch-bark/8 header-light:before:bg-cedar/10",
         className,
       )}
       href={href}
@@ -46,19 +42,15 @@ export function CallDirectorsAction({
             below 2.5:1 on bright areas, so the accent stays on the portrait
             ring and the hover state instead. */}
         <strong
-          className={cn(
-            "text-sm leading-none font-semibold",
-            dark ? "text-birch-bark/85" : "text-ink-soft",
-          )}
+          className="text-sm leading-none font-semibold text-birch-bark/85 header-light:text-ink-soft"
         >
           {label}
         </strong>
         <span
           className={cn(
             "font-mono text-[15px] leading-none font-bold tracking-[0.01em] transition-colors motion-fast motion-reduce:transition-none",
-            dark
-              ? "text-birch-bark group-hover:text-campfire-amber"
-              : "text-pine-night group-hover:text-cedar",
+            "text-birch-bark group-hover:text-campfire-amber",
+            "header-light:text-pine-night header-light:group-hover:text-cedar",
           )}
         >
           {phone}
