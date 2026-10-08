@@ -124,10 +124,20 @@ describe("team dashboard session route", () => {
   it("refuses everyone when the member list cannot be read", async () => {
     const errorSpy = vi.spyOn(console, "error").mockImplementation(() => undefined);
     sanityFetch.mockResolvedValue({ userId: "pMember1" });
-    aclFetch.mockResolvedValue(new Response("Forbidden", { status: 403 }));
     const { GET } = await loadModules();
 
-    expect(sessionCookie(await GET(sessionRequest()))).toBeNull();
+    for (const body of [
+      new Response("Forbidden", { status: 403 }),
+      new Response("<html>not json</html>"),
+      Response.json({ error: "unexpected" }),
+      Response.json([{ projectUserId: "pMember1", isRobot: false }]),
+    ]) {
+      aclFetch.mockResolvedValue(body);
+      const response = await GET(sessionRequest());
+
+      expect(response.status).toBe(303);
+      expect(sessionCookie(response)).toBeNull();
+    }
     errorSpy.mockRestore();
   });
 

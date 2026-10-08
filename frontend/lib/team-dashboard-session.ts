@@ -107,11 +107,14 @@ async function isProjectMember(userId: string, readToken: string) {
     return false;
   }
 
-  const members = (await response.json()) as ProjectMember[];
+  // An unexpected body refuses entry instead of failing the request.
+  const members = (await response.json().catch(() => null)) as ProjectMember[] | null;
+  if (!Array.isArray(members)) return false;
   return members.some(
     (member) =>
-      member.projectUserId === userId &&
-      !member.isRobot &&
+      member?.projectUserId === userId &&
+      member.isRobot === false &&
+      Array.isArray(member.roles) &&
       member.roles.length > 0,
   );
 }
