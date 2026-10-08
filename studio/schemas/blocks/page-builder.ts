@@ -22,6 +22,7 @@ export const contentPageBuilderBlockTypes = [
   "flipCards",
   "photoStrip",
   "pricingTiers",
+  "askAboutCampForm",
   // page-builder-generator:content-types
 ] as const;
 
@@ -82,6 +83,7 @@ const pageBuilderPreviewBlockTypes = new Set<PageBuilderBlockType>([
   "flipCards",
   "photoStrip",
   "pricingTiers",
+  "askAboutCampForm",
   // page-builder-generator:preview-types
 ]);
 
@@ -117,6 +119,10 @@ export function validateBlocks(
   const teamCount =
     blocks?.filter((block) => block?._type === "teamMembers").length ?? 0;
   if (teamCount > 1) return "Add no more than one Team Members section";
+  // The "Talk to the director" link needs one form to open.
+  const formCount =
+    blocks?.filter((block) => block?._type === "askAboutCampForm").length ?? 0;
+  if (formCount > 1) return "Add no more than one Ask about camp form";
   const final = blocks?.at(-1);
   if (final?.background === "green") return "Choose White or Cream for the final section above the footer.";
   return true;
@@ -152,7 +158,7 @@ function createBlocksField(
     {
       name: "cta",
       title: "CTA",
-      of: ["ctaBanner", "directorCta"],
+      of: ["ctaBanner", "directorCta", "askAboutCampForm"],
     },
     {
       name: "image-rich",

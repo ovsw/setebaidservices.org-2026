@@ -59,6 +59,7 @@ export type SectionTrait = {
  * changes a boundary; it records what the design intends.
  */
 export const sectionTraits: Record<Block["_type"], SectionTrait> = {
+  askAboutCampForm: {},
   benefitCards: {},
   bigImageList: {},
   ctaBanner: { tuck: true },
