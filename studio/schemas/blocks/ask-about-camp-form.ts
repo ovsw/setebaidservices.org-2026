@@ -15,7 +15,7 @@ export default defineType({
       name: "title",
       title: "Heading",
       type: "string",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Add the heading shown above the form."),
     }),
     defineField({
       name: "intro",
@@ -38,14 +38,14 @@ export default defineType({
       description:
         "A link to #talk-to-the-director, on this page or after this page's address, opens the form with this choice ticked.",
       initialValue: "Talk with the camp director",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Add the director choice. The Talk to the director link ticks it."),
     }),
     defineField({
       name: "privacyLine",
       title: "Privacy line",
       type: "string",
       description: "Shown beside the Send button, followed by a link to the privacy policy.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Add the privacy line shown beside the Send button."),
     }),
     defineField({
       name: "successMessage",
@@ -53,7 +53,7 @@ export default defineType({
       type: "text",
       rows: 3,
       description: "Shown in place of the form once the request is sent. Say what happens next.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Add the message parents see after their request is sent."),
     }),
     defineField({
       name: "errorMessage",
@@ -62,7 +62,7 @@ export default defineType({
       rows: 3,
       description:
         "Shown when the request could not be sent. The office phone number from Global Settings follows it as a call link.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Add the message parents see when their request cannot be sent."),
     }),
   ],
   preview: {
