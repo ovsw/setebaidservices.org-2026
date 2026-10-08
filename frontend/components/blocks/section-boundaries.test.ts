@@ -166,6 +166,19 @@ describe("resolveSectionBoundaries smile", () => {
   });
 
 
+  it("tucks instead of smiling below a photo that reaches the bottom edge", () => {
+    const result = resolveSectionBoundaries([
+      block("benefitCards", "green"),
+      story("white"),
+      block("imageCollageFeature", "cream"),
+      block("richTextBlock", "white"),
+    ]);
+    expect(result[1].smileBelow).toBe(false);
+    expect(result[2].tuck).toBe(true);
+    const withoutPhoto = [story("white", false), block("faqAccordion", "cream"), block("richTextBlock", "white")];
+    expect(smiles(withoutPhoto)[0].smileBelow).toBe(true);
+  });
+
   it("keeps a straight edge below a photo hero", () => {
     expect(smiles([block("innerHero"), block("faqAccordion", "cream")])[1].smileAbove).toBe(false);
   });
