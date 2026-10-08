@@ -4,6 +4,7 @@ import { DisableDraftMode } from "@/components/disable-draft-mode";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
 import { SanityLive } from "@/sanity/lib/live";
+import { VisitAnalytics } from "@/components/visit-analytics";
 
 export default async function MainLayout({
   children,
@@ -29,6 +30,8 @@ export default async function MainLayout({
         {children}
       </main>
       <SanityLive includeDrafts={isDraftMode} />
+      {/* Editors previewing drafts are not visitors. */}
+      {!isDraftMode && <VisitAnalytics />}
       {isDraftMode && (
         <>
           <DisableDraftMode />
