@@ -40,6 +40,13 @@ export type SectionTrait = {
    * run render mirrored. See `resolveSectionBoundaries`.
    */
   alternate?: boolean;
+  /**
+   * On desktop the section's photo reaches its bottom edge. A smile below it
+   * would hang the section's colour under the photo and leave a crescent
+   * between photo and curve, so the section below tucks over the photo
+   * instead. Applies only when the block carries a photo.
+   */
+  photoToBottom?: boolean;
 };
 
 /**
@@ -63,13 +70,13 @@ export const sectionTraits: Record<Block["_type"], SectionTrait> = {
   homeHero: { background: "white", hero: true },
   imageCollageFeature: {},
   innerHero: { background: "photo", hero: true },
-  largeSlides: {},
+  largeSlides: { photoToBottom: true },
   latestArticles: {},
   packingChecklist: {},
   richTextBlock: {},
   stackedFeatureRows: {},
   stackedTimeline: {},
-  storyFeature: { alternate: true },
+  storyFeature: { alternate: true, photoToBottom: true },
   teamMembers: {},
   quoteWall: {},
   wordSwap: {},
@@ -190,6 +197,15 @@ function hasPhoto(block: Block): boolean {
   return Boolean(image?.asset?._id);
 }
 
+/** Large slides carries its photos on the slides, one per slide. */
+function hasPhotoToBottom(block: Block): boolean {
+  if (sectionTraits[block._type].photoToBottom !== true) return false;
+  if (block._type !== "largeSlides") return hasPhoto(block);
+  const slides = (block as Block & { slides?: { image?: { asset?: { _id?: string } | null } | null }[] | null })
+    .slides;
+  return Boolean(slides?.some((slide) => slide.image?.asset?._id));
+}
+
 /**
  * How a section's top meets the section above.
  * - `seam`: same background, half rhythm, no shape.
@@ -212,6 +228,8 @@ const isShape = (edge: SectionEdge | "free" | undefined) =>
  * - below a photo hero only a tucker tucks; every other section meets the
  *   hero at a straight edge;
  * - Green and Night paint the same colour, so they meet at a straight edge;
+ * - below a section whose photo reaches its bottom edge, an edge between two
+ *   colours is a tuck, so no smile hangs under the photo;
  * - the last section's bottom is an edge, and the footer tucks under it;
  * - every other edge between two colours is free. A band (seam-joined
  *   sections) touches at most one shape, so a free edge next to a shaped
@@ -237,6 +255,7 @@ export function resolveSectionBoundaries(blocks: readonly Block[]): SectionBound
       hero: trait.hero === true,
       type: block._type,
       alternating: trait.alternate === true && hasPhoto(block),
+      photoToBottom: hasPhotoToBottom(block),
     };
   });
 
@@ -260,6 +279,7 @@ export function resolveSectionBoundaries(blocks: readonly Block[]): SectionBound
     if (above.background === "photo") return above.hero && section.tucker ? "tuck" : "straight";
     if (!above.hero && above.background === section.background) return "seam";
     if (sameFill(above.background, section.background)) return "straight";
+    if (above.photoToBottom) return "tuck";
     return "free";
   });
   edges.push("tuck");
