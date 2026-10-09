@@ -132,11 +132,11 @@ const dayFormat = new Intl.DateTimeFormat("en-CA", {
 });
 
 /** The Eastern day of a moment, as `YYYY-MM-DD`. */
-function analyticsDay(at: Date) {
+export function analyticsDay(at: Date) {
   return dayFormat.format(at);
 }
 
-function addDays(day: string, days: number) {
+export function addDays(day: string, days: number) {
   const date = new Date(`${day}T00:00:00Z`);
   date.setUTCDate(date.getUTCDate() + days);
   return date.toISOString().slice(0, 10);
