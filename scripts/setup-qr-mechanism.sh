@@ -490,32 +490,30 @@ trigger_variables_key_ok() {
   [[ "$HTTP_STATUS" == 200 ]]
 }
 
-# A "Trigger only" key may not list variables, but Trigger.dev answers 401
-# only for a key it does not know. This check starts no run.
+# Trigger.dev answers 401 only for a key it does not know. This check starts
+# no run.
 trigger_website_key_ok() {
   http_call "$TRIGGER_SECRET_KEY" GET "$TRIGGER_API/projects/$TRIGGER_PROJECT_REF/envvars/prod"
   [[ "$HTTP_STATUS" != 0 && "$HTTP_STATUS" != 401 ]]
 }
 
 section_d() {
-  stage "(d) Trigger.dev project, keys and alerts · unblocks #51, #52 and #53"
+  stage "(d) Trigger.dev project and keys · unblocks #51, #52 and #53"
   say "Trigger.dev runs the jobs that store requests in Neon and keep the data clean."
   open_url "https://cloud.trigger.dev"
   step "Create a project named 'setebaid-website', or open it."
   step "Open Project settings and copy the project ref (it starts with proj_)."
   ask_value TRIGGER_PROJECT_REF "Paste the project ref:"
   step "Switch to the Production environment and open API keys."
-  step "New API key: name 'website', access preset 'Trigger only', all tasks, no expiry."
-  note "If your plan does not offer 'Trigger only', choose 'No restrictions'."
+  note "The free plan gives full access keys only. That is enough for both keys."
+  step "New API key: name 'website', no expiry."
   ask_value TRIGGER_SECRET_KEY "Paste the 'website' key:" secret
-  step "New API key: name 'setup-script', access preset 'Variables only', no expiry."
+  step "New API key: name 'setup-script', no expiry."
   note "This key stays on this computer. The wizard uses it to write Trigger.dev variables."
   ask_value TRIGGER_VARIABLES_KEY "Paste the 'setup-script' key:" secret
   write_env TRIGGER_PROJECT_REF "$TRIGGER_PROJECT_REF"
   write_env TRIGGER_SECRET_KEY "$TRIGGER_SECRET_KEY"
   write_env TRIGGER_VARIABLES_KEY "$TRIGGER_VARIABLES_KEY"
-  step "Open Alerts, then New alert. Choose Email, enter your address, and select 'Run fails' and 'Deployment fails'."
-  pause "Press Enter when the alert is saved."
   vercel_set TRIGGER_SECRET_KEY "$TRIGGER_SECRET_KEY"
 
   local name value copied=()
@@ -529,12 +527,8 @@ section_d() {
   check "Trigger.dev knows the 'website' key" trigger_website_key_ok
   check "Vercel has TRIGGER_SECRET_KEY" vercel_has TRIGGER_SECRET_KEY
   for name in "${copied[@]}"; do check_trigger "$name" "$(saved "$name")"; done
-  note "Trigger.dev has no public check for alerts, so this answer is yours:"
-  if confirm "Is the failure alert listed on the Alerts page?"; then
-    ok "Failure alerts go to you"
-  else
-    fail "Add a Trigger.dev alert: Alerts → New alert → Email → Run fails"
-  fi
+  note "No Trigger.dev alerts: the free plan allows too few. The nightly gap-filler"
+  note "reports requests that reached Formspark but not Neon (#52)."
   pause "Press Enter to continue."
 }
 
@@ -668,7 +662,7 @@ declare -A SECTION_TITLE=(
   [a]="Vercel Web Analytics and Plus           #49        Phase 1"
   [b]="Deploy hook and Sanity webhook          #48        Phase 1"
   [c]="Formspark form and API token            #50 #52    Phase 2"
-  [d]="Trigger.dev project, keys and alerts    #51-#53    Phase 2"
+  [d]="Trigger.dev project and keys            #51-#53    Phase 2"
   [e]="Neon database                           #51 #54    Phase 2"
   [f]="Vercel API token for analytics          #53        Phase 2"
   [g]="Encryption key for form entries         #51        Phase 2"
