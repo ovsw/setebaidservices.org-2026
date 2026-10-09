@@ -11,9 +11,8 @@ function requiredEnv(name: string) {
 
 /**
  * Path A of an "Ask about camp" request: decrypt it and write it to Neon.
- * It retries for about two and a half hours. A run that still fails sends
- * Ovi the Trigger.dev failure alert, and the nightly gap-filler copies the
- * entry from Formspark. The payload stays encrypted, and the run returns
+ * It retries for about two and a half hours. If a run still fails, the
+ * nightly gap-filler copies the entry from Formspark and reports it. The payload stays encrypted, and the run returns
  * only the submission ID, so the run history holds no family details.
  */
 export const storeFormEntryTask = task({
