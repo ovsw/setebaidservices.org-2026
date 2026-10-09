@@ -3,6 +3,7 @@ import { type BLOG_INDEX_QUERY_RESULT } from "@/sanity.types";
 import { blogPostOrder, publishedPostFilter } from "./blog-post-listing";
 import { imageQuery } from "./shared/image";
 import { metaQuery } from "./shared/meta";
+import { archiveSharingPhotoQuery } from "./shared/sharing-photo";
 
 export type CategoryArchive = {
   _id: string;
@@ -10,6 +11,7 @@ export type CategoryArchive = {
   description?: string | null;
   meta?: NonNullable<BLOG_INDEX_QUERY_RESULT>["meta"];
   publishedPostCount: number;
+  sharingPhoto?: NonNullable<BLOG_INDEX_QUERY_RESULT>["sharingPhoto"];
   slug?: { current?: string | null } | null;
   title?: string | null;
 };
@@ -37,6 +39,7 @@ export const CATEGORY_QUERY = groq`
     slug,
     description,
     ${metaQuery},
+    ${archiveSharingPhotoQuery},
     "publishedPostCount": count(*[${publishedPostFilter} && category._ref == ^._id])
   }
 `;

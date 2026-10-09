@@ -5,6 +5,7 @@ import {
   fitPostOgTitle,
   getPostOgImageSecret,
   formatPostOgDate,
+  OG_IMAGE_VERSION,
   isValidPostOgSlug,
   signPostOgImage,
   verifyPostOgImageSignature,
@@ -39,7 +40,7 @@ describe("post OG image URLs", () => {
     );
 
     expect(url.pathname).toBe(`/api/og/post/${identity.slug}`);
-    expect(url.searchParams.get("v")).toBe("1");
+    expect(url.searchParams.get("v")).toBe(OG_IMAGE_VERSION);
     expect(url.searchParams.get("rev")).toBe(identity.revision);
     expect(
       verifyPostOgImageSignature({
@@ -77,7 +78,7 @@ describe("post OG image URLs", () => {
 describe("post OG image date", () => {
   it("uses the agreed uppercase publication date", () => {
     expect(formatPostOgDate("2026-08-15T23:30:00-07:00")).toBe(
-      "AUGUST 16, 2026",
+      "August 16, 2026",
     );
   });
 

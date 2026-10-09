@@ -14,6 +14,11 @@ function requiredEnvironmentValue(name) {
 const nextConfig = {
   cacheComponents: true,
   cacheLife: { default: sanity },
+  // The sharing card routes read their font and logo from disk at runtime,
+  // which file tracing cannot see.
+  outputFileTracingIncludes: {
+    "/api/og/**": ["./assets/og/**"],
+  },
   async redirects() {
     const client = createClient({
       projectId: requiredEnvironmentValue("NEXT_PUBLIC_SANITY_PROJECT_ID"),

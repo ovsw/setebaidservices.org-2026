@@ -40,3 +40,17 @@ export function sharingImageUrl(source: SanityImageSource) {
       : imageBuilder
   ).url();
 }
+
+/**
+ * Formats a Sharing photo for the card, honouring its crop and
+ * hotspot. JPEG, because the card renderer cannot decode WebP or SVG.
+ */
+export function sharingCardPhotoUrl(source: SanityImageSource) {
+  return builder
+    .image(source)
+    .width(SHARING_IMAGE_WIDTH)
+    .height(SHARING_IMAGE_HEIGHT)
+    .fit("crop")
+    .format("jpg")
+    .url();
+}

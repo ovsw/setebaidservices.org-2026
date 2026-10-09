@@ -112,7 +112,7 @@ const settings = defineType({
       type: "image",
       group: "seo",
       description:
-        "Optional. Shown on shared links when a page has no Social sharing image override and its Generated sharing card is unavailable. Shared links show this image at 1200 × 630, so set the crop and hotspot to keep the important part visible.",
+        "Optional. Shown on shared links only when a page's Generated sharing card is unavailable. Shared links show this image at 1200 × 630, so set the crop and hotspot to keep the important part visible.",
       options: { hotspot: true },
       fields: [
         defineField({
