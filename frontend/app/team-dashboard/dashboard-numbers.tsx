@@ -42,7 +42,7 @@ const timeFormat = new Intl.DateTimeFormat("en-US", {
 
 function sourceLabel(row: DashboardRow) {
   if (row.card) return row.source;
-  if (row.source === "direct") return "No card (website, search, links)";
+  if (row.source === "direct") return "Direct (website, search, links)";
   return `${row.source} (no card)`;
 }
 
