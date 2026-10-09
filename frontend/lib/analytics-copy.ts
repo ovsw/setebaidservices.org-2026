@@ -18,6 +18,11 @@ export type AnalyticsQuery = {
   kind: "visits" | "events";
   by: string[];
   filter: string;
+  /**
+   * Past 100 groups the API folds the rest into one "Others" row. Only a
+   * query whose folded rows all share one Source may keep that row.
+   */
+  othersAllowed?: true;
 };
 
 export type AnalyticsRow = Record<string, string | number | undefined>;
@@ -47,9 +52,8 @@ const event = (metric: AnalyticsMetric, name: string): AnalyticsQuery => ({
 });
 
 /**
- * Past 100 groups the API folds the rest into one "Others" row. Page views
- * are split so that the many untagged pages cannot push the few QR landings
- * or untagged `/go` visits into it.
+ * Page views are split so that the many untagged pages cannot push the few QR
+ * landings or untagged `/go` visits into the "Others" row.
  */
 export const ANALYTICS_QUERIES: AnalyticsQuery[] = [
   {
@@ -69,6 +73,8 @@ export const ANALYTICS_QUERIES: AnalyticsQuery[] = [
     kind: "visits",
     by: ["requestPath"],
     filter: production("utmSource eq '' and not startswith(requestPath, '/go/')"),
+    // Every page here has the Source `direct`; only the page detail is lost.
+    othersAllowed: true,
   },
   event("scans", "qr_scan"),
   event("call_taps", "call_tap"),
@@ -83,6 +89,10 @@ function label(value: AnalyticsRow[string]) {
 }
 
 function readRow(query: AnalyticsQuery, row: AnalyticsRow) {
+  if (!query.othersAllowed && Object.values(row).includes(OTHERS)) {
+    // Failing keeps the stored numbers, and the failed run alerts Ovi.
+    throw new Error(`Web Analytics folded ${query.metric} rows into "Others"; their Source is unknown.`);
+  }
   if (query.kind === "visits") {
     const page = label(row.requestPath);
     // An untagged page view gets the Source an untagged landing gets.

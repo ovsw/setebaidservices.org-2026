@@ -66,7 +66,6 @@ describe("copyAnalytics", () => {
           callTaps,
           [
             { "eventData/source": "chop-nurses", "eventData/page": "/ask-about-camp", count: 1, visitors: 1 },
-            { "eventData/source": "Others", "eventData/page": "Others", count: 2, visitors: 2 },
           ],
         ],
         [emailTaps, [{ "eventData/source": "direct", "eventData/page": "/", count: 1, visitors: 1 }]],
@@ -83,8 +82,19 @@ describe("copyAnalytics", () => {
       { day: "2026-10-17", source: "direct", page: "/", metric: "visits", count: 5 },
       { day: "2026-10-17", source: "direct", page: "other", metric: "visits", count: 7 },
       { day: "2026-10-17", source: "go-events", page: "/go/events", metric: "visits", count: 2 },
-      { day: "2026-10-17", source: "other", page: "other", metric: "call_taps", count: 2 },
     ]);
+  });
+
+  it("fails rather than store an unknown Source for rows folded into Others", async () => {
+    await db.query("insert into daily_totals values ('2026-10-17', 'chop-nurses', '/go/events', 'scans', 4)");
+    const { analytics } = fakeAnalytics("2026-10-17T12:00:00Z", {
+      "2026-10-17": new Map([
+        [scans, [{ "eventData/source": "Others", "eventData/page": "Others", count: 9, visitors: 9 }]],
+      ]),
+    });
+
+    await expect(copyAnalytics(db, analytics, new Date("2026-10-17T20:00:00Z"))).rejects.toThrow("Others");
+    expect((await totals(db)).map((row) => row.count)).toEqual([4]);
   });
 
   it("fills every day since analytics started, then replaces numbers on a re-run", async () => {
