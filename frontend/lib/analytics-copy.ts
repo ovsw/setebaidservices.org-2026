@@ -142,13 +142,43 @@ export function addDays(day: string, days: number) {
   return date.toISOString().slice(0, 10);
 }
 
-/** Eastern midnight is 04:00 UTC in summer time and 05:00 UTC in winter. */
-function midnight(day: string) {
-  for (const hour of ["04", "05"]) {
-    const at = new Date(`${day}T${hour}:00:00Z`);
-    if (analyticsDay(at) === day) return at;
+const clockFormat = new Intl.DateTimeFormat("en-CA", {
+  timeZone: ANALYTICS_TIME_ZONE,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+
+const pad = (value: number) => String(value).padStart(2, "0");
+
+/** A clock time of an Eastern day. Eastern is 4 hours behind UTC in summer time and 5 in winter. */
+function easternTime(day: string, hour: number, minute: number) {
+  const [year, month, date] = day.split("-").map(Number);
+  for (const offset of [4, 5]) {
+    const at = new Date(Date.UTC(year, month - 1, date, hour + offset, minute));
+    if (clockFormat.format(at) === `${day}, ${pad(hour)}:${pad(minute)}`) return at;
   }
-  throw new Error(`No Eastern midnight found for ${day}.`);
+  throw new Error(`No Eastern ${pad(hour)}:${pad(minute)} found on ${day}.`);
+}
+
+function midnight(day: string) {
+  return easternTime(day, 0, 0);
+}
+
+/** When the nightly copy runs, Eastern time: after midnight, before the gap-filler at 04:00. */
+export const ANALYTICS_SCHEDULE = { hour: 3, minute: 0 };
+
+/** The first run of the nightly copy after `now`, for the dashboard's "Next automatic update". */
+export function nextScheduledCopy(now = new Date()) {
+  const today = analyticsDay(now);
+  for (const day of [today, addDays(today, 1)]) {
+    const at = easternTime(day, ANALYTICS_SCHEDULE.hour, ANALYTICS_SCHEDULE.minute);
+    if (at > now) return at;
+  }
+  throw new Error("No next scheduled copy found.");
 }
 
 /**
@@ -221,6 +251,21 @@ export async function copyAnalytics(db: Database, analytics: WebAnalytics, now =
   await replaceDailyTotals(db, days, totals);
   await recordJobSuccess(db, ANALYTICS_JOB, now);
   return { days: days.length, totals: totals.length };
+}
+
+/** Two minutes: enough to stop a double click, short enough to watch a test scan arrive. */
+export const COPY_INTERVAL_MS = 2 * 60_000;
+
+/**
+ * The copy behind the dashboard's "Update now" button. A copy that finished
+ * less than two minutes ago is kept instead of repeated.
+ */
+export async function copyAnalyticsIfStale(db: Database, analytics: WebAnalytics, now = new Date()) {
+  const last = await lastSuccessAt(db, ANALYTICS_JOB);
+  if (last && now.getTime() - last.getTime() < COPY_INTERVAL_MS) {
+    return { copied: false as const, lastSuccessAt: last };
+  }
+  return { copied: true as const, ...(await copyAnalytics(db, analytics, now)) };
 }
 
 /** Web Analytics of one Vercel project, read with an API token. */

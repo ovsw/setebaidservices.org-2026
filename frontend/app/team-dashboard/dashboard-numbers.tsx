@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ANALYTICS_TIME_ZONE } from "@/lib/analytics-copy";
+import { ANALYTICS_TIME_ZONE, nextScheduledCopy } from "@/lib/analytics-copy";
 import {
   type DashboardCounts,
   type DashboardNumbers as Numbers,
@@ -14,6 +14,7 @@ import {
   readDashboardNumbers,
 } from "@/lib/team-dashboard-numbers";
 import { TEAM_DASHBOARD_PATH } from "@/lib/team-dashboard-session";
+import { UpdateNowButton } from "./update-now-button";
 
 const PRESETS: { preset: Exclude<DashboardPreset, "custom">; label: string; href: string }[] = [
   { preset: "season", label: "This season", href: TEAM_DASHBOARD_PATH },
@@ -167,7 +168,13 @@ export async function DashboardNumbers({ searchParams }: { searchParams: SearchP
                 {numbers.lastUpdated ? timeFormat.format(numbers.lastUpdated) : "Not yet"}
               </dd>
             </div>
+            <div>
+              <dt className="inline font-semibold">Next automatic update: </dt>
+              <dd className="inline">{timeFormat.format(nextScheduledCopy())}</dd>
+            </div>
           </dl>
+
+          <UpdateNowButton />
         </>
       )}
     </div>

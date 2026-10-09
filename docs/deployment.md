@@ -112,8 +112,9 @@ The script never prints a secret and never writes one into the repository.
 | `FORMSPARK_API_TOKEN` | | yes | c |
 | `TRIGGER_SECRET_KEY` (the "website" key) | yes | | d |
 | `DATABASE_URL` | yes | yes | e |
-| `VERCEL_ANALYTICS_TOKEN` | | yes | f |
-| `VERCEL_PROJECT_ID`, `VERCEL_TEAM_ID` | | yes | f |
+| `VERCEL_ANALYTICS_TOKEN` | yes | yes | f |
+| `VERCEL_TEAM_ID` | yes | yes | f |
+| `VERCEL_PROJECT_ID` | Vercel provides it | yes | f |
 | `FORM_ENCRYPTION_KEY` | yes | yes | g |
 | `RESEND_API_KEY`, `REPORT_EMAIL_TO` | | yes | h |
 
@@ -155,12 +156,18 @@ of any task sends an email.
 
 ### Analytics copy in Neon
 
-Every hour, the Trigger.dev task `copy-analytics` copies the production page
-views and the `qr_scan`, `call_tap` and `email_tap` counts from Vercel Web
-Analytics into Neon, one daily total per Source, page and metric. A day is an
-Eastern (America/New_York) day. The first run copies every day since Web
-Analytics was enabled; later runs copy again from the day before their last
-success, and replace those days' numbers. Section f gives it its keys.
+Each night at 03:00 (New York time), the Trigger.dev task `copy-analytics`
+copies the production page views and the `qr_scan`, `call_tap` and
+`email_tap` counts from Vercel Web Analytics into Neon, one daily total per
+Source, page and metric. A day is an Eastern (America/New_York) day. The first
+run copies every day since Web Analytics was enabled; later runs copy again
+from the day before their last success, and replace those days' numbers.
+
+The team dashboard's "Update now" button runs the same copy in the Website,
+so the numbers are fresh when someone looks; the nightly run keeps the history
+complete when nobody does. A copy that finished less than two minutes ago is
+not repeated. The dashboard shows the last copy and the next nightly one.
+Section f gives the job and the Website their keys.
 
 After sections d, e and g have run, and again after each change under
 `frontend/db/migrations` or `frontend/trigger`:
