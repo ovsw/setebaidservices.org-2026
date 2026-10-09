@@ -1,5 +1,5 @@
 import type { Database } from "@/lib/database";
-import { lastSuccessAt, recordSuccess } from "@/lib/job-state";
+import { lastSuccessAt, recordJobSuccess } from "@/lib/job-state";
 import { untaggedSource } from "@/lib/visit-source";
 
 export const ANALYTICS_JOB = "copy-analytics";
@@ -219,7 +219,7 @@ export async function copyAnalytics(db: Database, analytics: WebAnalytics, now =
   }
 
   await replaceDailyTotals(db, days, totals);
-  await recordSuccess(db, ANALYTICS_JOB, now);
+  await recordJobSuccess(db, ANALYTICS_JOB, now);
   return { days: days.length, totals: totals.length };
 }
 

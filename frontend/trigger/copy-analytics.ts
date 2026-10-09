@@ -1,12 +1,7 @@
 import { neon } from "@neondatabase/serverless";
 import { schedules } from "@trigger.dev/sdk";
 import { ANALYTICS_JOB, copyAnalytics, vercelWebAnalytics } from "../lib/analytics-copy";
-
-function requiredEnv(name: string) {
-  const value = process.env[name];
-  if (!value) throw new Error(`${name} is not set in Trigger.dev.`);
-  return value;
-}
+import { requiredEnv } from "./required-env";
 
 /**
  * Every hour, copy the page views and the QR scan, call and email tap counts
@@ -15,7 +10,7 @@ function requiredEnv(name: string) {
  */
 export const copyAnalyticsTask = schedules.task({
   id: ANALYTICS_JOB,
-  cron: "0 * * * *",
+  cron: { pattern: "0 * * * *", environments: ["PRODUCTION"] },
   retry: {
     maxAttempts: 3,
     factor: 2,

@@ -4,14 +4,19 @@ import type { Database } from "@/lib/database";
 /**
  * Insert an entry by its submission ID. Storing the same entry again changes
  * nothing, so retries and the gap-filler never make duplicates. Returns
- * whether this call added the row.
+ * whether this call added the row. The gap-filler also gives the ID of the
+ * entry's Formspark copy.
  */
-export async function storeFormEntry(db: Database, entry: AskAboutCampEntry) {
+export async function storeFormEntry(
+  db: Database,
+  entry: AskAboutCampEntry,
+  formsparkId: string | null = null,
+) {
   const { rows } = await db.query(
     `insert into form_entries (
       submission_id, received_at, source, page, campaign,
-      parent_name, phone, email, child_age, best_time, interests
-    ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      parent_name, phone, email, child_age, best_time, interests, formspark_id
+    ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     on conflict (submission_id) do nothing
     returning submission_id`,
     [
@@ -26,6 +31,7 @@ export async function storeFormEntry(db: Database, entry: AskAboutCampEntry) {
       entry.childAge,
       entry.bestTime,
       entry.interests,
+      formsparkId,
     ],
   );
   return rows.length === 1;
