@@ -17,6 +17,9 @@ if (!process.env.DATABASE_URL) {
 const client = new Client(process.env.DATABASE_URL);
 await client.connect();
 try {
+  // A second run waits here until the first one ends, so two runs never
+  // read the same list of applied files. The lock ends with the connection.
+  await client.query("select pg_advisory_lock(hashtext('db-migrate'))");
   await client.query(
     "create table if not exists schema_migrations (name text primary key, applied_at timestamptz not null default now())",
   );
