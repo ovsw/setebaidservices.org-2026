@@ -2,10 +2,10 @@ import { describe, expect, it, vi } from "vitest";
 import {
   type AskAboutCampEntry,
   createSubmitLimiter,
-  formsparkPayload,
   submitAskAboutCamp,
 } from "@/lib/ask-about-camp-delivery";
 import { decryptFormEntry, type EncryptedFormEntry } from "@/lib/form-entry-crypto";
+import { formsparkPayload } from "@/lib/formspark-entry";
 
 const KEY = Buffer.alloc(32, 7).toString("base64");
 

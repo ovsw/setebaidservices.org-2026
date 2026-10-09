@@ -207,7 +207,7 @@ SANITY_HOOK_NAME="Rebuild the Website when a redirect changes"
 # The values the Trigger.dev tasks read. Section d copies every saved one, so
 # a section that runs before d loses nothing.
 TRIGGER_VARIABLES=(FORMSPARK_FORM_ID FORMSPARK_API_TOKEN DATABASE_URL FORM_ENCRYPTION_KEY
-  VERCEL_ANALYTICS_TOKEN VERCEL_PROJECT_ID VERCEL_TEAM_ID)
+  VERCEL_ANALYTICS_TOKEN VERCEL_PROJECT_ID VERCEL_TEAM_ID RESEND_API_KEY REPORT_EMAIL_TO)
 
 ok()   { printf '  %s✓%s %s\n' "$GREEN" "$RESET" "$1"; }
 fail() { printf '  %s✗ %s%s\n' "$RED" "$1" "$RESET"; SKIPPED+=("$1"); }
@@ -528,7 +528,7 @@ section_d() {
   check "Vercel has TRIGGER_SECRET_KEY" vercel_has TRIGGER_SECRET_KEY
   for name in "${copied[@]}"; do check_trigger "$name" "$(saved "$name")"; done
   note "No Trigger.dev alerts: the free plan allows too few. The nightly gap-filler"
-  note "reports requests that reached Formspark but not Neon (#52)."
+  note "emails you each request that reached only one path (#52, section h)."
   pause "Press Enter to continue."
 }
 
@@ -655,9 +655,43 @@ section_g() {
   pause "Press Enter to continue."
 }
 
+# ── (h) Resend for the gap report ────────────────────────────────────────
+
+# Sends one real email: Resend has no check for a key with sending access only.
+resend_ok() {
+  local body
+  body=$(jq -nc --arg to "$REPORT_EMAIL_TO" '{
+    from: "Setebaid jobs <onboarding@resend.dev>", to: [$to],
+    subject: "Setebaid: test of the gap report",
+    text: "The nightly gap-filler can email you. No action is needed."}')
+  http_call "$RESEND_API_KEY" POST "https://api.resend.com/emails" "$body"
+  [[ "$HTTP_STATUS" == 200 ]]
+}
+
+section_h() {
+  stage "(h) Resend for the gap report · unblocks #52"
+  say "The nightly gap-filler emails you each request that reached only one path."
+  say "It sends from Resend's test address, which delivers only to your Resend account's email."
+  open_url "https://resend.com/api-keys"
+  step "Sign in to Resend. Create an API key named 'setebaid-jobs' with Sending access."
+  ask_value RESEND_API_KEY "Paste the API key:" secret
+  ask_value REPORT_EMAIL_TO "The email address of your Resend account:"
+  write_env RESEND_API_KEY "$RESEND_API_KEY"
+  write_env REPORT_EMAIL_TO "$REPORT_EMAIL_TO"
+  trigger_set RESEND_API_KEY "$RESEND_API_KEY"
+  trigger_set REPORT_EMAIL_TO "$REPORT_EMAIL_TO"
+
+  printf '\n'
+  check "Resend sends a test email to $REPORT_EMAIL_TO" resend_ok
+  check_trigger RESEND_API_KEY "$RESEND_API_KEY"
+  check_trigger REPORT_EMAIL_TO "$REPORT_EMAIL_TO"
+  note "Your Gmail filter archives Resend mail; look in All Mail for the test email."
+  pause "Press Enter to continue."
+}
+
 # ── Choose the sections, check the tools, run ────────────────────────────
 
-SECTION_IDS=(a b c d e f g)
+SECTION_IDS=(a b c d e f g h)
 declare -A SECTION_TITLE=(
   [a]="Vercel Web Analytics and Plus           #49        Phase 1"
   [b]="Deploy hook and Sanity webhook          #48        Phase 1"
@@ -666,6 +700,7 @@ declare -A SECTION_TITLE=(
   [e]="Neon database                           #51 #54    Phase 2"
   [f]="Vercel API token for analytics          #53        Phase 2"
   [g]="Encryption key for form entries         #51        Phase 2"
+  [h]="Resend key for the gap report           #52        Phase 2"
 )
 
 requested=("$@")
@@ -673,7 +708,7 @@ if (( ${#requested[@]} == 0 )); then
   printf '\n%s  Setebaid QR mechanism: accounts and keys%s\n\n' "$BOLD" "$RESET"
   for id in "${SECTION_IDS[@]}"; do printf '  %s)  %s\n' "$id" "${SECTION_TITLE[$id]}"; done
   printf '\n'
-  note "Run a and b first (Phase 1). Running d before c, e, f and g saves a copy step."
+  note "Run a and b first (Phase 1). Running d before c, e, f, g and h saves a copy step."
   printf '  %sWhich sections? (for example: a b, or all)%s ' "$BOLD" "$RESET"
   read -r reply || true
   reply="${reply//,/ }"
@@ -683,7 +718,7 @@ fi
 
 SELECTED=()
 for id in "${requested[@]}"; do
-  [[ -n "${SECTION_TITLE[$id]:-}" ]] || { printf 'Unknown section: %s (use a to g, or all)\n' "$id" >&2; exit 1; }
+  [[ -n "${SECTION_TITLE[$id]:-}" ]] || { printf 'Unknown section: %s (use a to h, or all)\n' "$id" >&2; exit 1; }
 done
 for id in "${SECTION_IDS[@]}"; do
   for want in "${requested[@]}"; do
