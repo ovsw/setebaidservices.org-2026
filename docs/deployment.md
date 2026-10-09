@@ -92,6 +92,7 @@ pnpm setup:qr a b      # runs sections a and b only
 | e | A Neon project on the Free plan, and its pooled connection string | #51, #54 | 2 |
 | f | A Vercel API token that the analytics copy job uses | #53 | 2 |
 | g | An encryption key for form entries, generated on this computer | #51 | 2 |
+| h | A Resend API key that sends the nightly gap report to your Resend account's email | #52 | 2 |
 
 Each section ends with a check that the service accepts the new key. Where a
 service has no API for the check (Web Analytics Plus), the
@@ -114,6 +115,7 @@ The script never prints a secret and never writes one into the repository.
 | `VERCEL_ANALYTICS_TOKEN` | | yes | f |
 | `VERCEL_PROJECT_ID`, `VERCEL_TEAM_ID` | | yes | f |
 | `FORM_ENCRYPTION_KEY` | yes | yes | g |
+| `RESEND_API_KEY`, `REPORT_EMAIL_TO` | | yes | h |
 
 Vercel stores each one as a sensitive variable. New values reach the Website
 with its next deployment.
@@ -125,7 +127,7 @@ also holds two values that go nowhere else: the deploy hook URL, and the
 Trigger.dev "setup-script" key that lets the script write Trigger.dev
 variables.
 
-Sections c, e, f and g write to Trigger.dev only after section d has run.
+Sections c, e, f, g and h write to Trigger.dev only after section d has run.
 Section d copies every value that is already saved, so the order does not
 matter. Section g keeps the saved encryption key unless you choose to replace
 it, because a new key makes requests that still wait for a retry unreadable.
@@ -136,8 +138,17 @@ Each "Ask about camp" request goes on two paths at the same time: to
 Formspark, which emails the office, and, encrypted, to the Trigger.dev task
 `store-form-entry`, which writes it to Neon and retries for about two and a
 half hours. The request counts as sent when one path accepts it. The free plan
-of Trigger.dev has no usable failure alerts. Instead, the nightly gap-filler
-(#52) copies each request that reached Formspark but not Neon, and reports it.
+of Trigger.dev has no usable failure alerts. Instead, two nightly Trigger.dev
+jobs keep the store complete and clean:
+
+| Job | When (New York time) | What it does |
+| --- | --- | --- |
+| `fill-form-entry-gaps` | 04:00 | Reads the last eight days of Formspark. Copies into Neon each request older than three hours that Neon is missing (path A failed). Finds each Neon request one to seven days old with no Formspark copy (path B failed). Records each such delivery gap one time in the `delivery_gaps` table, for the dashboard, and emails the new ones to `REPORT_EMAIL_TO` |
+| `delete-old-form-entries` | 04:30 | Deletes the requests received more than three years ago, in Neon and in Formspark, and logs how many |
+
+Both jobs run in Production only and record their last successful run in
+`job_state`. The gap report names submission IDs, times, Sources and pages,
+never family details. If the email fails, the next night sends it.
 
 After sections d, e and g have run, and again after each change under
 `frontend/db/migrations` or `frontend/trigger`:

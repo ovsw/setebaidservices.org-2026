@@ -66,6 +66,10 @@ A redirect with a Source name, from a printed `/go/` address. It adds the UTM ta
 
 The name of the card or page that brought a visitor, for example `chop-nurses`. It travels as `utm_source`.
 
+**Delivery gap**
+
+An "Ask about camp" request that reached only one of its two paths: Neon through Trigger.dev (path A) or Formspark (path B). The nightly gap-filler records each one, so the team dashboard can count them and Ovi gets an email.
+
 ## Ownership rules
 
 - Code owns layout, rendering rules, validation, and safe fallbacks.

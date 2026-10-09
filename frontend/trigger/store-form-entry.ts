@@ -2,18 +2,14 @@ import { neon } from "@neondatabase/serverless";
 import { task } from "@trigger.dev/sdk";
 import { decryptFormEntry, type EncryptedFormEntry } from "../lib/form-entry-crypto";
 import { storeFormEntry } from "../lib/form-entry-store";
-
-function requiredEnv(name: string) {
-  const value = process.env[name];
-  if (!value) throw new Error(`${name} is not set in Trigger.dev.`);
-  return value;
-}
+import { requiredEnv } from "./required-env";
 
 /**
  * Path A of an "Ask about camp" request: decrypt it and write it to Neon.
  * It retries for about two and a half hours. If a run still fails, the
- * nightly gap-filler copies the entry from Formspark and reports it. The payload stays encrypted, and the run returns
- * only the submission ID, so the run history holds no family details.
+ * nightly gap-filler copies the entry from Formspark and reports it. The
+ * payload stays encrypted, and the run returns only the submission ID, so
+ * the run history holds no family details.
  */
 export const storeFormEntryTask = task({
   id: "store-form-entry",

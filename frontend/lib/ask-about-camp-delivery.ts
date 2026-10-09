@@ -8,6 +8,7 @@ import {
   validateAskAboutCamp,
 } from "@/lib/ask-about-camp";
 import { type EncryptedFormEntry, encryptFormEntry } from "@/lib/form-entry-crypto";
+import { formsparkPayload } from "@/lib/formspark-entry";
 import { isRouteSlug } from "@/lib/routes";
 import type { storeFormEntryTask } from "@/trigger/store-form-entry";
 
@@ -24,26 +25,6 @@ export type AskAboutCampEntry = AskAboutCampRequest & {
 
 /** Delivers one entry, or throws. */
 export type FormsparkClient = (entry: AskAboutCampEntry) => Promise<void>;
-
-/** The field names are what the office reads in the notification email. */
-export function formsparkPayload(entry: AskAboutCampEntry) {
-  return {
-    parent_name: entry.name,
-    phone: entry.phone,
-    email: entry.email,
-    child_age: entry.childAge,
-    best_time_to_call: entry.bestTime || "—",
-    what_they_want_to_know: entry.interests.length ? entry.interests.join("; ") : "—",
-    source: entry.source,
-    landing_page: entry.page,
-    campaign: entry.campaign ?? "—",
-    received_at: entry.receivedAt,
-    submission_id: entry.submissionId,
-    _email: {
-      subject: `Ask about camp: ${entry.source} on ${entry.page}`,
-    },
-  };
-}
 
 export function createFormsparkClient(formId: string | undefined): FormsparkClient {
   return async (entry) => {
