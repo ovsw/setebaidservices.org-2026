@@ -13,9 +13,6 @@ importers:
 
   frontend:
     dependencies:
-      '@fontsource/work-sans':
-        specifier: ^5.3.0
-        version: 5.3.0
       '@hookform/resolvers':
         specifier: ^5.4.0
         version: 5.4.0(react-hook-form@7.81.0(react@19.2.7))
@@ -1564,9 +1561,6 @@ packages:
 
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
-
-  '@fontsource/work-sans@5.3.0':
-    resolution: {integrity: sha512-3cKV28+bEiLGdyOl0VgEGCFWE1XdZJu/K+nH4Jt76XC3T//XrRtm2EF7jA61GSMIy8sYp6ZFTE01nD3lLaBV9A==}
 
   '@google-cloud/precise-date@4.0.0':
     resolution: {integrity: sha512-1TUx3KdaU3cN7nfCdNf+UVqA/PSX29Cjcox3fZZBtINlRrXVTmUkQnCKv2MbBUbCopbK4olAT1IHl76uZyCiVA==}
@@ -11228,8 +11222,6 @@ snapshots:
   '@floating-ui/utils@0.2.11': {}
 
   '@floating-ui/utils@0.2.12': {}
-
-  '@fontsource/work-sans@5.3.0': {}
 
   '@google-cloud/precise-date@4.0.0': {}
 

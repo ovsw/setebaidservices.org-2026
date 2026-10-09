@@ -5,11 +5,9 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
+// next.config.mjs ships assets/og with the card routes.
 const workSansExtraBold = readFile(
-  join(
-    process.cwd(),
-    "node_modules/@fontsource/work-sans/files/work-sans-latin-800-normal.woff",
-  ),
+  join(process.cwd(), "assets/og/work-sans-latin-800-normal.woff"),
 );
 const logoDark = readFile(join(process.cwd(), "assets/og/logo-dark.png"));
 
