@@ -173,7 +173,9 @@ export function AskAboutCampFields({
 
   if (state.status === "sent") {
     return (
-      <div className="field-cream rounded-card">
+      // self-start: the grid row is as tall as the heading beside it, and
+      // the short thank-you card must not leave an empty field below it.
+      <div className="field-cream self-start rounded-card">
         <div
           className={`${panel} outline-none`}
           ref={thanksRef}
