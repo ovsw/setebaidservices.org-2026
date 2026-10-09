@@ -23,7 +23,6 @@ export const fillFormEntryGapsTask = schedules.task({
 
     const submissions = await submissionsSince(formspark, new Date(now.getTime() - FORMSPARK_LOOKBACK_MS));
     const { copied, missingFromFormspark, unreadable } = await fillFormEntryGaps(db, submissions, now);
-    await recordJobSuccess(db, "fill-form-entry-gaps", now);
 
     const result = {
       checked: submissions.length,
@@ -33,8 +32,12 @@ export const fillFormEntryGapsTask = schedules.task({
     };
     logger.info("Gap check done", result);
 
-    // The gaps are recorded before the email, so a failed email is sent next run.
+    // The gaps are recorded before the email, so a failed email is sent next
+    // run. Success is recorded after it, so a failing email shows as a stale
+    // "Last updated".
     const send = createReportSender(requiredEnv("RESEND_API_KEY"), requiredEnv("REPORT_EMAIL_TO"));
-    return { ...result, emailed: await emailNewGaps(db, send, new Date()) };
+    const emailed = await emailNewGaps(db, send, new Date());
+    await recordJobSuccess(db, "fill-form-entry-gaps", now);
+    return { ...result, emailed };
   },
 });
