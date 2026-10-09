@@ -30,8 +30,11 @@ const COLUMNS: { key: keyof DashboardCounts; label: string }[] = [
 
 const dayFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
 const timeFormat = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "medium",
-  timeStyle: "short",
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
   timeZone: ANALYTICS_TIME_ZONE,
   timeZoneName: "short",
 });
