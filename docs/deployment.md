@@ -144,7 +144,7 @@ After sections d, e and g have run, and again after each change under
 
 ```bash
 pnpm db:migrate                                   # creates or updates the Neon tables
-TRIGGER_PROJECT_REF=proj_... pnpm trigger:deploy  # needs `npx trigger.dev login` one time
+pnpm trigger:deploy                               # needs `npx trigger.dev login` one time
 ```
 
 `pnpm db:migrate` reads `DATABASE_URL` from the file that `pnpm setup:qr`
