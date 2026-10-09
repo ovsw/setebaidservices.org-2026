@@ -1,16 +1,28 @@
 import { neon } from "@neondatabase/serverless";
 import { schedules } from "@trigger.dev/sdk";
-import { ANALYTICS_JOB, copyAnalytics, vercelWebAnalytics } from "../lib/analytics-copy";
+import {
+  ANALYTICS_JOB,
+  ANALYTICS_SCHEDULE,
+  ANALYTICS_TIME_ZONE,
+  copyAnalytics,
+  vercelWebAnalytics,
+} from "../lib/analytics-copy";
 import { requiredEnv } from "./required-env";
 
 /**
- * Every hour, copy the page views and the QR scan, call and email tap counts
+ * Every night, copy the page views and the QR scan, call and email tap counts
  * from Vercel Web Analytics into Neon as daily totals, so the history stays
- * ours whatever Vercel keeps. A failed hour is caught up by the next one.
+ * ours whatever Vercel keeps. The dashboard's "Update now" button runs the
+ * same copy when someone needs today's numbers. A failed night is caught up
+ * by the next one.
  */
 export const copyAnalyticsTask = schedules.task({
   id: ANALYTICS_JOB,
-  cron: { pattern: "0 * * * *", environments: ["PRODUCTION"] },
+  cron: {
+    pattern: `${ANALYTICS_SCHEDULE.minute} ${ANALYTICS_SCHEDULE.hour} * * *`,
+    timezone: ANALYTICS_TIME_ZONE,
+    environments: ["PRODUCTION"],
+  },
   retry: {
     maxAttempts: 3,
     factor: 2,

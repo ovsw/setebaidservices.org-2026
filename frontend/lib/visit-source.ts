@@ -36,6 +36,14 @@ function goPageSource(pathname: string) {
   return isRouteSlug(name) ? name : undefined;
 }
 
+/**
+ * A printed card's Source, as opposed to `direct` or a `/go` page's own name.
+ * The Studio refuses those names for a card (studio/schemas/validation/redirect-rules.ts).
+ */
+export function isCardSource(source: string) {
+  return source !== DIRECT_SOURCE && !source.startsWith("go-");
+}
+
 /** The Source of a landing without tags: the `/go` page's own name, or `direct`. */
 export function untaggedSource(pathname: string) {
   return goPageSource(pathname) ?? DIRECT_SOURCE;

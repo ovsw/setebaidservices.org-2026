@@ -31,6 +31,13 @@ type RedirectValidationData = {
 };
 
 const LIVE_SYSTEM_PATHS = new Set(["/", "/stories"]);
+// Visits without a card get the Source `direct` or a `/go` page's own name,
+// such as `go-events` (frontend/lib/visit-source.ts). The team dashboard
+// tells cards from these by name, so a card may not use one.
+function isVisitSourceName(name: string) {
+  return name === "direct" || name.startsWith("go-");
+}
+
 const TAG_FORMAT_HINT = "Use only lowercase letters, digits and dashes";
 const MISSING_DESTINATION_ERROR =
   "Can't redirect to a non-existent or non-published page. " +
@@ -199,6 +206,8 @@ export function getRedirectValidationIssues({
   if (utmSource) {
     if (!isRouteSlug(utmSource)) {
       errors.utmSource = `${TAG_FORMAT_HINT}, for example chop-nurses`;
+    } else if (isVisitSourceName(utmSource)) {
+      errors.utmSource = "The Website already uses this name for visits without a card";
     } else if (redirects.some((redirect) => redirect.utmSource === utmSource)) {
       errors.utmSource = "Another redirect already uses this source name";
     }

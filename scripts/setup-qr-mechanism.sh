@@ -595,7 +595,7 @@ vercel_token_ok() {
 
 section_f() {
   stage "(f) Vercel API token for analytics · unblocks #53"
-  say "The hourly job uses this token to copy the visit counts into Neon."
+  say "The nightly job and the dashboard's Update button use this token to copy the visit counts into Neon."
   open_url "https://vercel.com/account/settings/tokens"
   step "Create a token named 'setebaid-analytics-copy'. Scope: Studio ROVST."
   step "Expiration: No Expiration, or the longest one offered."
@@ -615,9 +615,14 @@ section_f() {
   trigger_set VERCEL_ANALYTICS_TOKEN "$VERCEL_ANALYTICS_TOKEN"
   trigger_set VERCEL_PROJECT_ID "$VERCEL_PROJECT_ID"
   trigger_set VERCEL_TEAM_ID "$VERCEL_TEAM_ID"
+  # The Website gets VERCEL_PROJECT_ID from Vercel itself (a system variable).
+  vercel_set VERCEL_ANALYTICS_TOKEN "$VERCEL_ANALYTICS_TOKEN"
+  vercel_set VERCEL_TEAM_ID "$VERCEL_TEAM_ID"
 
   printf '\n'
   check "Vercel accepts the token for the Website project" vercel_token_ok
+  check "Vercel has VERCEL_ANALYTICS_TOKEN" vercel_has VERCEL_ANALYTICS_TOKEN
+  check "Vercel has VERCEL_TEAM_ID" vercel_has VERCEL_TEAM_ID
   check_trigger VERCEL_ANALYTICS_TOKEN "$VERCEL_ANALYTICS_TOKEN"
   check_trigger VERCEL_PROJECT_ID "$VERCEL_PROJECT_ID"
   check_trigger VERCEL_TEAM_ID "$VERCEL_TEAM_ID"

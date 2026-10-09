@@ -4,7 +4,10 @@ import { PGlite } from "@electric-sql/pglite";
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   ANALYTICS_QUERIES,
+  COPY_INTERVAL_MS,
   copyAnalytics,
+  copyAnalyticsIfStale,
+  nextScheduledCopy,
   type AnalyticsQuery,
   type AnalyticsRow,
   type WebAnalytics,
@@ -151,5 +154,46 @@ describe("copyAnalytics", () => {
     await copyAnalytics(db, analytics, new Date("2026-10-17T20:00:00Z"));
 
     expect((await totals(db)).map((row) => row.metric)).toEqual(["form_requests"]);
+  });
+});
+
+describe("copyAnalyticsIfStale", () => {
+  let db: PGlite;
+
+  beforeEach(async () => {
+    db = new PGlite();
+    for (const file of readdirSync(migrations).sort()) {
+      await db.exec(readFileSync(path.join(migrations, file), "utf8"));
+    }
+  });
+
+  it("copies when there is no copy yet, and again once the last one is old enough", async () => {
+    const { analytics, windows } = fakeAnalytics("2026-10-17T12:00:00Z", {});
+    const first = new Date("2026-10-17T20:00:00Z");
+
+    expect(await copyAnalyticsIfStale(db, analytics, first)).toEqual({ copied: true, days: 1, totals: 0 });
+    expect(await copyAnalyticsIfStale(db, analytics, new Date(first.getTime() + COPY_INTERVAL_MS - 1))).toEqual({
+      copied: false,
+      lastSuccessAt: first,
+    });
+    expect(windows).toHaveLength(1);
+
+    expect(
+      await copyAnalyticsIfStale(db, analytics, new Date(first.getTime() + COPY_INTERVAL_MS)),
+    ).toMatchObject({ copied: true });
+    expect(windows).toHaveLength(3);
+  });
+});
+
+describe("nextScheduledCopy", () => {
+  it("is the next 03:00 Eastern, today or tomorrow", () => {
+    // 2026-10-09 22:00 EDT: tonight at 03:00 EDT.
+    expect(nextScheduledCopy(new Date("2026-10-10T02:00:00Z"))).toEqual(new Date("2026-10-10T07:00:00Z"));
+    // Exactly 03:00 EDT: the next one is tomorrow.
+    expect(nextScheduledCopy(new Date("2026-10-10T07:00:00Z"))).toEqual(new Date("2026-10-11T07:00:00Z"));
+    // The night the clocks go back (2026-11-01): 03:00 EST is 08:00 UTC.
+    expect(nextScheduledCopy(new Date("2026-11-01T03:00:00Z"))).toEqual(new Date("2026-11-01T08:00:00Z"));
+    // The night the clocks go forward (2027-03-14): 03:00 EDT is 07:00 UTC.
+    expect(nextScheduledCopy(new Date("2027-03-14T06:00:00Z"))).toEqual(new Date("2027-03-14T07:00:00Z"));
   });
 });
