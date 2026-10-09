@@ -8,6 +8,7 @@ import {
   type DashboardCounts,
   type DashboardNumbers as Numbers,
   type DashboardPreset,
+  type DashboardRow,
   type DashboardRange,
   dashboardRange,
   readDashboardNumbers,
@@ -28,7 +29,6 @@ const COLUMNS: { key: keyof DashboardCounts; label: string }[] = [
   { key: "formRequests", label: "Form requests" },
 ];
 
-const dayFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
 const timeFormat = new Intl.DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
@@ -39,7 +39,11 @@ const timeFormat = new Intl.DateTimeFormat("en-US", {
   timeZoneName: "short",
 });
 
-const formatDay = (day: string) => dayFormat.format(new Date(`${day}T00:00:00Z`));
+function sourceLabel(row: DashboardRow) {
+  if (row.card) return row.source;
+  if (row.source === "direct") return "No card (website, search, links)";
+  return `${row.source} (no card)`;
+}
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -95,10 +99,6 @@ export async function DashboardNumbers({ searchParams }: { searchParams: SearchP
         </form>
       </nav>
 
-      <p className="text-lg">
-        {formatDay(range.from)} – {formatDay(range.to)}
-      </p>
-
       {typeof numbers === "string" ? (
         <p role="alert">{numbers}</p>
       ) : (
@@ -125,10 +125,14 @@ export async function DashboardNumbers({ searchParams }: { searchParams: SearchP
                 ) : (
                   numbers.rows.map((row) => (
                     <tr key={row.source} className="border-b">
-                      <th scope="row" className="py-2 pr-4 font-normal">{row.source}</th>
+                      <th scope="row" className="py-2 pr-4 font-normal">{sourceLabel(row)}</th>
                       {COLUMNS.map((column) => (
                         <td key={column.key} className="py-2 pr-4 text-right">
-                          {row[column.key]}
+                          {column.key === "scans" && !row.card ? (
+                            <span aria-label="Not possible without a card">—</span>
+                          ) : (
+                            row[column.key]
+                          )}
                         </td>
                       ))}
                     </tr>

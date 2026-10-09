@@ -157,6 +157,13 @@ test("rejects invalid or duplicate QR tags and QR sources outside /go/", () => {
       utmSource,
     );
   }
+  for (const utmSource of ["direct", "go-events"]) {
+    assert.match(
+      issues({ ...qr, source: "/go/x", utmSource }, [], routes).errors.utmSource,
+      /visits without a card/,
+      utmSource,
+    );
+  }
   assert.match(
     issues({ ...qr, source: "/go/x", utmCampaign: "Fall 2026" }, [], routes).errors
       .utmCampaign,

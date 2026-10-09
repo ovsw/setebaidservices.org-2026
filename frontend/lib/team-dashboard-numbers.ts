@@ -6,6 +6,7 @@ import {
 } from "@/lib/analytics-copy";
 import type { Database } from "@/lib/database";
 import { lastSuccessAt } from "@/lib/job-state";
+import { isCardSource } from "@/lib/visit-source";
 
 /** A period of whole Eastern days, both ends included, as `YYYY-MM-DD`. */
 export type DashboardRange = { from: string; to: string };
@@ -59,7 +60,11 @@ export type DashboardCounts = {
   formRequests: number;
 };
 
-export type DashboardRow = DashboardCounts & { source: string };
+export type DashboardRow = DashboardCounts & {
+  source: string;
+  /** Only a card's row can have QR scans. */
+  card: boolean;
+};
 
 export type DashboardNumbers = {
   rows: DashboardRow[];
@@ -127,14 +132,20 @@ export async function readDashboardNumbers(
   for (const row of counts.rows as { source: string; metric: keyof typeof COLUMNS; count: number }[]) {
     const column = COLUMNS[row.metric];
     let sourceRow = bySource.get(row.source);
-    if (!sourceRow) bySource.set(row.source, (sourceRow = { source: row.source, ...emptyCounts() }));
+    if (!sourceRow) bySource.set(
+        row.source,
+        (sourceRow = { source: row.source, card: isCardSource(row.source), ...emptyCounts() }),
+      );
     sourceRow[column] += row.count;
     totals[column] += row.count;
   }
 
-  // The busiest Sources first.
+  // Cards first, then the `/go` pages without a card, then `direct`; the
+  // busiest first within each group.
+  const group = (row: DashboardRow) => (row.card ? 0 : row.source === "direct" ? 2 : 1);
   const rows = [...bySource.values()].sort(
     (a, b) =>
+      group(a) - group(b) ||
       b.visits - a.visits ||
       b.formRequests - a.formRequests ||
       a.source.localeCompare(b.source),

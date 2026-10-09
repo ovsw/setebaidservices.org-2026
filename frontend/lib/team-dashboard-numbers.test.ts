@@ -36,7 +36,7 @@ describe("readDashboardNumbers", () => {
     }
   });
 
-  it("gives one row per Source and a totals row for the period", async () => {
+  it("gives one row per Source, cards first, and a totals row for the period", async () => {
     // Inside the period, across pages and days.
     await addTotal(db, "2026-10-10", "chop-nurses", "/go/events", "visits", 3);
     await addTotal(db, "2026-10-11", "chop-nurses", "/ask-about-camp", "visits", 2);
@@ -60,9 +60,9 @@ describe("readDashboardNumbers", () => {
     const numbers = await readDashboardNumbers(db, { from: "2026-10-10", to: "2026-10-12" });
 
     expect(numbers.rows).toEqual([
-      { source: "direct", visits: 9, scans: 0, callTaps: 0, emailTaps: 2, formRequests: 0 },
-      { source: "chop-nurses", visits: 5, scans: 3, callTaps: 1, emailTaps: 0, formRequests: 2 },
-      { source: "go-events", visits: 0, scans: 0, callTaps: 0, emailTaps: 0, formRequests: 1 },
+      { source: "chop-nurses", card: true, visits: 5, scans: 3, callTaps: 1, emailTaps: 0, formRequests: 2 },
+      { source: "go-events", card: false, visits: 0, scans: 0, callTaps: 0, emailTaps: 0, formRequests: 1 },
+      { source: "direct", card: false, visits: 9, scans: 0, callTaps: 0, emailTaps: 2, formRequests: 0 },
     ]);
     expect(numbers.totals).toEqual({ visits: 14, scans: 3, callTaps: 1, emailTaps: 2, formRequests: 3 });
   });
@@ -74,7 +74,7 @@ describe("readDashboardNumbers", () => {
     const numbers = await readDashboardNumbers(db, { from: "2026-10-10", to: "2026-10-10" });
 
     expect(numbers.rows).toEqual([
-      { source: "chop-nurses", visits: 0, scans: 0, callTaps: 0, emailTaps: 0, formRequests: 1 },
+      { source: "chop-nurses", card: true, visits: 0, scans: 0, callTaps: 0, emailTaps: 0, formRequests: 1 },
     ]);
     expect(numbers.totals.formRequests).toBe(1);
   });
