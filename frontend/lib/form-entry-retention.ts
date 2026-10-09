@@ -1,4 +1,4 @@
-import type { Database } from "@/lib/form-entry-store";
+import type { Database } from "@/lib/database";
 import type { FormsparkApi } from "@/lib/formspark-api";
 
 /** The privacy policy keeps a request for three years. */

@@ -36,6 +36,11 @@ function goPageSource(pathname: string) {
   return isRouteSlug(name) ? name : undefined;
 }
 
+/** The Source of a landing without tags: the `/go` page's own name, or `direct`. */
+export function untaggedSource(pathname: string) {
+  return goPageSource(pathname) ?? DIRECT_SOURCE;
+}
+
 function withoutTags(url: URL) {
   const tags = [...url.searchParams.keys()].filter((key) => key.startsWith("utm_"));
   if (tags.length === 0) return undefined;
@@ -68,7 +73,7 @@ export function resolveVisitSource(
   }
 
   return {
-    visit: stored ?? { source: goPageSource(url.pathname) ?? DIRECT_SOURCE },
+    visit: stored ?? { source: untaggedSource(url.pathname) },
     cleanedPath,
     qrScan: false,
   };

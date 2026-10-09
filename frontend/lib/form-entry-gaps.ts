@@ -1,4 +1,5 @@
-import { type Database, storeFormEntry } from "@/lib/form-entry-store";
+import type { Database } from "@/lib/database";
+import { storeFormEntry } from "@/lib/form-entry-store";
 import { entryFromFormspark } from "@/lib/formspark-entry";
 import type { FormsparkSubmission } from "@/lib/formspark-api";
 import type { ReportEmail } from "@/lib/report-email";

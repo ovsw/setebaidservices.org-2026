@@ -527,9 +527,13 @@ section_d() {
   check "Trigger.dev knows the 'website' key" trigger_website_key_ok
   check "Vercel has TRIGGER_SECRET_KEY" vercel_has TRIGGER_SECRET_KEY
   for name in "${copied[@]}"; do check_trigger "$name" "$(saved "$name")"; done
-  note "No Trigger.dev alerts: the free plan allows too few. The nightly gap-filler"
-  note "emails you each request that reached only one path (#52, section h)."
-  pause "Press Enter to continue."
+
+  printf '\n'
+  say "The free plan allows one alert destination. Use it for failed runs."
+  step "In the project, open Alerts and click New alert. Skip this if it exists."
+  step "Email: your own address. Alert me when: Task run failure. Environment: Production."
+  note "The nightly gap-filler also emails you each request that reached only one path (#52, section h)."
+  pause "Press Enter when the alert is saved."
 }
 
 # ── (e) Neon ─────────────────────────────────────────────────────────────

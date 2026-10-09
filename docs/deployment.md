@@ -88,7 +88,7 @@ pnpm setup:qr a b      # runs sections a and b only
 | a | Vercel Web Analytics, and the Web Analytics Plus add-on for the Studio ROVST team | #49 | 1 |
 | b | A Vercel deploy hook on `main`, and a Sanity webhook that calls it when a published Redirect is created, changed or deleted | #48 | 1 |
 | c | A Formspark workspace (upgraded, for API access), the "Ask about camp" form, and an API token that can read and delete submissions | #50, #52 | 2 |
-| d | A Trigger.dev project and two Production keys | #51, #52, #53 | 2 |
+| d | A Trigger.dev project, two Production keys, and an email alert for failed runs | #51, #52, #53 | 2 |
 | e | A Neon project on the Free plan, and its pooled connection string | #51, #54 | 2 |
 | f | A Vercel API token that the analytics copy job uses | #53 | 2 |
 | g | An encryption key for form entries, generated on this computer | #51 | 2 |
@@ -137,9 +137,8 @@ it, because a new key makes requests that still wait for a retry unreadable.
 Each "Ask about camp" request goes on two paths at the same time: to
 Formspark, which emails the office, and, encrypted, to the Trigger.dev task
 `store-form-entry`, which writes it to Neon and retries for about two and a
-half hours. The request counts as sent when one path accepts it. The free plan
-of Trigger.dev has no usable failure alerts. Instead, two nightly Trigger.dev
-jobs keep the store complete and clean:
+half hours. The request counts as sent when one path accepts it. Two nightly
+Trigger.dev jobs keep the store complete and clean:
 
 | Job | When (New York time) | What it does |
 | --- | --- | --- |
@@ -149,6 +148,19 @@ jobs keep the store complete and clean:
 Both jobs run in Production only and record their last successful run in
 `job_state`. The gap report names submission IDs, times, Sources and pages,
 never family details. If the email fails, the next night sends it.
+
+The free plan of Trigger.dev allows one alert destination. Section d sets it
+to Ovi's email for task run failures in Production, so the last failed attempt
+of any task sends an email.
+
+### Analytics copy in Neon
+
+Every hour, the Trigger.dev task `copy-analytics` copies the production page
+views and the `qr_scan`, `call_tap` and `email_tap` counts from Vercel Web
+Analytics into Neon, one daily total per Source, page and metric. A day is an
+Eastern (America/New_York) day. The first run copies every day since Web
+Analytics was enabled; later runs copy again from the day before their last
+success, and replace those days' numbers. Section f gives it its keys.
 
 After sections d, e and g have run, and again after each change under
 `frontend/db/migrations` or `frontend/trigger`:
