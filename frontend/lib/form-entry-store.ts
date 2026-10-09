@@ -1,9 +1,5 @@
 import type { AskAboutCampEntry } from "@/lib/ask-about-camp-delivery";
-
-/** The one query shape the store needs; Neon's driver and PGlite both have it. */
-export type Database = {
-  query(text: string, params?: unknown[]): Promise<{ rows: unknown[] }>;
-};
+import type { Database } from "@/lib/database";
 
 /**
  * Insert an entry by its submission ID. Storing the same entry again changes
