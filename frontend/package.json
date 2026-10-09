@@ -21,7 +21,7 @@
     "shot": "node scripts/shot.mjs"
   },
   "dependencies": {
-    "@fontsource/source-serif-4": "^5.3.0",
+    "@fontsource/work-sans": "^5.3.0",
     "@hookform/resolvers": "^5.4.0",
     "@neondatabase/serverless": "^1.2.0",
     "@portabletext/react": "^6.2.0",

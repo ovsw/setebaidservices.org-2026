@@ -26,6 +26,12 @@ const siteSettings = {
   seoImage: { asset: siteImageAsset },
 } as unknown as SEO_SETTINGS_QUERY_RESULT;
 
+const sharingPhoto = {
+  asset: { _ref: "image-social1234-1600x900-jpg", _type: "reference" as const },
+  crop: { _type: "sanity.imageCrop" as const, top: 0.1, bottom: 0.1, left: 0, right: 0.2 },
+  hotspot: { _type: "sanity.imageHotspot" as const, x: 0.3, y: 0.5, width: 0.2, height: 0.2 },
+};
+
 function withMeta<T extends { meta?: object | null }>(doc: T, meta: object) {
   return { ...doc, meta: { ...doc.meta, ...meta } } as unknown as T;
 }
@@ -186,68 +192,27 @@ describe("generatePageMetadata", () => {
     );
   });
 
-  it("prefers an editor-selected sharing image, formatted to 1200 × 630", () => {
-    const pageWithImage = {
-      ...page,
-      meta: {
-        ...page.meta,
-        image: {
-          asset: {
-            _id: "image-social1234-1600x900-jpg",
-            url: "https://cdn.sanity.io/images/test-project/test/social1234-1600x900.jpg",
-            mimeType: "image/jpeg",
-            metadata: { dimensions: { width: 1600, height: 900 } },
-          },
-          crop: { top: 0.1, bottom: 0.1, left: 0, right: 0.2 },
-          hotspot: { x: 0.3, y: 0.5, width: 0.2, height: 0.2 },
-        },
-      },
-    } as unknown as NonNullable<PAGE_QUERY_RESULT>;
-
-    const metadata = generatePageMetadata({
-      page: pageWithImage,
+  it("puts the Sharing photo inside the generated card", () => {
+    const plain = generatePageMetadata({ page, path: "/about", settings: siteSettings });
+    const withPhoto = generatePageMetadata({
+      page: { ...page, sharingPhoto },
       path: "/about",
       settings: siteSettings,
     });
-    const image = metadata.openGraph.images[0];
-    const url = new URL(image.url);
+    const plainUrl = new URL(plain.openGraph.images[0].url);
+    const photoUrl = new URL(withPhoto.openGraph.images[0].url);
 
-    expect(url.origin + url.pathname).toBe(
-      "https://cdn.sanity.io/images/test-project/test/social1234-1600x900.jpg",
+    expect(photoUrl.pathname).toBe("/api/og/page/page/about");
+    // A new photo, crop or hotspot gives the card a new URL.
+    expect(photoUrl.searchParams.get("rev")).not.toBe(
+      plainUrl.searchParams.get("rev"),
     );
-    expect(url.searchParams.get("w")).toBe("1200");
-    expect(url.searchParams.get("h")).toBe("630");
-    // The saved crop and hotspot choose the visible region.
-    expect(url.searchParams.get("rect")).toBeTruthy();
-    expect(image).toMatchObject({
+    expect(withPhoto.openGraph.images[0]).toMatchObject({
       width: 1200,
       height: 630,
       alt: "About | About Example Company",
     });
-    expect(metadata.twitter.images).toEqual([image]);
-  });
-
-  it("uses the override's own alt text when it has one", () => {
-    const metadata = generatePageMetadata({
-      page: withMeta(page, {
-        image: { alt: "Campers on the dock", asset: siteImageAsset },
-      }),
-      path: "/about",
-    });
-
-    expect(metadata.openGraph.images[0].alt).toBe("Campers on the dock");
-  });
-
-  it("ignores an override whose asset no longer resolves", () => {
-    const metadata = generatePageMetadata({
-      page: withMeta(page, { image: { asset: null } }),
-      path: "/about",
-      settings: siteSettings,
-    });
-
-    expect(new URL(metadata.openGraph.images[0].url).pathname).toBe(
-      "/api/og/page/page/about",
-    );
+    expect(withPhoto.twitter.images).toEqual(withPhoto.openGraph.images);
   });
 
   it("uses the Site sharing image when no generated card is available", () => {
@@ -271,7 +236,7 @@ describe("generatePageMetadata", () => {
     });
 
     expect(metadata.openGraph.images[0].url).toBe(
-      "https://example.test/images/og-post-fallback.png",
+      "https://example.test/images/og-default.png",
     );
   });
 
@@ -406,25 +371,33 @@ describe("description resolution", () => {
 });
 
 describe("listing sharing images", () => {
-  const override = { image: { asset: siteImageAsset } };
+  it("puts the Sharing photo inside the listing cards", () => {
+    const cards = [
+      [
+        generateBlogIndexMetadata({ blogIndex, page: 1 }),
+        generateBlogIndexMetadata({
+          blogIndex: { ...blogIndex, sharingPhoto } as unknown as NonNullable<BLOG_INDEX_QUERY_RESULT>,
+          page: 1,
+        }),
+      ],
+      [
+        generateCategoryMetadata({ category, page: 1 }),
+        generateCategoryMetadata({ category: { ...category, sharingPhoto }, page: 1 }),
+      ],
+    ];
 
-  it("applies the override to the blog index and category listings", () => {
-    const blog = generateBlogIndexMetadata({
-      blogIndex: withMeta(blogIndex, override),
-      page: 1,
-    });
-    const archive = generateCategoryMetadata({
-      category: withMeta(category, override),
-      page: 1,
-    });
-
-    for (const metadata of [blog, archive]) {
-      expect(metadata.openGraph.images[0].url).toContain("site1234-2400x1600.jpg");
-      expect(metadata.twitter.images).toEqual(metadata.openGraph.images);
+    for (const [plain, withPhoto] of cards) {
+      const plainUrl = new URL(plain.openGraph.images[0].url);
+      const photoUrl = new URL(withPhoto.openGraph.images[0].url);
+      expect(photoUrl.pathname).toBe(plainUrl.pathname);
+      expect(photoUrl.searchParams.get("rev")).not.toBe(
+        plainUrl.searchParams.get("rev"),
+      );
+      expect(withPhoto.twitter.images).toEqual(withPhoto.openGraph.images);
     }
   });
 
-  it("keeps generated cards for listings without an override", () => {
+  it("keeps generated cards for listings without a Sharing photo", () => {
     const metadata = generateCategoryMetadata({ category, page: 2, settings: siteSettings });
 
     expect(new URL(metadata.openGraph.images[0].url).pathname).toBe(

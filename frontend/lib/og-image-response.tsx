@@ -1,17 +1,18 @@
 import { PostOgImage } from "@/components/post-og-image";
-import { siteName } from "@/lib/site-name";
 import { sharingImageUrl } from "@/sanity/lib/image";
 import { fetchSeoSettings } from "@/sanity/lib/seo-settings";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-const sourceSerifSemibold = readFile(
+const workSansExtraBold = readFile(
   join(
     process.cwd(),
-    "node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-600-normal.woff",
+    "node_modules/@fontsource/work-sans/files/work-sans-latin-800-normal.woff",
   ),
 );
+const logoDark = readFile(join(process.cwd(), "assets/og/logo-dark.png"));
+
 const CACHE_HEADERS = {
   "Cache-Control": "public, max-age=31536000, immutable",
   "CDN-Cache-Control": "public, max-age=31536000, immutable",
@@ -20,27 +21,38 @@ const CACHE_HEADERS = {
   "X-Content-Type-Options": "nosniff",
 };
 
+function pngDataUrl(data: Buffer) {
+  return `data:image/png;base64,${data.toString("base64")}`;
+}
+
 export async function createOgImageResponse({
   eyebrow,
+  photoUrl,
   title,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
+  photoUrl?: string | null;
   title: string;
 }) {
-  const font = await sourceSerifSemibold;
+  const [font, logo] = await Promise.all([workSansExtraBold, logoDark]);
 
   return new ImageResponse(
-    <PostOgImage eyebrow={eyebrow} siteName={siteName} title={title} />,
+    <PostOgImage
+      eyebrow={eyebrow}
+      logo={pngDataUrl(logo)}
+      photoUrl={photoUrl}
+      title={title}
+    />,
     {
       width: 1200,
       height: 630,
       headers: CACHE_HEADERS,
       fonts: [
         {
-          name: "Source Serif 4",
+          name: "Work Sans",
           data: font,
           style: "normal",
-          weight: 600,
+          weight: 800,
         },
       ],
     },
@@ -49,7 +61,7 @@ export async function createOgImageResponse({
 
 function staticSafetyImageUrl() {
   return new URL(
-    "/images/og-post-fallback.png",
+    "/images/og-default.png",
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   ).toString();
 }

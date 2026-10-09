@@ -51,9 +51,9 @@ export default defineField({
     defineField({
       name: "image",
       type: "image",
-      title: "Social sharing image override",
+      title: "Social sharing photo",
       description:
-        "Optional. The image shown when this page is shared on social networks and in messages. Leave empty to use the Generated sharing card. Page Builder and hero photos are not used. Shared links show this image at 1200 × 630, so set the crop and hotspot to keep the important part visible.",
+        "Optional. The photo on the card shown when this page is shared on social networks and in messages. When empty, the card uses the hero photo (a post's main image). With no photo at all, the card shows the logo on green. The photo fills the whole card, with the logo and title on its left side, so set the hotspot on the part that must stay visible.",
       options: { hotspot: true },
       fields: [
         defineField({

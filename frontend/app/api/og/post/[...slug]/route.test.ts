@@ -102,7 +102,7 @@ describe("post OG image route", () => {
 
     expect(response.status).toBe(302);
     expect(response.headers.get("location")).toBe(
-      "https://example.test/images/og-post-fallback.png",
+      "https://example.test/images/og-default.png",
     );
     consoleError.mockRestore();
   });
@@ -115,7 +115,7 @@ describe("post OG image route", () => {
 
     expect(response.status).toBe(302);
     expect(response.headers.get("location")).toBe(
-      "https://example.test/images/og-post-fallback.png",
+      "https://example.test/images/og-default.png",
     );
     consoleError.mockRestore();
   });

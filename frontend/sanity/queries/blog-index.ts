@@ -1,6 +1,7 @@
 import { groq } from "next-sanity";
 import { pageBuilderQuery } from "./page-builder";
 import { metaQuery } from "./shared/meta";
+import { archiveSharingPhotoQuery } from "./shared/sharing-photo";
 import type { LATEST_POST_QUERY_RESULT } from "@/sanity.types";
 import {
   blogPostOrder,
@@ -25,7 +26,8 @@ export const BLOG_INDEX_QUERY = groq`
     title,
     description,
     ${pageBuilderQuery},
-    ${metaQuery}
+    ${metaQuery},
+    ${archiveSharingPhotoQuery}
   }
 `;
 

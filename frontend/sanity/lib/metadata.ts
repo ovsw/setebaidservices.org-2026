@@ -20,9 +20,11 @@ import {
   getPageOgImageTitle,
   type PageOgImageTarget,
 } from "@/lib/page-og-image";
+import type { SanityImageSource } from "@sanity/image-url";
 import {
   SHARING_IMAGE_HEIGHT,
   SHARING_IMAGE_WIDTH,
+  sharingCardPhotoUrl,
   sharingImageUrl,
 } from "@/sanity/lib/image";
 import { resolveSeoTitle } from "../../../shared/seo-title";
@@ -54,7 +56,7 @@ function sharingImage(url: string, title: string, alt = `${title} | ${siteName}`
 
 function staticSafetyImage() {
   return sharingImage(
-    `${siteOrigin}/images/og-post-fallback.png`,
+    `${siteOrigin}/images/og-default.png`,
     "Helpful website content",
   );
 }
@@ -75,23 +77,25 @@ function uploadedSharingImage(
   };
 }
 
+/** The Sharing photo goes inside the card, so the card URL changes with it. */
+function cardPhotoUrl(photo: SanityImageSource | null | undefined) {
+  return photo ? sharingCardPhotoUrl(photo) : null;
+}
+
 /**
- * One precedence rule for every route: Social sharing image override →
- * Generated sharing card → Site sharing image → static safety image.
+ * One precedence rule for every route: Generated sharing card → Site sharing
+ * image → static safety image. The Social sharing photo is part of the card.
  */
 function resolveSharingImage({
   generated,
-  override,
   settings,
   title,
 }: {
   generated: SharingImage | null;
-  override: UploadedSharingImage;
   settings: SEO_SETTINGS_QUERY_RESULT | undefined;
   title: string;
 }) {
   return (
-    uploadedSharingImage(override, title) ||
     generated ||
     uploadedSharingImage(settings?.seoImage, title) ||
     staticSafetyImage()
@@ -173,6 +177,7 @@ export function generatePageMetadata({
     isPost && postTitle && page.publishedAt && isValidOgSlug(page.slug?.current || "")
       ? buildPostOgImageUrl({
           origin: siteOrigin,
+          photoUrl: cardPhotoUrl(page.sharingPhoto),
           publishedAt: page.publishedAt,
           slug: page.slug?.current || "",
           title: postTitle,
@@ -198,6 +203,7 @@ export function generatePageMetadata({
     pageTitle && pageTarget
       ? buildPageOgImageUrl({
           origin: siteOrigin,
+          photoUrl: cardPhotoUrl(page?.sharingPhoto),
           target: pageTarget,
           title: pageTitle,
         })
@@ -211,7 +217,6 @@ export function generatePageMetadata({
         : pageImage && pageTitle
           ? sharingImage(pageImage, pageTitle, seoTitle.finalTitle)
           : null,
-    override: page?.meta?.image,
     settings,
     title: seoTitle.finalTitle,
   });
@@ -276,13 +281,13 @@ export function generateBlogIndexMetadata({
     generated: sharingImage(
       buildPageOgImageUrl({
         origin: siteOrigin,
+        photoUrl: cardPhotoUrl(blogIndex?.sharingPhoto),
         target: { kind: "blog", page },
         title: cardTitle,
       }),
       cardTitle,
       pageTitleResolution.finalTitle,
     ),
-    override: blogIndex?.meta?.image,
     settings,
     title: pageTitleResolution.finalTitle,
   });
@@ -343,6 +348,7 @@ export function generateCategoryMetadata({
         ? sharingImage(
             buildPageOgImageUrl({
               origin: siteOrigin,
+              photoUrl: cardPhotoUrl(category.sharingPhoto),
               target: { kind: "category", page, slug },
               title: cardTitle,
             }),
@@ -350,7 +356,6 @@ export function generateCategoryMetadata({
             pageTitleResolution.finalTitle,
           )
         : null,
-    override: category.meta?.image,
     settings,
     title: pageTitleResolution.finalTitle,
   });
