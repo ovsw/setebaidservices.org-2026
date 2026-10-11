@@ -25,7 +25,7 @@ const SCRIMS = [
 /**
  * The Generated sharing card: the Sharing photo across the whole card under
  * the Inner Hero's scrims, with the logo and the title on top. Without a
- * photo, camp green holds a faint brand ring where the photo would be.
+ * photo, camp green holds the logo's mark, large, where the photo would be.
  */
 export function PostOgImage({
   eyebrow,
@@ -138,28 +138,30 @@ export function PostOgImage({
   );
 }
 
-/** A large faint photo ring, open on the left like the logo's turning arrow. */
+/**
+ * The logo's mark, large: the turning arrow round the marigold dot. The
+ * coordinates are measured from the 540-pixel mark
+ * (prototype/assets/setebaid-mark-2a.png); the ring ends under the arrowhead.
+ */
 function BrandRing() {
-  const size = 720;
-  const radius = 290;
-  const centre = size / 2;
-  const offset = radius * Math.SQRT1_2;
+  const size = 766;
 
   return (
     <svg
       width={size}
       height={size}
-      viewBox={`0 0 ${size} ${size}`}
-      style={{ position: "absolute", top: -45, right: -150 }}
+      viewBox="0 0 540 540"
+      style={{ position: "absolute", top: -75, right: -166 }}
     >
       <path
-        d={`M ${centre - offset} ${centre - offset} A ${radius} ${radius} 0 1 1 ${centre - offset} ${centre + offset}`}
+        d="M 143.5 118.4 A 204.5 204.5 0 1 1 130.4 419.6"
         fill="none"
         stroke={LOGO_GREEN}
-        strokeWidth={72}
+        strokeWidth={77}
         strokeLinecap="round"
       />
-      <circle cx={centre} cy={centre} r={78} fill={MARIGOLD} />
+      <path d="M 22 148 L 148 22 L 181 181 Z" fill={LOGO_GREEN} />
+      <circle cx={275} cy={275} r={78} fill={MARIGOLD} />
     </svg>
   );
 }
