@@ -101,6 +101,7 @@ export function RequestRow({
 
       <div className="space-y-3">
         <h3 className="text-lg font-semibold">{parentName}</h3>
+        <div className="space-y-2">{contact}</div>
         <div className="grid max-w-60 gap-1">
           <Label htmlFor={`${id}-status`}>Status</Label>
           <div className="relative">
@@ -135,7 +136,6 @@ export function RequestRow({
             />
           </div>
         </div>
-        <div className="space-y-2">{contact}</div>
       </div>
 
       {details}
