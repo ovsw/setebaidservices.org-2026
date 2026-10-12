@@ -1,17 +1,14 @@
 import { neon } from "@neondatabase/serverless";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { ANALYTICS_TIME_ZONE } from "@/lib/analytics-copy";
 import { dashboardRange } from "@/lib/team-dashboard-numbers";
 import {
-  CALL_STATUS_LABELS,
-  type CallStatus,
   type DashboardRequest,
   isOpenStatus,
   readDashboardRequests,
 } from "@/lib/team-dashboard-requests";
 import { TEAM_DASHBOARD_PATH } from "@/lib/team-dashboard-session";
-import { CallStatusForm } from "./call-status-form";
+import { RequestRow } from "./request-row";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -31,12 +28,6 @@ const dayFormat = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
   timeZone: ANALYTICS_TIME_ZONE,
 });
-
-const BADGE: Record<CallStatus, "default" | "secondary" | "outline"> = {
-  to_call: "default",
-  no_answer: "secondary",
-  called: "outline",
-};
 
 /** The same period as the counts, with or without the called requests. */
 function toggleHref(searchParams: SearchParams, openOnly: boolean) {
@@ -110,51 +101,45 @@ export async function DashboardRequests({ searchParams }: { searchParams: Search
       ) : (
         <ul className="divide-y border-y">
           {requests.map((request) => (
-            <li
-              key={request.submissionId}
-              className="grid gap-6 py-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)]"
-            >
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="text-lg font-semibold">{request.parentName}</h3>
-                  <Badge variant={BADGE[request.callStatus]}>
-                    {CALL_STATUS_LABELS[request.callStatus]}
-                  </Badge>
-                </div>
-                <p>
-                  <a
-                    href={`tel:${request.phone.replace(/[^\d+]/g, "")}`}
-                    className="underline underline-offset-4"
-                  >
-                    {request.phone}
-                  </a>
-                </p>
-                <p className="break-all">
-                  <a href={`mailto:${request.email}`} className="underline underline-offset-4">
-                    {request.email}
-                  </a>
-                </p>
-              </div>
-
-              <dl className="space-y-1">
-                <Detail term="Child's age">{request.childAge}</Detail>
-                <Detail term="Best time">{request.bestTime || "Any time"}</Detail>
-                <Detail term="Wants to know">
-                  {request.interests.length ? request.interests.join(", ") : "—"}
-                </Detail>
-                <Detail term="Source">
-                  {request.source} ({request.page})
-                </Detail>
-                <Detail term="Received">{timeFormat.format(request.receivedAt)}</Detail>
-                {request.callStatusAt && (
-                  <Detail term="Status changed">{dayFormat.format(request.callStatusAt)}</Detail>
-                )}
-              </dl>
-
-              <CallStatusForm
+            <li key={request.submissionId}>
+              <RequestRow
                 submissionId={request.submissionId}
+                parentName={request.parentName}
                 status={request.callStatus}
                 note={request.callNote}
+                contact={
+                  <>
+                    <p>
+                      <a
+                        href={`tel:${request.phone.replace(/[^\d+]/g, "")}`}
+                        className="underline underline-offset-4"
+                      >
+                        {request.phone}
+                      </a>
+                    </p>
+                    <p className="break-all">
+                      <a href={`mailto:${request.email}`} className="underline underline-offset-4">
+                        {request.email}
+                      </a>
+                    </p>
+                  </>
+                }
+                details={
+                  <dl className="space-y-1">
+                    <Detail term="Child's age">{request.childAge}</Detail>
+                    <Detail term="Best time">{request.bestTime || "Any time"}</Detail>
+                    <Detail term="Wants to know">
+                      {request.interests.length ? request.interests.join(", ") : "—"}
+                    </Detail>
+                    <Detail term="Source">
+                      {request.source} ({request.page})
+                    </Detail>
+                    <Detail term="Received">{timeFormat.format(request.receivedAt)}</Detail>
+                    {request.callStatusAt && (
+                      <Detail term="Status changed">{dayFormat.format(request.callStatusAt)}</Detail>
+                    )}
+                  </dl>
+                }
               />
             </li>
           ))}
