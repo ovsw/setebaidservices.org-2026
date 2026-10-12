@@ -103,7 +103,9 @@ export function RequestRow({
         <h3 className="text-lg font-semibold">{parentName}</h3>
         <div className="space-y-2">{contact}</div>
         <div className="grid max-w-60 gap-1 pt-3">
-          <Label htmlFor={`${id}-status`}>Status</Label>
+          <Label htmlFor={`${id}-status`} className="sr-only">
+            Status for {parentName}
+          </Label>
           <div className="relative">
             <select
               id={`${id}-status`}
