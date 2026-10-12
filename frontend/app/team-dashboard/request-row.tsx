@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import { type FormEvent, type ReactNode, useActionState, useEffect, useRef, useState, startTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -18,6 +19,12 @@ const STATUS_LOOK: Record<CallStatus, string> = {
   to_call: "border-transparent bg-primary text-primary-foreground",
   no_answer: "border-transparent bg-secondary text-secondary-foreground",
   called: "border-input bg-transparent text-foreground",
+};
+
+const ARROW_COLOR: Record<CallStatus, string> = {
+  to_call: "text-primary-foreground",
+  no_answer: "text-secondary-foreground",
+  called: "text-foreground",
 };
 
 /**
@@ -93,40 +100,47 @@ export function RequestRow({
       <input type="hidden" name="submissionId" value={submissionId} />
 
       <div className="space-y-2">
-        <div className="flex flex-wrap items-center gap-3">
-          <h3 className="text-lg font-semibold">{parentName}</h3>
-          <Label htmlFor={`${id}-status`} className="sr-only">
-            Status for {parentName}
-          </Label>
-          <select
-            id={`${id}-status`}
-            name="status"
-            value={status}
-            disabled={pending}
-            onChange={(event) => {
-              const next = event.target.value;
-              if (!isCallStatus(next)) return;
-              setStatus(next);
-              save({ status: next });
-            }}
-            className={cn(
-              "min-h-11 cursor-pointer rounded-full border px-4 text-sm font-semibold focus-ring disabled:opacity-70",
-              STATUS_LOOK[status],
-            )}
-          >
-            {CALL_STATUSES.map((value) => (
-              <option key={value} value={value} className="bg-background text-foreground">
-                {CALL_STATUS_LABELS[value]}
-              </option>
-            ))}
-          </select>
-        </div>
+        <h3 className="text-lg font-semibold">{parentName}</h3>
         {contact}
       </div>
 
       {details}
 
       <div className="grid content-start gap-3">
+        <div className="grid gap-1">
+          <Label htmlFor={`${id}-status`}>Status</Label>
+          <div className="relative">
+            <select
+              id={`${id}-status`}
+              name="status"
+              value={status}
+              disabled={pending}
+              onChange={(event) => {
+                const next = event.target.value;
+                if (!isCallStatus(next)) return;
+                setStatus(next);
+                save({ status: next });
+              }}
+              className={cn(
+                "min-h-(--control-height) w-full cursor-pointer appearance-none rounded-control border py-2 pr-10 pl-3 text-base font-semibold focus-ring disabled:cursor-wait",
+                STATUS_LOOK[status],
+              )}
+            >
+              {CALL_STATUSES.map((value) => (
+                <option key={value} value={value} className="bg-background font-normal text-foreground">
+                  {CALL_STATUS_LABELS[value]}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              aria-hidden
+              className={cn(
+                "pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2",
+                ARROW_COLOR[status],
+              )}
+            />
+          </div>
+        </div>
         <div className="grid gap-1">
           <Label htmlFor={`${id}-note`}>Note</Label>
           <textarea
