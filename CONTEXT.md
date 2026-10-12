@@ -72,7 +72,7 @@ An "Ask about camp" request that reached only one of its two paths: Neon through
 
 **Call status**
 
-What the office did with an "Ask about camp" request: To call (new), Called, or No answer (try again). A request is open until it is Called. The team dashboard lists the requests with their status and one short note; both are deleted with the request after three years.
+What the office did with an "Ask about camp" request, and what came of the call. Open statuses keep the request on the call list: To call (new), No answer, Left a message, Follow up. Closed statuses end it: Plans to register, Not for them, Can't reach. The team dashboard lists the requests with their status and one short note; both are deleted with the request after three years.
 
 ## Ownership rules
 

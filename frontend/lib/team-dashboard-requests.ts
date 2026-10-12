@@ -1,13 +1,15 @@
 import { ANALYTICS_TIME_ZONE } from "@/lib/analytics-copy";
 import type { Database } from "@/lib/database";
-import type { CallStatus } from "@/lib/call-status";
+import { type CallStatus, CLOSED_CALL_STATUSES } from "@/lib/call-status";
 import type { DashboardRange } from "@/lib/team-dashboard-numbers";
 
 export {
   CALL_NOTE_MAX_LENGTH,
   CALL_STATUS_LABELS,
   CALL_STATUSES,
+  CLOSED_CALL_STATUSES,
   type CallStatus,
+  OPEN_CALL_STATUSES,
   isCallStatus,
   isOpenStatus,
   normalizeCallNote,
@@ -49,8 +51,8 @@ type RequestRow = {
 
 /**
  * The requests of a period, for the people who call the families: open
- * requests (to call, no answer) first, then called ones, newest first within
- * each group. `openOnly` leaves out the called ones.
+ * requests first, then closed ones, newest first within each group.
+ * `openOnly` leaves out the closed ones.
  */
 export async function readDashboardRequests(
   db: Database,
@@ -62,9 +64,9 @@ export async function readDashboardRequests(
         child_age, best_time, interests, call_status, call_note, call_status_at
       from form_entries
       where ${receivedDay} between $1::date and $2::date
-        and ($3::boolean = false or call_status <> 'called')
-      order by (call_status = 'called'), received_at desc, submission_id`,
-    [from, to, openOnly],
+        and ($3::boolean = false or call_status <> all($4::text[]))
+      order by (call_status = any($4::text[])), received_at desc, submission_id`,
+    [from, to, openOnly, CLOSED_CALL_STATUSES],
   );
   return (rows as RequestRow[]).map((row) => ({
     submissionId: row.submission_id,

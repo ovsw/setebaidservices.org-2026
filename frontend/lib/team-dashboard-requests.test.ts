@@ -38,7 +38,7 @@ describe("dashboard requests", () => {
       );
     await insert(ids.oldOpen, "2026-10-10T14:00:00Z");
     await insert(ids.newOpen, "2026-10-12T14:00:00Z");
-    await insert(ids.called, "2026-10-12T15:00:00Z", "called");
+    await insert(ids.called, "2026-10-12T15:00:00Z", "not_for_them");
     await insert(ids.noAnswer, "2026-10-11T14:00:00Z", "no_answer");
     await insert(ids.outside, "2026-10-01T14:00:00Z");
   });
@@ -60,7 +60,7 @@ describe("dashboard requests", () => {
     });
   });
 
-  it("leaves out the called requests when asked for open ones", async () => {
+  it("leaves out the closed requests when asked for open ones", async () => {
     const rows = await readDashboardRequests(db, range, { openOnly: true });
     expect(rows.map((row) => row.submissionId)).toEqual([ids.newOpen, ids.noAnswer, ids.oldOpen]);
   });
@@ -83,10 +83,10 @@ describe("dashboard requests", () => {
     expect(second.callStatusAt).toEqual(first.callStatusAt);
 
     await expect(
-      saveCallStatus(db, { submissionId: ids.outside, status: "called", note: "" }),
+      saveCallStatus(db, { submissionId: ids.outside, status: "plans_to_register", note: "" }),
     ).resolves.toBe(true);
     await expect(
-      saveCallStatus(db, { submissionId: "99999999-9999-4999-8999-999999999999", status: "called", note: "" }),
+      saveCallStatus(db, { submissionId: "99999999-9999-4999-8999-999999999999", status: "plans_to_register", note: "" }),
     ).resolves.toBe(false);
   });
 
@@ -94,5 +94,30 @@ describe("dashboard requests", () => {
     expect(normalizeCallNote("  call back Tuesday  ")).toBe("call back Tuesday");
     expect(normalizeCallNote("x".repeat(600))).toHaveLength(500);
     expect(normalizeCallNote(undefined)).toBe("");
+  });
+});
+
+describe("call statuses", () => {
+  it("keeps the four open statuses on the call list and closes the other three", async () => {
+    const { CALL_STATUSES, isOpenStatus } = await import("@/lib/call-status");
+    expect(CALL_STATUSES.filter(isOpenStatus)).toEqual(["to_call", "no_answer", "left_message", "follow_up"]);
+  });
+
+  it("turns a stored 'called' into 'follow_up' when the outcomes arrive", async () => {
+    const db = new PGlite();
+    const files = readdirSync(migrations).sort();
+    for (const file of files.filter((name) => name < "0004")) {
+      await db.exec(readFileSync(path.join(migrations, file), "utf8"));
+    }
+    await db.query(
+      `insert into form_entries (submission_id, received_at, source, page, parent_name, phone, email, child_age, call_status)
+      values ('${ids.called}', now(), 'direct', '/ask-about-camp', 'A', '1', 'a@example.com', '9', 'called')`,
+    );
+    for (const file of files.filter((name) => name >= "0004")) {
+      await db.exec(readFileSync(path.join(migrations, file), "utf8"));
+    }
+    const { rows } = await db.query("select call_status from form_entries");
+    expect(rows).toEqual([{ call_status: "follow_up" }]);
+    await expect(db.query("update form_entries set call_status = 'called'")).rejects.toThrow();
   });
 });

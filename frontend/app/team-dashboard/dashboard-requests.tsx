@@ -29,7 +29,7 @@ const dayFormat = new Intl.DateTimeFormat("en-US", {
   timeZone: ANALYTICS_TIME_ZONE,
 });
 
-/** The same period as the counts, with or without the called requests. */
+/** The same period as the counts, with or without the closed requests. */
 function toggleHref(searchParams: SearchParams, openOnly: boolean) {
   const params = new URLSearchParams();
   for (const key of ["range", "from", "to"]) {

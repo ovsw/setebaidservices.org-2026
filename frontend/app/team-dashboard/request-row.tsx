@@ -7,24 +7,40 @@ import { Label } from "@/components/ui/label";
 import {
   CALL_NOTE_MAX_LENGTH,
   CALL_STATUS_LABELS,
-  CALL_STATUSES,
   type CallStatus,
+  CLOSED_CALL_STATUSES,
   isCallStatus,
+  OPEN_CALL_STATUSES,
 } from "@/lib/call-status";
 import { cn } from "@/lib/utils";
 import { type SaveCallResult, saveCallStatusFromRow } from "./actions";
 
-/** The status control is also the status display, so each status has its own look. */
+/**
+ * The status control is also the status display. A new request is the
+ * strongest colour; a request in progress is sand; a closed one is outlined.
+ */
+const NEW = "border-transparent bg-primary text-primary-foreground";
+const IN_PROGRESS = "border-transparent bg-secondary text-secondary-foreground";
+const CLOSED = "border-input bg-transparent text-foreground";
+
 const STATUS_LOOK: Record<CallStatus, string> = {
-  to_call: "border-transparent bg-primary text-primary-foreground",
-  no_answer: "border-transparent bg-secondary text-secondary-foreground",
-  called: "border-input bg-transparent text-foreground",
+  to_call: NEW,
+  no_answer: IN_PROGRESS,
+  left_message: IN_PROGRESS,
+  follow_up: IN_PROGRESS,
+  plans_to_register: CLOSED,
+  not_for_them: CLOSED,
+  cant_reach: CLOSED,
 };
 
 const ARROW_COLOR: Record<CallStatus, string> = {
   to_call: "text-primary-foreground",
   no_answer: "text-secondary-foreground",
-  called: "text-foreground",
+  left_message: "text-secondary-foreground",
+  follow_up: "text-secondary-foreground",
+  plans_to_register: "text-foreground",
+  not_for_them: "text-foreground",
+  cant_reach: "text-foreground",
 };
 
 /**
@@ -123,10 +139,19 @@ export function RequestRow({
                 STATUS_LOOK[status],
               )}
             >
-              {CALL_STATUSES.map((value) => (
-                <option key={value} value={value} className="bg-background font-normal text-foreground">
-                  {CALL_STATUS_LABELS[value]}
-                </option>
+              {(
+                [
+                  ["Open", OPEN_CALL_STATUSES],
+                  ["Closed", CLOSED_CALL_STATUSES],
+                ] as const
+              ).map(([group, values]) => (
+                <optgroup key={group} label={group} className="bg-background text-foreground">
+                  {values.map((value) => (
+                    <option key={value} value={value} className="bg-background font-normal text-foreground">
+                      {CALL_STATUS_LABELS[value]}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
             </select>
             <ChevronDown

@@ -39,7 +39,7 @@ describe("saveCallStatusFromRow", () => {
   it("refuses a missing or forged session without writing", async () => {
     for (const value of [undefined, "forged"]) {
       cookie.value = value;
-      expect(await row({ submissionId: ID, status: "called", note: "" })).toEqual({
+      expect(await row({ submissionId: ID, status: "plans_to_register", note: "" })).toEqual({
         ok: false,
         message: "Open this from the Studio.",
       });
@@ -50,7 +50,7 @@ describe("saveCallStatusFromRow", () => {
   it("refuses an unknown status or a malformed request ID", async () => {
     cookie.value = "valid";
     expect((await row({ submissionId: ID, status: "done", note: "" })).ok).toBe(false);
-    expect((await row({ submissionId: "1 or 1=1", status: "called", note: "" })).ok).toBe(false);
+    expect((await row({ submissionId: "1 or 1=1", status: "plans_to_register", note: "" })).ok).toBe(false);
     expect(saveCallStatus).not.toHaveBeenCalled();
   });
 
@@ -73,11 +73,11 @@ describe("saveCallStatusFromRow", () => {
   it("says so when the request is gone or the write fails", async () => {
     cookie.value = "valid";
     saveCallStatus.mockResolvedValueOnce(false);
-    expect((await row({ submissionId: ID, status: "called", note: "" })).ok).toBe(false);
+    expect((await row({ submissionId: ID, status: "plans_to_register", note: "" })).ok).toBe(false);
 
     vi.spyOn(console, "error").mockImplementation(() => {});
     saveCallStatus.mockRejectedValueOnce(new Error("Neon is down"));
-    expect((await row({ submissionId: ID, status: "called", note: "" })).ok).toBe(false);
+    expect((await row({ submissionId: ID, status: "plans_to_register", note: "" })).ok).toBe(false);
     expect(refresh).not.toHaveBeenCalled();
   });
 });
