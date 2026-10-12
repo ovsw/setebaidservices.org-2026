@@ -257,7 +257,7 @@ export async function copyAnalytics(db: Database, analytics: WebAnalytics, now =
 export const COPY_INTERVAL_MS = 2 * 60_000;
 
 /**
- * The copy behind the dashboard's "Update now" button. A copy that finished
+ * The copy behind the dashboard's "Get the latest data" button. A copy that finished
  * less than two minutes ago is kept instead of repeated.
  */
 export async function copyAnalyticsIfStale(db: Database, analytics: WebAnalytics, now = new Date()) {

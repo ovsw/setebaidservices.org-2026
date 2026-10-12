@@ -12,7 +12,7 @@ import { requiredEnv } from "./required-env";
 /**
  * Every night, copy the page views and the QR scan, call and email tap counts
  * from Vercel Web Analytics into Neon as daily totals, so the history stays
- * ours whatever Vercel keeps. The dashboard's "Update now" button runs the
+ * ours whatever Vercel keeps. The dashboard's "Get the latest data" button runs the
  * same copy when someone needs today's numbers. A failed night is caught up
  * by the next one.
  */

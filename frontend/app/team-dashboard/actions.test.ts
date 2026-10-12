@@ -10,6 +10,7 @@ vi.mock("next/headers", () => ({
 vi.mock("next/cache", () => ({ refresh }));
 vi.mock("@neondatabase/serverless", () => ({ neon: () => ({ query: vi.fn() }) }));
 vi.mock("@/lib/analytics-copy", () => ({
+  ANALYTICS_TIME_ZONE: "America/New_York",
   copyAnalyticsIfStale,
   vercelWebAnalytics: () => ({}),
 }));
