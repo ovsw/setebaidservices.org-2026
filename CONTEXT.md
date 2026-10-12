@@ -70,6 +70,10 @@ The name of the card or page that brought a visitor, for example `chop-nurses`. 
 
 An "Ask about camp" request that reached only one of its two paths: Neon through Trigger.dev (path A) or Formspark (path B). The nightly gap-filler records each one, so the team dashboard can count them and Ovi gets an email.
 
+**Call status**
+
+What the office did with an "Ask about camp" request: To call (new), Called, or No answer (try again). A request is open until it is Called. The team dashboard lists the requests with their status and one short note; both are deleted with the request after three years.
+
 ## Ownership rules
 
 - Code owns layout, rendering rules, validation, and safe fallbacks.
