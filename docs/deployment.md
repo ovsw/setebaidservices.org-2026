@@ -163,7 +163,7 @@ Source, page and metric. A day is an Eastern (America/New_York) day. The first
 run copies every day since Web Analytics was enabled; later runs copy again
 from the day before their last success, and replace those days' numbers.
 
-The team dashboard's "Update now" button runs the same copy in the Website,
+The team dashboard's "Get the latest data" button runs the same copy in the Website,
 so the numbers are fresh when someone looks; the nightly run keeps the history
 complete when nobody does. A copy that finished less than two minutes ago is
 not repeated. The dashboard shows the last copy and the next nightly one.

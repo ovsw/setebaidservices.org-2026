@@ -11,7 +11,7 @@ export function UpdateNowButton() {
   return (
     <form action={action} className="flex flex-wrap items-center gap-3">
       <Button type="submit" size="compact" variant="outline" disabled={pending}>
-        {pending ? "Updating…" : "Update now"}
+        {pending ? "Getting the latest data…" : "Get the latest data"}
       </Button>
       <p role="status">{result && !pending ? result.message : null}</p>
     </form>

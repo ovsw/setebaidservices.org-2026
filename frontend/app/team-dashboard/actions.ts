@@ -13,7 +13,7 @@ import {
 export type UpdateResult = { ok: boolean; message: string };
 
 /**
- * The "Update now" button: copy the newest visit and tap counts from Vercel
+ * The "Get the latest data" button: copy the newest visit and tap counts from Vercel
  * into Neon, then show the page again. Anyone can reach a server action, so
  * the session is checked here as on the page.
  */
