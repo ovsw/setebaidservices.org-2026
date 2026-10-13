@@ -59,34 +59,38 @@ export default function HomeHero({
       data-header-overlay="light"
       id={`hero-${stegaClean(_key)}`}
     >
-      <div className="container-content grid items-center gap-12 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:gap-16">
-        <div className="relative flex flex-col gap-12">
-          <div className="flex flex-col gap-6">
-            {hasText(status) ? (
-              <p
-                className="flex items-center gap-2 font-ui text-base leading-[1.3] font-semibold text-link"
-                data-sanity={dataAttribute?.("status")}
-              >
-                <span aria-hidden="true" className="inline-block size-2.5 shrink-0 rounded-full bg-highlight" />
-                {status}
-              </p>
-            ) : null}
-            <h1
-              className="text-display-hero text-balance"
-              data-sanity={dataAttribute?.("title")}
-              id={headingId}
+      {/* Phones stack everything. Tablets put the headline across the full
+          width and the text beside the photo below it, because a half-width
+          column breaks the headline into one-word lines. From 1024px the
+          headline joins the text column, vertically centred on the photo. */}
+      <div className="container-content grid items-center gap-x-12 gap-y-6 [grid-template-areas:'head'_'text'_'media'] md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:[grid-template-areas:'head_head'_'text_media'] lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:grid-rows-[1fr_auto_auto_1fr] lg:gap-x-16 lg:[grid-template-areas:'._media'_'head_media'_'text_media'_'._media']">
+        <div className="flex flex-col gap-6 [grid-area:head]">
+          {hasText(status) ? (
+            <p
+              className="flex items-center gap-2 font-ui text-base leading-[1.3] font-semibold text-link"
+              data-sanity={dataAttribute?.("status")}
             >
-              <HeadingText value={title} />
-            </h1>
-            {body?.length ? (
-              <div
-                className="grid max-w-[40ch] gap-4 text-lead text-muted-foreground"
-                data-sanity={dataAttribute?.("body")}
-              >
-                <BodyText value={body} />
-              </div>
-            ) : null}
-          </div>
+              <span aria-hidden="true" className="inline-block size-2.5 shrink-0 rounded-full bg-highlight" />
+              {status}
+            </p>
+          ) : null}
+          <h1
+            className="text-display-hero text-balance"
+            data-sanity={dataAttribute?.("title")}
+            id={headingId}
+          >
+            <HeadingText value={title} />
+          </h1>
+        </div>
+        <div className="flex flex-col gap-12 [grid-area:text]">
+          {body?.length ? (
+            <div
+              className="grid max-w-[40ch] gap-4 text-lead text-muted-foreground"
+              data-sanity={dataAttribute?.("body")}
+            >
+              <BodyText value={body} />
+            </div>
+          ) : null}
           <SectionButtons
             buttons={buttons}
             dataAttribute={dataAttribute}
@@ -110,7 +114,7 @@ export default function HomeHero({
           ) : null}
         </div>
 
-        <div className="mx-auto flex w-full max-w-[420px] flex-col lg:mr-0 lg:ml-auto lg:max-w-[560px]">
+        <div className="mx-auto mt-6 flex w-full max-w-[420px] flex-col [grid-area:media] md:mt-0 md:mr-0 lg:ml-auto lg:max-w-[560px]">
           <div className="relative aspect-square w-full">
             <div
               aria-hidden="true"
