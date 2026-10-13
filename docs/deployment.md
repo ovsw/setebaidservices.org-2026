@@ -50,6 +50,36 @@ To confirm that it works, publish a change to a redirect. A new production
 deployment from the hook `sanity-redirects` appears in Vercel within a few
 seconds. When it is ready, the changed rule works on the Website.
 
+## Content goes live on publish
+
+The Website keeps the Sanity content of each page in its cache until a publish
+tells it to refresh. `<SanityLive />` does this only while a visitor has a page
+open, so a second path does not depend on visitors: a Sanity webhook calls
+`/api/revalidate` when published content changes. The route expires all cached
+Sanity content at once, so every page that shows the change (a story on the
+home page and on the stories index) is fresh on its next visit, a few seconds
+after you publish.
+
+| Setting | Value |
+| --- | --- |
+| Sanity webhook | Name "Refresh the Website when content is published", in the project's API settings |
+| URL | `https://setebaid-2026.vercel.app/api/revalidate` (the production domain after launch) |
+| Dataset | `production` |
+| Trigger | Create, update and delete |
+| Filter | None: every published document |
+| Drafts and versions | Off, so draft edits do not refresh the cache |
+| Projection | `{_id, _type}` |
+| HTTP method | `POST` |
+| Secret | `SANITY_REVALIDATE_SECRET` |
+
+The secret signs each call, and the route refuses a call without a valid
+signature. It is kept only in Vercel (Production, sensitive), in the Sanity
+webhook, and in the local setup file.
+
+To confirm that it works, publish a change and reload the page on the Website.
+The webhook's attempt log in the Sanity project's API settings shows each call
+with status 200.
+
 ## Studio on Sanity
 
 Add the local values from `studio/.env.local.example`. Confirm that the
