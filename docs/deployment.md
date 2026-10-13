@@ -50,6 +50,48 @@ To confirm that it works, publish a change to a redirect. A new production
 deployment from the hook `sanity-redirects` appears in Vercel within a few
 seconds. When it is ready, the changed rule works on the Website.
 
+## Content goes live on publish
+
+The Website keeps the Sanity content of each page in its cache, and each
+cached read carries Sanity's sync tags: labels for the content it used.
+`<SanityLive />` expires them only while a visitor has a page open, so the
+Sanity Function `invalidate-tags` (`studio/functions/invalidate-tags`) does it
+on every publish, with no visitor needed. This is next-sanity's "guaranteed
+live content updates" setup:
+
+1. After a publish, Sanity calls the function with the sync tags of the
+   changed content.
+2. The function sends them to `/api/revalidate-tags`, which expires each one.
+   Every page that shows the change (a story on the home page and on the
+   stories index) is fresh on its next visit, and no other page is.
+3. The function calls `done()`. Only then does Sanity tell open pages about
+   the change (`<SanityLive waitFor="function" />` in production), so they
+   never reload the old version.
+
+| Setting | Value |
+| --- | --- |
+| Blueprint | `studio/sanity.blueprint.ts`, stack `production` in project `o36mi5w4` |
+| Function | `invalidate-tags`, for the `production` dataset |
+| Function variable `REVALIDATE_TAGS_URL` | `https://setebaid-2026.vercel.app/api/revalidate-tags` (the production domain after launch) |
+| Function variable `SANITY_REVALIDATE_SECRET` | The same value as the Website's |
+| Website variable `SANITY_REVALIDATE_SECRET` | In Vercel, Production, sensitive |
+
+The secret is kept only in Vercel, in the function's variables, and in the
+local setup file. The route refuses a call without it.
+
+Deploy a changed function from the repository root, then check its log after a
+publish:
+
+```bash
+pnpm --dir studio exec sanity blueprints deploy
+pnpm --dir studio exec sanity functions logs invalidate-tags
+```
+
+A new checkout links to the stack with
+`pnpm --dir studio exec sanity blueprints config --edit --project-id o36mi5w4 --stack production`
+(the link is in the ignored `studio/.sanity/`). Function runs are part of the Sanity plan's
+included usage (500,000 a month); each publish uses one.
+
 ## Studio on Sanity
 
 Add the local values from `studio/.env.local.example`. Confirm that the
