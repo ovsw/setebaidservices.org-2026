@@ -1,14 +1,7 @@
 import { Images } from "lucide-react";
-import { defineArrayMember, defineField, defineType, type Path } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
+import { isInHiddenCardLink, isTiltedSection } from "./shared/feature-card-visibility";
 import { sectionBackgroundField } from "./shared/section-background";
-
-/** Whether the Feature Cards section that holds the field at `path` is tilted. */
-function isTiltedSection(document: unknown, path: Path | undefined) {
-  const sectionKey = (path?.[1] as { _key?: string } | undefined)?._key;
-  const blocks = (document as { blocks?: { _key?: string; layout?: string }[] } | undefined)
-    ?.blocks;
-  return blocks?.find((block) => block._key === sectionKey)?.layout === "tilted";
-}
 
 const featureCardLink = defineField({
   name: "link",
@@ -24,7 +17,10 @@ const featureCardLink = defineField({
       name: "url",
       title: "Destination",
       type: "customUrl",
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule.custom((value, context) =>
+          value || isInHiddenCardLink(context.document, context.path) ? true : "Required",
+        ),
     }),
   ],
   description: "Numbered grid only. The whole card links here.",
