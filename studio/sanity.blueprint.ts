@@ -11,6 +11,7 @@ export default defineBlueprint({
     defineSyncTagInvalidateFunction({
       name: "invalidate-tags",
       src: "./functions/invalidate-tags",
+      timeout: 20,
       event: {
         resource: { type: "dataset", id: "o36mi5w4.production" },
       },
