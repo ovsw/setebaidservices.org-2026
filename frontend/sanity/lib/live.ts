@@ -6,10 +6,9 @@ import {
 } from "next-sanity/live";
 import { cookies, draftMode } from "next/headers";
 import { client } from "./client";
-import { SANITY_CONTENT_TAG } from "./content-tag";
 import { token } from "./token";
 
-const live = defineLive({
+export const { sanityFetch, SanityLive } = defineLive({
   client,
   // Required for showing draft content when the Sanity Presentation Tool is used, or to enable the Vercel Toolbar Edit Mode
   serverToken: token || false,
@@ -17,17 +16,6 @@ const live = defineLive({
   browserToken: token || false,
   strict: true,
 });
-
-export const { SanityLive } = live;
-
-// <SanityLive /> refreshes cached content only while a visitor has a page
-// open. Every read also carries SANITY_CONTENT_TAG, which the publish webhook
-// expires, so content refreshes when nobody is looking too.
-export const sanityFetch = ((options: Parameters<typeof live.sanityFetch>[0]) =>
-  live.sanityFetch({
-    ...options,
-    tags: [SANITY_CONTENT_TAG, ...(options.tags ?? [])],
-  })) as typeof live.sanityFetch;
 
 export interface DynamicFetchOptions {
   perspective: LivePerspective;

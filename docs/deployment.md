@@ -52,33 +52,45 @@ seconds. When it is ready, the changed rule works on the Website.
 
 ## Content goes live on publish
 
-The Website keeps the Sanity content of each page in its cache until a publish
-tells it to refresh. `<SanityLive />` does this only while a visitor has a page
-open, so a second path does not depend on visitors: a Sanity webhook calls
-`/api/revalidate` when published content changes. The route expires all cached
-Sanity content at once, so every page that shows the change (a story on the
-home page and on the stories index) is fresh on its next visit, a few seconds
-after you publish.
+The Website keeps the Sanity content of each page in its cache, and each
+cached read carries Sanity's sync tags: labels for the content it used.
+`<SanityLive />` expires them only while a visitor has a page open, so the
+Sanity Function `invalidate-tags` (`studio/functions/invalidate-tags`) does it
+on every publish, with no visitor needed. This is next-sanity's "guaranteed
+live content updates" setup:
+
+1. After a publish, Sanity calls the function with the sync tags of the
+   changed content.
+2. The function sends them to `/api/revalidate-tags`, which expires each one.
+   Every page that shows the change (a story on the home page and on the
+   stories index) is fresh on its next visit, and no other page is.
+3. The function calls `done()`. Only then does Sanity tell open pages about
+   the change (`<SanityLive waitFor="function" />` in production), so they
+   never reload the old version.
 
 | Setting | Value |
 | --- | --- |
-| Sanity webhook | Name "Refresh the Website when content is published", in the project's API settings |
-| URL | `https://setebaid-2026.vercel.app/api/revalidate` (the production domain after launch) |
-| Dataset | `production` |
-| Trigger | Create, update and delete |
-| Filter | None: every published document |
-| Drafts and versions | Off, so draft edits do not refresh the cache |
-| Projection | `{_id, _type}` |
-| HTTP method | `POST` |
-| Secret | `SANITY_REVALIDATE_SECRET` |
+| Blueprint | `studio/sanity.blueprint.ts`, stack `production` in project `o36mi5w4` |
+| Function | `invalidate-tags`, for the `production` dataset |
+| Function variable `REVALIDATE_TAGS_URL` | `https://setebaid-2026.vercel.app/api/revalidate-tags` (the production domain after launch) |
+| Function variable `SANITY_REVALIDATE_SECRET` | The same value as the Website's |
+| Website variable `SANITY_REVALIDATE_SECRET` | In Vercel, Production, sensitive |
 
-The secret signs each call, and the route refuses a call without a valid
-signature. It is kept only in Vercel (Production, sensitive), in the Sanity
-webhook, and in the local setup file.
+The secret is kept only in Vercel, in the function's variables, and in the
+local setup file. The route refuses a call without it.
 
-To confirm that it works, publish a change and reload the page on the Website.
-The webhook's attempt log in the Sanity project's API settings shows each call
-with status 200.
+Deploy a changed function from the repository root, then check its log after a
+publish:
+
+```bash
+pnpm --dir studio exec sanity blueprints deploy
+pnpm --dir studio exec sanity functions logs invalidate-tags
+```
+
+A new checkout links to the stack with
+`pnpm --dir studio exec sanity blueprints config --edit --project-id o36mi5w4 --stack production`
+(the link is in the ignored `studio/.sanity/`). Function runs are part of the Sanity plan's
+included usage (500,000 a month); each publish uses one.
 
 ## Studio on Sanity
 
