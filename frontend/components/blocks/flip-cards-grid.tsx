@@ -165,9 +165,18 @@ export default function FlipCardGrid({
                     tone.back,
                   )}
                 >
-                  <TurnIcon
-                    className="absolute -right-[50px] -bottom-[50px] size-[220px] opacity-[0.06]"
-                    strokeWidth={2.5}
+                  {/*
+                   * A soft glow from the bottom-right corner that fades out by
+                   * the top-left one. The extra stops ease the fade so it has
+                   * no edge.
+                   */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 opacity-[0.25]"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(circle farthest-corner at 100% 100%, currentColor, color-mix(in oklab, currentColor 60%, transparent) 25%, color-mix(in oklab, currentColor 28%, transparent) 50%, color-mix(in oklab, currentColor 8%, transparent) 75%, transparent)",
+                    }}
                   />
                   <span className="text-eyebrow">{backLabel}</span>
                   <span className="relative text-statement-sm text-pretty">{card.back}</span>
