@@ -41,6 +41,20 @@ export function tierShare(price: number, fullCost: number) {
 const DONOR_STRIPES =
   "repeating-linear-gradient(135deg, color-mix(in oklab, var(--color-highlight) 50%, var(--color-card)) 0 7px, color-mix(in oklab, var(--color-highlight) 28%, var(--color-card)) 7px 14px)";
 
+/**
+ * Cuts a half-circle notch out of both sides at the tear line, so the
+ * section's background (and its glow) shows through. `y` is the tear line:
+ * "100%" for the bottom of the card above it, "0" for the top of the
+ * application tier below it.
+ */
+const tearNotches = (y: string) =>
+  ["0", "100%"]
+    .map(
+      (x) =>
+        `radial-gradient(circle at ${x} ${y}, transparent 11px, #000 11.5px) ${x === "0" ? "left" : "right"} / 51% 100% no-repeat`,
+    )
+    .join(", ");
+
 function TierBar({ fullCost, price }: { fullCost: number; price: number }) {
   const { covered, share } = tierShare(price, fullCost);
   return (
@@ -83,6 +97,50 @@ export default function PricingTiers({
   const headingId = `pricing-tiers-${stegaClean(_key)}-title`;
   const fullCost = Math.max(...rows.map((tier) => tier.price as number));
   const footLink = resolveButton(link);
+  const isApplication = (tier: (typeof rows)[number]) => Boolean(stegaClean(tier.application));
+  const applicationRows = rows.filter(isApplication);
+
+  const renderTier = (tier: (typeof rows)[number]) => {
+    const application = isApplication(tier);
+    const tierPath = `tiers[_key=="${tier._key}"]`;
+    return (
+      <div
+        className={cn(
+          "grid items-center gap-x-7 gap-y-4 lg:grid-cols-[170px_minmax(0,1fr)_320px]",
+          application
+            ? "rounded-b-card border-t-2 border-dashed border-[color-mix(in_oklab,var(--color-fill-cool)_80%,var(--color-foreground)_20%)] bg-[color-mix(in_oklab,var(--color-fill-cool)_22%,var(--color-card))] px-[calc(var(--pad-panel)+12px)] pt-8 pb-[calc(var(--pad-panel)+24px)] text-card-foreground sm:px-[calc(var(--pad-panel)+24px)]"
+            : "rounded-card px-3 py-5 sm:px-6",
+        )}
+        data-sanity={dataAttribute?.(tierPath)}
+        key={tier._key}
+        style={application ? { mask: tearNotches("0") } : undefined}
+      >
+        <div className="flex flex-col gap-2">
+          <span className="font-ui text-eyebrow text-muted-foreground">{tier.name}</span>
+          <span className="font-ui text-[1.0625rem] leading-[1.3] font-semibold">{tier.label}</span>
+        </div>
+        <TierBar fullCost={fullCost} price={tier.price as number} />
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+          <span className="text-title-lg leading-none whitespace-nowrap tabular-nums lg:text-right">
+            {formatDollars(tier.price as number)}
+          </span>
+          <SectionButtonLink
+            arrow
+            button={tier.buttons?.[0]}
+            className={cn("min-w-44", !application && "bg-card")}
+            dataSanity={dataAttribute?.(`${tierPath}.buttons`)}
+            // The tier sets the style: the application tier leads.
+            variant={application ? "primary" : "outline"}
+          />
+        </div>
+        {hasText(tier.note) ? (
+          <p className="max-w-[62ch] text-small text-muted-foreground lg:col-span-2 lg:col-start-2">
+            {tier.note}
+          </p>
+        ) : null}
+      </div>
+    );
+  };
 
   return (
     <section
@@ -110,82 +168,36 @@ export default function PricingTiers({
           ) : null}
         </div>
 
-        <div
-          className="flex flex-col gap-2 rounded-card bg-card p-(--pad-panel) text-card-foreground shadow-[inset_0_0_0_1.5px_var(--color-border)] [--pad-panel:clamp(16px,3vw,32px)]"
-          data-sanity={dataAttribute?.("tiers")}
-        >
-          {hasText(panelTitle) || hasText(panelNote) ? (
-            <div className="flex flex-col gap-2 px-3 sm:px-6">
-              {hasText(panelTitle) ? (
-                <h3 className="text-title" data-sanity={dataAttribute?.("panelTitle")}>
-                  {panelTitle}
-                </h3>
-              ) : null}
-              {hasText(panelNote) ? (
-                <p
-                  className="max-w-[60ch] text-body leading-[1.6] text-muted-foreground"
-                  data-sanity={dataAttribute?.("panelNote")}
-                >
-                  {panelNote}
-                </p>
-              ) : null}
-            </div>
-          ) : null}
-
-          {rows.map((tier) => {
-            const application = Boolean(stegaClean(tier.application));
-            const tierPath = `tiers[_key=="${tier._key}"]`;
-            return (
-              <div
-                className={cn(
-                  "grid items-center gap-x-7 gap-y-4 lg:grid-cols-[170px_minmax(0,1fr)_260px]",
-                  application
-                    ? "relative mx-[calc(var(--pad-panel)*-1)] mt-4 mb-[calc(var(--pad-panel)*-1)] rounded-b-card border-t-2 border-dashed border-[color-mix(in_oklab,var(--color-fill-cool)_80%,var(--color-foreground)_20%)] bg-[color-mix(in_oklab,var(--color-fill-cool)_22%,var(--color-card))] px-[calc(var(--pad-panel)+12px)] pt-8 pb-[calc(var(--pad-panel)+24px)] sm:px-[calc(var(--pad-panel)+24px)]"
-                    : "rounded-card px-3 py-5 sm:px-6",
-                )}
-                data-sanity={dataAttribute?.(tierPath)}
-                key={tier._key}
-              >
-                {application ? (
-                  <>
-                    <span
-                      aria-hidden="true"
-                      className="absolute -top-3 -left-[11px] size-[22px] rounded-full bg-background"
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="absolute -top-3 -right-[11px] size-[22px] rounded-full bg-background"
-                    />
-                  </>
+        <div className="[--pad-panel:clamp(16px,3vw,32px)]" data-sanity={dataAttribute?.("tiers")}>
+          <div
+            className={cn(
+              "flex flex-col gap-2 border-[1.5px] border-border bg-card px-(--pad-panel) pt-(--pad-panel) text-card-foreground",
+              applicationRows.length
+                ? "rounded-t-card border-b-0 pb-6"
+                : "rounded-card pb-(--pad-panel)",
+            )}
+            style={applicationRows.length ? { mask: tearNotches("100%") } : undefined}
+          >
+            {hasText(panelTitle) || hasText(panelNote) ? (
+              <div className="flex flex-col gap-2 px-3 sm:px-6">
+                {hasText(panelTitle) ? (
+                  <h3 className="text-title" data-sanity={dataAttribute?.("panelTitle")}>
+                    {panelTitle}
+                  </h3>
                 ) : null}
-                <div className="flex flex-col gap-2">
-                  <span className="font-ui text-eyebrow text-muted-foreground">{tier.name}</span>
-                  <span className="font-ui text-[1.0625rem] leading-[1.3] font-semibold">
-                    {tier.label}
-                  </span>
-                </div>
-                <TierBar fullCost={fullCost} price={tier.price as number} />
-                <div className="grid grid-cols-[minmax(0,1fr)_128px] items-center gap-4">
-                  <span className="text-title-lg leading-none whitespace-nowrap tabular-nums lg:text-right">
-                    {formatDollars(tier.price as number)}
-                  </span>
-                  <SectionButtonLink
-                    arrow
-                    button={tier.buttons?.[0]}
-                    className={cn("w-full", !application && "bg-card")}
-                    dataSanity={dataAttribute?.(`${tierPath}.buttons`)}
-                    // The tier sets the style: the application tier leads.
-                    variant={application ? "primary" : "outline"}
-                  />
-                </div>
-                {hasText(tier.note) ? (
-                  <p className="max-w-[62ch] text-small text-muted-foreground lg:col-span-2 lg:col-start-2">
-                    {tier.note}
+                {hasText(panelNote) ? (
+                  <p
+                    className="max-w-[60ch] text-body leading-[1.6] text-muted-foreground"
+                    data-sanity={dataAttribute?.("panelNote")}
+                  >
+                    {panelNote}
                   </p>
                 ) : null}
               </div>
-            );
-          })}
+            ) : null}
+            {rows.filter((tier) => !isApplication(tier)).map(renderTier)}
+          </div>
+          {applicationRows.map(renderTier)}
         </div>
 
         {notes?.length || footLink ? (
