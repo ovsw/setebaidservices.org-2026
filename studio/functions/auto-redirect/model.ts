@@ -80,15 +80,23 @@ function isActive(record: RedirectRecord) {
 }
 
 /**
- * A redirect this function created and nobody has edited since: its id still
- * matches its source, and no draft or release version is waiting.
+ * A redirect this function created that still holds only what the function
+ * writes: its id matches its source, it is active and permanent, it has no
+ * UTM tags, and no draft or release version is waiting. A published editor
+ * change to any of these keeps the redirect. (The destination reference is
+ * checked by the caller.) Deleting a record that matches loses nothing an
+ * editor chose.
  */
 function isOwnRedirect(record: FetchedRedirect) {
   const source = normalizeRedirectPath(readRedirectPath(record.source));
   return (
     !!source &&
     !record.hasPendingEdits &&
-    record._id === autoRedirectId(toStoredRedirectPath(source))
+    record._id === autoRedirectId(toStoredRedirectPath(source)) &&
+    isActive(record) &&
+    (record.permanent === "true" || record.permanent === true) &&
+    !record.utmSource &&
+    !record.utmCampaign
   );
 }
 

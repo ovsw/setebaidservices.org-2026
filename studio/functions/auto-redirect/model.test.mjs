@@ -169,6 +169,7 @@ test("deletes its own redirect when a document reclaims an old slug", () => {
           source: "/a",
           destination: "/a",
           destinationReference: { _ref: "page-id" },
+          permanent: "true",
           status: "active",
           ...redirect,
         },
@@ -182,10 +183,17 @@ test("deletes its own redirect when a document reclaims an old slug", () => {
   assert.deepEqual(plan.remove, [{ _id: ownId, _rev: "rev-a" }]);
   assert.deepEqual(plan.retire, []);
 
-  // An editor has touched it: keep it, only switch it off.
-  const edited = reclaim({ hasPendingEdits: true });
-  assert.deepEqual(edited.remove, []);
-  assert.deepEqual(edited.retire, [{ _id: ownId, _rev: "rev-a" }]);
+  // An editor has a pending or published change: keep it, only switch it off.
+  for (const change of [
+    { hasPendingEdits: true },
+    { permanent: "false" },
+    { utmSource: "flyer" },
+    { utmCampaign: "spring" },
+  ]) {
+    const edited = reclaim(change);
+    assert.deepEqual(edited.remove, [], JSON.stringify(change));
+    assert.deepEqual(edited.retire, [{ _id: ownId, _rev: "rev-a" }]);
+  }
 });
 
 test("renaming back and forth leaves one active redirect each time", () => {
@@ -203,6 +211,7 @@ test("renaming back and forth leaves one active redirect each time", () => {
     source: "/a",
     destination: "/a",
     destinationReference: { _ref: "page-id" },
+    permanent: "true",
     status: "active",
   };
   const toA = planAutoRedirect({
@@ -219,6 +228,7 @@ test("renaming back and forth leaves one active redirect each time", () => {
     source: "/b",
     destination: "/b",
     destinationReference: { _ref: "page-id" },
+    permanent: "true",
     status: "active",
   };
   const toBAgain = planAutoRedirect({
