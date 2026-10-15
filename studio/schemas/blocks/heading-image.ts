@@ -34,7 +34,6 @@ export default defineType({
           title: "Alt Text",
           type: "string",
           description: "Describe the photo for visitors who cannot see it.",
-          validation: (rule) => rule.required(),
         }),
       ],
     }),

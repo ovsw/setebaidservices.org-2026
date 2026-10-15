@@ -48,13 +48,6 @@ const featureCard = defineArrayMember({
           title: "Alt Text",
           type: "string",
           description: "Describe the image for visitors who cannot see it.",
-          validation: (rule) =>
-            rule.custom((value, context) => {
-              const parent = context.parent as { asset?: unknown } | undefined;
-              return parent?.asset && !value?.trim()
-                ? "Alt text is required when an image is set"
-                : true;
-            }),
         }),
       ],
       validation: (rule) => rule.required(),
