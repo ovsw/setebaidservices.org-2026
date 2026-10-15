@@ -1,6 +1,6 @@
 import {
   defineBlueprint,
-  // defineDocumentFunction,
+  defineDocumentFunction,
   defineSyncTagInvalidateFunction,
 } from "@sanity/blueprints";
 
@@ -17,24 +17,28 @@ export default defineBlueprint({
       },
     }),
 
-    // Off until launch (issue #84): creates a Redirect when a page's slug
-    // changes. To turn it on, restore this entry and its import, then deploy.
-    // defineDocumentFunction({
-    //   name: "auto-redirect",
-    //   src: "./functions/auto-redirect",
-    //   memory: 2,
-    //   timeout: 30,
-    //   event: {
-    //     on: ["publish"],
-    //     filter:
-    //       '_type in ["page", "post", "category"] && delta::changedAny(slug.current)',
-    //     projection: `{
-    //       "documentId": after()._id,
-    //       "documentType": after()._type,
-    //       "beforeSlug": before().slug.current,
-    //       "slug": after().slug.current
-    //     }`,
-    //   },
-    // }),
+    // Creates a Redirect from the old address when a published page, post or
+    // category changes its slug, so links to the old address keep working.
+    defineDocumentFunction({
+      name: "auto-redirect",
+      src: "./functions/auto-redirect",
+      memory: 2,
+      timeout: 30,
+      event: {
+        // Not "publish": that shorthand also fires on Content Release versions,
+        // whose new address is not live yet.
+        on: ["create", "update"],
+        includeDrafts: false,
+        includeAllVersions: false,
+        filter:
+          '_type in ["page", "post", "category"] && delta::changedAny(slug.current)',
+        projection: `{
+          "documentId": after()._id,
+          "documentType": after()._type,
+          "beforeSlug": before().slug.current,
+          "slug": after().slug.current
+        }`,
+      },
+    }),
   ],
 });
