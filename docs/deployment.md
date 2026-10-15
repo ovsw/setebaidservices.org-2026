@@ -4,7 +4,7 @@ The Website and Studio are separate applications.
 
 | Part | Where |
 | --- | --- |
-| Website | Vercel project `setebaid-2026` on the Studio ROVST team, preview address `setebaid-2026.vercel.app` |
+| Website | Vercel project `setebaid-2026` on the Studio ROVST team, production address `setebaidservices.org` since 2026-10-15, preview address `setebaid-2026.vercel.app` |
 | Studio | `setebaid.sanity.studio` |
 | Content | Sanity project `o36mi5w4`, dataset `production` |
 | Code | GitHub `ovsw/setebaidservices.org-2026`, production branch `main` |
@@ -72,7 +72,7 @@ live content updates" setup:
 | --- | --- |
 | Blueprint | `studio/sanity.blueprint.ts`, stack `production` in project `o36mi5w4` |
 | Function | `invalidate-tags`, for the `production` dataset |
-| Function variable `REVALIDATE_TAGS_URL` | `https://setebaid-2026.vercel.app/api/revalidate-tags` (the production domain after launch) |
+| Function variable `REVALIDATE_TAGS_URL` | `https://setebaidservices.org/api/revalidate-tags` (since launch, 2026-10-15) |
 | Function variable `SANITY_REVALIDATE_SECRET` | The same value as the Website's |
 | Website variable `SANITY_REVALIDATE_SECRET` | In Vercel, Production, sensitive |
 
