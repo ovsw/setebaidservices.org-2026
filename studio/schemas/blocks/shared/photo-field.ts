@@ -40,18 +40,11 @@ export function photoField({
       }),
       ...extraFields,
     ],
-    // The alt text is checked here, not on its own field: Sanity validates
-    // hidden fields too, and a photo hidden by another layout must not block
-    // publishing.
     validation: (rule) =>
       rule.custom((value, context) => {
-        const photo = value as { alt?: string; asset?: unknown } | undefined;
+        const photo = value as { asset?: unknown } | undefined;
         const needed = required || (requiredWhen?.(context.parent) ?? false);
-        if (needed && !photo?.asset) return "Add a photo";
-        const shown = showWhen?.(context.parent) ?? true;
-        return shown && photo?.asset && !photo.alt?.trim()
-          ? "Describe the image for visitors who cannot see it"
-          : true;
+        return needed && !photo?.asset ? "Add a photo" : true;
       }),
   });
 }

@@ -11,7 +11,7 @@ const portableTextComponents: PortableTextProps["components"] = {
       const { lqip, dimensions } = asset.metadata;
       return (
         <Image
-          alt={value.alt || "Image"}
+          alt={value.alt || ""}
           blurDataURL={lqip || undefined}
           height={dimensions.height}
           placeholder={lqip ? "blur" : undefined}

@@ -70,13 +70,6 @@ export default defineType({
           title: "Alt Text",
           description:
             "The text that identifies this person for screen readers and search engines.",
-          validation: (rule) =>
-            rule.custom((value, context) => {
-              const parent = context.parent as { asset?: unknown } | undefined;
-              return parent?.asset && !value?.trim()
-                ? "Alt text is required when a photo is set"
-                : true;
-            }),
         }),
       ],
     }),
