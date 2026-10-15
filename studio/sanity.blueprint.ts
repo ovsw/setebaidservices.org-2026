@@ -25,7 +25,11 @@ export default defineBlueprint({
       memory: 2,
       timeout: 30,
       event: {
-        on: ["publish"],
+        // Not "publish": that shorthand also fires on Content Release versions,
+        // whose new address is not live yet.
+        on: ["create", "update"],
+        includeDrafts: false,
+        includeAllVersions: false,
         filter:
           '_type in ["page", "post", "category"] && delta::changedAny(slug.current)',
         projection: `{
