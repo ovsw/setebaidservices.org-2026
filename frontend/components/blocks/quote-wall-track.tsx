@@ -31,8 +31,8 @@ type QuoteWallProps = QuoteWallBlock & {
  * run past both edges of the page and drag sideways. Every card takes the
  * field's soft card tone (The Soft Card Rule); the variety comes from size,
  * not colour. A quote's length sets its card's width and type, so short
- * quotes are narrow cards in larger type and long ones run wider. The second
- * row starts further in, so the seams between cards never line up.
+ * quotes are narrow cards in larger type and long ones run wider. Both rows
+ * start one card gap in from the left edge of the viewport, at any width.
  */
 
 /** Card widths and type by quote length, shortest first. */
@@ -173,15 +173,12 @@ export default function QuoteWallTrack({
         </div>
         <QuoteWallDrag label={stegaClean(hint) || "Quotes. Scroll sideways for more."}>
           <div
-            className="flex w-max flex-col gap-4 px-[max(var(--gutter),calc(50vw-588px))]"
+            className="flex w-max flex-col gap-4 pr-[max(var(--gutter),calc(50vw-588px))] pl-4"
             data-sanity={dataAttribute?.("testimonials")}
           >
             {rows.map((row, rowIndex) =>
               row.length ? (
-                <div
-                  className={cn("flex items-stretch gap-4", rowIndex === 1 && "pl-16 md:pl-24")}
-                  key={rowIndex}
-                >
+                <div className="flex items-stretch gap-4" key={rowIndex}>
                   {row.map((card) => (
                     <QuoteCard
                       card={card}
