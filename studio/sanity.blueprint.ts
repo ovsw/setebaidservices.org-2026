@@ -3,6 +3,19 @@ import {
   defineDocumentFunction,
   defineSyncTagInvalidateFunction,
 } from "@sanity/blueprints";
+import { requireStudioEnvironmentValue } from "./environment";
+
+// The same values Studio and the CLI use, so a different dataset (for example
+// a test dataset) gets its own function binding without a code edit. A
+// missing value stops `sanity blueprints deploy` with the variable's name.
+const projectId = requireStudioEnvironmentValue(
+  "SANITY_STUDIO_PROJECT_ID",
+  process.env.SANITY_STUDIO_PROJECT_ID,
+);
+const dataset = requireStudioEnvironmentValue(
+  "SANITY_STUDIO_DATASET",
+  process.env.SANITY_STUDIO_DATASET,
+);
 
 export default defineBlueprint({
   resources: [
@@ -13,7 +26,7 @@ export default defineBlueprint({
       src: "./functions/invalidate-tags",
       timeout: 20,
       event: {
-        resource: { type: "dataset", id: "o36mi5w4.production" },
+        resource: { type: "dataset", id: `${projectId}.${dataset}` },
       },
     }),
 
