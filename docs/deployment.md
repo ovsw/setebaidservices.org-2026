@@ -70,7 +70,7 @@ live content updates" setup:
 
 | Setting | Value |
 | --- | --- |
-| Blueprint | `studio/sanity.blueprint.ts`, stack `production` in project `o36mi5w4` |
+| Blueprint | `studio/sanity.blueprint.ts`, stack `production` in project `o36mi5w4`. It binds the function to `SANITY_STUDIO_PROJECT_ID` and `SANITY_STUDIO_DATASET` from `studio/.env.local` |
 | Function | `invalidate-tags`, for the `production` dataset |
 | Function variable `REVALIDATE_TAGS_URL` | `https://setebaidservices.org/api/revalidate-tags` (since launch, 2026-10-15) |
 | Function variable `SANITY_REVALIDATE_SECRET` | The same value as the Website's |
