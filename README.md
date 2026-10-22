@@ -77,6 +77,12 @@ with `--all`, `--here` (this worktree), `--orphans` (launcher already gone), or
 
 Run `pnpm verify` before opening a pull request. It checks generated Sanity types, TypeScript, lint, focused tests, both production builds, and the smoke suite. GitHub Actions runs the same two halves, `pnpm verify:static` and `pnpm verify:build`, as parallel jobs under one `Release gate` check. A pull request that changes only documentation (`docs/`, Markdown files, `.claude/`, `.codex/`) skips both halves.
 
+To save time, `pnpm verify` runs the type checks, lint and tests at the same
+time, and the two builds at the same time. `pnpm typegen` skips the slow schema
+extract when no Studio, `shared/` or lockfile input changed since the last
+extract in this checkout. Run `SCHEMA_EXTRACT_FORCE=1 pnpm typegen` to extract
+anyway.
+
 `pnpm page-builder:new <name>` creates and registers a typed Studio schema,
 GROQ projection, and React renderer. Use `--scope content|general|home`,
 `--title "Studio title"`, `--preview ./preview.jpg`, or `--dry-run` as needed.

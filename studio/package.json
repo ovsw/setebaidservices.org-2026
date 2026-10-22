@@ -11,7 +11,7 @@
     "deploy": "node ../scripts/deploy-studio.mjs",
     "generate:lucide-icons": "node scripts/generate-lucide-icon-catalog.mjs",
     "test:presentation": "node --test presentation/presentation.test.mjs",
-    "typegen": "rm -f schema.json && sanity schema extract; test -f schema.json && sanity typegen generate",
+    "typegen": "node scripts/extract-schema.mjs && sanity typegen generate",
     "typecheck": "tsc --noEmit",
     "legacy:page": "node --env-file=.env.local scripts/print-legacy-page.mjs",
     "page:text": "node --env-file=.env.local scripts/print-page-text.mjs",

@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "email": "email dev",
     "typegen": "pnpm --dir ../studio typegen",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "db:migrate": "node --env-file-if-exists=${QR_SETUP_ENV_FILE:-$HOME/.config/setebaid/qr-mechanism.env} scripts/db-migrate.mjs",
     "trigger:dev": "trigger dev",
