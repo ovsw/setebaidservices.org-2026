@@ -43,8 +43,25 @@ calls.
 | HDYC                                   | `page`               | Harrisburg Diabetic Youth Camp, `/camps/harrisburg-diabetic-youth-camp` |
 | CIT                                    | `page`               | Counselor-in-Training, `/camps/counselor-in-training`              |
 
-The client may say "the menu" (`navigation`), "the footer" (`footer`) or "the
-contact details" (`settings`). These are in "Never edit, and why".
+The client may say "the menu" or "the header" (`navigation`), "the footer"
+(`footer`) or "the contact details" (`settings`). See "Menu, footer and site
+settings".
+
+## Menu, footer and site settings
+
+- The menu (`navigation`), the footer (`footer`) and the site settings
+  (`settings`: site name, logo, contact details, social links) are on every
+  page. Clark may change them, as far as their schema allows: add, remove,
+  rename or reorder menu links and groups, footer columns and footer links;
+  change the contact details and the social links.
+- Read the document first and change only what the request names; keep every
+  `_key`. Say in the plan that the change shows on every page.
+- A link goes to an existing page: copy the shape of an existing link in the
+  same document. Never invent a link shape.
+- The menu and the settings have Ovi's unpublished changes (see "Pages and
+  sections"). Say so in the plan.
+- A change that the schema cannot hold (a new kind of menu item, a new layout,
+  a different look) goes to Ovi.
 
 ## Dates and prices
 
@@ -168,10 +185,8 @@ Section library:
 
 ## Never edit, and why
 
-- **Site Configuration**: `settings` (site name, logo, contact details, social
-  links), `navigation` (the menu) and `footer`. They are on every page; one
-  wrong field breaks the whole website. A change to the menu, the footer or
-  the contact details goes to Ovi.
+- The SEO fields of `settings` (the "Search & sharing" group): search
+  results depend on them. A change goes to Ovi.
 - **Redirects** (`redirect`): the QR codes on printed event labels go through
   the `/go/...` addresses and redirects. One wrong change breaks a printed
   code. Any change to a redirect, or to the slug of a `/go/` page, goes to
