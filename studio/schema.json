@@ -97,6 +97,136 @@
   },
   {
     "type": "type",
+    "name": "share",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "subtitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "familiesShare": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        },
+        "familiesLabel": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "donorsLabel": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "tiersTitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "tiersSubtitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "tiers": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "name": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  },
+                  "optional": true
+                },
+                "families": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "number"
+                  },
+                  "optional": true
+                },
+                "kind": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "full"
+                      },
+                      {
+                        "type": "string",
+                        "value": "reduced"
+                      },
+                      {
+                        "type": "string",
+                        "value": "campership"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "_type": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string",
+                    "value": "impactTier"
+                  }
+                }
+              },
+              "rest": {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "optional": true
+        },
+        "note": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
     "name": "meta",
     "value": {
       "type": "object",
@@ -551,6 +681,143 @@
             "type": "string",
             "value": "image"
           }
+        }
+      }
+    }
+  },
+  {
+    "name": "impactNumbers",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "impactNumbers"
+          }
+        },
+        "background": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sectionBackground"
+          },
+          "optional": true
+        },
+        "layout": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "band"
+              },
+              {
+                "type": "string",
+                "value": "spotlight"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "eyebrow": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "minimalRichText"
+          },
+          "optional": true
+        },
+        "season": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "intro": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "stats": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "value": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  },
+                  "optional": true
+                },
+                "detail": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  },
+                  "optional": true
+                },
+                "label": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  },
+                  "optional": true
+                },
+                "_type": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string",
+                    "value": "impactStat"
+                  }
+                }
+              },
+              "rest": {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "optional": true
+        },
+        "link": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "button"
+          },
+          "optional": true
+        },
+        "share": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "share"
+          },
+          "optional": true
         }
       }
     }
@@ -7643,6 +7910,21 @@
                   "type": "inline",
                   "name": "askAboutCampForm"
                 }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "impactNumbers"
+                }
               }
             ]
           }
@@ -8058,6 +8340,21 @@
                 "rest": {
                   "type": "inline",
                   "name": "askAboutCampForm"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "impactNumbers"
                 }
               }
             ]
@@ -9370,6 +9667,21 @@
                 "rest": {
                   "type": "inline",
                   "name": "askAboutCampForm"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "impactNumbers"
                 }
               }
             ]

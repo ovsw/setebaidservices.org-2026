@@ -61,6 +61,7 @@ import flipCards from "./schemas/blocks/flip-cards";
 import photoStrip from "./schemas/blocks/photo-strip";
 import pricingTiers from "./schemas/blocks/pricing-tiers";
 import askAboutCampForm from "./schemas/blocks/ask-about-camp-form";
+import impactNumbers from "./schemas/blocks/impact-numbers";
 // page-builder-generator:block-imports
 
 export const schemaTypes = [
@@ -123,5 +124,6 @@ export const schemaTypes = [
   photoStrip,
   pricingTiers,
   askAboutCampForm,
+  impactNumbers,
   // page-builder-generator:block-types
 ];

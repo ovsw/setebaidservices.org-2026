@@ -23,6 +23,7 @@ export const contentPageBuilderBlockTypes = [
   "photoStrip",
   "pricingTiers",
   "askAboutCampForm",
+  "impactNumbers",
   // page-builder-generator:content-types
 ] as const;
 
