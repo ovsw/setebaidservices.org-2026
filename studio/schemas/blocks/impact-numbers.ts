@@ -162,7 +162,15 @@ export default defineType({
       description:
         "Band: four to six. Spotlight: the first number is the hero figure, the next four sit beside it.",
       of: [impactStat],
-      validation: (rule) => rule.required().min(1).max(6),
+      validation: (rule) => [
+        rule.required().min(1).max(6),
+        // Spotlight shows one hero figure and four beside it; a sixth would be dropped.
+        rule.custom((value, context) =>
+          isSpotlight(context.parent) && Array.isArray(value) && value.length > 5
+            ? "Spotlight shows at most five numbers: one hero figure and four beside it."
+            : true,
+        ),
+      ],
     }),
     defineField({
       name: "link",

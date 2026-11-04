@@ -103,19 +103,22 @@ function Header({
 
 /** A figure with its small detail and its label. dt/dd keep source order for assistive tech. */
 function Figure({
+  className,
   dataAttribute,
   emphasis,
   size,
   stat,
 }: {
+  className?: string;
   dataAttribute?: DataAttribute;
   emphasis?: boolean;
   size: "hero" | "band" | "small";
   stat: Stat;
 }) {
   const path = statPath(stat);
+  // The div groups one dt/dd pair, so it must sit right under a dl.
   return (
-    <div className="flex min-w-0 flex-col">
+    <div className={cn("flex min-w-0 flex-col", className)}>
       <dt
         className={cn(
           "order-2 font-ui font-semibold text-foreground",
@@ -323,22 +326,26 @@ export default function ImpactNumbers({
 
         {spotlight ? (
           <>
-            <dl
+            {/* The hero figure and the 2x2 grid are separate lists, so every
+                dt/dd group sits right under its dl. */}
+            <div
               className={cn(
                 "mt-12 grid gap-10 lg:mt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-16",
                 styles.reveal,
               )}
               data-sanity={dataAttribute?.("stats")}
             >
-              <Figure dataAttribute={dataAttribute} emphasis size="hero" stat={hero} />
+              <dl className="m-0">
+                <Figure dataAttribute={dataAttribute} emphasis size="hero" stat={hero} />
+              </dl>
               {rest.length ? (
-                <div className="grid grid-cols-2 gap-x-6 gap-y-7 self-end">
+                <dl className="m-0 grid grid-cols-2 gap-x-6 gap-y-7 self-end">
                   {rest.slice(0, 4).map((stat) => (
                     <Figure dataAttribute={dataAttribute} key={stat._key} size="small" stat={stat} />
                   ))}
-                </div>
+                </dl>
               ) : null}
-            </dl>
+            </div>
             {share ? (
               <div className="mt-12 lg:mt-16">
                 <ShareCard dataAttribute={dataAttribute} share={share} />
@@ -348,17 +355,23 @@ export default function ImpactNumbers({
         ) : (
           <dl
             className={cn(
+              // Six figures stay at three columns: two even rows, no orphan.
               "mt-12 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3",
-              figures.length >= 4 && "xl:grid-cols-4",
-              figures.length >= 5 && "xl:grid-cols-5",
+              figures.length === 4 && "xl:grid-cols-4",
+              figures.length === 5 && "xl:grid-cols-5",
               styles.reveal,
             )}
             data-sanity={dataAttribute?.("stats")}
           >
             {figures.map((stat, index) => (
-              <div className="border-t-[3px] border-highlight pt-4" key={stat._key}>
-                <Figure dataAttribute={dataAttribute} emphasis={index === 0} size="band" stat={stat} />
-              </div>
+              <Figure
+                className="border-t-[3px] border-highlight pt-4"
+                dataAttribute={dataAttribute}
+                emphasis={index === 0}
+                key={stat._key}
+                size="band"
+                stat={stat}
+              />
             ))}
           </dl>
         )}
