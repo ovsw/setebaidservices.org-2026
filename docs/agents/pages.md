@@ -15,9 +15,7 @@ landing pages are the main reason for the sprint.
 - MVP pages are the cards outside Backlog on the board (see "Page
   record"). Their plan documents in "Page plans" say "Launch: MVP".
 - "Final" pages are later releases. Their cards sit in Backlog, and their
-  plan documents say "Launch: Final". Work on Final pages is blocked until
-  the MVP ships: do not take a Backlog card or move it out of Backlog
-  before then (Ovi, 2026-10-06).
+  plan documents say "Launch: Final".
 - No lead magnets in the MVP: no quizzes, no parent's guide, no giveaway,
   no "talk to a camp parent". No other new features (no full staff roster,
   no impact graphs, no referral kit, no "Get involved" hub).
