@@ -18,7 +18,7 @@ type ImpactSpotlightProps = Extract<PageBlock, { _type: "impactSpotlight" }> & {
  * at display size beside a 2x2 grid of up to four more. Below them, on its
  * own full-width row, the bar shows the family share in camp green and the
  * donor share in the same marigold stripes as the price page, with the
- * promise ("every child gets the same camp…") set as a statement beside it.
+ * promise ("every child gets the same camp…") set as a statement before it.
  * No card and no rule between the rows: the spacing alone separates them.
  */
 
@@ -103,6 +103,15 @@ export default function ImpactSpotlight({
               revealClass,
             )}
           >
+            {hasStatement ? (
+              <p
+                className="max-w-[24ch] text-balance text-statement text-foreground"
+                data-sanity={dataAttribute?.("statement")}
+              >
+                {statement}
+              </p>
+            ) : null}
+
             {hasShare ? (
               <div>
                 {hasText(shareTitle) ? (
@@ -149,15 +158,6 @@ export default function ImpactSpotlight({
                   </li>
                 </ul>
               </div>
-            ) : null}
-
-            {hasStatement ? (
-              <p
-                className="max-w-[24ch] text-balance text-statement text-foreground"
-                data-sanity={dataAttribute?.("statement")}
-              >
-                {statement}
-              </p>
             ) : null}
           </div>
         ) : null}
