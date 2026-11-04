@@ -53,7 +53,7 @@ describe("memorialCardStepErrors", () => {
   });
 
   it("refuses an amount that is not dollars", () => {
-    for (const amount of ["0", "fifty", "12.345", "-5", "2000000"]) {
+    for (const amount of ["0", "0.50", "fifty", "12.345", "-5", "2000000"]) {
       expect(memorialCardStepErrors(0, { ...validDraft, amount })).toHaveProperty("amount");
     }
   });

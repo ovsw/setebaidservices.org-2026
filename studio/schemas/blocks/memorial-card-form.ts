@@ -45,6 +45,7 @@ export default defineType({
               name: "image",
               title: "Picture",
               type: "image",
+              options: { hotspot: true },
               description: "The front of the card. The name above describes it, so no alt text is needed.",
               validation: (rule) => rule.required().error("Add a picture of the card."),
             }),

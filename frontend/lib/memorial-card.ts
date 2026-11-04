@@ -37,7 +37,7 @@ const amount = text(20)
   .refine((value) => AMOUNT.test(value), "Enter an amount in dollars, like 50 or 50.00.")
   .refine((value) => {
     const dollars = Number(value.replace(/[$,\s]/g, ""));
-    return dollars > 0 && dollars <= 1_000_000;
+    return dollars >= 1 && dollars <= 1_000_000;
   }, "Enter an amount between $1 and $1,000,000.");
 
 const tribute = z.enum(["memory", "honor"], { error: "Choose “In memory of” or “In honor of”." });
