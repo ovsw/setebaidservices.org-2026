@@ -1,4 +1,5 @@
 import type { Database } from "@/lib/database";
+import { FORM_TABLES } from "@/lib/form-entry";
 import type { FormsparkApi } from "@/lib/formspark-api";
 
 /** The privacy policy keeps a request for three years. */
@@ -17,13 +18,21 @@ export function retentionCutoff(now: Date) {
   return cutoff;
 }
 
-/** Deletes the entries received before the cutoff, and their delivery gaps. */
+/**
+ * Deletes every form's entries received before the cutoff, and their
+ * delivery gaps. Returns how many entries it deleted.
+ */
 export async function deleteOldFormEntries(db: Database, cutoff: Date) {
-  const { rows } = await db.query(
-    "delete from form_entries where received_at < $1 returning submission_id",
-    [cutoff.toISOString()],
-  );
-  return rows.length;
+  let deleted = 0;
+  for (const table of Object.values(FORM_TABLES)) {
+    const { rows } = await db.query(`delete from ${table} where received_at < $1 returning submission_id`, [
+      cutoff.toISOString(),
+    ]);
+    deleted += rows.length;
+  }
+  // A gap carries its entry's received_at, so the same cutoff removes it.
+  await db.query("delete from delivery_gaps where received_at < $1", [cutoff.toISOString()]);
+  return deleted;
 }
 
 /** Deletes the Formspark submissions received before the cutoff. */

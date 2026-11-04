@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { FormSendResult } from "@/lib/form-entry";
 
 /**
  * The "Ask about camp" request: what a parent types into the form. The
@@ -66,9 +67,4 @@ export function validateAskAboutCamp(
   return { ok: false, errors };
 }
 
-export type AskAboutCampResult =
-  | { status: "idle" }
-  | { status: "invalid"; errors: AskAboutCampErrors }
-  | { status: "sent" }
-  /** Not sent: delivery failed, the visitor sent too often, or a bot filled the honeypot. */
-  | { status: "failed" };
+export type AskAboutCampResult = FormSendResult<AskAboutCampErrors>;

@@ -1,9 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import {
-  type AskAboutCampEntry,
-  createSubmitLimiter,
-  submitAskAboutCamp,
-} from "@/lib/ask-about-camp-delivery";
+import { createSubmitLimiter, submitAskAboutCamp } from "@/lib/ask-about-camp-delivery";
+import type { FormEntry } from "@/lib/form-entry";
 import { decryptFormEntry, type EncryptedFormEntry } from "@/lib/form-entry-crypto";
 import { formsparkPayload } from "@/lib/formspark-entry";
 
@@ -30,7 +27,7 @@ function validForm(extra: Record<string, string | string[]> = {}) {
 }
 
 function deps() {
-  const sent: AskAboutCampEntry[] = [];
+  const sent: FormEntry[] = [];
   const triggered: EncryptedFormEntry[] = [];
   return {
     sent,
@@ -40,7 +37,7 @@ function deps() {
         triggered.push(payload);
       }),
       encryptionKey: KEY,
-      formspark: vi.fn(async (entry: AskAboutCampEntry) => {
+      formspark: vi.fn(async (entry: FormEntry) => {
         sent.push(entry);
       }),
       allow: createSubmitLimiter({ limit: 5, windowMs: 60_000 }),
@@ -59,6 +56,7 @@ describe("submitAskAboutCamp", () => {
     });
     expect(sent).toEqual([
       {
+        kind: "ask_about_camp",
         name: "Dana Rivera",
         phone: "(610) 555-0123",
         email: "dana@example.com",
@@ -141,6 +139,7 @@ describe("submitAskAboutCamp", () => {
 
   it("shows the office the Source and the landing page", () => {
     const payload = formsparkPayload({
+      kind: "ask_about_camp",
       name: "Dana Rivera",
       phone: "610-555-0123",
       email: "dana@example.com",
