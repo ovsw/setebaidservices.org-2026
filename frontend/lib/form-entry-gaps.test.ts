@@ -65,7 +65,7 @@ describe("fillFormEntryGaps", () => {
       NOW,
     );
 
-    expect(result.copied).toEqual([{ submissionId: lost.submissionId, path: "trigger", receivedAt: lost.receivedAt }]);
+    expect(result.copied).toEqual([{ submissionId: lost.submissionId, form: lost.kind, path: "trigger", receivedAt: lost.receivedAt }]);
     expect(result.missingFromFormspark).toEqual([]);
     expect(await storedIds()).toEqual([
       { submission_id: stored.submissionId, formspark_id: "fs-0001" },
@@ -95,12 +95,18 @@ describe("fillFormEntryGaps", () => {
 
     const result = await fillFormEntryGaps(db, [inFormspark(lost)], NOW);
 
-    expect(result.copied).toEqual([{ submissionId: lost.submissionId, path: "trigger", receivedAt: lost.receivedAt }]);
-    const { rows } = await db.query(
-      `select entry.kind, answers.honoree_name from form_entries entry
-      join memorial_card_entries answers using (submission_id)`,
-    );
-    expect(rows).toEqual([{ kind: "memorial_card", honoree_name: "Ruth Ellen Baker" }]);
+    expect(result.copied).toEqual([{ submissionId: lost.submissionId, form: lost.kind, path: "trigger", receivedAt: lost.receivedAt }]);
+    const { rows } = await db.query("select honoree_name, formspark_id from memorial_card_entries");
+    expect(rows).toEqual([{ honoree_name: "Ruth Ellen Baker", formspark_id: "fs-0009" }]);
+    const gaps = await db.query("select form, path from delivery_gaps");
+    expect(gaps.rows).toEqual([{ form: "memorial_card", path: "trigger" }]);
+    const camp = await db.query("select count(*)::integer as count from form_entries");
+    expect(camp.rows).toEqual([{ count: 0 }]);
+
+    const send = vi.fn(async () => undefined);
+    await expect(emailNewGaps(db, send, NOW)).resolves.toBe(1);
+    const text = (send.mock.calls[0] as unknown as [{ text: string }])[0].text;
+    expect(text).toContain("Memorial card · obituary · /donate/memorial");
   });
 
   it("reports Neon entries older than one day that have no Formspark copy", async () => {
@@ -113,7 +119,7 @@ describe("fillFormEntryGaps", () => {
 
     expect(result.copied).toEqual([]);
     expect(result.missingFromFormspark).toEqual([
-      { submissionId: notMailed.submissionId, path: "formspark", receivedAt: notMailed.receivedAt },
+      { submissionId: notMailed.submissionId, form: notMailed.kind, path: "formspark", receivedAt: notMailed.receivedAt },
     ]);
   });
 

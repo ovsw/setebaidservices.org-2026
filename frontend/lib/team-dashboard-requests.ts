@@ -51,8 +51,7 @@ type RequestRow = {
 
 /**
  * The requests of a period, for the people who call the families: open
- * requests first, then closed ones, newest first within each group. Only
- * "Ask about camp" requests: memorial card entries need no call.
+ * requests first, then closed ones, newest first within each group.
  * `openOnly` leaves out the closed ones.
  */
 export async function readDashboardRequests(
@@ -64,8 +63,7 @@ export async function readDashboardRequests(
     `select submission_id, received_at, source, page, parent_name, phone, email,
         child_age, best_time, interests, call_status, call_note, call_status_at
       from form_entries
-      where kind = 'ask_about_camp'
-        and ${receivedDay} between $1::date and $2::date
+      where ${receivedDay} between $1::date and $2::date
         and ($3::boolean = false or call_status <> all($4::text[]))
       order by (call_status = any($4::text[])), received_at desc, submission_id`,
     [from, to, openOnly, CLOSED_CALL_STATUSES],
@@ -101,7 +99,7 @@ export async function saveCallStatus(
       set call_status = $2,
         call_note = $3,
         call_status_at = case when call_status <> $2 then now() else call_status_at end
-      where submission_id = $1 and kind = 'ask_about_camp'
+      where submission_id = $1
       returning submission_id`,
     [submissionId, status, note],
   );

@@ -31,6 +31,12 @@ export const FORM_LABELS: Record<FormKind, string> = {
   memorial_card: "Memorial card",
 };
 
+/** The Neon table that holds each form's entries. */
+export const FORM_TABLES: Record<FormKind, string> = {
+  ask_about_camp: "form_entries",
+  memorial_card: "memorial_card_entries",
+};
+
 /** The answer of a sent form, as the browser receives it. */
 export type FormSendResult<Errors> =
   | { status: "idle" }

@@ -65,30 +65,51 @@ describe("storeFormEntry", () => {
     };
   }
 
-  it("stores a memorial card entry once, with the kind memorial card and its answers", async () => {
+  it("stores a memorial card entry once, in its own table", async () => {
     const memorial = memorialEntry();
     await expect(storeFormEntry(db, memorial)).resolves.toBe(true);
     await expect(storeFormEntry(db, memorial)).resolves.toBe(false);
 
-    const entries = await db.query("select submission_id, kind, parent_name from form_entries");
-    expect(entries.rows).toEqual([{ submission_id: memorial.submissionId, kind: "memorial_card", parent_name: null }]);
-    const answers = await db.query(
-      "select honoree_name, amount::text as amount, card_message_is_own_words, donor_email from memorial_card_entries",
+    const { rows } = await db.query(
+      `select submission_id, source, page, honoree_name, amount::text as amount,
+        card_message_is_own_words, donor_email
+      from memorial_card_entries`,
     );
-    expect(answers.rows).toEqual([
-      { honoree_name: "Ruth Ellen Baker", amount: "1250.50", card_message_is_own_words: false, donor_email: "dana@example.com" },
+    expect(rows).toEqual([
+      {
+        submission_id: memorial.submissionId,
+        source: "obituary",
+        page: "/donate/memorial",
+        honoree_name: "Ruth Ellen Baker",
+        amount: "1250.50",
+        card_message_is_own_words: false,
+        donor_email: "dana@example.com",
+      },
     ]);
   });
 
-  it("gives an Ask about camp request the kind ask about camp", async () => {
+  it("keeps each form's entries in that form's table", async () => {
     await storeFormEntry(db, entry);
-    const { rows } = await db.query("select kind from form_entries");
-    expect(rows).toEqual([{ kind: "ask_about_camp" }]);
+    await storeFormEntry(db, memorialEntry());
+
+    const camp = await db.query("select submission_id from form_entries");
+    const memorial = await db.query("select submission_id from memorial_card_entries");
+    expect(camp.rows).toEqual([{ submission_id: entry.submissionId }]);
+    expect(memorial.rows).toEqual([{ submission_id: memorialEntry().submissionId }]);
   });
 
-  it("deletes a memorial card's answers with its entry when retention removes it", async () => {
+  it("deletes old entries of every form, and their delivery gaps", async () => {
+    await storeFormEntry(db, entry);
     await storeFormEntry(db, memorialEntry());
-    await expect(deleteOldFormEntries(db, new Date("2030-01-01T00:00:00.000Z"))).resolves.toBe(1);
+    await db.query(
+      `insert into delivery_gaps (submission_id, form, path, received_at, found_at)
+      values ($1, 'memorial_card', 'formspark', $2, $2)`,
+      [memorialEntry().submissionId, memorialEntry().receivedAt],
+    );
+    await expect(deleteOldFormEntries(db, new Date("2030-01-01T00:00:00.000Z"))).resolves.toBe(2);
+
+    const gaps = await db.query("select count(*)::integer as count from delivery_gaps");
+    expect(gaps.rows).toEqual([{ count: 0 }]);
 
     const { rows } = await db.query("select count(*)::integer as count from memorial_card_entries");
     expect(rows).toEqual([{ count: 0 }]);

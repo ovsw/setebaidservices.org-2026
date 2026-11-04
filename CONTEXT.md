@@ -68,7 +68,7 @@ The name of the card or page that brought a visitor, for example `chop-nurses`. 
 
 **Form entry**
 
-What a visitor sends through one of the Website's forms. Each entry has a kind: an "Ask about camp" request or a memorial card entry. Every kind travels the same two paths and is kept for three years.
+What a visitor sends through one of the Website's forms: an "Ask about camp" request or a memorial card entry. Every entry travels the same two paths and is kept for three years. Each form keeps its entries in its own Neon table.
 
 **Memorial card entry**
 
