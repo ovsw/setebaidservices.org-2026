@@ -230,10 +230,15 @@ the legal and policy pages (/privacy-policy, /terms-of-use,
 /cookie-policy, /accessibility, /refund-policy); on other pages, choose a
 designed section.
 
-**Layouts.** Six sections have a second look, set in their `layout`
-field (`variant` on `ctaBanner`). The home page uses each one. On other
-pages, use a layout when the content does the same job; otherwise keep
-the default.
+**Layouts (grandfathered).** Six sections have a second look, set in
+their `layout` field (`variant` on `ctaBanner`). This breaks the rule
+"one section, one look" in `docs/agents/page-builder.md`; they stay
+until [issue #112](https://github.com/ovsw/setebaidservices.org-2026/issues/112)
+splits them into separate sections. The home page uses each one. On other
+pages, use a layout only when the content does the same job; otherwise
+keep the default. Never add a look to any section, and never propose a
+`layout` or `variant` field on a new section: a new look needs Ovi's
+express approval and becomes its own section.
 
 - `featureCards`: `grid` (default), or `tilted` for a few large cards
   with a tilted photo, a date badge and two buttons, e.g. camps.
