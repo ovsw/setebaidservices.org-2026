@@ -58,51 +58,6 @@ const impactStat = defineArrayMember({
   },
 });
 
-/** One price tier and how many families chose it. */
-const impactTier = defineArrayMember({
-  name: "impactTier",
-  title: "Tier",
-  type: "object",
-  fields: [
-    defineField({
-      name: "name",
-      title: "Tier",
-      type: "string",
-      description: '"Tier I · full cost", "Tier IV · campership".',
-      validation: (rule) => rule.required().max(40),
-    }),
-    defineField({
-      name: "families",
-      title: "Families",
-      type: "number",
-      description: "How many families chose this tier last season.",
-      validation: (rule) => rule.required().min(0).integer(),
-    }),
-    defineField({
-      name: "kind",
-      title: "Kind",
-      type: "string",
-      description: "Sets the bar colour: marigold for the full cost, lake for a reduced tier, green for the campership tier.",
-      initialValue: "reduced",
-      options: {
-        layout: "radio",
-        list: [
-          { title: "Full cost", value: "full" },
-          { title: "Reduced tier", value: "reduced" },
-          { title: "Campership", value: "campership" },
-        ],
-      },
-    }),
-  ],
-  preview: {
-    select: { families: "families", name: "name" },
-    prepare: ({ families, name }) => ({
-      title: name || "Untitled tier",
-      subtitle: typeof families === "number" ? `${families} families` : undefined,
-    }),
-  },
-});
-
 export default defineType({
   name: "impactNumbers",
   title: "Impact Numbers",
@@ -117,7 +72,7 @@ export default defineType({
       title: "Layout",
       type: "string",
       description:
-        "Band: four to six large figures in a row. Spotlight: the first figure set very large, the rest beside it, and the who-paid card below.",
+        "Band: four to six large figures in a row. Spotlight: the first figure set very large, the rest beside it, and the who-paid bar below.",
       initialValue: "band",
       options: {
         layout: "radio",
@@ -182,7 +137,7 @@ export default defineType({
       name: "share",
       title: "Who paid for camp",
       type: "object",
-      description: "Spotlight layout only. The card below the numbers.",
+      description: "Spotlight layout only. The row below the numbers.",
       hidden: ({ parent }) => !isSpotlight(parent),
       options: { collapsible: true, collapsed: false },
       fields: [
@@ -218,30 +173,10 @@ export default defineType({
           initialValue: "Donors, grants and sponsors",
         }),
         defineField({
-          name: "tiersTitle",
-          title: "Tiers title",
-          type: "string",
-          description: '"Which price did families choose?"',
-        }),
-        defineField({
-          name: "tiersSubtitle",
-          title: "Tiers caption",
-          type: "string",
-          description: '"Families, by tier".',
-        }),
-        defineField({
-          name: "tiers",
-          title: "Tiers",
-          type: "array",
-          description: "One row per tier, highest price first.",
-          of: [impactTier],
-          validation: (rule) => rule.max(6),
-        }),
-        defineField({
           name: "note",
           title: "Note",
           type: "string",
-          description: 'A closing line in the card: "Every child gets the same camp, and nobody at camp knows who paid what."',
+          description: 'Set large beside the bar: "Every child gets the same camp, and nobody at camp knows who paid what."',
         }),
       ],
     }),

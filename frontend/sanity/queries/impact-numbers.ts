@@ -27,14 +27,6 @@ export const impactNumbersQuery = groq`
       familiesShare,
       familiesLabel,
       donorsLabel,
-      tiersTitle,
-      tiersSubtitle,
-      "tiers": array::compact(tiers[]{
-        _key,
-        name,
-        families,
-        "kind": coalesce(kind, "reduced")
-      }),
       note
     }
   }

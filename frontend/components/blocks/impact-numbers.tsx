@@ -22,7 +22,6 @@ type ImpactNumbersProps = ImpactNumbersBlock & {
 
 type Stat = NonNullable<ImpactNumbersBlock["stats"]>[number];
 type Share = NonNullable<ImpactNumbersBlock["share"]>;
-type Tier = NonNullable<Share["tiers"]>[number];
 
 /*
  * Impact Numbers — last season in numbers, for donors.
@@ -30,25 +29,16 @@ type Tier = NonNullable<Share["tiers"]>[number];
  * Band: the headline, then four to six large figures in a row, each over a
  * marigold rule, with an optional arrow link. Spotlight: the first figure is
  * set at display size beside a 2x2 grid of the rest; below them, on its own
- * full-width row, a card shows who paid for camp (the family share in camp
- * green, the donor share in the same marigold stripes as the price page) and
- * how many families chose each tier, on the field under a hairline, not in a
- * card. Both read the field tokens, so they sit
- * on Cream, Sand and Forest.
+ * full-width row under a hairline, the bar shows who paid for camp (the family
+ * share in camp green, the donor share in the same marigold stripes as the
+ * price page) with the "every child gets the same camp" line set large beside
+ * it. Both read the field tokens, so they sit on Cream, Sand and Forest.
  */
 
 /** The family and donor shares of the cost, clamped to whole percents. */
 export function costShares(familiesShare: number | null | undefined) {
   const families = Math.min(100, Math.max(0, Math.round(familiesShare ?? 0)));
   return { donors: 100 - families, families };
-}
-
-/** Each tier's bar as a share of the largest tier, so the longest bar is full. */
-export function tierBarWidths(tiers: Array<{ families?: number | null }>) {
-  const max = Math.max(0, ...tiers.map((tier) => tier.families ?? 0));
-  return tiers.map((tier) =>
-    max > 0 ? Math.round((Math.max(tier.families ?? 0, 0) / max) * 100) : 0,
-  );
 }
 
 const DONOR_STRIPES =
@@ -155,14 +145,7 @@ function Figure({
   );
 }
 
-function tierBarClass(kind: Tier["kind"]) {
-  const clean = stegaClean(kind);
-  if (clean === "full") return "bg-highlight";
-  if (clean === "campership") return "bg-primary";
-  return "bg-fill-cool";
-}
-
-function ShareCard({
+function ShareRow({
   dataAttribute,
   share,
 }: {
@@ -170,19 +153,19 @@ function ShareCard({
   share: Share;
 }) {
   const hasShare = typeof share.familiesShare === "number";
-  const tiers = (share.tiers ?? []).filter((tier) => hasText(tier.name));
-  if (!hasShare && !tiers.length) return null;
+  const hasNote = hasText(share.note);
+  if (!hasShare && !hasNote) return null;
 
   const { donors, families } = costShares(share.familiesShare);
-  const widths = tierBarWidths(tiers);
   const familiesLabel = stegaClean(share.familiesLabel)?.trim() || "Families";
   const donorsLabel = stegaClean(share.donorsLabel)?.trim() || "Donors";
 
   return (
     <div
       className={cn(
-        // No card: the bar and the tier list sit on the field under a hairline.
-        "grid gap-10 border-t border-border pt-10 lg:grid-cols-2 lg:gap-16 lg:pt-12",
+        // No card: the bar and the line sit on the field under a hairline.
+        "grid gap-10 border-t border-border pt-10 lg:gap-16 lg:pt-12",
+        hasShare && hasNote && "lg:grid-cols-2 lg:items-center",
         styles.reveal,
       )}
       data-sanity={dataAttribute?.("share")}
@@ -235,51 +218,10 @@ function ShareCard({
         </div>
       ) : null}
 
-      {tiers.length ? (
-        <div>
-          {hasText(share.tiersTitle) ? (
-            <h3 className="font-display text-title text-foreground" data-sanity={dataAttribute?.("share.tiersTitle")}>
-              {share.tiersTitle}
-            </h3>
-          ) : null}
-          {hasText(share.tiersSubtitle) ? (
-            <p className="mt-1 text-small text-muted-foreground" data-sanity={dataAttribute?.("share.tiersSubtitle")}>
-              {share.tiersSubtitle}
-            </p>
-          ) : null}
-          <dl className="mt-5 grid gap-3" data-sanity={dataAttribute?.("share.tiers")}>
-            {tiers.map((tier, index) => {
-              const tierPath = `share.tiers[_key=="${tier._key}"]`;
-              return (
-                <div
-                  className="grid grid-cols-[minmax(6.5rem,10rem)_minmax(0,1fr)_2.5rem] items-center gap-3 font-ui text-sm"
-                  key={tier._key}
-                >
-                  <dt className="font-semibold text-foreground" data-sanity={dataAttribute?.(`${tierPath}.name`)}>
-                    {tier.name}
-                  </dt>
-                  <dd className="m-0 h-2.5 overflow-hidden rounded-full bg-card" aria-hidden="true">
-                    <span
-                      className={cn("block h-full rounded-full", tierBarClass(tier.kind))}
-                      style={{ width: `${widths[index]}%` }}
-                    />
-                  </dd>
-                  <dd
-                    className="m-0 text-right font-bold tabular-nums text-foreground"
-                    data-sanity={dataAttribute?.(`${tierPath}.families`)}
-                  >
-                    {tier.families ?? 0}
-                  </dd>
-                </div>
-              );
-            })}
-          </dl>
-        </div>
-      ) : null}
-
-      {hasText(share.note) ? (
+      {hasNote ? (
+        // The promise behind the bar, set as a statement, not a footnote.
         <p
-          className="text-small text-muted-foreground lg:col-span-2"
+          className="max-w-[24ch] text-balance text-statement text-foreground"
           data-sanity={dataAttribute?.("share.note")}
         >
           {share.note}
@@ -350,7 +292,7 @@ export default function ImpactNumbers({
             </div>
             {share ? (
               <div className="mt-12 lg:mt-16">
-                <ShareCard dataAttribute={dataAttribute} share={share} />
+                <ShareRow dataAttribute={dataAttribute} share={share} />
               </div>
             ) : null}
           </>
