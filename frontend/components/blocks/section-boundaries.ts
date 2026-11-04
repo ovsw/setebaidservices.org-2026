@@ -71,6 +71,7 @@ export const sectionTraits: Record<Block["_type"], SectionTrait> = {
   homeHero: { background: "white", hero: true },
   imageCollageFeature: {},
   impactNumbers: {},
+  impactSpotlight: {},
   innerHero: { background: "photo", hero: true },
   largeSlides: { photoToBottom: true },
   latestArticles: {},

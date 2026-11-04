@@ -49,6 +49,7 @@ test("the shared blocks field exactly matches its authoritative inventory", () =
     "askAboutCampForm",
     "memorialCardForm",
     "impactNumbers",
+    "impactSpotlight",
   ]);
   assert.equal(blocksField.of.some(({ hidden }) => hidden), false);
   assert.equal(new Set(pageBuilderBlockTypes).size, pageBuilderBlockTypes.length);

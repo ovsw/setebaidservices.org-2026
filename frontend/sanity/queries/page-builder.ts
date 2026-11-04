@@ -25,6 +25,7 @@ import { pricingTiersQuery } from "./pricing-tiers";
 import { askAboutCampFormQuery } from "./ask-about-camp-form";
 import { memorialCardFormQuery } from "./memorial-card-form";
 import { impactNumbersQuery } from "./impact-numbers";
+import { impactSpotlightQuery } from "./impact-spotlight";
 // page-builder-generator:query-imports
 
 export const pageBuilderQuery = `
@@ -59,6 +60,7 @@ export const pageBuilderQuery = `
     ${askAboutCampFormQuery},
     ${memorialCardFormQuery},
     ${impactNumbersQuery},
+    ${impactSpotlightQuery},
     ${"" /* page-builder-generator:query-spreads */}
   }
 `;

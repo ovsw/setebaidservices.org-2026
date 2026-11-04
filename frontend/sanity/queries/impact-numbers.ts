@@ -5,7 +5,6 @@ import { minimalRichTextQuery } from "./shared/minimal-rich-text";
 // @sanity-typegen-ignore
 export const impactNumbersQuery = groq`
   _type == "impactNumbers" => {
-    "layout": coalesce(layout, "band"),
     eyebrow,
     title[]{
       ${minimalRichTextQuery}
@@ -20,14 +19,6 @@ export const impactNumbersQuery = groq`
     }),
     link{
       ${buttonQuery}
-    },
-    share{
-      title,
-      subtitle,
-      familiesShare,
-      familiesLabel,
-      donorsLabel,
-      note
     }
   }
 `;
