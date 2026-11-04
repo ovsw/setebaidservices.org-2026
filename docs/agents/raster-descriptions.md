@@ -8,6 +8,13 @@ copies the Raster description onto the matching Sanity image asset.
 Sanity is the system of record. Raster is only the intake and description
 source. Nothing links the two after the sync. Match is by file name.
 
+## When to use Raster
+
+Use Raster only for large batches, such as hundreds of photos at once. For a
+few images, the agent looks at each image and writes its `description` on the
+`sanity.imageAsset` document directly. Follow the style of the existing
+descriptions: one or two plain sentences that say what the image shows.
+
 ## One-time setup
 
 `studio/.env.local` needs, next to the Sanity variables:
@@ -26,10 +33,11 @@ grant the key access to that library in Raster.
 
 1. Upload the image files to the Sanity media library as usual, either in the
    Studio Media tab or from an image field. Keep the original file names.
-2. Upload the same files to any Raster library. Library size does not
-   matter: the sync skips assets that are already in sync and only lists the
-   new ones. If you use a library the key has not seen before, grant the API
-   key access to it in Raster first.
+2. Upload the same files to Setebaid's Raster library, "STB Processed Photos
+   1" (`stb-processed-photos-1`). Library size does not matter: the sync skips
+   assets that are already in sync and only lists the new ones. The Raster
+   organization also holds other clients' libraries; never upload Setebaid
+   images there.
 3. Wait until Raster shows a description on each asset. This takes seconds to
    a minute.
 4. Dry-run the sync from the repo root:
@@ -38,8 +46,8 @@ grant the key access to that library in Raster.
    pnpm raster:sync
    ```
 
-   With no `--library`, it uses the library that received the most recent
-   upload. Pass `--library <id>` to pick one. The first line of the output
+   With no `--library`, it uses Setebaid's library. Pass `--library <id>` to
+   pick another one; grant the API key access to it in Raster first. The first line of the output
    names the library it chose. It prints what it would patch and what it
    could not match. Nothing is written.
 

@@ -9,8 +9,10 @@
 // on upload). A stem is patched only when it is unambiguous on both sides: one
 // Raster description, and one Sanity asset.
 //
-// `--library <id>` picks the Raster library. Without it, the library holding the
-// most recently uploaded asset is used. Dry-run by default. `--apply` writes.
+// `--library <id>` picks the Raster library. Without it, Setebaid's library
+// (`stb-processed-photos-1`) is used. The Raster organization also holds other
+// clients' libraries, so the default never guesses. Dry-run by default.
+// `--apply` writes.
 // Only `description` is written, and only where Sanity has none, unless
 // `--overwrite` is passed.
 //
@@ -20,6 +22,7 @@ import { createClient } from "@sanity/client";
 import { assertSetebaidProductionTarget } from "./assert-setebaid-production-target.mjs";
 
 const RASTER_API_VERSION = "2026-05-20";
+const SETEBAID_LIBRARY_ID = "stb-processed-photos-1";
 const PAGE_SIZE = 50;
 const TRANSACTION_SIZE = 50;
 
@@ -81,32 +84,14 @@ async function listRasterAssets(libraryId) {
   return assets;
 }
 
-// Libraries carry no creation date, so the default library is the one whose
-// newest asset was uploaded most recently. Unlike the assets endpoint,
-// `/libraries` is not paginated: it returns every library in one call, and
-// returns an empty list if `page` is passed. Do not add paging here.
-async function findMostRecentlyUploadedLibrary() {
-  let best = null;
-  for (const library of await rasterGet("/libraries")) {
-    const assets = await listRasterAssets(library.id);
-    const newest = Math.max(0, ...assets.map((asset) => Number(asset.created) || 0));
-    if (!best || newest > best.newest) best = { id: library.id, newest, assets };
-  }
-  if (!best) throw new Error("No Raster libraries visible to this API key");
-  return best;
-}
-
 const stem = (filename) =>
   filename
     .replace(/\.[a-z0-9]+$/i, "")
     .trim()
     .toLowerCase();
 
-const selected = requestedLibraryId
-  ? { id: requestedLibraryId, assets: await listRasterAssets(requestedLibraryId) }
-  : await findMostRecentlyUploadedLibrary();
-const RASTER_LIBRARY_ID = selected.id;
-const rasterAssets = selected.assets;
+const RASTER_LIBRARY_ID = requestedLibraryId || SETEBAID_LIBRARY_ID;
+const rasterAssets = await listRasterAssets(RASTER_LIBRARY_ID);
 const descriptionByStem = new Map();
 const ambiguousStems = new Set();
 let undescribedInRaster = 0;
@@ -161,7 +146,7 @@ for (const [key, assets] of sanityAssetsByStem) {
 }
 const unmatchedRaster = [...descriptionByStem.keys()].filter((key) => !matchedStems.has(key));
 
-console.log(`Mode: ${APPLY ? "apply" : "dry-run"} (${projectId}/${dataset}, Raster library "${RASTER_LIBRARY_ID}"${requestedLibraryId ? "" : ", most recently uploaded"})`);
+console.log(`Mode: ${APPLY ? "apply" : "dry-run"} (${projectId}/${dataset}, Raster library "${RASTER_LIBRARY_ID}"${requestedLibraryId ? "" : ", Setebaid default"})`);
 console.log(`Raster assets: ${rasterAssets.length} (${descriptionByStem.size} described, ${undescribedInRaster} still undescribed, ${ambiguousStems.size} ambiguous names skipped)`);
 console.log(`Sanity image assets: ${sanityAssets.length}`);
 console.log(`To patch: ${patches.length}`);
