@@ -74,6 +74,7 @@ export const sectionTraits: Record<Block["_type"], SectionTrait> = {
   innerHero: { background: "photo", hero: true },
   largeSlides: { photoToBottom: true },
   latestArticles: {},
+  memorialCardForm: {},
   packingChecklist: {},
   richTextBlock: {},
   stackedFeatureRows: {},

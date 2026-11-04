@@ -23,6 +23,7 @@ import { flipCardsQuery } from "./flip-cards";
 import { photoStripQuery } from "./photo-strip";
 import { pricingTiersQuery } from "./pricing-tiers";
 import { askAboutCampFormQuery } from "./ask-about-camp-form";
+import { memorialCardFormQuery } from "./memorial-card-form";
 import { impactNumbersQuery } from "./impact-numbers";
 // page-builder-generator:query-imports
 
@@ -56,6 +57,7 @@ export const pageBuilderQuery = `
     ${photoStripQuery},
     ${pricingTiersQuery},
     ${askAboutCampFormQuery},
+    ${memorialCardFormQuery},
     ${impactNumbersQuery},
     ${"" /* page-builder-generator:query-spreads */}
   }

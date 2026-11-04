@@ -15,6 +15,7 @@ const migrations = path.resolve(__dirname, "../db/migrations");
 
 function entry(id: number, receivedAt: string): AskAboutCampEntry {
   return {
+    kind: "ask_about_camp",
     name: "Dana Rivera",
     phone: "(610) 555-0123",
     email: "dana@example.com",

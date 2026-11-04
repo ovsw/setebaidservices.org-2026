@@ -18,6 +18,10 @@ export default defineConfig({
       OG_IMAGE_SECRET: "test-only-og-image-secret",
     },
     environment: "jsdom",
+    // The Neon tests start PGlite, a full Postgres in memory. While the whole
+    // suite runs in parallel, one start can take longer than the default 5s.
+    testTimeout: 20_000,
+    hookTimeout: 20_000,
     include: ["**/*.test.{ts,tsx}"],
     setupFiles: ["./vitest.setup.ts"],
   },

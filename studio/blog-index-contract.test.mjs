@@ -47,6 +47,7 @@ test("the shared blocks field exactly matches its authoritative inventory", () =
     "photoStrip",
     "pricingTiers",
     "askAboutCampForm",
+    "memorialCardForm",
     "impactNumbers",
   ]);
   assert.equal(blocksField.of.some(({ hidden }) => hidden), false);

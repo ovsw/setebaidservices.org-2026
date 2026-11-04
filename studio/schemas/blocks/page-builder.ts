@@ -23,6 +23,7 @@ export const contentPageBuilderBlockTypes = [
   "photoStrip",
   "pricingTiers",
   "askAboutCampForm",
+  "memorialCardForm",
   "impactNumbers",
   // page-builder-generator:content-types
 ] as const;
@@ -85,6 +86,7 @@ const pageBuilderPreviewBlockTypes = new Set<PageBuilderBlockType>([
   "photoStrip",
   "pricingTiers",
   "askAboutCampForm",
+  "memorialCardForm",
   // page-builder-generator:preview-types
 ]);
 
@@ -124,6 +126,10 @@ export function validateBlocks(
   const formCount =
     blocks?.filter((block) => block?._type === "askAboutCampForm").length ?? 0;
   if (formCount > 1) return "Add no more than one Ask about camp form";
+  // Links to #card-form need one form to jump to.
+  const cardFormCount =
+    blocks?.filter((block) => block?._type === "memorialCardForm").length ?? 0;
+  if (cardFormCount > 1) return "Add no more than one Memorial card form";
   const final = blocks?.at(-1);
   if (final?.background === "green") return "Choose White or Cream for the final section above the footer.";
   return true;
@@ -159,7 +165,7 @@ function createBlocksField(
     {
       name: "cta",
       title: "CTA",
-      of: ["ctaBanner", "directorCta", "askAboutCampForm"],
+      of: ["ctaBanner", "directorCta", "askAboutCampForm", "memorialCardForm"],
     },
     {
       name: "image-rich",
