@@ -187,6 +187,7 @@ function createBlocksField(
         "faqHub",
         "stackedTimeline",
         "packingChecklist",
+        "impactNumbers",
       ],
     },
     {
