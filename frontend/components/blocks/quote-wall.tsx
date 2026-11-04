@@ -1,5 +1,4 @@
 import { sectionThemeClass } from "./section-theme";
-import { simpleRichTextComponents } from "@/components/simple-rich-text";
 import type { HOME_PAGE_QUERY_RESULT, PAGE_QUERY_RESULT } from "@/sanity.types";
 import {
   PortableText,
@@ -8,8 +7,10 @@ import {
 } from "@portabletext/react";
 import { stegaClean } from "next-sanity";
 import { cn } from "@/lib/utils";
-import { urlFor } from "@/sanity/lib/image";
-import Image from "next/image";
+import QuoteCard, {
+  type TestimonialDataAttribute,
+  type TestimonialDocument,
+} from "./quote-card";
 import QuoteWallDialog from "./quote-wall-dialog";
 import QuoteWallList from "./quote-wall-list";
 import QuoteWallTrack from "./quote-wall-track";
@@ -20,15 +21,9 @@ type PageBlock =
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
 type QuoteWallBlock = Extract<PageBlock, { _type: "quoteWall" }>;
-type TestimonialReference = NonNullable<QuoteWallBlock["testimonials"]>[number];
-type TestimonialDocument = NonNullable<TestimonialReference["document"]>;
-
 type QuoteWallProps = QuoteWallBlock & {
   dataAttribute?: (path: string) => string | undefined;
-  testimonialDataAttribute?: (
-    documentId: string,
-    path: string,
-  ) => string | undefined;
+  testimonialDataAttribute?: TestimonialDataAttribute;
 };
 
 /**
@@ -61,109 +56,35 @@ function hasText(value?: string | null) {
   return Boolean(stegaClean(value)?.trim());
 }
 
-/** Up to two initials from the name, for the avatar fallback. */
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .filter((word) => /^\p{L}/u.test(word))
-    .slice(0, 2)
-    .map((word) => Array.from(word)[0]?.toUpperCase() ?? "")
-    .join("");
-}
-
-/** Round portrait, or the person's initials when there is no photo. */
-function TestimonialAvatar({
-  image,
-  name,
-}: Readonly<{ image: TestimonialDocument["image"]; name: string }>) {
-  const hasImage = Boolean(image?.asset?._id);
-  return (
-    <span aria-hidden={hasImage ? undefined : "true"} className={styles.avatar}>
-      {hasImage && image ? (
-        <Image
-          alt={stegaClean(image.alt) || ""}
-          blurDataURL={image.asset?.metadata?.lqip || undefined}
-          className="object-cover"
-          fill
-          placeholder={image.asset?.metadata?.lqip ? "blur" : undefined}
-          sizes="44px"
-          src={urlFor(image).width(96).height(96).url()}
-        />
-      ) : (
-        <span className={styles.avatarFallback}>{initials(name)}</span>
-      )}
-    </span>
-  );
-}
-
-function QuoteCard({
+/** A Wall card. A long quote is clamped, with the whole card in a dialog. */
+function WallCard({
   clamped,
   referenceDataAttribute,
   testimonial,
   testimonialDataAttribute,
 }: Readonly<{
-  /** Shorten the quote and offer the full text in a dialog. */
   clamped: boolean;
   referenceDataAttribute?: string;
   testimonial: TestimonialDocument;
-  testimonialDataAttribute?: QuoteWallProps["testimonialDataAttribute"];
+  testimonialDataAttribute?: TestimonialDataAttribute;
 }>) {
-  const role = stegaClean(testimonial.title)?.trim();
-  const origin = stegaClean(testimonial.origin)?.trim();
-  const name = stegaClean(testimonial.name) ?? "";
-
   return (
-    <figure className={styles.card} data-sanity={referenceDataAttribute}>
-      <span aria-hidden="true" className={styles.quoteMark}>
-        &ldquo;
-      </span>
-      <blockquote
-        className={styles.quoteBody}
-        data-clamped={clamped ? "" : undefined}
-        data-sanity={testimonialDataAttribute?.(testimonial._id, "body")}
-      >
-        <PortableText
-          components={simpleRichTextComponents}
-          value={testimonial.body ?? []}
-        />
-      </blockquote>
-      {clamped ? (
-        <QuoteWallDialog label="Read the full quote" name={name}>
-          <QuoteCard clamped={false} testimonial={testimonial} />
-        </QuoteWallDialog>
-      ) : null}
-      <figcaption className={styles.attribution}>
-        <span
-          className={styles.avatarSlot}
-          data-sanity={testimonialDataAttribute?.(testimonial._id, "image")}
-        >
-          <TestimonialAvatar image={testimonial.image} name={name} />
-        </span>
-        <span className={styles.who}>
-          <span
-            className={styles.name}
-            data-sanity={testimonialDataAttribute?.(testimonial._id, "name")}
+    <QuoteCard
+      bodyClassName={clamped ? styles.clamped : undefined}
+      readMore={
+        clamped ? (
+          <QuoteWallDialog
+            label="Read the full quote"
+            name={stegaClean(testimonial.name) ?? ""}
           >
-            {testimonial.name}
-          </span>
-          {role || origin ? (
-            <span className={styles.meta}>
-              {role ? (
-                <span data-sanity={testimonialDataAttribute?.(testimonial._id, "title")}>
-                  {testimonial.title}
-                </span>
-              ) : null}
-              {role && origin ? <span aria-hidden="true"> · </span> : null}
-              {origin ? (
-                <span data-sanity={testimonialDataAttribute?.(testimonial._id, "origin")}>
-                  {testimonial.origin}
-                </span>
-              ) : null}
-            </span>
-          ) : null}
-        </span>
-      </figcaption>
-    </figure>
+            <QuoteCard bodyClassName="text-quote-lg" testimonial={testimonial} />
+          </QuoteWallDialog>
+        ) : null
+      }
+      referenceDataAttribute={referenceDataAttribute}
+      testimonial={testimonial}
+      testimonialDataAttribute={testimonialDataAttribute}
+    />
   );
 }
 
@@ -243,7 +164,7 @@ function QuoteWallColumns({
           items={cards.map(({ clamped, document, key, path }) => ({
             key,
             node: (
-              <QuoteCard
+              <WallCard
                 clamped={clamped}
                 referenceDataAttribute={dataAttribute?.(path)}
                 testimonial={document}

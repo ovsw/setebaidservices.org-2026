@@ -3,13 +3,8 @@ import type { HOME_PAGE_QUERY_RESULT, PAGE_QUERY_RESULT } from "@/sanity.types";
 import { toPlainText } from "@portabletext/react";
 import { stegaClean } from "next-sanity";
 import QuoteWallDrag from "./quote-wall-drag";
-import {
-  BodyText,
-  HeadingText,
-  hasImage,
-  hasText,
-  SectionImage,
-} from "./section-parts";
+import QuoteCard, { type TestimonialDocument } from "./quote-card";
+import { HeadingText, hasText } from "./section-parts";
 import { lightGlowClass, sectionThemeClass } from "./section-theme";
 
 type PageBlock =
@@ -17,10 +12,6 @@ type PageBlock =
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
 type QuoteWallBlock = Extract<PageBlock, { _type: "quoteWall" }>;
-type TestimonialDocument = NonNullable<
-  NonNullable<QuoteWallBlock["testimonials"]>[number]["document"]
->;
-
 type QuoteWallProps = QuoteWallBlock & {
   dataAttribute?: (path: string) => string | undefined;
   testimonialDataAttribute?: (documentId: string, path: string) => string | undefined;
@@ -64,62 +55,6 @@ export function dealRows<T extends { size: { width: number } }>(cards: T[]) {
     lengths[row] += card.size.width;
   }
   return rows;
-}
-
-function QuoteCard({
-  card,
-  testimonialDataAttribute,
-}: {
-  card: Card;
-  testimonialDataAttribute?: QuoteWallProps["testimonialDataAttribute"];
-}) {
-  const { document, size } = card;
-  const id = document._id;
-  return (
-    <figure
-      className="m-0 flex flex-col gap-4 rounded-card bg-card p-7 text-card-foreground"
-      style={{ flex: `0 0 min(${size.width}px, 78vw)` }}
-    >
-      <span
-        aria-hidden="true"
-        className="h-[22px] overflow-hidden font-display text-[56px] leading-[0.6] font-extrabold text-emphasis select-none"
-      >
-        &ldquo;
-      </span>
-      <blockquote
-        className={cn("m-0 grid gap-3 [&_p]:[font:inherit]", size.type)}
-        data-sanity={testimonialDataAttribute?.(id, "body")}
-      >
-        <BodyText value={document.body} />
-      </blockquote>
-      <figcaption className="mt-auto flex items-center gap-3 pt-2">
-        {hasImage(document.image) ? (
-          <span
-            className="relative size-11 flex-none overflow-hidden rounded-full bg-muted"
-            data-sanity={testimonialDataAttribute?.(id, "image")}
-          >
-            <SectionImage image={document.image} sizes="44px" width={96} />
-          </span>
-        ) : null}
-        <span className="flex min-w-0 flex-col gap-1">
-          <span
-            className="origin-left -rotate-2 text-note-sm leading-none"
-            data-sanity={testimonialDataAttribute?.(id, "name")}
-          >
-            {document.name}
-          </span>
-          {hasText(document.title) ? (
-            <span
-              className="font-ui text-label text-muted-foreground"
-              data-sanity={testimonialDataAttribute?.(id, "title")}
-            >
-              {document.title}
-            </span>
-          ) : null}
-        </span>
-      </figcaption>
-    </figure>
-  );
 }
 
 export default function QuoteWallTrack({
@@ -181,8 +116,10 @@ export default function QuoteWallTrack({
                 <div className="flex items-stretch gap-4" key={rowIndex}>
                   {row.map((card) => (
                     <QuoteCard
-                      card={card}
+                      bodyClassName={card.size.type}
                       key={card.key}
+                      style={{ flex: `0 0 min(${card.size.width}px, 78vw)` }}
+                      testimonial={card.document}
                       testimonialDataAttribute={testimonialDataAttribute}
                     />
                   ))}
