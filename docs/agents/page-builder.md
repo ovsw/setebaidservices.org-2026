@@ -9,6 +9,27 @@ existing layout and propose any schema or layout change to Ovi instead of
 making it. The development instructions below apply only to a separately
 authorized section-development task.
 
+## One section, one look
+
+A section has one design, and its catalogue thumbnail shows it. Content
+editors are not designers: they pick a section by its thumbnail and fill
+its fields; they never choose how a section looks.
+
+- No section gets a `layout`, `variant`, `style` or similar field that
+  changes its design, shows or hides fields, or picks a different renderer.
+- A new look is a new section: its own `_type`, its own fields, its own
+  preview image.
+- Any exception needs Ovi's express approval, in writing, before the work
+  starts. It is never an agent's own call, and "the prototype has it" is
+  not approval.
+- Six sections from the home page prototype still carry a `layout` or
+  `variant` field (`featureCards`, `benefitCards`, `stackedTimeline`,
+  `quoteWall`, `imageCollageFeature`, `ctaBanner`). They are grandfathered
+  until [issue #112](https://github.com/ovsw/setebaidservices.org-2026/issues/112)
+  splits them. Do not add a look to them, and do not copy the pattern.
+- The section `background` field (Cream, Sand, Forest) is not a look. It
+  stays.
+
 ## How a section reaches the page
 
 A top-level section passes through this flow:
@@ -203,7 +224,7 @@ For visual changes, treat the existing design system as the default:
 - Reuse tokens from `frontend/app/globals.css`.
 - Reuse the section shell (`sectionThemeClass`, `py-section`, `container-content`), shared buttons, and nearby block patterns before adding a new primitive.
 - Check the full page and mobile layout, not only the section in isolation.
-- Introduce a one-off value or variant only when the design intentionally requires it.
+- Never add a one-off value or variant on your own; see "One section, one look" above.
 
 ## Definition of done
 
