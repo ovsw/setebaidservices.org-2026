@@ -97,7 +97,8 @@ const receivedDay = `(received_at at time zone '${ANALYTICS_TIME_ZONE}')::date`;
 /**
  * The dashboard's counts for a period: one row per Source and a totals row.
  * Form requests are counted from the stored entries, so an ad blocker cannot
- * hide one; the other columns come from the daily totals. Only counts leave
+ * hide one. They are "Ask about camp" requests only: the office handles
+ * memorial card entries from their email; the other columns come from the daily totals. Only counts leave
  * the database, never entry details.
  */
 export async function readDashboardNumbers(
@@ -114,7 +115,8 @@ export async function readDashboardNumbers(
       union all
       select source, 'form_requests', count(*)::integer
         from form_entries
-        where ${receivedDay} between $1::date and $2::date
+        where kind = 'ask_about_camp'
+          and ${receivedDay} between $1::date and $2::date
         group by source`,
       [from, to],
     ),

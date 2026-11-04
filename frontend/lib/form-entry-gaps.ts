@@ -1,4 +1,5 @@
 import type { Database } from "@/lib/database";
+import { FORM_LABELS, type FormKind } from "@/lib/form-entry";
 import { storeFormEntry } from "@/lib/form-entry-store";
 import { entryFromFormspark } from "@/lib/formspark-entry";
 import type { FormsparkSubmission } from "@/lib/formspark-api";
@@ -110,14 +111,15 @@ type UnsentGap = {
   received_at: Date | string;
   source: string;
   page: string;
+  kind: FormKind;
 };
 
 function gapLine(gap: UnsentGap) {
   const received = new Date(gap.received_at).toISOString().slice(0, 16).replace("T", " ");
-  return `- ${received} UTC · ${gap.source} · ${gap.page} · submission ${gap.submission_id}`;
+  return `- ${received} UTC · ${FORM_LABELS[gap.kind] ?? gap.kind} · ${gap.source} · ${gap.page} · submission ${gap.submission_id}`;
 }
 
-/** The report lists IDs, times, Sources and pages only, never family details. */
+/** The report lists IDs, times, forms, Sources and pages only, never family details. */
 export function gapReportEmail(gaps: UnsentGap[]): ReportEmail {
   const copied = gaps.filter((gap) => gap.path === "trigger");
   const missing = gaps.filter((gap) => gap.path === "formspark");
@@ -156,7 +158,7 @@ export async function emailNewGaps(
   now: Date,
 ) {
   const { rows } = await db.query(
-    `select gap.submission_id, gap.path, gap.received_at, entry.source, entry.page
+    `select gap.submission_id, gap.path, gap.received_at, entry.source, entry.page, entry.kind
     from delivery_gaps gap join form_entries entry using (submission_id)
     where gap.emailed_at is null
     order by gap.received_at`,

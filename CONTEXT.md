@@ -66,9 +66,17 @@ A redirect with a Source name, from a printed `/go/` address. It adds the UTM ta
 
 The name of the card or page that brought a visitor, for example `chop-nurses`. It travels as `utm_source`.
 
+**Form entry**
+
+What a visitor sends through one of the Website's forms. Each entry has a kind: an "Ask about camp" request or a memorial card entry. Every kind travels the same two paths and is kept for three years.
+
+**Memorial card entry**
+
+A donor's details for a memorial or honor card, sent from the Memorial card form on `/donate/memorial`: who is remembered or honored, the gift amount and how the donor gives, who gets the card, the card design and its words, and the donor's contact details. The office mails the card and matches it to the gift by the amount; the family never sees the amount. Memorial card entries are not on the team dashboard.
+
 **Delivery gap**
 
-An "Ask about camp" request that reached only one of its two paths: Neon through Trigger.dev (path A) or Formspark (path B). The nightly gap-filler records each one, so the team dashboard can count them and Ovi gets an email.
+A form entry that reached only one of its two paths: Neon through Trigger.dev (path A) or Formspark (path B). The nightly gap-filler records each one, so the team dashboard can count them and Ovi gets an email.
 
 **Call status**
 

@@ -7,6 +7,9 @@ import { emailNewGaps, fillFormEntryGaps } from "@/lib/form-entry-gaps";
 import { storeFormEntry } from "@/lib/form-entry-store";
 import { entryFromFormspark, formsparkPayload } from "@/lib/formspark-entry";
 import type { FormsparkSubmission } from "@/lib/formspark-api";
+import type { MemorialCardEntry } from "@/lib/form-entry";
+import { validateMemorialCard } from "@/lib/memorial-card";
+import { validDraft } from "@/test/memorial-card-draft";
 
 const migrations = path.resolve(__dirname, "../db/migrations");
 const NOW = new Date("2026-10-20T08:00:00.000Z");
@@ -14,6 +17,7 @@ const HOUR = 60 * 60 * 1000;
 
 function entry(id: number, hoursAgo: number, extra: Partial<AskAboutCampEntry> = {}): AskAboutCampEntry {
   return {
+    kind: "ask_about_camp",
     name: "Dana Rivera",
     phone: "(610) 555-0123",
     email: "dana@example.com",
@@ -28,7 +32,7 @@ function entry(id: number, hoursAgo: number, extra: Partial<AskAboutCampEntry> =
   };
 }
 
-function inFormspark(item: AskAboutCampEntry): FormsparkSubmission {
+function inFormspark(item: AskAboutCampEntry | MemorialCardEntry): FormsparkSubmission {
   return { id: `fs-${item.submissionId.slice(-4)}`, data: formsparkPayload(item), createdAt: item.receivedAt };
 }
 
@@ -73,6 +77,30 @@ describe("fillFormEntryGaps", () => {
     expect(rows).toEqual([
       { interests: ["Cabins", "Talk with the camp director"], campaign: "fall-2026-events", best_time: "" },
     ]);
+  });
+
+  it("copies a memorial card entry that reached only Formspark, with its answers", async () => {
+    const formData = new FormData();
+    for (const [field, value] of Object.entries(validDraft)) formData.set(field, value);
+    const checked = validateMemorialCard(formData);
+    if (!checked.ok) throw new Error("The test draft is not valid");
+    const lost: MemorialCardEntry = {
+      ...checked.request,
+      kind: "memorial_card",
+      submissionId: "00000000-0000-4000-8000-000000000009",
+      receivedAt: new Date(NOW.getTime() - 5 * HOUR).toISOString(),
+      source: "obituary",
+      page: "/donate/memorial",
+    };
+
+    const result = await fillFormEntryGaps(db, [inFormspark(lost)], NOW);
+
+    expect(result.copied).toEqual([{ submissionId: lost.submissionId, path: "trigger", receivedAt: lost.receivedAt }]);
+    const { rows } = await db.query(
+      `select entry.kind, answers.honoree_name from form_entries entry
+      join memorial_card_entries answers using (submission_id)`,
+    );
+    expect(rows).toEqual([{ kind: "memorial_card", honoree_name: "Ruth Ellen Baker" }]);
   });
 
   it("reports Neon entries older than one day that have no Formspark copy", async () => {

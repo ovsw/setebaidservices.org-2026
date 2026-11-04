@@ -1,5 +1,5 @@
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
-import type { AskAboutCampEntry } from "@/lib/ask-about-camp-delivery";
+import type { FormEntry } from "@/lib/form-entry";
 
 /**
  * A form entry as it travels to the store task. Only the Website and the
@@ -24,7 +24,7 @@ function readKey(keyBase64: string) {
   return key;
 }
 
-export function encryptFormEntry(entry: AskAboutCampEntry, keyBase64: string): EncryptedFormEntry {
+export function encryptFormEntry(entry: FormEntry, keyBase64: string): EncryptedFormEntry {
   const iv = randomBytes(12);
   const cipher = createCipheriv(ALGORITHM, readKey(keyBase64), iv);
   cipher.setAAD(Buffer.from(entry.submissionId));
@@ -38,7 +38,7 @@ export function encryptFormEntry(entry: AskAboutCampEntry, keyBase64: string): E
 }
 
 /** Throws when the key is wrong or the payload was changed. */
-export function decryptFormEntry(payload: EncryptedFormEntry, keyBase64: string): AskAboutCampEntry {
+export function decryptFormEntry(payload: EncryptedFormEntry, keyBase64: string): FormEntry {
   const decipher = createDecipheriv(ALGORITHM, readKey(keyBase64), Buffer.from(payload.iv, "base64"));
   decipher.setAAD(Buffer.from(payload.submissionId));
   decipher.setAuthTag(Buffer.from(payload.tag, "base64"));
@@ -46,5 +46,7 @@ export function decryptFormEntry(payload: EncryptedFormEntry, keyBase64: string)
     decipher.update(Buffer.from(payload.ciphertext, "base64")),
     decipher.final(),
   ]);
-  return JSON.parse(plaintext.toString("utf8")) as AskAboutCampEntry;
+  const entry = JSON.parse(plaintext.toString("utf8")) as FormEntry;
+  // Entries sent before memorial cards existed carry no kind.
+  return { ...entry, kind: entry.kind ?? "ask_about_camp" } as FormEntry;
 }
