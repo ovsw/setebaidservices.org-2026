@@ -32,7 +32,8 @@ type Tier = NonNullable<Share["tiers"]>[number];
  * set at display size beside a 2x2 grid of the rest; below them, on its own
  * full-width row, a card shows who paid for camp (the family share in camp
  * green, the donor share in the same marigold stripes as the price page) and
- * how many families chose each tier. Both read the field tokens, so they sit
+ * how many families chose each tier, on the field under a hairline, not in a
+ * card. Both read the field tokens, so they sit
  * on Cream, Sand and Forest.
  */
 
@@ -180,7 +181,8 @@ function ShareCard({
   return (
     <div
       className={cn(
-        "grid gap-10 rounded-card bg-card p-7 text-card-foreground shadow-raised lg:grid-cols-2 lg:gap-14 lg:p-10",
+        // No card: the bar and the tier list sit on the field under a hairline.
+        "grid gap-10 border-t border-border pt-10 lg:grid-cols-2 lg:gap-16 lg:pt-12",
         styles.reveal,
       )}
       data-sanity={dataAttribute?.("share")}
@@ -256,7 +258,7 @@ function ShareCard({
                   <dt className="font-semibold text-foreground" data-sanity={dataAttribute?.(`${tierPath}.name`)}>
                     {tier.name}
                   </dt>
-                  <dd className="m-0 h-2.5 overflow-hidden rounded-full bg-muted" aria-hidden="true">
+                  <dd className="m-0 h-2.5 overflow-hidden rounded-full bg-card" aria-hidden="true">
                     <span
                       className={cn("block h-full rounded-full", tierBarClass(tier.kind))}
                       style={{ width: `${widths[index]}%` }}
