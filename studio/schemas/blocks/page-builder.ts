@@ -24,6 +24,8 @@ export const contentPageBuilderBlockTypes = [
   "pricingTiers",
   "askAboutCampForm",
   "memorialCardForm",
+  "impactNumbers",
+  "impactSpotlight",
   // page-builder-generator:content-types
 ] as const;
 
@@ -192,6 +194,8 @@ function createBlocksField(
         "faqHub",
         "stackedTimeline",
         "packingChecklist",
+        "impactNumbers",
+        "impactSpotlight",
       ],
     },
     {

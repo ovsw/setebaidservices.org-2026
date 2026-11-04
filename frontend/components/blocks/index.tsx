@@ -33,6 +33,8 @@ import PhotoStrip from "@/components/blocks/photo-strip";
 import PricingTiers from "@/components/blocks/pricing-tiers";
 import AskAboutCampForm from "@/components/blocks/ask-about-camp-form";
 import MemorialCardForm from "@/components/blocks/memorial-card-form";
+import ImpactNumbers from "@/components/blocks/impact-numbers";
+import ImpactSpotlight from "@/components/blocks/impact-spotlight";
 // page-builder-generator:component-imports
 import { dataset, projectId } from "@/sanity/lib/env";
 import type { BlogListing } from "@/lib/blog-index";
@@ -85,6 +87,8 @@ const serverFieldEditingBlockTypes = new Set<Block["_type"]>([
   "pricingTiers",
   "askAboutCampForm",
   "memorialCardForm",
+  "impactNumbers",
+  "impactSpotlight",
   // page-builder-generator:editing-types
 ]);
 
@@ -119,6 +123,8 @@ const componentMap: Partial<{
   pricingTiers: PricingTiers,
   askAboutCampForm: AskAboutCampForm,
   memorialCardForm: MemorialCardForm,
+  impactNumbers: ImpactNumbers,
+  impactSpotlight: ImpactSpotlight,
   // page-builder-generator:component-map
 };
 
