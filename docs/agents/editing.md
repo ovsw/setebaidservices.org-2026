@@ -105,6 +105,11 @@ settings".
   `image` with `alt`, the `body` (the quote, required) and an optional
   `rating`. Pages show testimonials in the "Quote wall" section
   (`quoteWall`), in the order of its `testimonials` list.
+- A Quote wall's `layout` stays `wall` (the default) on a new or changed
+  section. Use `track` (one row that visitors drag sideways) only when the
+  section holds more than twelve testimonials; the wall shows nine cards
+  and a "show more" button, which suits every smaller set. Do not switch an
+  existing section's layout on your own.
 - Never present a placeholder quote as real, and never write a quote for a
   real person. Campers are children: use only the name form the client gives
   (often the first name only).
