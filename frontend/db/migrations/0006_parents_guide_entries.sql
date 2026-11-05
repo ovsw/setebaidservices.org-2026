@@ -1,5 +1,5 @@
 -- Parent's guide requests: one row per parent who asks for the guide on
--- /parents/guide, with only a name and an email. Each form keeps its entries
+-- /parents/guide, with only a first name and an email. Each form keeps its entries
 -- in its own table. The submission ID comes from the Website, so the store
 -- task and the nightly gap-filler can insert the same entry more than once
 -- and still keep one row.
@@ -9,7 +9,7 @@ create table parents_guide_entries (
   source text not null,
   page text not null,
   campaign text,
-  parent_name text not null,
+  first_name text not null,
   email text not null,
   formspark_id text unique,
   stored_at timestamptz not null default now()

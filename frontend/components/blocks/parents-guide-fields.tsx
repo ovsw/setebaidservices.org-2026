@@ -25,7 +25,7 @@ type ParentsGuideFieldsProps = {
   successMessage: string;
 };
 
-const FIELD_ORDER: ParentsGuideField[] = ["name", "email"];
+const FIELD_ORDER: ParentsGuideField[] = ["firstName", "email"];
 const initialState: ParentsGuideResult = { status: "idle" };
 
 function focusFirstError(form: HTMLFormElement | null, found: ParentsGuideErrors) {
@@ -53,6 +53,10 @@ function TextField({
     <div className="flex flex-col gap-2">
       <Label className="text-[15px] font-semibold leading-snug" htmlFor={id}>
         {label}
+        {/* The input's required attribute tells screen readers; the star is for the eye. */}
+        <span aria-hidden="true" className="text-destructive">
+          {" "}*
+        </span>
       </Label>
       <Input
         aria-describedby={error ? `${id}-error` : undefined}
@@ -157,7 +161,13 @@ export function ParentsGuideFields({
     <div className="field-cream self-start rounded-card">
       <form className={`${panel} relative flex flex-col gap-8`} noValidate onSubmit={submit} ref={formRef}>
         <div className="grid gap-5 md:grid-cols-2">
-          <TextField autoComplete="name" error={errors.name} label="Your name" name="name" onEdit={clearError} />
+          <TextField
+            autoComplete="given-name"
+            error={errors.firstName}
+            label="First name"
+            name="firstName"
+            onEdit={clearError}
+          />
           <TextField
             autoComplete="email"
             error={errors.email}

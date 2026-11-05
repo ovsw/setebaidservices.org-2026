@@ -72,7 +72,7 @@ What a visitor sends through one of the Website's forms: an "Ask about camp" req
 
 **Parent's guide request**
 
-A parent's name and email, sent from the Parent's guide form on `/parents/guide` to ask for the guide. The office sends the guide by email. Parent's guide requests are not on the team dashboard.
+A parent's first name and email, sent from the Parent's guide form on `/parents/guide` to ask for the guide. The office sends the guide by email. Parent's guide requests are not on the team dashboard.
 
 **Memorial card entry**
 

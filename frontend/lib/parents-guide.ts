@@ -2,14 +2,14 @@ import { z } from "zod";
 import type { FormSendResult } from "@/lib/form-entry";
 
 /**
- * The parent's guide request: a parent's name and email, so the office can
+ * The parent's guide request: a parent's first name and email, so the office can
  * send the guide. The browser and the server check it with the same rules.
  */
 
 const text = (max: number) => z.string().trim().max(max, "This answer is too long.");
 
 export const parentsGuideSchema = z.object({
-  name: text(100).min(1, "Enter your name."),
+  firstName: text(100).min(1, "Enter your first name."),
   email: text(200)
     .min(1, "Enter your email address.")
     .pipe(z.email("Enter an email address like name@example.com.")),
@@ -29,7 +29,7 @@ export function validateParentsGuide(
   formData: FormData,
 ): { ok: true; request: ParentsGuideRequest } | { ok: false; errors: ParentsGuideErrors } {
   const result = parentsGuideSchema.safeParse({
-    name: field(formData, "name"),
+    firstName: field(formData, "firstName"),
     email: field(formData, "email"),
   });
   if (result.success) return { ok: true, request: result.data };

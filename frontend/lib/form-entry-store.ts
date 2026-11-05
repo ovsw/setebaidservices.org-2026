@@ -82,7 +82,7 @@ function storeMemorialCard(db: Database, entry: MemorialCardEntry, formsparkId: 
 function storeParentsGuide(db: Database, entry: ParentsGuideEntry, formsparkId: string | null) {
   return db.query(
     `insert into parents_guide_entries (
-      submission_id, received_at, source, page, campaign, formspark_id, parent_name, email
+      submission_id, received_at, source, page, campaign, formspark_id, first_name, email
     ) values ($1, $2, $3, $4, $5, $6, $7, $8)
     on conflict (submission_id) do nothing
     returning submission_id`,
@@ -93,7 +93,7 @@ function storeParentsGuide(db: Database, entry: ParentsGuideEntry, formsparkId: 
       entry.page,
       entry.campaign ?? null,
       formsparkId,
-      entry.name,
+      entry.firstName,
       entry.email,
     ],
   );

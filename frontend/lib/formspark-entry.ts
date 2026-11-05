@@ -81,11 +81,11 @@ function memorialCardPayload(entry: MemorialCardEntry) {
 function parentsGuidePayload(entry: ParentsGuideEntry) {
   return {
     form: FORM_LABELS.parents_guide,
-    parent_name: entry.name,
+    first_name: entry.firstName,
     email: entry.email,
     ...visitFields(entry),
     _email: {
-      subject: `Parent's guide request: ${entry.name}`,
+      subject: `Parent's guide request: ${entry.firstName}`,
     },
   };
 }
@@ -164,7 +164,7 @@ const memorialCardData = z.object({
 const parentsGuideData = z.object({
   ...visitData,
   form: z.literal(FORM_LABELS.parents_guide),
-  parent_name: storedText,
+  first_name: storedText,
   email: storedText,
 });
 
@@ -233,7 +233,7 @@ function parentsGuideFromFormspark(data: unknown): ParentsGuideEntry | undefined
   return {
     kind: "parents_guide",
     ...visitMeta(fields),
-    name: fields.parent_name,
+    firstName: fields.first_name,
     email: fields.email,
   };
 }
