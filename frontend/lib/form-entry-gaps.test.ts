@@ -150,6 +150,17 @@ describe("fillFormEntryGaps", () => {
     ]);
   });
 
+  it("does not report a form as missing from Formspark when its Formspark form was not read", async () => {
+    const notMailed = entry(1, 30);
+    await storeFormEntry(db, notMailed);
+
+    const result = await fillFormEntryGaps(db, [], NOW, ["memorial_card", "parents_guide"]);
+
+    expect(result.missingFromFormspark).toEqual([]);
+    const gaps = await db.query("select count(*)::integer as count from delivery_gaps");
+    expect(gaps.rows).toEqual([{ count: 0 }]);
+  });
+
   it("reports each gap one time, and the next run finds nothing new", async () => {
     const lost = entry(1, 5);
     const notMailed = entry(2, 30);

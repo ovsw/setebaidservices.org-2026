@@ -25,10 +25,22 @@ export const deleteOldFormEntriesTask = schedules.task({
     const token = requiredEnv("FORMSPARK_API_TOKEN");
 
     const neonDeleted = await deleteOldFormEntries(db, cutoff);
-    // Every form's Formspark form: each form has its own.
+    // Every form's Formspark form: each form has its own. A form that fails
+    // does not stop the others; the run still fails after them, so it retries
+    // and shows as failed.
     let formsparkDeleted = 0;
+    const failures: string[] = [];
     for (const formId of formsparkFormIds(requiredEnv)) {
-      formsparkDeleted += await deleteOldFormsparkSubmissions(createFormsparkApi(token, formId), cutoff);
+      try {
+        formsparkDeleted += await deleteOldFormsparkSubmissions(createFormsparkApi(token, formId), cutoff);
+      } catch (error) {
+        failures.push(error instanceof Error ? error.message : "unknown error");
+      }
+    }
+    if (failures.length) {
+      throw new Error(
+        `Deleted ${formsparkDeleted} old Formspark submissions, but ${failures.length} form(s) failed: ${failures.join("; ")}`,
+      );
     }
     await recordJobSuccess(db, "delete-old-form-entries", now);
 

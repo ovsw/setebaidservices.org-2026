@@ -469,7 +469,8 @@ section_c() {
   open_url "https://dashboard.formspark.io"
   step "Create a workspace named 'Setebaid', or open it. Upgrade it: a one-time payment that turns on the API."
   say "Each Website form has its own Formspark form, so each kind reaches the office on its own."
-  step "In that workspace, create three forms: 'Ask about camp', 'Memorial card' and 'Parent's guide'. Set each one's notification email to the office address."
+  step "In that workspace, create the 'Memorial card' and 'Parent's guide' forms, and 'Ask about camp' only on a new setup. Set each new form's notification email to the office address."
+  say "On a re-run, press Enter at a form ID prompt to keep the saved ID. A new 'Ask about camp' form would leave the old one's submissions undeleted."
   step "Copy each form ID: the part after https://submit-form.com/ in the form's setup code."
   ask_value FORMSPARK_FORM_ID "Paste the 'Ask about camp' form ID:" secret
   ask_value FORMSPARK_MEMORIAL_CARD_FORM_ID "Paste the 'Memorial card' form ID:" secret

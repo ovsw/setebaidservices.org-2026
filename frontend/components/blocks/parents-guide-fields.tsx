@@ -38,12 +38,14 @@ function TextField({
   error,
   label,
   name,
+  onEdit,
   type = "text",
 }: {
   autoComplete: string;
   error?: string;
   label: string;
   name: ParentsGuideField;
+  onEdit: (name: ParentsGuideField) => void;
   type?: "email" | "text";
 }) {
   const id = `parents-guide-${name}`;
@@ -59,6 +61,7 @@ function TextField({
         className="border-[1.5px] bg-popover text-popover-foreground"
         id={id}
         name={name}
+        onInput={() => onEdit(name)}
         required
         type={type}
       />
@@ -99,6 +102,16 @@ export function ParentsGuideFields({
     if (state.status === "failed") failedRef.current?.focus();
     if (state.status === "invalid") focusFirstError(formRef.current, state.errors);
   }, [state]);
+
+  // A corrected answer drops its own error; the other fields keep theirs.
+  function clearError(name: ParentsGuideField) {
+    setClientErrors((current) => {
+      if (!current[name]) return current;
+      const rest = { ...current };
+      delete rest[name];
+      return rest;
+    });
+  }
 
   function submit(event: FormEvent<HTMLFormElement>) {
     // Sent by hand, not through the form's action, so React does not clear
@@ -144,8 +157,15 @@ export function ParentsGuideFields({
     <div className="field-cream self-start rounded-card">
       <form className={`${panel} relative flex flex-col gap-8`} noValidate onSubmit={submit} ref={formRef}>
         <div className="grid gap-5 md:grid-cols-2">
-          <TextField autoComplete="name" error={errors.name} label="Your name" name="name" />
-          <TextField autoComplete="email" error={errors.email} label="Email" name="email" type="email" />
+          <TextField autoComplete="name" error={errors.name} label="Your name" name="name" onEdit={clearError} />
+          <TextField
+            autoComplete="email"
+            error={errors.email}
+            label="Email"
+            name="email"
+            onEdit={clearError}
+            type="email"
+          />
         </div>
 
         {/* Only a bot fills this in; people never see or reach it. */}
