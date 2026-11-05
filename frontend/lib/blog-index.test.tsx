@@ -310,11 +310,59 @@ describe("blog index", () => {
 
     expect(vi.mocked(Blocks).mock.lastCall?.[0].blogListing).toEqual({
       featured: post,
+      leadsPage: false,
       pagination: calculateBlogPagination(0, 1),
       posts: [],
     });
     // No Hero section: the page still has its heading for assistive tech.
     expect(screen.getByRole("heading", { level: 1, name: "Blog" })).toBeInTheDocument();
+  });
+
+  it("lets a leading Latest Posts section carry the page heading", async () => {
+    vi.mocked(fetchBlogIndex).mockResolvedValueOnce({
+      _id: "blogIndex",
+      _type: "blogIndex",
+      blocks: [{ _key: "listing", _type: "latestArticles", title: "Stories from camp" }],
+      description: "Camp stories",
+      title: "Blog",
+    } as never);
+    vi.mocked(fetchLatestPost).mockResolvedValueOnce(post as never);
+    vi.mocked(fetchRegularPosts).mockResolvedValueOnce([]);
+    vi.mocked(fetchRegularPostsCount).mockResolvedValueOnce(0);
+
+    render(
+      await BlogIndexRoute({
+        currentPage: 1,
+        perspective: "published",
+        stega: false,
+      }),
+    );
+
+    expect(vi.mocked(Blocks).mock.lastCall?.[0].blogListing?.leadsPage).toBe(true);
+    // The section renders the heading, so the route adds no hidden one.
+    expect(screen.queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
+  });
+
+  it("renders the listing title as the page heading when the listing leads", () => {
+    const props = {
+      _key: "listing",
+      _type: "latestArticles",
+      articles: [],
+      background: null,
+      blogListing: {
+        featured: post,
+        leadsPage: true,
+        pagination: calculateBlogPagination(0, 1),
+        posts: [],
+      },
+      title: "Stories from camp",
+    } as unknown as ComponentProps<typeof LatestArticles>;
+
+    render(<LatestArticles {...props} />);
+
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Stories from camp" }),
+    ).toBeInTheDocument();
   });
 
   it("lists the posts even when the Blog page has no Latest Posts section yet", () => {

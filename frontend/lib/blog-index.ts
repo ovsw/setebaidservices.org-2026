@@ -18,6 +18,11 @@ export type BlogPagination = {
 export type BlogListing = {
   /** The newest post, shown large on page one only. */
   featured: BlogPost | null;
+  /**
+   * True when the Latest Posts section is the first section on the Blog
+   * page: it then carries the page heading, so the stories come first.
+   */
+  leadsPage: boolean;
   pagination: BlogPagination;
   posts: BlogPost[];
 };

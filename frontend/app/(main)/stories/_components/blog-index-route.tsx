@@ -15,6 +15,7 @@ import {
 } from "@/sanity/lib/fetch";
 import type { DynamicFetchOptions } from "@/sanity/lib/live";
 import type { BLOG_INDEX_QUERY_RESULT } from "@/sanity.types";
+import { stegaClean } from "next-sanity";
 import { notFound } from "next/navigation";
 import { siteUrl } from "@/lib/site-url";
 
@@ -81,9 +82,12 @@ export async function BlogIndexRoute({
     notFound();
   }
   const blocks = withBlogListingSection(blogIndex.blocks ?? []);
-  const hasHero = blocks.some(
-    (block) => block._type === "innerHero",
-  );
+  const hasHero = blocks.some((block) => block._type === "innerHero");
+  // A stored listing with a title leads the page; the stand-in never does.
+  const leadingBlock = blogIndex.blocks?.[0];
+  const leadsPage =
+    leadingBlock?._type === "latestArticles" &&
+    Boolean(stegaClean(leadingBlock.title)?.trim());
 
   return (
     <>
@@ -95,12 +99,13 @@ export async function BlogIndexRoute({
         siteUrl={siteUrl}
       />
       <FaqPageJsonLd blocks={blogIndex.blocks ?? []} />
-      {/* The Hero carries the page heading; without one, keep an outline. */}
-      {!hasHero ? <h1 className="sr-only">{blogIndex.title}</h1> : null}
+      {/* The Hero or a leading listing carries the page heading; otherwise keep an outline. */}
+      {!hasHero && !leadsPage ? <h1 className="sr-only">{blogIndex.title}</h1> : null}
       <Blocks
         blocks={blocks}
         blogListing={{
           featured: currentPage === 1 ? latestPost : null,
+          leadsPage,
           pagination,
           posts: regularPosts,
         }}
