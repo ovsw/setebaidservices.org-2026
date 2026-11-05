@@ -15,6 +15,7 @@ import {
 } from "@/sanity/lib/fetch";
 import type { DynamicFetchOptions } from "@/sanity/lib/live";
 import type { BLOG_INDEX_QUERY_RESULT } from "@/sanity.types";
+import { stegaClean } from "next-sanity";
 import { notFound } from "next/navigation";
 import { siteUrl } from "@/lib/site-url";
 
@@ -82,8 +83,11 @@ export async function BlogIndexRoute({
   }
   const blocks = withBlogListingSection(blogIndex.blocks ?? []);
   const hasHero = blocks.some((block) => block._type === "innerHero");
-  // The stored listing leads the page; the stand-in never carries the heading.
-  const leadsPage = blogIndex.blocks?.[0]?._type === "latestArticles";
+  // A stored listing with a title leads the page; the stand-in never does.
+  const leadingBlock = blogIndex.blocks?.[0];
+  const leadsPage =
+    leadingBlock?._type === "latestArticles" &&
+    Boolean(stegaClean(leadingBlock.title)?.trim());
 
   return (
     <>
