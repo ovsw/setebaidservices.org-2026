@@ -74,7 +74,7 @@ function PostCardImage({
     <figure
       className={cn(
         "relative m-0 overflow-hidden",
-        dataAttribute && editableAboveLink,
+        dataAttribute && post.image?.asset?._id && editableAboveLink,
         tones[tone].media,
         className,
       )}
