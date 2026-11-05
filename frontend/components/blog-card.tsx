@@ -40,6 +40,11 @@ const tones = {
 const cardShell =
   "group/post relative flex flex-col overflow-hidden rounded-lg transition-[translate,box-shadow] motion-base hover:-translate-y-0.5 hover:shadow-interactive-lift has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-campfire-amber motion-reduce:transition-none motion-reduce:hover:translate-y-0";
 const stretchedLink = "outline-none after:absolute after:inset-0";
+/**
+ * The stretched title link covers the whole card, so a hover in Presentation
+ * lands on the title. While editing, the other editable parts sit above it.
+ */
+const editableAboveLink = "relative z-10";
 
 function getPostHref(post: BlogPost) {
   const slug = stegaClean(post.slug?.current);
@@ -67,7 +72,12 @@ function PostCardImage({
   const image = post.image?.asset?._id ? post.image : fallbackImage;
   return (
     <figure
-      className={cn("relative m-0 overflow-hidden", tones[tone].media, className)}
+      className={cn(
+        "relative m-0 overflow-hidden",
+        dataAttribute && editableAboveLink,
+        tones[tone].media,
+        className,
+      )}
       data-sanity={post.image?.asset?._id ? dataAttribute?.("image") : undefined}
     >
       {image?.asset?._id ? (
@@ -112,7 +122,7 @@ export function PublicationDate({
     .toUpperCase();
   return (
     <time
-      className={className}
+      className={cn(className, dataAttribute && editableAboveLink)}
       data-sanity={dataAttribute?.("publishedAt")}
       dateTime={stegaClean(value)}
     >
@@ -184,7 +194,11 @@ export function PostCard({
         </h3>
         {post.excerpt ? (
           <p
-            className={cn("mt-3 line-clamp-3 text-pretty text-[15px]/relaxed", colors.muted)}
+            className={cn(
+              "mt-3 line-clamp-3 text-pretty text-[15px]/relaxed",
+              dataAttribute && editableAboveLink,
+              colors.muted,
+            )}
             data-sanity={dataAttribute?.("excerpt")}
           >
             {post.excerpt}
@@ -247,7 +261,11 @@ export function FeaturedPostCard({
           </h3>
           {post.excerpt ? (
             <p
-              className={cn("mt-4 line-clamp-4 text-pretty text-base/relaxed lg:text-lg/relaxed", colors.muted)}
+              className={cn(
+                "mt-4 line-clamp-4 text-pretty text-base/relaxed lg:text-lg/relaxed",
+                dataAttribute && editableAboveLink,
+                colors.muted,
+              )}
               data-sanity={dataAttribute?.("excerpt")}
             >
               {post.excerpt}
