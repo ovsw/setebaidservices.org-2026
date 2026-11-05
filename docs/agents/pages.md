@@ -255,6 +255,16 @@ express approval and becomes its own section.
 - `ctaBanner` `variant`: `closing` (default) ends a page, `nudge` is a
   quiet prompt between sections, `photo` is a full-width photo band.
 
+**One ask at a time (Ovi, 2026-11-05).** A page ends with one `ctaBanner`
+(`closing`). Never put two call-to-action sections next to each other
+(`ctaBanner` in any variant, `directorCta`): a `nudge` needs a content
+section on both sides, and the section right before the closing band is
+proof (`quoteWall`, a story) or content, never another ask. Two asks in a
+row read as a false ending, make the two primary buttons compete, and
+leave empty colour before the footer. When a plan's last outline part is
+a short prompt (for example "reunions"), fold its line into the nearest
+content section instead of giving it its own band.
+
 **Text-only pages have no hero.** Legal and policy pages open with the
 page's own title and description, which the site shows as a styled title
 header. Do not add an `innerHero` without a photo. Write the short intro in
