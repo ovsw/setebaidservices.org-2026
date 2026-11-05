@@ -247,8 +247,9 @@ express approval and becomes its own section.
 - `stackedTimeline`: `timeline` (default) for ordered steps, or
   `dateCards` for up to three dated items, e.g. events. The item's small
   label shows large, so put the date there.
-- `quoteWall`: `wall` (default), or `track` for one row of quotes that
-  visitors drag sideways.
+- `quoteWall`: always `wall` (default). Use `track`, one row of quotes
+  that visitors drag sideways, only for more than twelve testimonials in
+  one section (Ovi, 2026-11-05). Today only the home page qualifies.
 - `imageCollageFeature`: `collage` (default), or `bento` for a text card
   with buttons and three captioned photos, e.g. staff.
 - `ctaBanner` `variant`: `closing` (default) ends a page, `nudge` is a
@@ -278,7 +279,8 @@ only, never in code: this repository is public.
 - Camps → `featureCards`, layout `tilted`.
 - Why Setebaid → `benefitCards`, layout `ringPhoto`.
 - Pricing → `pricingTiers`.
-- Voices → `quoteWall`, layout `track`.
+- Voices → `quoteWall`, layout `wall` (`track` only for more than twelve
+  testimonials; see "Layouts").
 - Events → `stackedTimeline`, layout `dateCards`.
 - Donate → `ctaBanner`, variant `photo`.
 - Staff → `imageCollageFeature`, layout `bento`.
