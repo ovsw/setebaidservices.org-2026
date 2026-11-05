@@ -26,6 +26,7 @@ export const contentPageBuilderBlockTypes = [
   "memorialCardForm",
   "impactNumbers",
   "impactSpotlight",
+  "parentsGuideForm",
   // page-builder-generator:content-types
 ] as const;
 
@@ -131,6 +132,10 @@ export function validateBlocks(
   const cardFormCount =
     blocks?.filter((block) => block?._type === "memorialCardForm").length ?? 0;
   if (cardFormCount > 1) return "Add no more than one Memorial card form";
+  // The form's anchor, #parents-guide-form, needs one form to jump to.
+  const guideFormCount =
+    blocks?.filter((block) => block?._type === "parentsGuideForm").length ?? 0;
+  if (guideFormCount > 1) return "Add no more than one Parent's guide form";
   const final = blocks?.at(-1);
   if (final?.background === "green") return "Choose White or Cream for the final section above the footer.";
   return true;
@@ -166,7 +171,7 @@ function createBlocksField(
     {
       name: "cta",
       title: "CTA",
-      of: ["ctaBanner", "directorCta", "askAboutCampForm", "memorialCardForm"],
+      of: ["ctaBanner", "directorCta", "askAboutCampForm", "memorialCardForm", "parentsGuideForm"],
     },
     {
       name: "image-rich",

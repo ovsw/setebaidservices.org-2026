@@ -150,7 +150,9 @@ The script never prints a secret and never writes one into the repository.
 
 | Variable | Vercel (Production, Preview) | Trigger.dev (prod) | Section |
 | --- | --- | --- | --- |
-| `FORMSPARK_FORM_ID` | yes | yes | c |
+| `FORMSPARK_FORM_ID` (Ask about camp) | yes | yes | c |
+| `FORMSPARK_MEMORIAL_CARD_FORM_ID` | yes | yes | c |
+| `FORMSPARK_PARENTS_GUIDE_FORM_ID` | yes | yes | c |
 | `FORMSPARK_API_TOKEN` | | yes | c |
 | `TRIGGER_SECRET_KEY` (the "website" key) | yes | | d |
 | `DATABASE_URL` | yes | yes | e |

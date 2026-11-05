@@ -151,7 +151,7 @@ export function gapReportEmail(gaps: UnsentGap[]): ReportEmail {
   if (missing.length) {
     parts.push(
       [
-        "In Neon, but not in Formspark. Path B failed: the office may not have received these by email. Their details are in Neon, in their form's table: form_entries for Ask about camp, memorial_card_entries for Memorial card.",
+        `In Neon, but not in Formspark. Path B failed: the office may not have received these by email. Their details are in Neon, in their form's table: ${FORM_KINDS.map((form) => `${FORM_TABLES[form]} for ${FORM_LABELS[form]}`).join(", ")}.`,
         ...missing.map(gapLine),
       ].join("\n"),
     );

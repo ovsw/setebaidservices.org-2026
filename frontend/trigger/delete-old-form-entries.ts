@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { logger, schedules } from "@trigger.dev/sdk";
-import { createFormsparkApi } from "../lib/formspark-api";
+import { createFormsparkApi, formsparkFormIds } from "../lib/formspark-api";
 import {
   deleteOldFormEntries,
   deleteOldFormsparkSubmissions,
@@ -22,10 +22,14 @@ export const deleteOldFormEntriesTask = schedules.task({
     const now = new Date();
     const cutoff = retentionCutoff(now);
     const db = neon(requiredEnv("DATABASE_URL"), { fullResults: true });
-    const formspark = createFormsparkApi(requiredEnv("FORMSPARK_API_TOKEN"), requiredEnv("FORMSPARK_FORM_ID"));
+    const token = requiredEnv("FORMSPARK_API_TOKEN");
 
     const neonDeleted = await deleteOldFormEntries(db, cutoff);
-    const formsparkDeleted = await deleteOldFormsparkSubmissions(formspark, cutoff);
+    // Every form's Formspark form: each form has its own.
+    let formsparkDeleted = 0;
+    for (const formId of formsparkFormIds(requiredEnv)) {
+      formsparkDeleted += await deleteOldFormsparkSubmissions(createFormsparkApi(token, formId), cutoff);
+    }
     await recordJobSuccess(db, "delete-old-form-entries", now);
 
     const result = { cutoff: cutoff.toISOString(), neonDeleted, formsparkDeleted };

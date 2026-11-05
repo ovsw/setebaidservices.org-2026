@@ -26,6 +26,7 @@ import { askAboutCampFormQuery } from "./ask-about-camp-form";
 import { memorialCardFormQuery } from "./memorial-card-form";
 import { impactNumbersQuery } from "./impact-numbers";
 import { impactSpotlightQuery } from "./impact-spotlight";
+import { parentsGuideFormQuery } from "./parents-guide-form";
 // page-builder-generator:query-imports
 
 export const pageBuilderQuery = `
@@ -61,6 +62,7 @@ export const pageBuilderQuery = `
     ${memorialCardFormQuery},
     ${impactNumbersQuery},
     ${impactSpotlightQuery},
+    ${parentsGuideFormQuery},
     ${"" /* page-builder-generator:query-spreads */}
   }
 `;

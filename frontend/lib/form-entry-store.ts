@@ -1,5 +1,10 @@
 import type { Database } from "@/lib/database";
-import type { AskAboutCampEntry, FormEntry, MemorialCardEntry } from "@/lib/form-entry";
+import type {
+  AskAboutCampEntry,
+  FormEntry,
+  MemorialCardEntry,
+  ParentsGuideEntry,
+} from "@/lib/form-entry";
 
 function storeAskAboutCamp(db: Database, entry: AskAboutCampEntry, formsparkId: string | null) {
   return db.query(
@@ -74,6 +79,37 @@ function storeMemorialCard(db: Database, entry: MemorialCardEntry, formsparkId: 
   );
 }
 
+function storeParentsGuide(db: Database, entry: ParentsGuideEntry, formsparkId: string | null) {
+  return db.query(
+    `insert into parents_guide_entries (
+      submission_id, received_at, source, page, campaign, formspark_id, parent_name, email
+    ) values ($1, $2, $3, $4, $5, $6, $7, $8)
+    on conflict (submission_id) do nothing
+    returning submission_id`,
+    [
+      entry.submissionId,
+      entry.receivedAt,
+      entry.source,
+      entry.page,
+      entry.campaign ?? null,
+      formsparkId,
+      entry.name,
+      entry.email,
+    ],
+  );
+}
+
+function storeEntry(db: Database, entry: FormEntry, formsparkId: string | null) {
+  switch (entry.kind) {
+    case "memorial_card":
+      return storeMemorialCard(db, entry, formsparkId);
+    case "parents_guide":
+      return storeParentsGuide(db, entry, formsparkId);
+    default:
+      return storeAskAboutCamp(db, entry, formsparkId);
+  }
+}
+
 /**
  * Insert an entry into its form's table, by its submission ID. Storing the same entry again changes
  * nothing, so retries and the gap-filler never make duplicates. Returns
@@ -85,9 +121,6 @@ export async function storeFormEntry(
   entry: FormEntry,
   formsparkId: string | null = null,
 ) {
-  const { rows } =
-    entry.kind === "memorial_card"
-      ? await storeMemorialCard(db, entry, formsparkId)
-      : await storeAskAboutCamp(db, entry, formsparkId);
+  const { rows } = await storeEntry(db, entry, formsparkId);
   return rows.length === 1;
 }

@@ -68,7 +68,11 @@ The name of the card or page that brought a visitor, for example `chop-nurses`. 
 
 **Form entry**
 
-What a visitor sends through one of the Website's forms: an "Ask about camp" request or a memorial card entry. Every entry travels the same two paths and is kept for three years. Each form keeps its entries in its own Neon table.
+What a visitor sends through one of the Website's forms: an "Ask about camp" request, a memorial card entry or a parent's guide request. Every entry travels the same two paths and is kept for three years. Each form keeps its entries in its own Neon table and posts to its own Formspark form.
+
+**Parent's guide request**
+
+A parent's name and email, sent from the Parent's guide form on `/parents/guide` to ask for the guide. The office sends the guide by email. Parent's guide requests are not on the team dashboard.
 
 **Memorial card entry**
 

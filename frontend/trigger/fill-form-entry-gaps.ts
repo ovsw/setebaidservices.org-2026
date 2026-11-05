@@ -1,7 +1,7 @@
 import { neon } from "@neondatabase/serverless";
 import { logger, schedules } from "@trigger.dev/sdk";
 import { emailNewGaps, FORMSPARK_LOOKBACK_MS, fillFormEntryGaps } from "../lib/form-entry-gaps";
-import { createFormsparkApi, submissionsSince } from "../lib/formspark-api";
+import { createFormsparkApi, formsparkFormIds, submissionsSince } from "../lib/formspark-api";
 import { recordJobSuccess } from "../lib/job-state";
 import { createReportSender } from "../lib/report-email";
 import { requiredEnv } from "./required-env";
@@ -19,9 +19,17 @@ export const fillFormEntryGapsTask = schedules.task({
   run: async () => {
     const now = new Date();
     const db = neon(requiredEnv("DATABASE_URL"), { fullResults: true });
-    const formspark = createFormsparkApi(requiredEnv("FORMSPARK_API_TOKEN"), requiredEnv("FORMSPARK_FORM_ID"));
+    const token = requiredEnv("FORMSPARK_API_TOKEN");
+    const since = new Date(now.getTime() - FORMSPARK_LOOKBACK_MS);
 
-    const submissions = await submissionsSince(formspark, new Date(now.getTime() - FORMSPARK_LOOKBACK_MS));
+    // Every form's Formspark form: each form has its own.
+    const submissions = (
+      await Promise.all(
+        formsparkFormIds(requiredEnv).map((formId) =>
+          submissionsSince(createFormsparkApi(token, formId), since),
+        ),
+      )
+    ).flat();
     const { copied, missingFromFormspark, unreadable } = await fillFormEntryGaps(db, submissions, now);
 
     const result = {
