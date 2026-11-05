@@ -56,7 +56,8 @@ export function resolvePostLimit(limit?: number | null) {
  * all-posts link over a three-column card grid) and blog53 (the wide
  * featured post). On a page it shows the newest few posts. On the Blog page
  * the route hands it `blogListing`: page one leads with the newest post
- * large, and every page ends with pagination.
+ * large, and every page ends with pagination. When the listing is the first
+ * section on the Blog page, its title is the page heading.
  */
 export default function LatestArticles({
   _key,
@@ -83,6 +84,8 @@ export default function LatestArticles({
   const buttonHref = getSafeLinkHref(button?.href);
   const buttonLabel = stegaClean(button?.text)?.trim();
   const featured = blogListing?.featured ?? null;
+  const leadsPage = Boolean(blogListing?.leadsPage);
+  const Heading = leadsPage ? "h1" : "h2";
   // The dispatcher passes `dataAttribute` only when Presentation editing is on.
   const stega = Boolean(dataAttribute);
 
@@ -103,13 +106,16 @@ export default function LatestArticles({
                 {eyebrow}
               </p>
             ) : null}
-            <h2
-              className="text-balance font-display text-headline"
+            <Heading
+              className={cn(
+                "text-balance font-display",
+                leadsPage ? "text-display-page" : "text-headline",
+              )}
               data-sanity={dataAttribute?.("title")}
               id={headingId}
             >
               {title}
-            </h2>
+            </Heading>
             {hasText(description) ? (
               <p
                 className={cn("mt-5 max-w-xl text-pretty text-lg/relaxed", field.description)}

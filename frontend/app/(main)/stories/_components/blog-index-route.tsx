@@ -81,9 +81,9 @@ export async function BlogIndexRoute({
     notFound();
   }
   const blocks = withBlogListingSection(blogIndex.blocks ?? []);
-  const hasHero = blocks.some(
-    (block) => block._type === "innerHero",
-  );
+  const hasHero = blocks.some((block) => block._type === "innerHero");
+  // The stored listing leads the page; the stand-in never carries the heading.
+  const leadsPage = blogIndex.blocks?.[0]?._type === "latestArticles";
 
   return (
     <>
@@ -95,12 +95,13 @@ export async function BlogIndexRoute({
         siteUrl={siteUrl}
       />
       <FaqPageJsonLd blocks={blogIndex.blocks ?? []} />
-      {/* The Hero carries the page heading; without one, keep an outline. */}
-      {!hasHero ? <h1 className="sr-only">{blogIndex.title}</h1> : null}
+      {/* The Hero or a leading listing carries the page heading; otherwise keep an outline. */}
+      {!hasHero && !leadsPage ? <h1 className="sr-only">{blogIndex.title}</h1> : null}
       <Blocks
         blocks={blocks}
         blogListing={{
           featured: currentPage === 1 ? latestPost : null,
+          leadsPage,
           pagination,
           posts: regularPosts,
         }}
