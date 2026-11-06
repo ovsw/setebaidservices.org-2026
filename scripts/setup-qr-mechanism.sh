@@ -204,9 +204,13 @@ TRIGGER_API="https://api.trigger.dev/api/v1"
 FORMSPARK_API="https://api.formspark.io/public/v1"
 SANITY_HOOK_NAME="Rebuild the Website when a redirect changes"
 
+# Each Website form's Formspark form ID: Ask about camp, Memorial card, Parent's guide.
+FORMSPARK_FORM_VARIABLES=(FORMSPARK_FORM_ID FORMSPARK_MEMORIAL_CARD_FORM_ID FORMSPARK_PARENTS_GUIDE_FORM_ID)
+
 # The values the Trigger.dev tasks read. Section d copies every saved one, so
 # a section that runs before d loses nothing.
-TRIGGER_VARIABLES=(FORMSPARK_FORM_ID FORMSPARK_API_TOKEN DATABASE_URL FORM_ENCRYPTION_KEY
+TRIGGER_VARIABLES=(FORMSPARK_FORM_ID FORMSPARK_MEMORIAL_CARD_FORM_ID FORMSPARK_PARENTS_GUIDE_FORM_ID
+  FORMSPARK_API_TOKEN DATABASE_URL FORM_ENCRYPTION_KEY
   VERCEL_ANALYTICS_TOKEN VERCEL_PROJECT_ID VERCEL_TEAM_ID RESEND_API_KEY REPORT_EMAIL_TO)
 
 ok()   { printf '  %s✓%s %s\n' "$GREEN" "$RESET" "$1"; }
@@ -453,8 +457,9 @@ formspark_token_ok() {
     <<<"$HTTP_BODY" >/dev/null
 }
 
+# formspark_form_ok FORM_ID succeeds when the API can read that form's submissions.
 formspark_form_ok() {
-  http_call "$FORMSPARK_API_TOKEN" GET "$FORMSPARK_API/forms/$FORMSPARK_FORM_ID/submissions?limit=1"
+  http_call "$FORMSPARK_API_TOKEN" GET "$FORMSPARK_API/forms/$1/submissions?limit=1"
   [[ "$HTTP_STATUS" == 200 ]]
 }
 
@@ -463,22 +468,30 @@ section_c() {
   say "Formspark emails each request to the office and keeps a backup copy."
   open_url "https://dashboard.formspark.io"
   step "Create a workspace named 'Setebaid', or open it. Upgrade it: a one-time payment that turns on the API."
-  step "In that workspace, create a form named 'Ask about camp'. Set its notification email to the office address."
-  step "Copy the form ID: the part after https://submit-form.com/ in the form's setup code."
-  ask_value FORMSPARK_FORM_ID "Paste the form ID:" secret
+  say "Each Website form has its own Formspark form, so each kind reaches the office on its own."
+  step "In that workspace, create the 'Memorial card' and 'Parent's guide' forms, and 'Ask about camp' only on a new setup. Set each new form's notification email to the office address."
+  say "On a re-run, press Enter at a form ID prompt to keep the saved ID. A new 'Ask about camp' form would leave the old one's submissions undeleted."
+  step "Copy each form ID: the part after https://submit-form.com/ in the form's setup code."
+  ask_value FORMSPARK_FORM_ID "Paste the 'Ask about camp' form ID:" secret
+  ask_value FORMSPARK_MEMORIAL_CARD_FORM_ID "Paste the 'Memorial card' form ID:" secret
+  ask_value FORMSPARK_PARENTS_GUIDE_FORM_ID "Paste the 'Parent's guide' form ID:" secret
   step "Open API tokens. Create a token named 'setebaid-jobs' with the scopes submissions:read and submissions:write. Expiry: Never."
   ask_value FORMSPARK_API_TOKEN "Paste the API token:" secret
-  write_env FORMSPARK_FORM_ID "$FORMSPARK_FORM_ID"
   write_env FORMSPARK_API_TOKEN "$FORMSPARK_API_TOKEN"
-  vercel_set FORMSPARK_FORM_ID "$FORMSPARK_FORM_ID"
-  trigger_set FORMSPARK_FORM_ID "$FORMSPARK_FORM_ID"
   trigger_set FORMSPARK_API_TOKEN "$FORMSPARK_API_TOKEN"
+  for name in "${FORMSPARK_FORM_VARIABLES[@]}"; do
+    write_env "$name" "${!name}"
+    vercel_set "$name" "${!name}"
+    trigger_set "$name" "${!name}"
+  done
 
   printf '\n'
   check "Formspark accepts the token, with read and delete access to submissions" formspark_token_ok
-  check "Formspark API reads the form's submissions (needs the upgraded workspace)" formspark_form_ok
-  check "Vercel has FORMSPARK_FORM_ID" vercel_has FORMSPARK_FORM_ID
-  check_trigger FORMSPARK_FORM_ID "$FORMSPARK_FORM_ID"
+  for name in "${FORMSPARK_FORM_VARIABLES[@]}"; do
+    check "Formspark API reads the submissions of $name (needs the upgraded workspace)" formspark_form_ok "${!name}"
+    check "Vercel has $name" vercel_has "$name"
+    check_trigger "$name" "${!name}"
+  done
   check_trigger FORMSPARK_API_TOKEN "$FORMSPARK_API_TOKEN"
   pause "Press Enter to continue."
 }

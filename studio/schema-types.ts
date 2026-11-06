@@ -64,6 +64,7 @@ import askAboutCampForm from "./schemas/blocks/ask-about-camp-form";
 import memorialCardForm from "./schemas/blocks/memorial-card-form";
 import impactNumbers from "./schemas/blocks/impact-numbers";
 import impactSpotlight from "./schemas/blocks/impact-spotlight";
+import parentsGuideForm from "./schemas/blocks/parents-guide-form";
 // page-builder-generator:block-imports
 
 export const schemaTypes = [
@@ -129,5 +130,6 @@ export const schemaTypes = [
   memorialCardForm,
   impactNumbers,
   impactSpotlight,
+  parentsGuideForm,
   // page-builder-generator:block-types
 ];
