@@ -51,7 +51,15 @@ export default async function PaginatedCategoryPage({ params }: Props) {
   const page = parseBlogPageSegment(segment);
   if (!page) notFound();
   if (isEnabled) return <DynamicPaginatedCategoryPage page={page} slug={slug} />;
-  return <CategoryArchiveRoute currentPage={page} perspective="published" slug={slug} stega={false} />;
+  return (
+    <CategoryArchiveRoute
+      currentPage={page}
+      perspective="published"
+      slug={slug}
+      stega={false}
+      isPublic
+    />
+  );
 }
 
 async function DynamicPaginatedCategoryPage({

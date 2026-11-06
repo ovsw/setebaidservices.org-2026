@@ -9,9 +9,10 @@
 export const PUBLIC_VISIBILITY_FILTER = "hidden != true";
 
 /** The same rule for a dereferenced link target, e.g. `internal`. */
-export function publicVisibilityFilterFor(reference: string) {
-  return `${reference}->hidden != true`;
-}
+// An arrow with an expression body: Sanity typegen can evaluate it inside
+// query templates, but not a function with a block body.
+export const publicVisibilityFilterFor = (reference: string) =>
+  `${reference}->hidden != true`;
 
 /** True only when the document carries `hidden: true`. */
 export function isHidden(document: object | null | undefined) {
