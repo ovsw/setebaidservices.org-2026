@@ -56,9 +56,10 @@ sends wins over a template subject, so subjects stay in
 `frontend/lib/formspark-entry.ts`.
 
 The reply email greets the visitor, says what happens next, and is signed "The
-Setebaid team". Paragraphs that belong below its button go in `afterButton`. Its subject is in its form's file. Formspark sends it to the
-first of `_replyto`, `mail` or `email` in the entry, adds a footer that cannot
-be removed, and sends replies to the form's first notification recipient.
+Setebaid team". Paragraphs that belong below its button go in `afterButton`.
+Its subject is in its form's file. Formspark sends it to the first of
+`_replyto`, `mail` or `email` in the entry, adds a footer that cannot be
+removed, and sends replies to the form's first notification recipient.
 
 ## The parent's guide link
 
