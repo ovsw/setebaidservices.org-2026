@@ -22,14 +22,20 @@ visual editor. Change the code here and push it.
   text, camp-green button, a system font, no images, at most 600px wide) and
   the two layouts.
 - `frontend/emails/<form>.ts`: one file per form: its office notification,
-  its reply email with the subject, and an example entry for the preview.
+  its reply email with the subject, and an example entry for the preview. A
+  form whose reply email waits on something leaves `reply` out, and the
+  script then pushes only its office notification.
 - `frontend/emails/index.ts`: the list of forms the script handles.
 - `frontend/scripts/form-emails.ts`: the script.
 
 The placeholders are Handlebars, and the entry is under `data`, so a payload
 field `phone` is `{{data.phone}}`. The field names are the ones
 `frontend/lib/formspark-entry.ts` sends; a renamed payload field needs the
-template changed with it. Style only with inline `style` attributes: Formspark
+template changed with it. An optional answer row sets `onlyWhenGiven`, so it
+shows only when the visitor filled the field in (the Website sends "—" for an
+empty one). Formspark's helpers are `capitalize`, `nl2br`, `pluralize`,
+`sanitizeUrl`, `stringify`, `switch`/`case`/`default` and `titleCase`; it has
+no `eq`. Style only with inline `style` attributes: Formspark
 sends no stylesheet.
 
 ## The layouts
@@ -58,7 +64,8 @@ be removed, and sends replies to the form's first notification recipient.
 
 The script reads `FORMSPARK_TEMPLATE_TOKEN` (a Formspark token with
 `forms:read` and `forms:write`) and the form IDs (`FORMSPARK_FORM_ID` for "Ask
-about camp", `FORMSPARK_MEMORIAL_CARD_FORM_ID` for "Memorial card") from `~/.config/setebaid/qr-mechanism.env`, the file
+about camp", `FORMSPARK_PARENTS_GUIDE_FORM_ID` for "Parent's guide",
+`FORMSPARK_MEMORIAL_CARD_FORM_ID` for "Memorial card") from `~/.config/setebaid/qr-mechanism.env`, the file
 `pnpm db:migrate` reads. The token lives only on Ovi's machine, never in Vercel.
 
 ```sh

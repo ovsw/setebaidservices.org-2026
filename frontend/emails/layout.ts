@@ -46,7 +46,23 @@ export type Answer = {
   label: string;
   /** Template code, usually `field(name)`. */
   value: string;
+  /**
+   * The payload field of an optional answer: the row shows only when the
+   * visitor gave it. The Website sends "—" for an optional field left empty.
+   */
+  onlyWhenGiven?: string;
 };
+
+/** What the Website sends for an optional field left empty (frontend/lib/formspark-entry.ts). */
+const EMPTY = "—";
+
+/**
+ * Shows `content` only when the payload field holds a value. Formspark has no
+ * `eq` helper, so this uses its `switch` helper to skip the "—" placeholder.
+ */
+function whenGiven(name: string, content: string) {
+  return `{{#switch data.${name}}}{{#case "${EMPTY}"}}{{/case}}{{#default}}${content}{{/default}}{{/switch}}`;
+}
 
 function page(content: string) {
   return [
@@ -81,14 +97,19 @@ function button({ label, href }: Button) {
   ].join("\n");
 }
 
+/**
+ * The visitor's answers as label-over-value rows, in form order. A row marked
+ * `onlyWhenGiven` shows only when the visitor filled that field in.
+ */
 function answers(list: Answer[]) {
-  const rows = list.map(
-    ({ label, value }) =>
+  const rows = list.map(({ label, value, onlyWhenGiven }) => {
+    const row =
       `<tr><td style="padding:10px 0;border-top:1px solid ${theme.rule};">` +
       `<div style="font-size:13px;line-height:1.4;color:${theme.inkSoft};">${text(label)}</div>` +
       `<div style="font-size:16px;line-height:1.5;color:${theme.ink};">${value}</div>` +
-      `</td></tr>`,
-  );
+      `</td></tr>`;
+    return onlyWhenGiven ? whenGiven(onlyWhenGiven, row) : row;
+  });
   return [
     `<tr><td style="padding:0 0 16px;">`,
     `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid ${theme.rule};">`,
@@ -175,7 +196,8 @@ export type FormEmails = {
   /** The variable that holds the form's Formspark ID. */
   formIdVariable: string;
   notification: string;
-  reply: { subject: string; code: string };
+  /** Left out while the reply email waits on something, so the script pushes only the notification. */
+  reply?: { subject: string; code: string };
   /** An entry shaped like the Website's Formspark payload (frontend/lib/formspark-entry.ts). */
   example: Record<string, unknown>;
 };
