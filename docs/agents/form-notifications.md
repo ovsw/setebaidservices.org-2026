@@ -64,7 +64,8 @@ be removed, and sends replies to the form's first notification recipient.
 
 The script reads `FORMSPARK_TEMPLATE_TOKEN` (a Formspark token with
 `forms:read` and `forms:write`) and the form IDs (`FORMSPARK_FORM_ID` for "Ask
-about camp", `FORMSPARK_PARENTS_GUIDE_FORM_ID` for "Parent's guide") from `~/.config/setebaid/qr-mechanism.env`, the file
+about camp", `FORMSPARK_PARENTS_GUIDE_FORM_ID` for "Parent's guide",
+`FORMSPARK_MEMORIAL_CARD_FORM_ID` for "Memorial card") from `~/.config/setebaid/qr-mechanism.env`, the file
 `pnpm db:migrate` reads. The token lives only on Ovi's machine, never in Vercel.
 
 ```sh
