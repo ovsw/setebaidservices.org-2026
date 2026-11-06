@@ -15,14 +15,18 @@ export const HONEYPOT_FIELD = "fax";
 
 const text = (max: number) => z.string().trim().max(max, "This answer is too long.");
 
+/** A phone number as people type it: digits and + ( ) - . and spaces, at least 7 digits. */
+export function isPhoneNumber(value: string) {
+  return /^[0-9+()\-. ]*$/.test(value) && value.replace(/\D/g, "").length >= 7;
+}
+
+export const PHONE_ERROR = "Enter a phone number with at least 7 digits.";
+
 export const askAboutCampSchema = z.object({
   name: text(100).min(1, "Enter your name."),
   phone: text(30)
     .min(1, "Enter your phone number.")
-    .refine(
-      (value) => /^[0-9+()\-. ]*$/.test(value) && value.replace(/\D/g, "").length >= 7,
-      "Enter a phone number with at least 7 digits.",
-    ),
+    .refine(isPhoneNumber, PHONE_ERROR),
   email: text(200)
     .min(1, "Enter your email address.")
     .pipe(z.email("Enter an email address like name@example.com.")),

@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { AskAboutCampEntry, FormEntry, MemorialCardEntry } from "@/lib/form-entry";
+import type {
+  AskAboutCampEntry,
+  FormEntry,
+  MemorialCardEntry,
+  ParentsGuideEntry,
+} from "@/lib/form-entry";
 import { entryFromFormspark, formsparkPayload } from "@/lib/formspark-entry";
 
 const askAboutCamp: AskAboutCampEntry = {
@@ -44,13 +49,25 @@ const memorialCard: MemorialCardEntry = {
   page: "/donate/memorial",
 };
 
+const parentsGuide: ParentsGuideEntry = {
+  kind: "parents_guide",
+  firstName: "Maria",
+  email: "maria@example.com",
+  phone: "",
+  okToContact: false,
+  submissionId: "0b5a3c1e-7f2d-4c8a-9e61-2d4f8a6b0003",
+  receivedAt: "2026-11-05T15:30:00.000Z",
+  source: "direct",
+  page: "/parents/guide",
+};
+
 const at = <Entry extends FormEntry>(entry: Entry, receivedAt: string): Entry => ({
   ...entry,
   receivedAt,
 });
 
 describe("the sent time in Formspark", () => {
-  it.each([askAboutCamp, memorialCard])("shows the office Pennsylvania time ($kind)", (entry) => {
+  it.each([askAboutCamp, memorialCard, parentsGuide])("shows the office Pennsylvania time ($kind)", (entry) => {
     // November: Eastern Standard Time, five hours behind UTC.
     expect(formsparkPayload(entry).sent_at).toBe("Nov 5, 2026, 10:30 AM ET");
     // October: Eastern Daylight Time, four hours behind UTC.
@@ -68,7 +85,16 @@ describe("the sent time in Formspark", () => {
     expect(sentAt("2026-03-08T07:30:00.000Z")).toBe("Mar 8, 2026, 3:30 AM ET");
   });
 
-  it.each([askAboutCamp, memorialCard])("reads back the same entry ($kind)", (entry) => {
+  it.each([askAboutCamp, memorialCard, parentsGuide])("reads back the same entry ($kind)", (entry) => {
     expect(entryFromFormspark(formsparkPayload(entry))).toEqual(entry);
+  });
+});
+
+describe("a parent's guide request in Formspark", () => {
+  it("sends the phone and the OK to contact as Yes or No", () => {
+    expect(formsparkPayload(parentsGuide)).toMatchObject({ phone: "—", ok_to_contact: "No" });
+    const willing = { ...parentsGuide, phone: "(610) 555-0123", okToContact: true };
+    expect(formsparkPayload(willing)).toMatchObject({ phone: "(610) 555-0123", ok_to_contact: "Yes" });
+    expect(entryFromFormspark(formsparkPayload(willing))).toEqual(willing);
   });
 });
