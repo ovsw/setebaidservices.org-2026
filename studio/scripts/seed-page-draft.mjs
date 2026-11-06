@@ -114,7 +114,7 @@ async function main() {
     usage(`Page ${pageId} does not exist; a new page needs slug and title in the seed.`);
   }
   const pageDocument = withKeys({
-    ...(base ?? { _type: "page", slug: { _type: "slug", current: slug } }),
+    ...(base ?? { _type: "page", hidden: true, slug: { _type: "slug", current: slug } }),
     ...pageFields,
     _id: draftId,
     _type: "page",

@@ -9,6 +9,8 @@ import { resolve } from "./presentation/resolve";
 import { openInPresentationAction } from "./presentation/open-in-presentation";
 import { isPresentationDocumentType } from "./presentation/routes";
 import { structure } from "./structure";
+import { hiddenBadge } from "./badges/hidden-badge";
+import { hideableDocumentTypes } from "./schemas/blocks/shared/hidden";
 import { teamDashboardTool } from "./tools/team-dashboard";
 import {
   singletonDocumentActions,
@@ -64,6 +66,10 @@ export default defineConfig({
         ? input.filter(({ action }) =>
             action && singletonDocumentActions.has(action),
           )
+        : input,
+    badges: (input, context) =>
+      hideableDocumentTypes.has(context.schemaType)
+        ? [hiddenBadge, ...input]
         : input,
     unstable_fieldActions: (input, context) =>
       isPresentationDocumentType(context.documentType)

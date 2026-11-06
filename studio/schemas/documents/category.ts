@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { BookA } from "lucide-react";
 import meta from "../blocks/shared/meta";
+import { hiddenField, withHiddenMarker } from "../blocks/shared/hidden";
 import { uniqueCategorySlug } from "../validation/unique-category-slug";
 import { categoryPath } from "../../../shared/content-routes.ts";
 
@@ -12,6 +13,7 @@ export default defineType({
   groups: [
     { name: "content", title: "Content" },
     { name: "seo", title: "SEO" },
+    { name: "settings", title: "Settings" },
   ],
   fields: [
     defineField({
@@ -35,15 +37,17 @@ export default defineType({
       group: "content",
     }),
     meta,
+    hiddenField,
   ],
   preview: {
     select: {
       title: "title",
       slug: "slug.current",
+      hidden: "hidden",
     },
-    prepare: ({ slug, title }) => ({
+    prepare: ({ slug, title, hidden }) => ({
       title: title || "Untitled Category",
-      subtitle: categoryPath(slug) ?? "No slug",
+      subtitle: withHiddenMarker(categoryPath(slug) ?? "No slug", hidden),
     }),
   },
 });

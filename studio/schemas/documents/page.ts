@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { Files } from "lucide-react";
 import meta from "../blocks/shared/meta";
+import { hiddenField, withHiddenMarker } from "../blocks/shared/hidden";
 import { blocksField } from "../blocks/page-builder";
 import { uniqueRoutedSlug } from "../validation/routed-slug";
 
@@ -44,8 +45,13 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      subtitle: "slug.current",
+      slug: "slug.current",
+      hidden: "hidden",
     },
+    prepare: ({ title, slug, hidden }) => ({
+      title,
+      subtitle: withHiddenMarker(slug, hidden),
+    }),
   },
   groups: [
     {
@@ -85,6 +91,7 @@ export default defineType({
       },
       validation: (Rule) => Rule.required().custom(uniqueRoutedSlug),
     }),
+    hiddenField,
     blocksField,
     meta,
   ],

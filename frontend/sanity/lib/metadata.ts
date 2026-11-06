@@ -29,6 +29,7 @@ import {
 } from "@/sanity/lib/image";
 import { resolveSeoTitle } from "../../../shared/seo-title";
 import { resolveSeoDescription } from "../../../shared/seo-description";
+import { isHidden } from "../../../shared/public-visibility";
 const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 
 const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -245,7 +246,8 @@ export function generatePageMetadata({
       description,
       images: [image],
     },
-    robots: !isProduction
+    // A Hidden page never renders publicly; noindex is the second barrier.
+    robots: !isProduction || isHidden(page)
       ? "noindex, nofollow"
       : page?.meta?.noindex
         ? "noindex"
