@@ -104,19 +104,28 @@ it with the template's current version; edit the template, not this part.
 ## Hidden pages (Ovi, 2026-11-06)
 
 The site is live, so a published page is public unless it is **Hidden**
-(see `CONTEXT.md`). Hidden keeps an unreviewed page private while the
-draft-versus-published comparison keeps working.
+(see `CONTEXT.md`). Hidden keeps an unreviewed page off the public Website
+while the draft-versus-published comparison keeps working. It is not a
+privacy control: the published content of a Hidden page can still be read
+through the Sanity API, so never publish anything that must stay secret.
 
 - New pages, stories, categories and the stories index start Hidden. A
   page seeded by script is created Hidden too.
-- A page is published at Client Review, as in "Page record". It stays
-  Hidden: the client sees it in Presentation, the public Website answers
-  404.
+- A page is published at Client Review, as in "Page record". A new page
+  stays Hidden: the client sees it in Presentation, the public Website
+  answers 404.
+- A page that is already public (Hidden unticked, or never set) stays
+  public when a revision is published; the seed script keeps its value.
+  Publishing its revision at Client Review makes the revision public at
+  once.
 - When the card moves to Accepted, an editor unticks Hidden on the page
-  (Settings group) and publishes. Only then does the page go public.
-- A link to a Hidden page shows a warning in the Studio and leads to a 404
-  on the public Website until the page is accepted. Header and footer
-  entries to it disappear on their own.
+  (Settings group) and publishes. Only then does the page appear on the
+  public Website.
+- A page link chosen as a reference (link type Internal) to a Hidden page
+  shows a warning in the Studio. A typed site-relative URL (link type
+  External, for example `/get-involved`) gets no warning. Either kind
+  leads to a 404 on the public Website until the page is accepted. Header
+  and footer entries to it disappear on their own.
 - The published "Final" documents from the 2026-11-06 audit (the five
   `/donate/...` and `/get-involved` pages, the stories index, every story
   and every category) were set Hidden by

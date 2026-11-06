@@ -74,3 +74,17 @@ test("reports listed page paths that no document matches", () => {
     "/donate/memorial",
   ]);
 });
+
+test("matches page slugs with leading or trailing slashes, as the frontend does", () => {
+  const documents = [
+    page("page-get-involved", "/get-involved/"),
+    page("page-donate-impact", "donate/impact/"),
+    page("page-no-slug", undefined),
+  ];
+  assert.deepEqual(ids(planHiddenPatches(documents)), ["page-donate-impact", "page-get-involved"]);
+  assert.deepEqual(missingPagePaths(documents), [
+    "/donate/campaigns",
+    "/donate/campaigns/year-end",
+    "/donate/memorial",
+  ]);
+});

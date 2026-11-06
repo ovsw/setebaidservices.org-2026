@@ -43,9 +43,19 @@ function isPublishedOrDraft(id) {
   return !id.startsWith("versions.");
 }
 
+/**
+ * The page path for a slug, in the forms the frontend accepts
+ * (`get-involved`, `/get-involved`, `get-involved/`, `/get-involved/`).
+ */
+export function pagePath(slug) {
+  if (typeof slug !== "string") return null;
+  const trimmed = slug.trim().replace(/^\/+|\/+$/g, "");
+  return trimmed ? `/${trimmed}` : null;
+}
+
 function isListed(document) {
   if (HIDDEN_DOCUMENT_TYPES.includes(document._type)) return true;
-  return document._type === "page" && HIDDEN_PAGE_PATHS.includes(`/${document.slug}`);
+  return document._type === "page" && HIDDEN_PAGE_PATHS.includes(pagePath(document.slug));
 }
 
 /**
@@ -67,7 +77,7 @@ export function planHiddenPatches(documents) {
 /** Listed page paths that matched no document. */
 export function missingPagePaths(documents) {
   const found = new Set(
-    documents.filter((document) => document._type === "page").map((document) => `/${document.slug}`),
+    documents.filter((document) => document._type === "page").map((document) => pagePath(document.slug)),
   );
   return HIDDEN_PAGE_PATHS.filter((path) => !found.has(path));
 }
