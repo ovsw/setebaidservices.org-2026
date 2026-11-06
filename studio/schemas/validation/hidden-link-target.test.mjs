@@ -4,11 +4,12 @@ import test from "node:test";
 
 import {
   checkHiddenLinkTarget,
+  HIDDEN_LINK_TARGET_UNCHECKED,
   HIDDEN_LINK_TARGET_WARNING,
   hiddenLinkTargetWarning,
 } from "./hidden-link-target.ts";
 
-function createContext({ hidden = false, parent = {} } = {}) {
+function createContext({ fail = false, hidden = false, parent = {} } = {}) {
   const calls = [];
   return {
     calls,
@@ -17,6 +18,7 @@ function createContext({ hidden = false, parent = {} } = {}) {
       withConfig: (config) => ({
         fetch: async (query, params) => {
           calls.push({ config, params, query });
+          if (fail) throw new Error("network down");
           return hidden;
         },
       }),
@@ -68,6 +70,14 @@ test("passes a visible target and an empty reference", async () => {
   const context = createContext({ hidden: true });
   assert.equal(await checkHiddenLinkTarget(undefined, context), true);
   assert.equal(context.calls.length, 0);
+});
+
+test("a failed lookup stays a warning instead of throwing", async () => {
+  const result = await checkHiddenLinkTarget(
+    { _ref: "page-about" },
+    createContext({ fail: true }),
+  );
+  assert.equal(result, HIDDEN_LINK_TARGET_UNCHECKED);
 });
 
 test("skips a reference the link does not use", async () => {

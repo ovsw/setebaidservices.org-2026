@@ -3,6 +3,9 @@ import type { ReferenceRule, ValidationContext } from "sanity";
 export const HIDDEN_LINK_TARGET_WARNING =
   "This page is Hidden: the link leads to a 404 on the public Website until the page is made visible (untick Hidden on it).";
 
+export const HIDDEN_LINK_TARGET_UNCHECKED =
+  "Could not check whether this link leads to a Hidden page.";
+
 type ReferenceValue = { _ref?: string } | null | undefined;
 
 /**
@@ -20,15 +23,20 @@ export async function checkHiddenLinkTarget(
   const client = context
     .getClient({ apiVersion: "2026-03-23" })
     .withConfig({ perspective: "raw" });
-  const hidden = await client.fetch<boolean | null>(
-    `select(
-      count(*[_id == $id]) > 0 => *[_id == $id][0].hidden,
-      *[_id == $draftId][0].hidden
-    ) == true`,
-    { draftId: `drafts.${id}`, id },
-  );
-
-  return hidden ? HIDDEN_LINK_TARGET_WARNING : true;
+  // A failed lookup must stay a warning: a rejected promise would become an
+  // error marker and block publishing.
+  try {
+    const hidden = await client.fetch<boolean | null>(
+      `select(
+        count(*[_id == $id]) > 0 => *[_id == $id][0].hidden,
+        *[_id == $draftId][0].hidden
+      ) == true`,
+      { draftId: `drafts.${id}`, id },
+    );
+    return hidden ? HIDDEN_LINK_TARGET_WARNING : true;
+  } catch {
+    return HIDDEN_LINK_TARGET_UNCHECKED;
+  }
 }
 
 /**
