@@ -1,4 +1,5 @@
 import { groq } from "next-sanity";
+import { pageBuilderQuery } from "./page-builder";
 import { urlInternalHref } from "./shared/internal-href";
 
 const actionProjection = `{
@@ -19,11 +20,12 @@ const actionProjection = `{
 export const BLOG_POST_SETTINGS_QUERY = groq`*[
   _type == "blogPostSettings" &&
   _id == "blogPostSettings" &&
-  defined(actions)
+  (defined(actions) || defined(blocks))
 ][0]{
   _id,
   _type,
   title,
   description,
-  "actions": array::compact(actions[]${actionProjection})
+  "actions": array::compact(actions[]${actionProjection}),
+  ${pageBuilderQuery}
 }`;

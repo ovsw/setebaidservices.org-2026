@@ -27,6 +27,7 @@ const threeHeadings = [
 const currentSidebar = {
   _id: "blogPostSettings",
   _type: "blogPostSettings",
+  blocks: null,
   title: "Explore the topic",
   description: "Choose the next resource that fits what you want to learn.",
   actions: [

@@ -134,17 +134,19 @@ function splitStandfirst(body: PostBody): [PostBody[number] | null, PostBody] {
 }
 
 function PostContent({
-  blogPostSidebar,
+  blogPostSettings,
+  perspective,
   post,
   stega,
 }: {
-  blogPostSidebar: BlogPostSidebar | null;
+  blogPostSettings: BlogPostSidebar | null;
+  perspective: DynamicFetchOptions["perspective"];
   post: NonNullable<POST_QUERY_RESULT>;
   stega: boolean;
 }) {
   const body = post.body ?? [];
   const bodyModel = createPostBodyModel(body);
-  const hasPostSidebar = Boolean(blogPostSidebar?.actions?.length);
+  const hasPostSidebar = Boolean(blogPostSettings?.actions?.length);
   const hasTableOfContents = bodyModel.showTableOfContents;
   const layoutName: PostLayoutName = hasTableOfContents
     ? hasPostSidebar
@@ -154,16 +156,18 @@ function PostContent({
       ? "two-column"
       : "single-column";
   const hasRails = hasTableOfContents || hasPostSidebar;
+  // Every story closes with the same sections, kept on Blog Post Settings.
+  const closingBlocks = blogPostSettings?.blocks ?? [];
   const readTime = getPostReadTime(body);
   const [standfirst, storyBody] = splitStandfirst(body);
   const postDataAttribute = documentDataAttribute({ id: post._id, stega, type: "post" });
   const postSlug = post.slug?.current?.replace(/^\/+|\/+$/g, "") || "";
   const postCanonicalPath = postPath(postSlug) || "/stories";
-  const blogPostSettingsDataAttribute = blogPostSidebar
+  const blogPostSettingsDataAttribute = blogPostSettings
     ? documentDataAttribute({
-        id: blogPostSidebar._id,
+        id: blogPostSettings._id,
         stega,
-        type: blogPostSidebar._type,
+        type: blogPostSettings._type,
       })
     : undefined;
   const bodyDataAttribute = stega
@@ -178,6 +182,7 @@ function PostContent({
     : undefined;
 
   return (
+    <>
     <section className="field-cream pt-8 pb-(--section-pad) md:pt-12">
       <BreadcrumbJsonLd
         items={[
@@ -227,27 +232,42 @@ function PostContent({
           <PostSidebar
             className="mt-12 lg:sticky lg:top-28 lg:mt-0"
             dataAttribute={blogPostSettingsDataAttribute}
-            sidebar={blogPostSidebar}
+            sidebar={blogPostSettings}
           />
         </div>
       </div>
     </section>
+    {blogPostSettings && closingBlocks.length ? (
+      <Blocks
+        blocks={closingBlocks}
+        documentId={blogPostSettings._id}
+        documentType="blogPostSettings"
+        perspective={perspective}
+        stega={stega}
+      />
+    ) : null}
+    </>
   );
 }
 
 export function RootContentView({
-  blogPostSidebar = null,
+  blogPostSettings = null,
   content,
   perspective,
   stega,
 }: {
-  blogPostSidebar?: BlogPostSidebar | null;
+  blogPostSettings?: BlogPostSidebar | null;
   content: NonNullable<PAGE_QUERY_RESULT | POST_QUERY_RESULT>;
   perspective: DynamicFetchOptions["perspective"];
   stega: boolean;
 }) {
   return content._type === "post" ? (
-    <PostContent blogPostSidebar={blogPostSidebar} post={content} stega={stega} />
+    <PostContent
+      blogPostSettings={blogPostSettings}
+      perspective={perspective}
+      post={content}
+      stega={stega}
+    />
   ) : (
     <PageContent page={content} perspective={perspective} stega={stega} />
   );
