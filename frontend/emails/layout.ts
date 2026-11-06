@@ -97,6 +97,10 @@ function button({ label, href }: Button) {
   ].join("\n");
 }
 
+/**
+ * The visitor's answers as label-over-value rows, in form order. A row marked
+ * `onlyWhenGiven` shows only when the visitor filled that field in.
+ */
 function answers(list: Answer[]) {
   const rows = list.map(({ label, value, onlyWhenGiven }) => {
     const row =
