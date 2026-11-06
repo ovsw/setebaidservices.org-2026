@@ -95,15 +95,19 @@ const path = (template: Template) =>
  */
 async function preview(token: string, template: Template) {
   const stored = await call(token, "GET", path(template));
-  const current = stored.ok && stored.answer.code === template.code;
-  const rendered = await call(token, "POST", `${path(template)}/preview`, {
-    data: template.form.example,
-  });
   console.log(`\n=== ${template.name}`);
   if (!stored.ok) {
+    // A 404 is a missing template only when the form itself exists.
+    if (stored.status !== 404) failure(template, stored.status, stored.answer as FormsparkError);
+    const form = await call(token, "GET", `/forms/${encodeURIComponent(formId(template.form))}`);
+    if (!form.ok) failure(template, form.status, form.answer as FormsparkError);
     console.log("Formspark has no template of this kind yet. Push it, then preview again.");
     return;
   }
+  const current = stored.answer.code === template.code;
+  const rendered = await call(token, "POST", `${path(template)}/preview`, {
+    data: template.form.example,
+  });
   if (!rendered.ok) failure(template, rendered.status, rendered.answer as FormsparkError);
   if (!current) {
     console.log("Formspark holds a different version than this code. Below is the stored one;");
