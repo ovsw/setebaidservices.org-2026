@@ -157,6 +157,7 @@ export function validateBlogIndexBlocks(
 function createBlocksField(
   blockTypes: readonly PageBuilderBlockType[],
   validate: typeof validateBlocks = validateBlocks,
+  field: { description?: string; group?: string; title?: string } = {},
 ) {
   const groups: {
     name: string;
@@ -219,9 +220,10 @@ function createBlocksField(
 
   return defineField({
     name: "blocks",
-    title: "Page sections",
+    title: field.title ?? "Page sections",
+    description: field.description,
     type: "array",
-    group: "content",
+    group: "group" in field ? field.group : "content",
     of: blockTypes.map((type) => ({ type })),
     validation: (rule) => rule.custom(validate),
     options: {
@@ -251,4 +253,18 @@ export const blogIndexBlocksField = createBlocksField(
 );
 export const homePageBlocksField = createBlocksField(
   homePagePageBuilderBlockTypes,
+);
+
+/**
+ * The closing sections of every story page, stored once on Blog Post
+ * Settings. Latest Posts is left out: it needs the Stories page's list.
+ */
+export const storyClosingBlocksField = createBlocksField(
+  contentPageBuilderBlockTypes.filter((type) => type !== "latestArticles"),
+  validateBlocks,
+  {
+    description: "Shown under the text of every story, the same on all stories.",
+    group: undefined,
+    title: "Closing sections",
+  },
 );

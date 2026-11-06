@@ -53,6 +53,9 @@ studio/backups/
 # per-worktree development port assignment
 /.worktree-ports.json
 
+# Playwright run state, rewritten by every test run
+/frontend/test-results/
+
 # Parallel agent worktrees (nested checkouts, never tracked)
 .claude/worktrees/
 

@@ -143,7 +143,7 @@ export default function Blocks({
   /** The Blog page's post list, rendered by its Latest Posts section. */
   blogListing?: BlogListing;
   documentId: string;
-  documentType?: "blogIndex" | "homePage" | "page";
+  documentType?: "blogIndex" | "blogPostSettings" | "homePage" | "page";
   /** A giving page, under /donate. */
   giving?: boolean;
   perspective: LivePerspective;

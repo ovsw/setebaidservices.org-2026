@@ -88,9 +88,11 @@ function SidebarAction({
 }
 
 export function PostSidebar({
+  className,
   dataAttribute,
   sidebar,
 }: {
+  className?: string;
   dataAttribute?: DataAttribute;
   sidebar: BlogPostSidebar | null;
 }) {
@@ -102,6 +104,7 @@ export function PostSidebar({
   return (
     <aside
       aria-label="Post actions"
+      className={className}
       data-sanity={dataAttribute?.("actions")}
     >
       {sidebar.title || sidebar.description ? (
@@ -140,9 +143,15 @@ export function PostSidebar({
   );
 }
 
-export function PostTableOfContentsRail({ headings }: { headings: PostHeading[] }) {
+export function PostTableOfContentsRail({
+  className,
+  headings,
+}: {
+  className?: string;
+  headings: PostHeading[];
+}) {
   return (
-    <aside aria-label="Post table of contents">
+    <aside aria-label="Post table of contents" className={className}>
       <details open>
         <summary>Table of contents</summary>
         <PostTableOfContents headings={headings} />

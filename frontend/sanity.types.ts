@@ -1123,6 +1123,80 @@ export type BlogPostSettings = {
       _key: string;
     } & BlogPostSidebarAction
   >;
+  blocks?: Array<
+    | ({
+        _key: string;
+      } & RichTextBlock)
+    | ({
+        _key: string;
+      } & BenefitCards)
+    | ({
+        _key: string;
+      } & StoryFeature)
+    | ({
+        _key: string;
+      } & ImageCollageFeature)
+    | ({
+        _key: string;
+      } & FeatureCards)
+    | ({
+        _key: string;
+      } & StackedFeatureRows)
+    | ({
+        _key: string;
+      } & FaqAccordion)
+    | ({
+        _key: string;
+      } & TeamMembers)
+    | ({
+        _key: string;
+      } & CtaBanner)
+    | ({
+        _key: string;
+      } & StackedTimeline)
+    | ({
+        _key: string;
+      } & PackingChecklist)
+    | ({
+        _key: string;
+      } & BigImageList)
+    | ({
+        _key: string;
+      } & DirectorCta)
+    | ({
+        _key: string;
+      } & LargeSlides)
+    | ({
+        _key: string;
+      } & HeadingImage)
+    | ({
+        _key: string;
+      } & QuoteWall)
+    | ({
+        _key: string;
+      } & WordSwap)
+    | ({
+        _key: string;
+      } & FlipCards)
+    | ({
+        _key: string;
+      } & PhotoStrip)
+    | ({
+        _key: string;
+      } & PricingTiers)
+    | ({
+        _key: string;
+      } & AskAboutCampForm)
+    | ({
+        _key: string;
+      } & MemorialCardForm)
+    | ({
+        _key: string;
+      } & ImpactNumbers)
+    | ({
+        _key: string;
+      } & ImpactSpotlight)
+  >;
 };
 
 export type TeamMember = {
@@ -3461,7 +3535,1298 @@ export type BLOG_INDEX_QUERY_RESULT =
       _type: "blogPostSettings";
       title: string | null;
       description: string | null;
-      blocks: null;
+      blocks: Array<
+        | {
+            _key: string;
+            _type: "askAboutCampForm";
+            background: SectionBackground | null;
+            title: string | null;
+            intro: string | null;
+            topics: Array<string> | null;
+            directorTopic: string | null;
+            privacyLine: string | null;
+            successMessage: string | null;
+            errorMessage: string | null;
+            officePhone: string | null;
+          }
+        | {
+            _key: string;
+            _type: "benefitCards";
+            background: SectionBackground | null;
+            layout: "grid" | "ringPhoto";
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            caption: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            cards: Array<{
+              _key: string;
+              _type: "featureGridItem";
+              icon: {
+                name: string | null;
+                svg: string | null;
+              } | null;
+              title: string | null;
+              body: Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: never;
+                markDefs: Array<{
+                  _key: string;
+                  _type: "customLink";
+                  customLink?: CustomUrl;
+                  href: string | null | "/";
+                  openInNewTab: boolean | null;
+                }> | null;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }> | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "bigImageList";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            stops: Array<{
+              _key: string;
+              label: string | null;
+              time: string | null;
+              text: string | null;
+              image: {
+                asset: {
+                  _id: string;
+                  url: string | null;
+                  mimeType: string | null;
+                  metadata: {
+                    lqip: string | null;
+                    dimensions: {
+                      width: number | null;
+                      height: number | null;
+                    } | null;
+                  } | null;
+                } | null;
+                media?: unknown; // Unable to locate the referenced type "bigImageListStop.image.media" in schema
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                alt?: string;
+                _type: "image";
+              } | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "ctaBanner";
+            background: SectionBackground | null;
+            variant: "closing" | "nudge" | "photo" | null;
+            eyebrow: string | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            title: string | null;
+            description: string | null;
+            buttons: Array<{
+              _key: string;
+              _type: "button";
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "directorCta";
+            background: SectionBackground | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            description: string | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            buttons: Array<{
+              _key: string;
+              _type: "button";
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "faqAccordion";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            subtitle: string | null;
+            faqs: Array<{
+              _key: string;
+              _id: string;
+              _type: "faq";
+              title: string | null;
+              answer: Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: never;
+                markDefs: Array<{
+                  _key: string;
+                  _type: "customLink";
+                  customLink?: CustomUrl;
+                  href: string | null | "/";
+                  openInNewTab: boolean | null;
+                }> | null;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }> | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "featureCards";
+            background: SectionBackground | null;
+            layout: "grid" | "tilted";
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            description: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+            groups: Array<{
+              _key: string;
+              heading: string | null;
+              description: string | null;
+              singleRowUpToFour: boolean | true;
+              cards: Array<{
+                _key: string;
+                image: {
+                  asset: {
+                    _id: string;
+                    url: string | null;
+                    mimeType: string | null;
+                    metadata: {
+                      lqip: string | null;
+                      dimensions: {
+                        width: number | null;
+                        height: number | null;
+                      } | null;
+                    } | null;
+                  } | null;
+                  media?: unknown; // Unable to locate the referenced type "featureCardItem.image.media" in schema
+                  hotspot?: SanityImageHotspot;
+                  crop?: SanityImageCrop;
+                  alt?: string;
+                  _type: "image";
+                } | null;
+                title: string | null;
+                text: string | null;
+                eyebrow: string | null;
+                badgeLabel: string | null;
+                badgeValue: string | null;
+                buttons: Array<{
+                  _key: string;
+                  text: string | null;
+                  openInNewTab: boolean | null;
+                  href: string | null | "/" | "/stories";
+                }> | null;
+                link: {
+                  text: string | null;
+                  openInNewTab: boolean | null;
+                  href: string | null | "/" | "/stories";
+                } | null;
+              }> | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "flipCards";
+            background: SectionBackground | null;
+            intro: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            frontLabel: string | null;
+            backLabel: string | null;
+            turnLabel: string | null;
+            cards: Array<{
+              _key: string;
+              front: string | null;
+              back: string | null;
+              emoji: string | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "headingImage";
+            background: SectionBackground | null;
+            title: string | null;
+            richText: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+          }
+        | {
+            _key: string;
+            _type: "imageCollageFeature";
+            background: SectionBackground | null;
+            layout: "bento" | "collage";
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            body: string | null;
+            points: Array<{
+              _key: string;
+              title: string | null;
+              body: string | null;
+            }> | null;
+            primaryImage: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              caption?: string;
+              _type: "image";
+            } | null;
+            secondaryImage: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              caption?: string;
+              _type: "image";
+            } | null;
+            tertiaryImage: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              caption?: string;
+              _type: "image";
+            } | null;
+            buttons: Array<{
+              _key: string;
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
+            cta: {
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
+            _type: "impactNumbers";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            season: string | null;
+            intro: string | null;
+            stats: Array<{
+              _key: string;
+              value: string | null;
+              detail: string | null;
+              label: string | null;
+            }> | null;
+            link: {
+              _key: null;
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
+            _type: "impactSpotlight";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            stats: Array<{
+              _key: string;
+              value: string | null;
+              detail: string | null;
+              label: string | null;
+            }> | null;
+            shareTitle: string | null;
+            shareCaption: string | null;
+            familiesShare: number | null;
+            familiesLabel: string | null;
+            donorsLabel: string | null;
+            statement: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
+            _type: "largeSlides";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            slides: Array<{
+              _key: string;
+              label: string | null;
+              time: string | null;
+              text: string | null;
+              image: {
+                asset: {
+                  _id: string;
+                  url: string | null;
+                  mimeType: string | null;
+                  metadata: {
+                    lqip: string | null;
+                    dimensions: {
+                      width: number | null;
+                      height: number | null;
+                    } | null;
+                  } | null;
+                } | null;
+                media?: unknown; // Unable to locate the referenced type "largeSlidesSlide.image.media" in schema
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                alt?: string;
+                _type: "image";
+              } | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "memorialCardForm";
+            background: SectionBackground | null;
+            title: string | null;
+            intro: string | null;
+            cardDesigns: Array<{
+              _key: string;
+              name: string | null;
+              image: {
+                asset: {
+                  _id: string;
+                  url: string | null;
+                  mimeType: string | null;
+                  metadata: {
+                    lqip: string | null;
+                    dimensions: {
+                      width: number | null;
+                      height: number | null;
+                    } | null;
+                  } | null;
+                } | null;
+                media?: unknown; // Unable to locate the referenced type "cardDesign.image.media" in schema
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                _type: "image";
+              } | null;
+            }> | null;
+            messages: Array<string> | null;
+            givingLink: string | null;
+            byMailLine: string | null;
+            privacyLine: string | null;
+            successMessage: string | null;
+            errorMessage: string | null;
+            officePhone: string | null;
+          }
+        | {
+            _key: string;
+            _type: "packingChecklist";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            groups: Array<{
+              _key: string;
+              title: string | null;
+              tone: "leaveAtHome" | "normal" | null;
+              items: Array<{
+                _key: string;
+                label: string | null;
+                quantity: string | null;
+              }> | null;
+            }> | null;
+            note: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            pdf: {
+              _id: string;
+              url: string | null;
+              originalFilename: string | null;
+              size: number | null;
+            } | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+          }
+        | {
+            _key: string;
+            _type: "photoStrip";
+            background: SectionBackground | null;
+            images: Array<{
+              _key: string;
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            }> | null;
+            caption: string | null;
+            link: {
+              _key: null;
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
+            _type: "pricingTiers";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            panelTitle: string | null;
+            panelNote: string | null;
+            tiers: Array<{
+              _key: string;
+              name: string | null;
+              label: string | null;
+              price: number | null;
+              buttons: Array<{
+                _key: string;
+                text: string | null;
+                openInNewTab: boolean | null;
+                href: string | null | "/" | "/stories";
+              }> | null;
+              application: boolean | null;
+              note: string | null;
+            }> | null;
+            notes: Array<string> | null;
+            link: {
+              _key: null;
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }
+        | {
+            _key: string;
+            _type: "quoteWall";
+            background: SectionBackground | null;
+            layout: "track" | "wall";
+            hint: string | null;
+            eyebrow: string | null;
+            heading: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            testimonials: Array<{
+              _key: string;
+              _type: "reference";
+              _ref: string;
+              document: {
+                _id: string;
+                _type: "testimonial";
+                name: string | null;
+                title: string | null;
+                origin: string | null;
+                rating: number | null;
+                image: {
+                  asset: {
+                    _id: string;
+                    url: string | null;
+                    mimeType: string | null;
+                    metadata: {
+                      lqip: string | null;
+                      dimensions: {
+                        width: number | null;
+                        height: number | null;
+                      } | null;
+                    } | null;
+                  } | null;
+                  media?: unknown;
+                  hotspot?: SanityImageHotspot;
+                  crop?: SanityImageCrop;
+                  alt?: string;
+                  _type: "image";
+                } | null;
+                body: Array<{
+                  children?: Array<{
+                    marks?: Array<string>;
+                    text?: string;
+                    _type: "span";
+                    _key: string;
+                  }>;
+                  style?: "normal";
+                  listItem?: never;
+                  markDefs: Array<{
+                    _key: string;
+                    _type: "customLink";
+                    customLink?: CustomUrl;
+                    href: string | null | "/";
+                    openInNewTab: boolean | null;
+                  }> | null;
+                  level?: number;
+                  _type: "block";
+                  _key: string;
+                }> | null;
+              };
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "richTextBlock";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: string | null;
+            richText: Array<
+              | {
+                  children: Array<{
+                    marks?: Array<string>;
+                    text?: string;
+                    _type: "span";
+                    _key: string;
+                  }> | null;
+                  style?:
+                    | "blockquote"
+                    | "h2"
+                    | "h3"
+                    | "h4"
+                    | "h5"
+                    | "h6"
+                    | "inline"
+                    | "normal";
+                  listItem?: "bullet" | "number";
+                  markDefs: Array<
+                    | {
+                        _key: string;
+                        _type: "buttonLink";
+                        customLink?: CustomUrl;
+                        href: string | null | "/";
+                        openInNewTab: boolean | null;
+                      }
+                    | {
+                        _key: string;
+                        _type: "buttonLink";
+                        customLink?: CustomUrl;
+                      }
+                    | {
+                        _key: string;
+                        _type: "customLink";
+                        customLink?: CustomUrl;
+                        href: string | null | "/";
+                        openInNewTab: boolean | null;
+                      }
+                    | {
+                        _key: string;
+                        _type: "customLink";
+                        customLink?: CustomUrl;
+                      }
+                  > | null;
+                  level?: number;
+                  _type: "block";
+                  _key: string;
+                }
+              | {
+                  title: string | null;
+                  body: string | null;
+                  _type: "callout";
+                  _key: string;
+                }
+              | {
+                  asset?: SanityImageAssetReference;
+                  media?: unknown;
+                  hotspot?: SanityImageHotspot;
+                  crop?: SanityImageCrop;
+                  alt?: string;
+                  caption?: string;
+                  _type: "image";
+                  _key: string;
+                  resolvedAsset: {
+                    _id: string;
+                    url: string | null;
+                    mimeType: string | null;
+                    metadata: {
+                      lqip: string | null;
+                      dimensions: {
+                        width: number | null;
+                        height: number | null;
+                      } | null;
+                    } | null;
+                  } | null;
+                }
+              | {
+                  title?: string;
+                  rows: Array<{
+                    cells: Array<string> | null;
+                    _type: "tableRow";
+                    _key: string;
+                  }> | null;
+                  _type: "table";
+                  _key: string;
+                }
+            > | null;
+          }
+        | {
+            _key: string;
+            _type: "stackedFeatureRows";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            rows: Array<{
+              _key: string;
+              icon: {
+                name: string | null;
+                svg: string | null;
+              } | null;
+              title: string | null;
+              items: Array<{
+                _key: string;
+                body: Array<{
+                  children?: Array<{
+                    marks?: Array<string>;
+                    text?: string;
+                    _type: "span";
+                    _key: string;
+                  }>;
+                  style?: "normal";
+                  listItem?: never;
+                  markDefs: Array<{
+                    _key: string;
+                    _type: "customLink";
+                    customLink?: CustomUrl;
+                    href: string | null | "/";
+                    openInNewTab: boolean | null;
+                  }> | null;
+                  level?: number;
+                  _type: "block";
+                  _key: string;
+                }> | null;
+              }> | null;
+              link: {
+                text: string | null;
+                openInNewTab: boolean | null;
+                href: string | null | "/" | "/stories";
+              } | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "stackedTimeline";
+            background: SectionBackground | null;
+            layout: "dateCards" | "timeline";
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            intro: string | null;
+            buttons: Array<{
+              _key: string;
+              _type: "button";
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
+            items: Array<{
+              _key: string;
+              title: string | null;
+              meta: string | null;
+              text: string | null;
+              link: {
+                _key: null;
+                text: string | null;
+                openInNewTab: boolean | null;
+                href: string | null | "/" | "/stories";
+              } | null;
+              image: {
+                asset: {
+                  _id: string;
+                  url: string | null;
+                  mimeType: string | null;
+                  metadata: {
+                    lqip: string | null;
+                    dimensions: {
+                      width: number | null;
+                      height: number | null;
+                    } | null;
+                  } | null;
+                } | null;
+                media?: unknown; // Unable to locate the referenced type "stackedTimelineItem.image.media" in schema
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                alt?: string;
+                _type: "image";
+              } | null;
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "storyFeature";
+            background: SectionBackground | null;
+            eyebrow: string | null;
+            title: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs?: null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            richText: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "blockquote" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            keyDetails: {
+              title: string | null;
+              items: Array<string> | null;
+            } | null;
+            buttons: Array<{
+              _key: string;
+              _type: "button";
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "teamMembers";
+            background: SectionBackground | null;
+            presentation: "profiles" | "roster" | null;
+            eyebrow: string | null;
+            title: string | null;
+            richText: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?:
+                | "blockquote"
+                | "h1"
+                | "h2"
+                | "h3"
+                | "h4"
+                | "h5"
+                | "h6"
+                | "normal";
+              listItem?: "bullet" | "number";
+              markDefs: Array<{
+                href?: string;
+                _type: "link";
+                _key: string;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+            members: Array<{
+              _key: string;
+              _type: "reference";
+              _ref: string;
+              document: {
+                _id: string;
+                _type: "teamMember";
+                name: string | null;
+                role: string | null;
+                yearsAtCamp: number | null;
+                shortBio: string | null;
+                email: string | null;
+                phone: string | null;
+                sortOrder: number | null;
+                image: {
+                  asset: {
+                    _id: string;
+                    url: string | null;
+                    mimeType: string | null;
+                    metadata: {
+                      lqip: string | null;
+                      dimensions: {
+                        width: number | null;
+                        height: number | null;
+                      } | null;
+                    } | null;
+                  } | null;
+                  media?: unknown;
+                  hotspot?: SanityImageHotspot;
+                  crop?: SanityImageCrop;
+                  alt?: string;
+                  _type: "image";
+                } | null;
+                bio: Array<{
+                  children?: Array<{
+                    marks?: Array<string>;
+                    text?: string;
+                    _type: "span";
+                    _key: string;
+                  }>;
+                  style?:
+                    | "blockquote"
+                    | "h1"
+                    | "h2"
+                    | "h3"
+                    | "h4"
+                    | "h5"
+                    | "h6"
+                    | "normal";
+                  listItem?: "bullet" | "number";
+                  markDefs: Array<{
+                    href?: string;
+                    _type: "link";
+                    _key: string;
+                  }> | null;
+                  level?: number;
+                  _type: "block";
+                  _key: string;
+                }> | null;
+              };
+            }> | null;
+          }
+        | {
+            _key: string;
+            _type: "wordSwap";
+            background: SectionBackground | null;
+            struckWord: string | null;
+            word: string | null;
+            body: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+          }
+      > | null;
       meta: null;
       sharingPhoto: null;
     }
@@ -7001,9 +8366,9 @@ export type BLOG_CATEGORY_POST_COUNTS_QUERY_RESULT = Array<{
 
 // Source: ../frontend/sanity/queries/blog-post-settings.ts
 // Variable: BLOG_POST_SETTINGS_QUERY
-// Query: *[  _type == "blogPostSettings" &&  _id == "blogPostSettings" &&  defined(actions)][0]{  _id,  _type,  title,  description,  "actions": array::compact(actions[]{  _key,  title,  description,  ...button{    "text": text,    "openInNewTab": url.openInNewTab,    "href": select(      url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),      url.type == "external" => url.external,      url.href    )  }})}
+// Query: *[  _type == "blogPostSettings" &&  _id == "blogPostSettings" &&  (defined(actions) || defined(blocks))][0]{  _id,  _type,  title,  description,  "actions": array::compact(actions[]{  _key,  title,  description,  ...button{    "text": text,    "openInNewTab": url.openInNewTab,    "href": select(      url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),      url.type == "external" => url.external,      url.href    )  }}),    blocks[]{    _key,    _type,    !(_type in ["homeHero", "innerHero"]) => {background},      _type == "latestArticles" => {    eyebrow,    title,    description,    limit,    buttons[]{      _key,      _type,      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    },    fallbackImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "articles": *[      _type == "post" && defined(slug.current) && defined(publishedAt) &&      meta.noindex != true &&      seoHideFromLists != true &&      seoNoIndex != true    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{        _id,  title,  slug,  publishedAt,  "excerpt": pt::text(excerpt),  image {  ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }},  category->{_id, title, slug}    }  },      _type == "faqAccordion" => {    eyebrow,    title[]{      ...    },    subtitle,    "faqs": array::compact(faqs[]{      _key,      "_id": @->._id,      "_type": @->._type,      "title": @->.title,      "answer": coalesce(@->.body, @->.richText)[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "storyFeature" => {    eyebrow,    title[]{      ...    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    richText[]{      ...,        markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    keyDetails {      title,      items[]    },    buttons[]{      _key,      _type,      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "teamMembers" => {    presentation,    eyebrow,    title,    richText[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    members[]{      _key,      _type,      "_ref": _ref,      "document": @->{        _id,        _type,        name,        role,        yearsAtCamp,        shortBio,        email,        phone,        sortOrder,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        bio[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }        }      }    }  },      _type == "richTextBlock" => {    eyebrow,    title,    richText[]{        ...,  _type == "block" => {    ...,    children[]{...},    markDefs[]{      ...,      _type in ["customLink", "buttonLink"] => {          "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab      }    }  },  _type == "image" => {    ...,    "resolvedAsset": asset->{      _id,      url,      mimeType,      metadata {        lqip,        dimensions {          width,          height        }      }    }  },  _type == "table" => {    ...,    rows[]{      ...,      cells[]    }  },  _type == "callout" => {    ...,    title,    body  }    }  },      _type == "ctaBanner" => {    variant,    eyebrow,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    title,    description,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "benefitCards" => {    "layout": coalesce(layout, "grid"),    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    caption,    link{        _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    },    eyebrow,    title[]{      ...    },    intro,    "cards": array::compact(cards[]{      _key,      _type,      "icon": icon{ name, svg },      title,      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    })  },      _type == "homeHero" => {    status,    title[]{      ...    },    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "buttons": array::compact(buttons[]{        _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }),    filmButton {      label,      url    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "stats": array::compact(stats[]{      _key,      value,      label    })  },      _type == "imageCollageFeature" => {    "layout": coalesce(layout, "collage"),    eyebrow,    title[]{      ...    },    body,    "points": array::compact(points[]{      _key,      title,      body    }),    primaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    secondaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    tertiaryImage {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{        _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }),    cta {      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }  },      _type == "featureCards" => {    "layout": coalesce(layout, "grid"),    eyebrow,    title[]{      ...    },    description,    link{        _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    },    "groups": array::compact(groups[]{      _key,      heading,      description,      "singleRowUpToFour": coalesce(singleRowUpToFour, true),      "cards": array::compact(cards[]{        _key,        image {            ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }        },        title,        text,        eyebrow,        badgeLabel,        badgeValue,        "buttons": array::compact(buttons[]{            _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )        }),        link {          text,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),            url.type == "external" => url.external,            url.href          )        }      })    })  },      _type == "stackedFeatureRows" => {    eyebrow,    title[]{      ...    },    "rows": array::compact(rows[]{      _key,      "icon": icon{ name, svg },      title,      "items": array::compact(items[]{        _key,        body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        }      }),      link {        text,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),          url.type == "external" => url.external,          url.href        )      }    })  },      _type == "innerHero" => {    eyebrow,    title[]{      ...    },    body,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "facts": array::compact(facts[]{      _key,      value,      label    })  },      _type == "stackedTimeline" => {    "layout": coalesce(layout, "timeline"),    eyebrow,    title[]{      ...    },    intro,    "buttons": array::compact(buttons[]{      _key,      _type,      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    }),    "items": array::compact(items[]{      _key,      title,      meta,      text,      link{          _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )      },      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "packingChecklist" => {    eyebrow,    title[]{      ...    },    intro,    "groups": array::compact(groups[]{      _key,      title,      tone,      "items": array::compact(items[]{        _key,        label,        quantity      })    }),    note[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    "pdf": pdf.asset->{      _id,      url,      originalFilename,      size    },    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },      _type == "bigImageList" => {    eyebrow,    title[]{      ...    },    intro,    "stops": array::compact(stops[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "directorCta" => {    title[]{      ...    },    description,    image {        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    "buttons": array::compact(buttons[]{      _key,      _type,      text,      "openInNewTab": url.openInNewTab,      "href": select(        url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),        url.type == "external" => url.external,        url.href      )    })  },      _type == "largeSlides" => {    eyebrow,    title[]{      ...    },    intro,    "slides": array::compact(slides[]{      _key,      label,      time,      text,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    })  },      _type == "headingImage" => {    title,    background,    richText[]{ ... },    image {   ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  } }  },      _type == "quoteWall" => {    "layout": coalesce(layout, "wall"),    hint,    eyebrow,    heading[]{      ...    },      testimonials[]{    _key,    _type,    "_ref": _ref,    "document": @->{      _id,      _type,      name,      title,      origin,      rating,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }      }    }  }  },      _type == "faqHub" => {    eyebrow,    title[]{      ...    },    subtitle,    searchPlaceholder,    emptyState,    "faqs": *[_type == "faq" && defined(category->_id)]      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {        _id,        title,        "answer": body[]{            ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }        },        "answerText": pt::text(body),        order,        "category": category->{          _id,          title,          "slug": slug.current,          order        }      }  },      _type == "wordSwap" => {    struckWord,    word,    body[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    }  },      _type == "flipCards" => {    intro[]{        ...,    markDefs[]{    ...,    _type == "customLink" => {        "href": select(    customLink.type == "internal" => select(  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")),    customLink.type == "external" => customLink.external,    customLink.href  ),  "openInNewTab": customLink.openInNewTab    }  }    },    frontLabel,    backLabel,    turnLabel,    "cards": array::compact(cards[]{      _key,      front,      back,      emoji    })  },      _type == "photoStrip" => {    "images": array::compact(images[]{      _key,        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }),    caption,    link{        _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },      _type == "pricingTiers" => {    eyebrow,    title[]{      ...    },    intro,    panelTitle,    panelNote,    "tiers": array::compact(tiers[]{      _key,      name,      label,      price,      "buttons": array::compact(buttons[]{          _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )      }),      application,      note    }),    notes,    link{        _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },      _type == "askAboutCampForm" => {    title,    intro,    topics,    directorTopic,    privacyLine,    successMessage,    errorMessage,    "officePhone": *[_type == "settings" && _id == "settings"][0].contact.phone  },      _type == "memorialCardForm" => {    title,    intro,    cardDesigns[]{      _key,      name,      image {          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      }    },    messages,    givingLink,    byMailLine,    privacyLine,    successMessage,    errorMessage,    "officePhone": *[_type == "settings" && _id == "settings"][0].contact.phone  },      _type == "impactNumbers" => {    eyebrow,    title[]{      ...    },    season,    intro,    "stats": array::compact(stats[]{      _key,      value,      detail,      label    }),    link{        _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },      _type == "impactSpotlight" => {    eyebrow,    title[]{      ...    },    intro,    "stats": array::compact(stats[]{      _key,      value,      detail,      label    }),    shareTitle,    shareCaption,    familiesShare,    familiesLabel,    donorsLabel,    statement,    link{        _key,  text,  "openInNewTab": url.openInNewTab,  "href": select(    url.type == "internal" => select(  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")),    url.type == "external" => url.external,    url.href  )    }  },      }}
 export type BLOG_POST_SETTINGS_QUERY_RESULT = {
-  _id: "blogPostSettings";
+  _id: string;
   _type: "blogPostSettings";
   title: string | null;
   description: string | null;
@@ -7021,7 +8386,1292 @@ export type BLOG_POST_SETTINGS_QUERY_RESULT = {
         title: string | null;
         description: string | null;
       }
-  >;
+  > | null;
+  blocks: Array<
+    | {
+        _key: string;
+        _type: "askAboutCampForm";
+        background: SectionBackground | null;
+        title: string | null;
+        intro: string | null;
+        topics: Array<string> | null;
+        directorTopic: string | null;
+        privacyLine: string | null;
+        successMessage: string | null;
+        errorMessage: string | null;
+        officePhone: string | null;
+      }
+    | {
+        _key: string;
+        _type: "benefitCards";
+        background: SectionBackground | null;
+        layout: "grid" | "ringPhoto";
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        caption: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        intro: string | null;
+        cards: Array<{
+          _key: string;
+          _type: "featureGridItem";
+          icon: {
+            name: string | null;
+            svg: string | null;
+          } | null;
+          title: string | null;
+          body: Array<{
+            children?: Array<{
+              marks?: Array<string>;
+              text?: string;
+              _type: "span";
+              _key: string;
+            }>;
+            style?: "normal";
+            listItem?: never;
+            markDefs: Array<{
+              _key: string;
+              _type: "customLink";
+              customLink?: CustomUrl;
+              href: string | null | "/";
+              openInNewTab: boolean | null;
+            }> | null;
+            level?: number;
+            _type: "block";
+            _key: string;
+          }> | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "bigImageList";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        intro: string | null;
+        stops: Array<{
+          _key: string;
+          label: string | null;
+          time: string | null;
+          text: string | null;
+          image: {
+            asset: {
+              _id: string;
+              url: string | null;
+              mimeType: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+            media?: unknown; // Unable to locate the referenced type "bigImageListStop.image.media" in schema
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt?: string;
+            _type: "image";
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "ctaBanner";
+        background: SectionBackground | null;
+        variant: "closing" | "nudge" | "photo" | null;
+        eyebrow: string | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        title: string | null;
+        description: string | null;
+        buttons: Array<{
+          _key: string;
+          _type: "button";
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "directorCta";
+        background: SectionBackground | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        description: string | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        buttons: Array<{
+          _key: string;
+          _type: "button";
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "faqAccordion";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        subtitle: string | null;
+        faqs: Array<{
+          _key: string;
+          _id: string;
+          _type: "faq";
+          title: string | null;
+          answer: Array<{
+            children?: Array<{
+              marks?: Array<string>;
+              text?: string;
+              _type: "span";
+              _key: string;
+            }>;
+            style?: "normal";
+            listItem?: never;
+            markDefs: Array<{
+              _key: string;
+              _type: "customLink";
+              customLink?: CustomUrl;
+              href: string | null | "/";
+              openInNewTab: boolean | null;
+            }> | null;
+            level?: number;
+            _type: "block";
+            _key: string;
+          }> | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "featureCards";
+        background: SectionBackground | null;
+        layout: "grid" | "tilted";
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        description: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+        groups: Array<{
+          _key: string;
+          heading: string | null;
+          description: string | null;
+          singleRowUpToFour: boolean | true;
+          cards: Array<{
+            _key: string;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown; // Unable to locate the referenced type "featureCardItem.image.media" in schema
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            title: string | null;
+            text: string | null;
+            eyebrow: string | null;
+            badgeLabel: string | null;
+            badgeValue: string | null;
+            buttons: Array<{
+              _key: string;
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            }> | null;
+            link: {
+              text: string | null;
+              openInNewTab: boolean | null;
+              href: string | null | "/" | "/stories";
+            } | null;
+          }> | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "flipCards";
+        background: SectionBackground | null;
+        intro: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        frontLabel: string | null;
+        backLabel: string | null;
+        turnLabel: string | null;
+        cards: Array<{
+          _key: string;
+          front: string | null;
+          back: string | null;
+          emoji: string | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "headingImage";
+        background: SectionBackground | null;
+        title: string | null;
+        richText: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "imageCollageFeature";
+        background: SectionBackground | null;
+        layout: "bento" | "collage";
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        body: string | null;
+        points: Array<{
+          _key: string;
+          title: string | null;
+          body: string | null;
+        }> | null;
+        primaryImage: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          caption?: string;
+          _type: "image";
+        } | null;
+        secondaryImage: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          caption?: string;
+          _type: "image";
+        } | null;
+        tertiaryImage: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          caption?: string;
+          _type: "image";
+        } | null;
+        buttons: Array<{
+          _key: string;
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        }> | null;
+        cta: {
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "impactNumbers";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        season: string | null;
+        intro: string | null;
+        stats: Array<{
+          _key: string;
+          value: string | null;
+          detail: string | null;
+          label: string | null;
+        }> | null;
+        link: {
+          _key: null;
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "impactSpotlight";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        intro: string | null;
+        stats: Array<{
+          _key: string;
+          value: string | null;
+          detail: string | null;
+          label: string | null;
+        }> | null;
+        shareTitle: string | null;
+        shareCaption: string | null;
+        familiesShare: number | null;
+        familiesLabel: string | null;
+        donorsLabel: string | null;
+        statement: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "largeSlides";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        intro: string | null;
+        slides: Array<{
+          _key: string;
+          label: string | null;
+          time: string | null;
+          text: string | null;
+          image: {
+            asset: {
+              _id: string;
+              url: string | null;
+              mimeType: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+            media?: unknown; // Unable to locate the referenced type "largeSlidesSlide.image.media" in schema
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt?: string;
+            _type: "image";
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "memorialCardForm";
+        background: SectionBackground | null;
+        title: string | null;
+        intro: string | null;
+        cardDesigns: Array<{
+          _key: string;
+          name: string | null;
+          image: {
+            asset: {
+              _id: string;
+              url: string | null;
+              mimeType: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+            media?: unknown; // Unable to locate the referenced type "cardDesign.image.media" in schema
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          } | null;
+        }> | null;
+        messages: Array<string> | null;
+        givingLink: string | null;
+        byMailLine: string | null;
+        privacyLine: string | null;
+        successMessage: string | null;
+        errorMessage: string | null;
+        officePhone: string | null;
+      }
+    | {
+        _key: string;
+        _type: "packingChecklist";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        intro: string | null;
+        groups: Array<{
+          _key: string;
+          title: string | null;
+          tone: "leaveAtHome" | "normal" | null;
+          items: Array<{
+            _key: string;
+            label: string | null;
+            quantity: string | null;
+          }> | null;
+        }> | null;
+        note: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        pdf: {
+          _id: string;
+          url: string | null;
+          originalFilename: string | null;
+          size: number | null;
+        } | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "photoStrip";
+        background: SectionBackground | null;
+        images: Array<{
+          _key: string;
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        }> | null;
+        caption: string | null;
+        link: {
+          _key: null;
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "pricingTiers";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        intro: string | null;
+        panelTitle: string | null;
+        panelNote: string | null;
+        tiers: Array<{
+          _key: string;
+          name: string | null;
+          label: string | null;
+          price: number | null;
+          buttons: Array<{
+            _key: string;
+            text: string | null;
+            openInNewTab: boolean | null;
+            href: string | null | "/" | "/stories";
+          }> | null;
+          application: boolean | null;
+          note: string | null;
+        }> | null;
+        notes: Array<string> | null;
+        link: {
+          _key: null;
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "quoteWall";
+        background: SectionBackground | null;
+        layout: "track" | "wall";
+        hint: string | null;
+        eyebrow: string | null;
+        heading: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        testimonials: Array<{
+          _key: string;
+          _type: "reference";
+          _ref: string;
+          document: {
+            _id: string;
+            _type: "testimonial";
+            name: string | null;
+            title: string | null;
+            origin: string | null;
+            rating: number | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            body: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+          };
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "richTextBlock";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: string | null;
+        richText: Array<
+          | {
+              children: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }> | null;
+              style?:
+                | "blockquote"
+                | "h2"
+                | "h3"
+                | "h4"
+                | "h5"
+                | "h6"
+                | "inline"
+                | "normal";
+              listItem?: "bullet" | "number";
+              markDefs: Array<
+                | {
+                    _key: string;
+                    _type: "buttonLink";
+                    customLink?: CustomUrl;
+                    href: string | null | "/";
+                    openInNewTab: boolean | null;
+                  }
+                | {
+                    _key: string;
+                    _type: "buttonLink";
+                    customLink?: CustomUrl;
+                  }
+                | {
+                    _key: string;
+                    _type: "customLink";
+                    customLink?: CustomUrl;
+                    href: string | null | "/";
+                    openInNewTab: boolean | null;
+                  }
+                | {
+                    _key: string;
+                    _type: "customLink";
+                    customLink?: CustomUrl;
+                  }
+              > | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }
+          | {
+              title: string | null;
+              body: string | null;
+              _type: "callout";
+              _key: string;
+            }
+          | {
+              asset?: SanityImageAssetReference;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              caption?: string;
+              _type: "image";
+              _key: string;
+              resolvedAsset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+            }
+          | {
+              title?: string;
+              rows: Array<{
+                cells: Array<string> | null;
+                _type: "tableRow";
+                _key: string;
+              }> | null;
+              _type: "table";
+              _key: string;
+            }
+        > | null;
+      }
+    | {
+        _key: string;
+        _type: "stackedFeatureRows";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        rows: Array<{
+          _key: string;
+          icon: {
+            name: string | null;
+            svg: string | null;
+          } | null;
+          title: string | null;
+          items: Array<{
+            _key: string;
+            body: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "normal";
+              listItem?: never;
+              markDefs: Array<{
+                _key: string;
+                _type: "customLink";
+                customLink?: CustomUrl;
+                href: string | null | "/";
+                openInNewTab: boolean | null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+          }> | null;
+          link: {
+            text: string | null;
+            openInNewTab: boolean | null;
+            href: string | null | "/" | "/stories";
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "stackedTimeline";
+        background: SectionBackground | null;
+        layout: "dateCards" | "timeline";
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        intro: string | null;
+        buttons: Array<{
+          _key: string;
+          _type: "button";
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        }> | null;
+        items: Array<{
+          _key: string;
+          title: string | null;
+          meta: string | null;
+          text: string | null;
+          link: {
+            _key: null;
+            text: string | null;
+            openInNewTab: boolean | null;
+            href: string | null | "/" | "/stories";
+          } | null;
+          image: {
+            asset: {
+              _id: string;
+              url: string | null;
+              mimeType: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+            media?: unknown; // Unable to locate the referenced type "stackedTimelineItem.image.media" in schema
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt?: string;
+            _type: "image";
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "storyFeature";
+        background: SectionBackground | null;
+        eyebrow: string | null;
+        title: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs?: null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        richText: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "blockquote" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        keyDetails: {
+          title: string | null;
+          items: Array<string> | null;
+        } | null;
+        buttons: Array<{
+          _key: string;
+          _type: "button";
+          text: string | null;
+          openInNewTab: boolean | null;
+          href: string | null | "/" | "/stories";
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "teamMembers";
+        background: SectionBackground | null;
+        presentation: "profiles" | "roster" | null;
+        eyebrow: string | null;
+        title: string | null;
+        richText: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?:
+            "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        members: Array<{
+          _key: string;
+          _type: "reference";
+          _ref: string;
+          document: {
+            _id: string;
+            _type: "teamMember";
+            name: string | null;
+            role: string | null;
+            yearsAtCamp: number | null;
+            shortBio: string | null;
+            email: string | null;
+            phone: string | null;
+            sortOrder: number | null;
+            image: {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            bio: Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?:
+                | "blockquote"
+                | "h1"
+                | "h2"
+                | "h3"
+                | "h4"
+                | "h5"
+                | "h6"
+                | "normal";
+              listItem?: "bullet" | "number";
+              markDefs: Array<{
+                href?: string;
+                _type: "link";
+                _key: string;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }> | null;
+          };
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "wordSwap";
+        background: SectionBackground | null;
+        struckWord: string | null;
+        word: string | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: never;
+          markDefs: Array<{
+            _key: string;
+            _type: "customLink";
+            customLink?: CustomUrl;
+            href: string | null | "/";
+            openInNewTab: boolean | null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+      }
+  > | null;
 } | null;
 
 // Source: ../frontend/sanity/queries/category.ts
@@ -11099,7 +13749,7 @@ declare global {
     '\n  count(*[_type == "post" && defined(slug.current) && defined(publishedAt) && _id != $latestPostId])\n': REGULAR_POSTS_COUNT_QUERY_RESULT;
     '\n  count(*[_type == "post" && defined(slug.current) && defined(publishedAt)])\n': ELIGIBLE_BLOG_POSTS_COUNT_QUERY_RESULT;
     '\n  *[_type == "category" && defined(slug.current)]{\n    "slug": slug.current,\n    "postCount": count(*[_type == "post" && defined(slug.current) && defined(publishedAt) && category._ref == ^._id])\n  }\n': BLOG_CATEGORY_POST_COUNTS_QUERY_RESULT;
-    '*[\n  _type == "blogPostSettings" &&\n  _id == "blogPostSettings" &&\n  defined(actions)\n][0]{\n  _id,\n  _type,\n  title,\n  description,\n  "actions": array::compact(actions[]{\n  _key,\n  title,\n  description,\n  ...button{\n    "text": text,\n    "openInNewTab": url.openInNewTab,\n    "href": select(\n      url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n      url.type == "external" => url.external,\n      url.href\n    )\n  }\n})\n}': BLOG_POST_SETTINGS_QUERY_RESULT;
+    '*[\n  _type == "blogPostSettings" &&\n  _id == "blogPostSettings" &&\n  (defined(actions) || defined(blocks))\n][0]{\n  _id,\n  _type,\n  title,\n  description,\n  "actions": array::compact(actions[]{\n  _key,\n  title,\n  description,\n  ...button{\n    "text": text,\n    "openInNewTab": url.openInNewTab,\n    "href": select(\n      url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n      url.type == "external" => url.external,\n      url.href\n    )\n  }\n}),\n  \n  blocks[]{\n    _key,\n    _type,\n    !(_type in ["homeHero", "innerHero"]) => {background},\n    \n  _type == "latestArticles" => {\n    eyebrow,\n    title,\n    description,\n    limit,\n    buttons[]{\n      _key,\n      _type,\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    },\n    fallbackImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "articles": *[\n      _type == "post" && defined(slug.current) && defined(publishedAt) &&\n      meta.noindex != true &&\n      seoHideFromLists != true &&\n      seoNoIndex != true\n    ] | order(publishedAt desc, _createdAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n    }\n  }\n,\n    \n  _type == "faqAccordion" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    "faqs": array::compact(faqs[]{\n      _key,\n      "_id": @->._id,\n      "_type": @->._type,\n      "title": @->.title,\n      "answer": coalesce(@->.body, @->.richText)[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "storyFeature" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    richText[]{\n      ...,\n      \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n    },\n    keyDetails {\n      title,\n      items[]\n    },\n    buttons[]{\n      _key,\n      _type,\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "teamMembers" => {\n    presentation,\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    members[]{\n      _key,\n      _type,\n      "_ref": _ref,\n      "document": @->{\n        _id,\n        _type,\n        name,\n        role,\n        yearsAtCamp,\n        shortBio,\n        email,\n        phone,\n        sortOrder,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        bio[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n,\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n        }\n      }\n    }\n  }\n,\n    \n  _type == "richTextBlock" => {\n    eyebrow,\n    title,\n    richText[]{\n      \n  ...,\n  _type == "block" => {\n    ...,\n    children[]{...},\n    markDefs[]{\n      ...,\n      _type in ["customLink", "buttonLink"] => {\n        \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n      }\n    }\n  },\n  _type == "image" => {\n    ...,\n    "resolvedAsset": asset->{\n      _id,\n      url,\n      mimeType,\n      metadata {\n        lqip,\n        dimensions {\n          width,\n          height\n        }\n      }\n    }\n  },\n  _type == "table" => {\n    ...,\n    rows[]{\n      ...,\n      cells[]\n    }\n  },\n  _type == "callout" => {\n    ...,\n    title,\n    body\n  }\n\n    }\n  }\n,\n    \n  _type == "ctaBanner" => {\n    variant,\n    eyebrow,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    title,\n    description,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "benefitCards" => {\n    "layout": coalesce(layout, "grid"),\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    caption,\n    link{\n      \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    },\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "cards": array::compact(cards[]{\n      _key,\n      _type,\n      "icon": icon{ name, svg },\n      title,\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    })\n  }\n,\n    \n  _type == "homeHero" => {\n    status,\n    title[]{\n      ...\n    },\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "buttons": array::compact(buttons[]{\n      \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }),\n    filmButton {\n      label,\n      url\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "stats": array::compact(stats[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "imageCollageFeature" => {\n    "layout": coalesce(layout, "collage"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "points": array::compact(points[]{\n      _key,\n      title,\n      body\n    }),\n    primaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    secondaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    tertiaryImage {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }),\n    cta {\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }\n  }\n,\n    \n  _type == "featureCards" => {\n    "layout": coalesce(layout, "grid"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    description,\n    link{\n      \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    },\n    "groups": array::compact(groups[]{\n      _key,\n      heading,\n      description,\n      "singleRowUpToFour": coalesce(singleRowUpToFour, true),\n      "cards": array::compact(cards[]{\n        _key,\n        image {\n          \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n        },\n        title,\n        text,\n        eyebrow,\n        badgeLabel,\n        badgeValue,\n        "buttons": array::compact(buttons[]{\n          \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n        }),\n        link {\n          text,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      })\n    })\n  }\n,\n    \n  _type == "stackedFeatureRows" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    "rows": array::compact(rows[]{\n      _key,\n      "icon": icon{ name, svg },\n      title,\n      "items": array::compact(items[]{\n        _key,\n        body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        }\n      }),\n      link {\n        text,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n          url.type == "external" => url.external,\n          url.href\n        )\n      }\n    })\n  }\n,\n    \n  _type == "innerHero" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    body,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "facts": array::compact(facts[]{\n      _key,\n      value,\n      label\n    })\n  }\n,\n    \n  _type == "stackedTimeline" => {\n    "layout": coalesce(layout, "timeline"),\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    }),\n    "items": array::compact(items[]{\n      _key,\n      title,\n      meta,\n      text,\n      link{\n        \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n      },\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "packingChecklist" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "groups": array::compact(groups[]{\n      _key,\n      title,\n      tone,\n      "items": array::compact(items[]{\n        _key,\n        label,\n        quantity\n      })\n    }),\n    note[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    "pdf": pdf.asset->{\n      _id,\n      url,\n      originalFilename,\n      size\n    },\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  _type == "bigImageList" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stops": array::compact(stops[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "directorCta" => {\n    title[]{\n      ...\n    },\n    description,\n    image {\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    "buttons": array::compact(buttons[]{\n      _key,\n      _type,\n      text,\n      "openInNewTab": url.openInNewTab,\n      "href": select(\n        url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n        url.type == "external" => url.external,\n        url.href\n      )\n    })\n  }\n,\n    \n  _type == "largeSlides" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "slides": array::compact(slides[]{\n      _key,\n      label,\n      time,\n      text,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    })\n  }\n,\n    \n  _type == "headingImage" => {\n    title,\n    background,\n    richText[]{ ... },\n    image { \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n }\n  }\n,\n    \n  _type == "quoteWall" => {\n    "layout": coalesce(layout, "wall"),\n    hint,\n    eyebrow,\n    heading[]{\n      ...\n    },\n    \n  testimonials[]{\n    _key,\n    _type,\n    "_ref": _ref,\n    "document": @->{\n      _id,\n      _type,\n      name,\n      title,\n      origin,\n      rating,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n      }\n    }\n  }\n\n  }\n,\n    \n  _type == "faqHub" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    subtitle,\n    searchPlaceholder,\n    emptyState,\n    "faqs": *[_type == "faq" && defined(category->_id)]\n      | order(category->order asc, coalesce(order, 2147483647) asc, lower(title) asc) {\n        _id,\n        title,\n        "answer": body[]{\n          \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n        },\n        "answerText": pt::text(body),\n        order,\n        "category": category->{\n          _id,\n          title,\n          "slug": slug.current,\n          order\n        }\n      }\n  }\n,\n    \n  _type == "wordSwap" => {\n    struckWord,\n    word,\n    body[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    }\n  }\n,\n    \n  _type == "flipCards" => {\n    intro[]{\n      \n  ...,\n  \n  markDefs[]{\n    ...,\n    _type == "customLink" => {\n      \n  "href": select(\n    customLink.type == "internal" => select(\n  customLink.internal->_id == "homePage" || customLink.internal->_type == "homePage" => "/",\n  customLink.internal->_type == "post" && defined(customLink.internal->slug.current) => "/stories/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  customLink.internal->_type == "category" && defined(customLink.internal->slug.current) => "/stories/category/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/"),\n  defined(customLink.internal->slug.current) => "/" + array::join(string::split(customLink.internal->slug.current, "/")[@ != ""], "/")\n),\n    customLink.type == "external" => customLink.external,\n    customLink.href\n  ),\n  "openInNewTab": customLink.openInNewTab\n\n    }\n  }\n\n\n    },\n    frontLabel,\n    backLabel,\n    turnLabel,\n    "cards": array::compact(cards[]{\n      _key,\n      front,\n      back,\n      emoji\n    })\n  }\n,\n    \n  _type == "photoStrip" => {\n    "images": array::compact(images[]{\n      _key,\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }),\n    caption,\n    link{\n      \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n  _type == "pricingTiers" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    panelTitle,\n    panelNote,\n    "tiers": array::compact(tiers[]{\n      _key,\n      name,\n      label,\n      price,\n      "buttons": array::compact(buttons[]{\n        \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n      }),\n      application,\n      note\n    }),\n    notes,\n    link{\n      \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n  _type == "askAboutCampForm" => {\n    title,\n    intro,\n    topics,\n    directorTopic,\n    privacyLine,\n    successMessage,\n    errorMessage,\n    "officePhone": *[_type == "settings" && _id == "settings"][0].contact.phone\n  }\n,\n    \n  _type == "memorialCardForm" => {\n    title,\n    intro,\n    cardDesigns[]{\n      _key,\n      name,\n      image {\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      }\n    },\n    messages,\n    givingLink,\n    byMailLine,\n    privacyLine,\n    successMessage,\n    errorMessage,\n    "officePhone": *[_type == "settings" && _id == "settings"][0].contact.phone\n  }\n,\n    \n  _type == "impactNumbers" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    season,\n    intro,\n    "stats": array::compact(stats[]{\n      _key,\n      value,\n      detail,\n      label\n    }),\n    link{\n      \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n  _type == "impactSpotlight" => {\n    eyebrow,\n    title[]{\n      ...\n    },\n    intro,\n    "stats": array::compact(stats[]{\n      _key,\n      value,\n      detail,\n      label\n    }),\n    shareTitle,\n    shareCaption,\n    familiesShare,\n    familiesLabel,\n    donorsLabel,\n    statement,\n    link{\n      \n  _key,\n  text,\n  "openInNewTab": url.openInNewTab,\n  "href": select(\n    url.type == "internal" => select(\n  url.internal->_id == "homePage" || url.internal->_type == "homePage" => "/",\n  url.internal->_id == "blogIndex" || url.internal->_type == "blogIndex" => "/stories",\n  url.internal->_type == "post" && defined(url.internal->slug.current) => "/stories/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  url.internal->_type == "category" && defined(url.internal->slug.current) => "/stories/category/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/"),\n  defined(url.internal->slug.current) => "/" + array::join(string::split(url.internal->slug.current, "/")[@ != ""], "/")\n),\n    url.type == "external" => url.external,\n    url.href\n  )\n\n    }\n  }\n,\n    \n  }\n\n}': BLOG_POST_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "category" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    slug,\n    description,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n    "sharingPhoto": select(\n  defined(meta.image.asset) => meta.image\n){ asset, crop, hotspot },\n    "publishedPostCount": count(*[_type == "post" && defined(slug.current) && defined(publishedAt) && category._ref == ^._id])\n  }\n': CATEGORY_QUERY_RESULT;
     '\n  *[_type == "post" && defined(slug.current) && defined(publishedAt) && category._ref == $categoryId]\n    | order(publishedAt desc, _createdAt desc, _id asc)[$start...$end]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  "excerpt": pt::text(excerpt),\n  image {\n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n},\n  category->{_id, title, slug}\n\n    }\n': CATEGORY_POSTS_QUERY_RESULT;
     '\n  count(*[_type == "post" && defined(slug.current) && defined(publishedAt) && category._ref == $categoryId])\n': CATEGORY_POSTS_COUNT_QUERY_RESULT;

@@ -2,7 +2,9 @@
   "mcpServers": {
     "shadcn": {
       "command": "sh",
-      "args": ["-c", "cd frontend && exec npx -y shadcn@4.16.1 mcp"]
+      "args": [
+        "scripts/shadcn-mcp.sh"
+      ]
     },
     "sanity": {
       "type": "http",

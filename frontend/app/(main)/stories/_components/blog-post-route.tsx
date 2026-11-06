@@ -20,7 +20,7 @@ export async function BlogPostRoute({
 
   return (
     <RootContentView
-      blogPostSidebar={getBlogPostSidebar(blogPostSettings)}
+      blogPostSettings={getBlogPostSidebar(blogPostSettings)}
       content={post}
       perspective={perspective}
       stega={stega}
