@@ -92,6 +92,9 @@ function memorialCardPayload(entry: MemorialCardEntry) {
     donor_phone: entry.donorPhone,
     donor_email: entry.donorEmail,
     ...visitFields(entry),
+    // Formspark sends the reply email to `_replyto`, and the office's Reply
+    // goes there too. The read-back ignores it: `donor_email` holds the address.
+    _replyto: entry.donorEmail,
     _email: {
       subject: `Memorial card: ${TRIBUTES[entry.tribute].toLowerCase()} ${entry.honoreeName}`,
     },
