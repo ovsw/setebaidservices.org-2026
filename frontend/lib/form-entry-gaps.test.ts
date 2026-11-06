@@ -7,7 +7,7 @@ import { emailNewGaps, fillFormEntryGaps } from "@/lib/form-entry-gaps";
 import { storeFormEntry } from "@/lib/form-entry-store";
 import { entryFromFormspark, formsparkPayload } from "@/lib/formspark-entry";
 import type { FormsparkSubmission } from "@/lib/formspark-api";
-import type { MemorialCardEntry } from "@/lib/form-entry";
+import type { MemorialCardEntry, ParentsGuideEntry } from "@/lib/form-entry";
 import { validateMemorialCard } from "@/lib/memorial-card";
 import { validDraft } from "@/test/memorial-card-draft";
 
@@ -32,7 +32,7 @@ function entry(id: number, hoursAgo: number, extra: Partial<AskAboutCampEntry> =
   };
 }
 
-function inFormspark(item: AskAboutCampEntry | MemorialCardEntry): FormsparkSubmission {
+function inFormspark(item: AskAboutCampEntry | MemorialCardEntry | ParentsGuideEntry): FormsparkSubmission {
   return { id: `fs-${item.submissionId.slice(-4)}`, data: formsparkPayload(item), createdAt: item.receivedAt };
 }
 
@@ -109,6 +109,33 @@ describe("fillFormEntryGaps", () => {
     expect(text).toContain("Memorial card · obituary · /donate/memorial");
   });
 
+  it("copies a parent's guide request that reached only Formspark, with its answers", async () => {
+    const lost: ParentsGuideEntry = {
+      kind: "parents_guide",
+      firstName: "Dana",
+      email: "dana@example.com",
+      submissionId: "00000000-0000-4000-8000-000000000010",
+      receivedAt: new Date(NOW.getTime() - 5 * HOUR).toISOString(),
+      source: "direct",
+      page: "/parents/guide",
+    };
+
+    const result = await fillFormEntryGaps(db, [inFormspark(lost)], NOW);
+
+    expect(result.copied).toEqual([{ submissionId: lost.submissionId, form: lost.kind, path: "trigger", receivedAt: lost.receivedAt }]);
+    const { rows } = await db.query("select first_name, email, formspark_id from parents_guide_entries");
+    expect(rows).toEqual([{ first_name: "Dana", email: "dana@example.com", formspark_id: "fs-0010" }]);
+    const gaps = await db.query("select form, path from delivery_gaps");
+    expect(gaps.rows).toEqual([{ form: "parents_guide", path: "trigger" }]);
+    const camp = await db.query("select count(*)::integer as count from form_entries");
+    expect(camp.rows).toEqual([{ count: 0 }]);
+
+    const send = vi.fn(async () => undefined);
+    await expect(emailNewGaps(db, send, NOW)).resolves.toBe(1);
+    const text = (send.mock.calls[0] as unknown as [{ text: string }])[0].text;
+    expect(text).toContain("Parent's guide · direct · /parents/guide");
+  });
+
   it("reports Neon entries older than one day that have no Formspark copy", async () => {
     const mailed = entry(1, 30);
     const notMailed = entry(2, 30);
@@ -121,6 +148,17 @@ describe("fillFormEntryGaps", () => {
     expect(result.missingFromFormspark).toEqual([
       { submissionId: notMailed.submissionId, form: notMailed.kind, path: "formspark", receivedAt: notMailed.receivedAt },
     ]);
+  });
+
+  it("does not report a form as missing from Formspark when its Formspark form was not read", async () => {
+    const notMailed = entry(1, 30);
+    await storeFormEntry(db, notMailed);
+
+    const result = await fillFormEntryGaps(db, [], NOW, ["memorial_card", "parents_guide"]);
+
+    expect(result.missingFromFormspark).toEqual([]);
+    const gaps = await db.query("select count(*)::integer as count from delivery_gaps");
+    expect(gaps.rows).toEqual([{ count: 0 }]);
   });
 
   it("reports each gap one time, and the next run finds nothing new", async () => {
