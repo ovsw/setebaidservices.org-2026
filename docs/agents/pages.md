@@ -101,6 +101,27 @@ it with the template's current version; edit the template, not this part.
   Clients need a Sanity login to open it; Ovi sends the invitations.
 <!-- ovs-workflow-setup:page-record:end -->
 
+## Hidden pages (Ovi, 2026-11-06)
+
+The site is live, so a published page is public unless it is **Hidden**
+(see `CONTEXT.md`). Hidden keeps an unreviewed page private while the
+draft-versus-published comparison keeps working.
+
+- New pages, stories, categories and the stories index start Hidden. A
+  page seeded by script is created Hidden too.
+- A page is published at Client Review, as in "Page record". It stays
+  Hidden: the client sees it in Presentation, the public Website answers
+  404.
+- When the card moves to Accepted, an editor unticks Hidden on the page
+  (Settings group) and publishes. Only then does the page go public.
+- A link to a Hidden page shows a warning in the Studio and leads to a 404
+  on the public Website until the page is accepted. Header and footer
+  entries to it disappear on their own.
+- The published "Final" documents from the 2026-11-06 audit (the five
+  `/donate/...` and `/get-involved` pages, the stories index, every story
+  and every category) were set Hidden by
+  `studio/scripts/hide-final-documents.mjs`.
+
 ## Plan
 
 - **Plan documents:** in Basecamp, see "Page record". Every page has one,
