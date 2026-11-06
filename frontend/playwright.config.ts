@@ -1,4 +1,20 @@
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "@playwright/test";
+
+// Serve on this worktree's own Website port (the one `pnpm dev:worktree` uses),
+// so the smoke test never collides with another worktree's server on 3000.
+// The test scripts run scripts/ensure-worktree-ports.mjs first to assign it.
+const portsFile = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+  ".worktree-ports.json",
+);
+const port: number = existsSync(portsFile)
+  ? JSON.parse(readFileSync(portsFile, "utf8")).frontendPort
+  : 3000;
+const baseURL = `http://localhost:${port}`;
 
 export default defineConfig({
   testDir: "./e2e",
@@ -10,15 +26,15 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL,
     channel: "chrome",
     trace: "retain-on-failure",
   },
   webServer: {
     command: process.env.PLAYWRIGHT_REUSE_BUILD
-      ? "pnpm start"
-      : "pnpm build && pnpm start",
-    url: "http://localhost:3000",
+      ? `pnpm start --port ${port}`
+      : `pnpm build && pnpm start --port ${port}`,
+    url: baseURL,
     reuseExistingServer:
       !process.env.CI && !process.env.PLAYWRIGHT_REUSE_BUILD,
     timeout: 180_000,
