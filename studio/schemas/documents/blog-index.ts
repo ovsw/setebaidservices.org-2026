@@ -2,6 +2,7 @@ import { Newspaper } from "lucide-react";
 import { defineField, defineType } from "sanity";
 import { blogIndexBlocksField } from "../blocks/page-builder";
 import meta from "../blocks/shared/meta";
+import { hiddenField, withHiddenMarker } from "../blocks/shared/hidden";
 
 export default defineType({
   name: "blogIndex",
@@ -11,6 +12,7 @@ export default defineType({
   groups: [
     { name: "content", title: "Content" },
     { name: "seo", title: "SEO" },
+    { name: "settings", title: "Settings" },
   ],
   fields: [
     defineField({
@@ -34,12 +36,13 @@ export default defineType({
     }),
     blogIndexBlocksField,
     meta,
+    hiddenField,
   ],
   preview: {
-    select: { title: "title", subtitle: "description" },
-    prepare: ({ subtitle, title }) => ({
+    select: { title: "title", subtitle: "description", hidden: "hidden" },
+    prepare: ({ subtitle, title, hidden }) => ({
       title: title || "Untitled Blog Index",
-      subtitle: subtitle || "/stories",
+      subtitle: withHiddenMarker(subtitle || "/stories", hidden),
     }),
   },
 });

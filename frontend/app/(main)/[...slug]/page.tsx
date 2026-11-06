@@ -1,4 +1,5 @@
 import { RootContentView } from "@/components/root-content";
+import { notFoundIfHidden } from "@/lib/public-visibility";
 import { isReservedPagePath, isRouteSlug, pagePath } from "@/lib/routes";
 import {
   fetchSanityPageBySlug,
@@ -79,7 +80,9 @@ export default async function PageRoute(props: {
   const { slug: segments } = await props.params;
   const slug = readPageSlug(segments);
   if (!slug) notFound();
-  return <CachedPage slug={slug} perspective="published" stega={false} />;
+  return (
+    <CachedPage slug={slug} perspective="published" stega={false} isPublic />
+  );
 }
 
 async function DynamicPage({
@@ -100,9 +103,13 @@ async function CachedPage({
   slug,
   perspective,
   stega,
-}: { slug: string } & DynamicFetchOptions) {
+  isPublic = false,
+}: { slug: string; isPublic?: boolean } & DynamicFetchOptions) {
   const page = await fetchSanityPageBySlug({ slug, perspective, stega });
   if (!page) notFound();
+  // Draft mode can use the published perspective too (the client review
+  // link), so the public branch says so explicitly.
+  if (isPublic) notFoundIfHidden(page);
 
   return (
     <RootContentView
