@@ -114,6 +114,8 @@ describe("fillFormEntryGaps", () => {
       kind: "parents_guide",
       firstName: "Dana",
       email: "dana@example.com",
+      phone: "(610) 555-0123",
+      okToContact: true,
       submissionId: "00000000-0000-4000-8000-000000000010",
       receivedAt: new Date(NOW.getTime() - 5 * HOUR).toISOString(),
       source: "direct",
@@ -123,8 +125,18 @@ describe("fillFormEntryGaps", () => {
     const result = await fillFormEntryGaps(db, [inFormspark(lost)], NOW);
 
     expect(result.copied).toEqual([{ submissionId: lost.submissionId, form: lost.kind, path: "trigger", receivedAt: lost.receivedAt }]);
-    const { rows } = await db.query("select first_name, email, formspark_id from parents_guide_entries");
-    expect(rows).toEqual([{ first_name: "Dana", email: "dana@example.com", formspark_id: "fs-0010" }]);
+    const { rows } = await db.query(
+      "select first_name, email, phone, ok_to_contact, formspark_id from parents_guide_entries",
+    );
+    expect(rows).toEqual([
+      {
+        first_name: "Dana",
+        email: "dana@example.com",
+        phone: "(610) 555-0123",
+        ok_to_contact: true,
+        formspark_id: "fs-0010",
+      },
+    ]);
     const gaps = await db.query("select form, path from delivery_gaps");
     expect(gaps.rows).toEqual([{ form: "parents_guide", path: "trigger" }]);
     const camp = await db.query("select count(*)::integer as count from form_entries");
