@@ -16,6 +16,8 @@ type PostImage = BlogPost["image"];
  * and cream fields; dark cards on the green field.
  */
 export type PostCardTone = "dark" | "light";
+/** The card title's heading level: one below the heading of the section that holds the cards. */
+export type PostCardHeadingLevel = "h2" | "h3";
 
 const tones = {
   dark: {
@@ -155,6 +157,7 @@ export function documentDataAttribute({
 
 type PostCardProps = {
   fallbackImage?: PostImage;
+  headingLevel?: PostCardHeadingLevel;
   post: BlogPost;
   stega: boolean;
   tone?: PostCardTone;
@@ -163,6 +166,7 @@ type PostCardProps = {
 /** Grid card: cover image, title, three lines of excerpt, date. */
 export function PostCard({
   fallbackImage,
+  headingLevel: Title = "h3",
   post,
   stega,
   tone = "light",
@@ -184,14 +188,14 @@ export function PostCard({
         tone={tone}
       />
       <div className="flex flex-1 flex-col p-6">
-        <h3
+        <Title
           className="text-balance font-display text-title"
           data-sanity={dataAttribute?.("title")}
         >
           <Link className={stretchedLink} href={href}>
             {post.title}
           </Link>
-        </h3>
+        </Title>
         {post.excerpt ? (
           <p
             className={cn(
@@ -228,6 +232,7 @@ export function PostCard({
 /** The newest post on page one of the Blog: a wide cover over the story. */
 export function FeaturedPostCard({
   fallbackImage,
+  headingLevel: Title = "h3",
   post,
   stega,
   tone = "light",
@@ -251,14 +256,14 @@ export function FeaturedPostCard({
       <div className="flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16 lg:p-10">
         <div className="max-w-3xl">
           <p className={cn("mb-3 text-eyebrow", colors.eyebrow)}>Latest post</p>
-          <h3
+          <Title
             className="text-balance font-display text-title-lg sm:text-4xl sm:leading-[1.05] sm:tracking-tight"
             data-sanity={dataAttribute?.("title")}
           >
             <Link className={stretchedLink} href={href}>
               {post.title}
             </Link>
-          </h3>
+          </Title>
           {post.excerpt ? (
             <p
               className={cn(
@@ -299,11 +304,13 @@ export function FeaturedPostCard({
 /** Responsive grid of post cards: one, two, then three columns. */
 export function PostGrid({
   fallbackImage,
+  headingLevel,
   posts,
   stega,
   tone,
 }: {
   fallbackImage?: PostImage;
+  headingLevel?: PostCardHeadingLevel;
   posts: BlogPost[];
   stega: boolean;
   tone?: PostCardTone;
@@ -314,6 +321,7 @@ export function PostGrid({
         <li className="min-w-0" key={post._id}>
           <PostCard
             fallbackImage={fallbackImage}
+            headingLevel={headingLevel}
             post={post}
             stega={stega}
             tone={tone}
