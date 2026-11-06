@@ -4,10 +4,7 @@ import { internalReferenceHref } from "./shared/internal-href";
 const destinationProjection = `{
   openInNewTab,
   "href": select(
-    kind == "internal" => select(
-      internal->_id == "blogIndex" => "/stories",
-      ${internalReferenceHref}
-    ),
+    kind == "internal" => ${internalReferenceHref},
     kind == "external" => external
   )
 }`;

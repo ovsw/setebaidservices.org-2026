@@ -184,6 +184,51 @@ describe("createHeaderNavigationModel", () => {
     expect(model).toEqual({ items: [], actions: [] });
   });
 
+  it("drops links whose target is Hidden (the query yields no href for them)", () => {
+    const model = createHeaderNavigationModel({
+      _id: "navigation",
+      items: [
+        {
+          _key: "stories",
+          kind: "link",
+          label: "Stories",
+          destination: { href: null, openInNewTab: false },
+        },
+        {
+          _key: "donate",
+          kind: "group",
+          label: "Donate",
+          links: [
+            {
+              _key: "campaigns",
+              label: "Campaigns",
+              description: null,
+              icon: null,
+              destination: { href: null, openInNewTab: false },
+            },
+            {
+              _key: "give",
+              label: "Give",
+              description: null,
+              icon: null,
+              destination: { href: "/donate", openInNewTab: false },
+            },
+          ],
+        },
+      ],
+      actions: [
+        { _key: "hidden-action", label: "Campaigns", destination: { href: null, openInNewTab: false } },
+      ],
+    });
+
+    expect(model.items).toHaveLength(1);
+    expect(model.items[0]).toMatchObject({ key: "donate", kind: "group" });
+    expect(
+      model.items[0]?.kind === "group" ? model.items[0].links.map((link) => link.key) : [],
+    ).toEqual(["give"]);
+    expect(model.actions).toEqual([]);
+  });
+
   it("uses authored identity and supports settings documents from before siteName", () => {
     expect(createHeaderBrandModel(null)).toBeNull();
     expect(

@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { InlineObjectField } from "../../inputs/inline-object-field";
+import { hiddenLinkTargetWarning } from "../../validation/hidden-link-target";
 
 type DestinationOptions = {
   name: string;
@@ -57,13 +58,19 @@ export function defineDestinationType({
           { type: "blogIndex" },
         ],
         hidden: ({ parent }) => parent?.kind !== "internal",
-        validation: (rule) =>
+        validation: (rule) => [
           rule.custom((value, context) =>
             (context.parent as { kind?: string } | undefined)?.kind ===
               "internal" && !value
               ? "Select a page"
               : true,
           ),
+          hiddenLinkTargetWarning(
+            rule,
+            (context) =>
+              (context.parent as { kind?: string } | undefined)?.kind === "internal",
+          ),
+        ],
       }),
       defineField({
         name: "external",

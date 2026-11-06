@@ -43,7 +43,15 @@ export async function generateMetadata({ params }: Props) {
 export default async function CategoryPage({ params }: Props) {
   const [{ slug }, { isEnabled }] = await Promise.all([params, draftMode()]);
   if (isEnabled) return <DynamicCategoryPage slug={slug} />;
-  return <CategoryArchiveRoute currentPage={1} perspective="published" slug={slug} stega={false} />;
+  return (
+    <CategoryArchiveRoute
+      currentPage={1}
+      perspective="published"
+      slug={slug}
+      stega={false}
+      isPublic
+    />
+  );
 }
 
 async function DynamicCategoryPage({ slug }: { slug: string }) {
