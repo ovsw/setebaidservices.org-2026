@@ -86,6 +86,8 @@ export default function LatestArticles({
   const featured = blogListing?.featured ?? null;
   const leadsPage = Boolean(blogListing?.leadsPage);
   const Heading = leadsPage ? "h1" : "h2";
+  // Card titles sit one level under the section heading, so the outline never skips a level.
+  const cardHeadingLevel = leadsPage ? "h2" : "h3";
   // The dispatcher passes `dataAttribute` only when Presentation editing is on.
   const stega = Boolean(dataAttribute);
 
@@ -149,6 +151,7 @@ export default function LatestArticles({
           <div className="mb-6">
             <FeaturedPostCard
               fallbackImage={fallbackImage}
+              headingLevel={cardHeadingLevel}
               post={featured}
               stega={stega}
               tone={tone}
@@ -159,6 +162,7 @@ export default function LatestArticles({
         {posts.length ? (
           <PostGrid
             fallbackImage={fallbackImage}
+            headingLevel={cardHeadingLevel}
             posts={posts}
             stega={stega}
             tone={tone}
