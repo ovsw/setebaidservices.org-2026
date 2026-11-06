@@ -166,9 +166,10 @@ with its next deployment.
 The script also keeps every value in `~/.config/setebaid/qr-mechanism.env`,
 outside git and readable only by you. Set `QR_SETUP_ENV_FILE` to use another
 path. A re-run offers the saved values, so press Enter to keep them. The file
-also holds two values that go nowhere else: the deploy hook URL, and the
+also holds values that go nowhere else: the deploy hook URL, the
 Trigger.dev "setup-script" key that lets the script write Trigger.dev
-variables.
+variables, and `FORMSPARK_TEMPLATE_TOKEN`, which `pnpm form-emails` uses to
+write the form emails (see `docs/agents/form-notifications.md`).
 
 Sections c, e, f, g and h write to Trigger.dev only after section d has run.
 Section d copies every value that is already saved, so the order does not
