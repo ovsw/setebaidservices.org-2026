@@ -14,6 +14,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "db:migrate": "node --env-file-if-exists=${QR_SETUP_ENV_FILE:-$HOME/.config/setebaid/qr-mechanism.env} scripts/db-migrate.mjs",
+    "form-emails": "node --env-file-if-exists=${QR_SETUP_ENV_FILE:-$HOME/.config/setebaid/qr-mechanism.env} scripts/form-emails.ts",
     "trigger:dev": "trigger dev",
     "trigger:deploy": "trigger deploy",
     "test:e2e": "playwright test",
