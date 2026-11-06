@@ -72,7 +72,7 @@ What a visitor sends through one of the Website's forms: an "Ask about camp" req
 
 **Parent's guide request**
 
-A parent's first name and email, sent from the Parent's guide form on `/parents/guide` to ask for the guide. The office sends the guide by email. Parent's guide requests are not on the team dashboard.
+A parent's first name and email, an optional phone and an optional OK to contact ("Setebaid may contact me about camp", unticked by default), sent from the Parent's guide form on `/parents/guide` to ask for the guide. The reply email delivers the guide. Parent's guide requests are not on the team dashboard.
 
 **Memorial card entry**
 

@@ -106,6 +106,8 @@ function parentsGuidePayload(entry: ParentsGuideEntry) {
     form: FORM_LABELS.parents_guide,
     first_name: entry.firstName,
     email: entry.email,
+    phone: entry.phone || EMPTY,
+    ok_to_contact: entry.okToContact ? "Yes" : "No",
     ...visitFields(entry),
     _email: {
       subject: `Parent's guide request: ${entry.firstName}`,
@@ -189,6 +191,8 @@ const parentsGuideData = z.object({
   form: z.literal(FORM_LABELS.parents_guide),
   first_name: storedText,
   email: storedText,
+  phone: optionalText,
+  ok_to_contact: z.enum(["Yes", "No"]),
 });
 
 function visitMeta(fields: z.output<z.ZodObject<typeof visitData>>) {
@@ -258,6 +262,8 @@ function parentsGuideFromFormspark(data: unknown): ParentsGuideEntry | undefined
     ...visitMeta(fields),
     firstName: fields.first_name,
     email: fields.email,
+    phone: fields.phone,
+    okToContact: fields.ok_to_contact === "Yes",
   };
 }
 
