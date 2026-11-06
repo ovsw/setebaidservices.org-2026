@@ -55,7 +55,8 @@ const richTextBlockComponents = {
   normal: ({ children }) => <p className="mb-4">{children}</p>,
   ...createRichTextHeadingComponents(),
   blockquote: ({ children }) => (
-    <blockquote className="my-6 border-l-2 border-border pl-4 italic">
+    // The pull quote: a thick logo-green rule and a larger serif line.
+    <blockquote className="text-quote-lg my-10 border-l-4 border-mark pl-6 text-foreground">
       {children}
     </blockquote>
   ),
@@ -172,9 +173,16 @@ export const richTextContentComponents: PortableTextProps["components"] = {
       if (!(title || body)) return null;
 
       return (
-        <aside className="my-8 border-l-4 border-border pl-5">
-          {title ? <p className="mb-2 font-semibold text-foreground">{title}</p> : null}
-          {body ? <p className="my-0 text-muted-foreground">{body}</p> : null}
+        // A light card one soft step off the field, with an edge because
+        // the fill alone barely shows on a light field.
+        <aside className="my-10 rounded-md border-[1.5px] border-border bg-card p-7 text-card-foreground">
+          {/* Divs, not paragraphs: the body's paragraph margins stay out. */}
+          {title ? <div className="text-title text-foreground">{title}</div> : null}
+          {body ? (
+            <div className={cn("text-body text-muted-foreground", title && "mt-3")}>
+              {body}
+            </div>
+          ) : null}
         </aside>
       );
     },
@@ -207,7 +215,7 @@ export default function RichTextContent({
   return (
     <div
       className={cn(
-        "max-w-none text-base leading-7 text-ink-soft [&>:first-child]:mt-0 [&>:last-child]:mb-0 [&_a]:font-medium [&_blockquote]:blockquote-accent [&_blockquote]:px-5 [&_blockquote]:py-3 [&_blockquote]:text-foreground [&_figcaption]:text-muted-foreground [&_h2]:mt-12 [&_h2]:border-b [&_h2]:border-border [&_h2]:pb-3 [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:tracking-normal [&_h3]:mt-10 [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:tracking-normal [&_h4]:mt-8 [&_h4]:text-xl [&_h4]:font-semibold [&_li]:my-2 [&_ol]:my-6 [&_ol]:pl-6 [&_p]:my-5 [&_p]:text-pretty [&_strong]:font-semibold [&_strong]:text-foreground [&_ul]:my-6 [&_ul]:pl-6",
+        "max-w-none text-base leading-7 text-ink-soft [&>:first-child]:mt-0 [&>:last-child]:mb-0 [&_a]:font-medium [&_figcaption]:text-muted-foreground [&_h2]:mt-12 [&_h2]:border-b [&_h2]:border-border [&_h2]:pb-3 [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:tracking-normal [&_h3]:mt-10 [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:tracking-normal [&_h4]:mt-8 [&_h4]:text-xl [&_h4]:font-semibold [&_li]:my-2 [&_ol]:my-6 [&_ol]:pl-6 [&_p]:my-5 [&_p]:text-pretty [&_strong]:font-semibold [&_strong]:text-foreground [&_ul]:my-6 [&_ul]:pl-6",
         className,
       )}
       data-sanity={dataSanity}

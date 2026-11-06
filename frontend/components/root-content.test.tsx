@@ -25,9 +25,10 @@ const post = {
   title: "Post title",
 } as unknown as NonNullable<POST_QUERY_RESULT>;
 
-const blogPostSidebar = {
+const blogPostSettings = {
   _id: "blogPostSettings",
   _type: "blogPostSettings",
+  blocks: null,
   title: "Explore the topic",
   description: null,
   actions: [
@@ -93,7 +94,7 @@ describe("RootContentView", () => {
 
     rerender(
       <RootContentView
-        blogPostSidebar={blogPostSidebar}
+        blogPostSettings={blogPostSettings}
         content={post}
         perspective="published"
         stega={false}
@@ -112,7 +113,7 @@ describe("RootContentView", () => {
     } as unknown as NonNullable<POST_QUERY_RESULT>;
     const { container } = render(
       <RootContentView
-        blogPostSidebar={blogPostSidebar}
+        blogPostSettings={blogPostSettings}
         content={thinPost}
         perspective="published"
         stega={false}
@@ -138,7 +139,7 @@ describe("RootContentView", () => {
     } as unknown as NonNullable<POST_QUERY_RESULT>;
     render(
       <RootContentView
-        blogPostSidebar={blogPostSidebar}
+        blogPostSettings={blogPostSettings}
         content={headingRichPost}
         perspective="published"
         stega={false}
@@ -201,5 +202,51 @@ describe("RootContentView", () => {
       <RootContentView content={post} perspective="published" stega={false} />,
     );
     expect(jsonLdNodesByType(container, "FinancialProduct")).toHaveLength(0);
+  });
+
+  it("closes every story with the shared sections from Blog Post Settings", () => {
+    const settings = {
+      ...blogPostSettings,
+      actions: null,
+      blocks: [
+        {
+          _key: "story-close",
+          _type: "ctaBanner",
+          background: "cream",
+          buttons: [
+            {
+              _key: "ask",
+              _type: "button",
+              href: "/ask-about-camp",
+              openInNewTab: false,
+              text: "Ask about camp",
+            },
+          ],
+          description: "Setebaid is a nonprofit camp.",
+          title: "New to Setebaid?",
+          variant: "closing",
+        },
+      ],
+    } as unknown as BlogPostSidebar;
+    const { container } = render(
+      <RootContentView
+        blogPostSettings={settings}
+        content={post}
+        perspective="published"
+        stega={false}
+      />,
+    );
+
+    const story = container.querySelector("article")?.closest("section");
+    const closing = screen.getByRole("heading", { name: "New to Setebaid?" });
+    expect(story?.contains(closing)).toBe(false);
+    expect(
+      story!.compareDocumentPosition(closing) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Ask about camp" })).toHaveAttribute(
+      "href",
+      "/ask-about-camp",
+    );
+    expect(screen.queryByRole("complementary", { name: "Post actions" })).not.toBeInTheDocument();
   });
 });

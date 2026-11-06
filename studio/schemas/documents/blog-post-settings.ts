@@ -1,5 +1,6 @@
 import { PanelRight } from "lucide-react";
 import { defineType } from "sanity";
+import { storyClosingBlocksField } from "../blocks/page-builder";
 import { blogPostSidebarFields } from "../blocks/shared/blog-post-sidebar";
 
 export default defineType({
@@ -7,8 +8,9 @@ export default defineType({
   title: "Blog Post Settings",
   type: "document",
   icon: PanelRight,
-  description: "Shared sidebar content shown on blog post pages.",
-  fields: blogPostSidebarFields,
+  description:
+    "Shared content on every story page: the sidebar and the closing sections.",
+  fields: [...blogPostSidebarFields, storyClosingBlocksField],
   preview: {
     prepare: () => ({ title: "Blog Post Settings" }),
   },
