@@ -170,6 +170,8 @@ export type ReplyEmail = {
   /** What happens next, one paragraph each, as template code. */
   paragraphs: string[];
   button?: Button;
+  /** Paragraphs below the button, as template code, for example how to ask a question. */
+  afterButton?: string[];
 };
 
 /**
@@ -182,6 +184,7 @@ export function replyEmail(email: ReplyEmail) {
       paragraph(email.greeting),
       ...email.paragraphs.map((value) => paragraph(value)),
       email.button ? button(email.button) : "",
+      ...(email.afterButton ?? []).map((value) => paragraph(value)),
       paragraph(`${text("The Setebaid team")}`, "8px 0 0"),
     ]
       .filter(Boolean)

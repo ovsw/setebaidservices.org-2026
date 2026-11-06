@@ -1,10 +1,17 @@
-import { type FormEmails, field, officeNotification, text } from "./layout.ts";
+import { type FormEmails, field, officeNotification, replyEmail, text } from "./layout.ts";
+
+/**
+ * The guide's stable address on the Website. It redirects to the PDF uploaded
+ * on the Parent's guide form in Sanity (frontend/app/parents-guide.pdf), so a
+ * new guide needs no template push. The email links to it; it never attaches
+ * the PDF, which would hurt delivery.
+ */
+export const GUIDE_URL = "https://setebaidservices.org/parents-guide.pdf";
 
 /**
  * The "Parent's guide" emails. Field names follow `parentsGuidePayload`. The
  * form asks for a first name only, so the emails use only the first name.
- *
- * The reply email, which delivers the guide, waits for the guide PDF (#120).
+ * The reply email delivers the guide as a link.
  */
 export const parentsGuideEmails: FormEmails = {
   form: "Parent's guide",
@@ -19,6 +26,15 @@ export const parentsGuideEmails: FormEmails = {
       { label: "Phone", value: field("phone"), onlyWhenGiven: "phone" },
     ],
   }),
+  reply: {
+    subject: "Your Camp Setebaid parent's guide",
+    code: replyEmail({
+      greeting: `${text("Hi")} ${field("first_name")},`,
+      paragraphs: [text("Thank you for asking for the parent's guide. Here it is.")],
+      button: { label: text("Read the guide"), href: GUIDE_URL },
+      afterButton: [text("Have a question about camp? Reply to this email, and we will answer.")],
+    }),
+  },
   example: {
     form: "Parent's guide",
     first_name: "Maria",

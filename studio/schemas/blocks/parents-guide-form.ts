@@ -8,7 +8,7 @@ export default defineType({
   type: "object",
   icon: BookOpen,
   description:
-    "A short form for the parent's guide. It asks only for a name and an email, and sends them to the office by email.",
+    "A short form for the parent's guide. It asks for a first name and an email, emails the parent the guide, and tells the office.",
   fields: [
     sectionBackgroundField,
     defineField({
@@ -16,6 +16,15 @@ export default defineType({
       title: "Heading",
       type: "string",
       validation: (rule) => rule.required().error("Add the heading shown above the form."),
+    }),
+    defineField({
+      name: "guide",
+      title: "Guide PDF",
+      type: "file",
+      description:
+        "The parent's guide. The reply email links to setebaidservices.org/parents-guide.pdf, which opens this file, so uploading a new PDF here replaces the guide everywhere.",
+      options: { accept: "application/pdf" },
+      validation: (rule) => rule.required().error("Upload the guide PDF that the reply email sends to parents."),
     }),
     defineField({
       name: "intro",
