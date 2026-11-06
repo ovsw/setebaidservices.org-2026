@@ -23,6 +23,7 @@
     "setup:sanity-cors": "node --env-file=studio/.env.local --env-file=studio/.env.production scripts/setup-sanity-cors.mjs",
     "setup:qr": "bash scripts/setup-qr-mechanism.sh",
     "db:migrate": "pnpm --dir frontend db:migrate",
+    "form-emails": "pnpm --dir frontend form-emails",
     "trigger:deploy": "pnpm --dir frontend trigger:deploy",
     "page-builder:new": "node scripts/create-page-builder-block.mjs",
     "impeccable:live": "\"$HOME/.claude/skills/impeccable/scripts/impeccable\" live --target frontend",

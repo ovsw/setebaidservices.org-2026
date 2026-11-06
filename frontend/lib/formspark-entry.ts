@@ -13,12 +13,32 @@ import { GIVE_BY, TRIBUTES } from "@/lib/memorial-card";
 const EMPTY = "—";
 const INTEREST_SEPARATOR = "; ";
 
+const EASTERN_TIME = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/New_York",
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+});
+
+/**
+ * The time an entry was sent, in Pennsylvania time and ready to show, for
+ * example "Nov 5, 2026, 10:30 AM ET". The emails print it as it is, so they
+ * need no time zone support from Formspark.
+ */
+export function easternSentTime(receivedAt: string) {
+  // ICU puts a narrow no-break space before AM/PM; mail clients get a plain one.
+  return `${EASTERN_TIME.format(new Date(receivedAt)).replace(/\s/g, " ")} ET`;
+}
+
 function visitFields(entry: FormEntry) {
   return {
     source: entry.source,
     landing_page: entry.page,
     campaign: entry.campaign ?? EMPTY,
     received_at: entry.receivedAt,
+    sent_at: easternSentTime(entry.receivedAt),
     submission_id: entry.submissionId,
   };
 }
@@ -194,8 +214,10 @@ function memorialCardFromFormspark(data: unknown): MemorialCardEntry | undefined
 }
 
 /**
- * Reads an entry back from a Formspark submission's data. Returns undefined
- * for a submission the Website did not send, for example a test post.
+ * Reads an entry back from a Formspark submission's data. It reads the time
+ * from `received_at` and ignores `sent_at`, which is only for the emails.
+ * Returns undefined for a submission the Website did not send, for example a
+ * test post.
  */
 export function entryFromFormspark(data: unknown): FormEntry | undefined {
   const form = data && typeof data === "object" ? (data as { form?: unknown }).form : undefined;
