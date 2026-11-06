@@ -22,6 +22,7 @@ import {
 } from "@/components/post-sidebar/post-sidebar";
 import { documentDataAttribute } from "@/components/blog-card";
 import RichTextContent from "@/components/rich-text-content";
+import { cn } from "@/lib/utils";
 import { dataset, projectId } from "@/sanity/lib/env";
 import type { DynamicFetchOptions } from "@/sanity/lib/live";
 import type { PAGE_QUERY_RESULT, POST_QUERY_RESULT } from "@/sanity.types";
@@ -107,6 +108,31 @@ function PageContent({
   );
 }
 
+type PostBody = NonNullable<NonNullable<POST_QUERY_RESULT>["body"]>;
+type PostLayoutName = "single-column" | "toc-column" | "two-column" | "three-column";
+
+/* Rails sit beside the story from 1024px; below that they stack around it. */
+const layoutColumns: Record<PostLayoutName, string> = {
+  "single-column": "",
+  "toc-column": "max-w-5xl lg:grid-cols-[14rem_minmax(0,1fr)]",
+  "two-column": "max-w-5xl lg:grid-cols-[minmax(0,1fr)_16rem]",
+  "three-column": "lg:grid-cols-[13rem_minmax(0,1fr)_15rem]",
+};
+
+/**
+ * Splits off the story's opening paragraph as the standfirst, when the body
+ * starts with a plain paragraph. A body that opens with a heading, a list,
+ * an image or a quote has no standfirst and renders whole.
+ */
+function splitStandfirst(body: PostBody): [PostBody[number] | null, PostBody] {
+  const [first, ...rest] = body;
+  const isPlainParagraph =
+    first?._type === "block" &&
+    (!first.style || stegaClean(first.style) === "normal") &&
+    !("listItem" in first && first.listItem);
+  return isPlainParagraph ? [first, rest] : [null, body];
+}
+
 function PostContent({
   blogPostSidebar,
   post,
@@ -120,14 +146,17 @@ function PostContent({
   const bodyModel = createPostBodyModel(body);
   const hasPostSidebar = Boolean(blogPostSidebar?.actions?.length);
   const hasTableOfContents = bodyModel.showTableOfContents;
-  const layoutName = hasTableOfContents
+  const layoutName: PostLayoutName = hasTableOfContents
     ? hasPostSidebar
       ? "three-column"
       : "toc-column"
     : hasPostSidebar
       ? "two-column"
       : "single-column";
+  const hasRails = hasTableOfContents || hasPostSidebar;
   const readTime = getPostReadTime(body);
+  const [standfirst, storyBody] = splitStandfirst(body);
+  const postDataAttribute = documentDataAttribute({ id: post._id, stega, type: "post" });
   const postSlug = post.slug?.current?.replace(/^\/+|\/+$/g, "") || "";
   const postCanonicalPath = postPath(postSlug) || "/stories";
   const blogPostSettingsDataAttribute = blogPostSidebar
@@ -149,7 +178,7 @@ function PostContent({
     : undefined;
 
   return (
-    <section>
+    <section className="field-cream pt-8 pb-(--section-pad) md:pt-12">
       <BreadcrumbJsonLd
         items={[
           { name: "Home", path: "/" },
@@ -160,24 +189,47 @@ function PostContent({
       />
       <BlogPostingJsonLd post={post} siteUrl={siteUrl} />
       <VideoJsonLd content={body} />
-      <PostHero post={post} readTime={readTime} stega={stega} />
-      <div data-post-layout={layoutName}>
-        {bodyModel.showTableOfContents ? (
-          <PostTableOfContentsRail headings={bodyModel.headings} />
-        ) : null}
-        <article>
-          {body.length ? (
-            <RichTextContent
-              dataSanity={bodyDataAttribute}
-              getHeadingId={bodyModel.getHeadingId}
-              value={body}
+      <div className="container-content">
+        <PostHero post={post} readTime={readTime} stega={stega} />
+        <div
+          className={cn(
+            "mx-auto mt-12 md:mt-16",
+            hasRails ? "lg:grid lg:items-start lg:gap-12" : "max-w-3xl",
+            layoutColumns[layoutName],
+          )}
+          data-post-layout={layoutName}
+        >
+          {bodyModel.showTableOfContents ? (
+            <PostTableOfContentsRail
+              className="mb-10 lg:sticky lg:top-28 lg:mb-0"
+              headings={bodyModel.headings}
             />
           ) : null}
-        </article>
-        <PostSidebar
-          dataAttribute={blogPostSettingsDataAttribute}
-          sidebar={blogPostSidebar}
-        />
+          <article className="min-w-0">
+            {standfirst ? (
+              // The story's first paragraph, the editor's line that sets the
+              // scene, opens the story at a larger size (the standfirst).
+              <RichTextContent
+                className="text-quote-lg text-foreground"
+                dataSanity={postDataAttribute?.(`body[_key=="${stegaClean(standfirst._key)}"]`)}
+                value={[standfirst]}
+              />
+            ) : null}
+            {storyBody.length ? (
+              <RichTextContent
+                className={standfirst ? "mt-10" : undefined}
+                dataSanity={bodyDataAttribute}
+                getHeadingId={bodyModel.getHeadingId}
+                value={storyBody}
+              />
+            ) : null}
+          </article>
+          <PostSidebar
+            className="mt-12 lg:sticky lg:top-28 lg:mt-0"
+            dataAttribute={blogPostSettingsDataAttribute}
+            sidebar={blogPostSidebar}
+          />
+        </div>
       </div>
     </section>
   );

@@ -20,6 +20,7 @@ const twMerge = extendTailwindMerge({
         "text-statement",
         "text-statement-sm",
         "text-quote",
+        "text-quote-lg",
         "text-lead",
         "text-body",
         "text-small",
