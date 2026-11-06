@@ -24,7 +24,9 @@ The ordered section editor used to compose a page.
 
 **Section**
 
-One reusable Page Builder content and layout unit.
+One entry in the Page Builder catalogue: one thumbnail, one design, one set
+of fields. A section never changes its design through a field; a second
+design is a second section. Avoid: layout, variant, look.
 
 **Seam**
 
