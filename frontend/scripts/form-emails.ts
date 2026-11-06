@@ -27,7 +27,7 @@ type Template = {
 type FormsparkError = { code?: string; detail?: string; errors?: unknown };
 
 function templatesOf(form: FormEmails): Template[] {
-  return [
+  const templates: Template[] = [
     {
       form,
       kind: "notification",
@@ -35,14 +35,17 @@ function templatesOf(form: FormEmails): Template[] {
       code: form.notification,
       subject: null,
     },
-    {
+  ];
+  if (form.reply) {
+    templates.push({
       form,
       kind: "autoresponder",
       name: `${form.form} reply email`,
       code: form.reply.code,
       subject: form.reply.subject,
-    },
-  ];
+    });
+  }
+  return templates;
 }
 
 function stop(message: string): never {
