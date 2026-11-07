@@ -13,6 +13,7 @@ import {
   fetchRegularPosts,
   fetchRegularPostsCount,
 } from "@/sanity/lib/fetch";
+import { notFoundIfHidden } from "@/lib/public-visibility";
 import type { DynamicFetchOptions } from "@/sanity/lib/live";
 import type { BLOG_INDEX_QUERY_RESULT } from "@/sanity.types";
 import { stegaClean } from "next-sanity";
@@ -62,12 +63,15 @@ export async function BlogIndexRoute({
   currentPage,
   perspective,
   stega,
-}: { currentPage: number } & DynamicFetchOptions) {
+  isPublic = false,
+}: { currentPage: number; isPublic?: boolean } & DynamicFetchOptions) {
   const [blogIndex, latestPost] = await Promise.all([
     fetchBlogIndex({ perspective, stega }),
     fetchLatestPost({ perspective, stega }),
   ]);
   if (!blogIndex) notFound();
+  // Draft mode (Presentation) never runs the Hidden check.
+  if (isPublic) notFoundIfHidden(blogIndex);
 
   const latestPostId = latestPost?._id || "";
   const queryParams = getRegularPostQueryParams(latestPostId, currentPage);

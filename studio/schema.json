@@ -8597,6 +8597,13 @@
           "name": "meta"
         },
         "optional": true
+      },
+      "hidden": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
       }
     }
   },
@@ -9547,6 +9554,13 @@
         },
         "optional": true
       },
+      "hidden": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "excerpt": {
         "type": "objectAttribute",
         "value": {
@@ -9825,6 +9839,13 @@
           "name": "meta"
         },
         "optional": true
+      },
+      "hidden": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
       }
     }
   },
@@ -9988,6 +10009,13 @@
         "value": {
           "type": "inline",
           "name": "slug"
+        },
+        "optional": true
+      },
+      "hidden": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
         },
         "optional": true
       },

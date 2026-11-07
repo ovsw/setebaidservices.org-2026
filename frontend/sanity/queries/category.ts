@@ -1,6 +1,11 @@
 import { groq } from "next-sanity";
 import { type BLOG_INDEX_QUERY_RESULT } from "@/sanity.types";
-import { blogPostOrder, publishedPostFilter } from "./blog-post-listing";
+import { PUBLIC_VISIBILITY_FILTER } from "../../../shared/public-visibility";
+import {
+  blogPostOrder,
+  postCardCategoryProjection,
+  publishedPostFilter,
+} from "./blog-post-listing";
 import { imageQuery } from "./shared/image";
 import { metaQuery } from "./shared/meta";
 import { archiveSharingPhotoQuery } from "./shared/sharing-photo";
@@ -9,6 +14,7 @@ export type CategoryArchive = {
   _id: string;
   _type: "category";
   description?: string | null;
+  hidden?: boolean | null;
   meta?: NonNullable<BLOG_INDEX_QUERY_RESULT>["meta"];
   publishedPostCount: number;
   sharingPhoto?: NonNullable<BLOG_INDEX_QUERY_RESULT>["sharingPhoto"];
@@ -28,7 +34,7 @@ const categoryPostProjection = `
   publishedAt,
   "excerpt": pt::text(excerpt),
   image {${imageQuery}},
-  category->{_id, title, slug}
+  ${postCardCategoryProjection}
 `;
 
 export const CATEGORY_QUERY = groq`
@@ -38,6 +44,7 @@ export const CATEGORY_QUERY = groq`
     title,
     slug,
     description,
+    hidden,
     ${metaQuery},
     ${archiveSharingPhotoQuery},
     "publishedPostCount": count(*[${publishedPostFilter} && category._ref == ^._id])
@@ -59,6 +66,7 @@ export const CATEGORY_STATIC_PARAMS_QUERY = groq`
   *[
     _type == "category"
     && defined(slug.current)
+    && ${PUBLIC_VISIBILITY_FILTER}
   ]{
     "slug": slug.current,
     "publishedPostCount": count(*[${publishedPostFilter} && category._ref == ^._id])

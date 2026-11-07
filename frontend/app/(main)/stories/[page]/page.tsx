@@ -108,7 +108,12 @@ export default async function BlogSegmentPage({ params }: Props) {
     return isEnabled ? (
       <DynamicBlogIndexPage page={page} />
     ) : (
-      <BlogIndexRoute currentPage={page} perspective="published" stega={false} />
+      <BlogIndexRoute
+        currentPage={page}
+        perspective="published"
+        stega={false}
+        isPublic
+      />
     );
   }
   if (/^\d+$/.test(segment)) notFound();
@@ -118,7 +123,7 @@ export default async function BlogSegmentPage({ params }: Props) {
   return isEnabled ? (
     <DynamicBlogPostPage slug={slug} />
   ) : (
-    <BlogPostRoute slug={slug} perspective="published" stega={false} />
+    <BlogPostRoute slug={slug} perspective="published" stega={false} isPublic />
   );
 }
 

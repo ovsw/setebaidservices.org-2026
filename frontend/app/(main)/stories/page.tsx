@@ -22,7 +22,9 @@ export default async function BlogPage() {
   if (isEnabled) {
     return <DynamicBlogPage />;
   }
-  return <BlogIndexRoute currentPage={1} perspective="published" stega={false} />;
+  return (
+    <BlogIndexRoute currentPage={1} perspective="published" stega={false} isPublic />
+  );
 }
 
 async function DynamicBlogPage() {

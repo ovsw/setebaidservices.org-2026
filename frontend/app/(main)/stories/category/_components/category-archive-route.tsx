@@ -14,6 +14,7 @@ import {
   fetchCategoryPosts,
   fetchCategoryPostsCount,
 } from "@/sanity/lib/fetch";
+import { notFoundIfHidden } from "@/lib/public-visibility";
 import type { DynamicFetchOptions } from "@/sanity/lib/live";
 import { notFound } from "next/navigation";
 import { stegaClean } from "next-sanity";
@@ -25,9 +26,12 @@ export async function CategoryArchiveRoute({
   perspective,
   slug,
   stega,
-}: { currentPage: number; slug: string } & DynamicFetchOptions) {
+  isPublic = false,
+}: { currentPage: number; isPublic?: boolean; slug: string } & DynamicFetchOptions) {
   const category = await fetchCategory({ perspective, slug, stega });
   if (!category) notFound();
+  // Draft mode (Presentation) never runs the Hidden check.
+  if (isPublic) notFoundIfHidden(category);
 
   const [posts, postCount] = await Promise.all([
     fetchCategoryPosts({

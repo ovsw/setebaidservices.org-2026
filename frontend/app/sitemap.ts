@@ -3,6 +3,7 @@ import { groq } from "next-sanity";
 import { isIndexableCategory } from "@/lib/blog-index";
 import { getDynamicFetchOptions, sanityFetchMetadata } from "@/sanity/lib/live";
 import { publishedPostFilter } from "@/sanity/queries/blog-post-listing";
+import { PUBLIC_VISIBILITY_FILTER } from "../../shared/public-visibility";
 
 const VIEWABLE_TYPES = ["homePage", "page", "post", "blogIndex", "category"] as const;
 
@@ -21,6 +22,7 @@ const SITEMAP_QUERY = groq`
   *[
     _type in $viewableTypes
     && meta.noindex != true
+    && ${PUBLIC_VISIBILITY_FILTER}
     && (
       (_type != "category" && (defined(slug.current) || _id in ["homePage", "blogIndex"]))
       || (_type == "category" && defined(slug.current))
