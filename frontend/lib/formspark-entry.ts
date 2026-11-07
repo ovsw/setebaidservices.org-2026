@@ -1,13 +1,20 @@
 import { z } from "zod";
-import type { AskAboutCampEntry, FormEntry, MemorialCardEntry } from "@/lib/form-entry";
+import type {
+  AskAboutCampEntry,
+  FormEntry,
+  MemorialCardEntry,
+  ParentsGuideEntry,
+} from "@/lib/form-entry";
 import { FORM_LABELS } from "@/lib/form-entry";
 import { GIVE_BY, TRIBUTES } from "@/lib/memorial-card";
 
 /**
  * How a form entry looks in Formspark. The Website posts it in this shape,
- * and the nightly gap-filler reads it back. Both forms post to the same
- * Formspark form; a memorial card entry names its form in the `form` field,
- * and an entry without one is an "Ask about camp" request.
+ * and the nightly gap-filler reads it back. Each form posts to its own
+ * Formspark form. A memorial card or parent's guide entry also names its form
+ * in the `form` field, and an entry without one is an "Ask about camp"
+ * request. Before each form had its own Formspark form, memorial cards were
+ * posted to the "Ask about camp" form; the field still tells them apart.
  */
 
 const EMPTY = "—";
@@ -71,9 +78,28 @@ function memorialCardPayload(entry: MemorialCardEntry) {
   };
 }
 
+function parentsGuidePayload(entry: ParentsGuideEntry) {
+  return {
+    form: FORM_LABELS.parents_guide,
+    first_name: entry.firstName,
+    email: entry.email,
+    ...visitFields(entry),
+    _email: {
+      subject: `Parent's guide request: ${entry.firstName}`,
+    },
+  };
+}
+
 /** The field names are what the office reads in the notification email. */
 export function formsparkPayload(entry: FormEntry) {
-  return entry.kind === "memorial_card" ? memorialCardPayload(entry) : askAboutCampPayload(entry);
+  switch (entry.kind) {
+    case "memorial_card":
+      return memorialCardPayload(entry);
+    case "parents_guide":
+      return parentsGuidePayload(entry);
+    default:
+      return askAboutCampPayload(entry);
+  }
 }
 
 const storedText = z.string().trim().min(1);
@@ -135,6 +161,13 @@ const memorialCardData = z.object({
   donor_email: storedText,
 });
 
+const parentsGuideData = z.object({
+  ...visitData,
+  form: z.literal(FORM_LABELS.parents_guide),
+  first_name: storedText,
+  email: storedText,
+});
+
 function visitMeta(fields: z.output<z.ZodObject<typeof visitData>>) {
   return {
     submissionId: fields.submission_id,
@@ -193,11 +226,25 @@ function memorialCardFromFormspark(data: unknown): MemorialCardEntry | undefined
   };
 }
 
+function parentsGuideFromFormspark(data: unknown): ParentsGuideEntry | undefined {
+  const result = parentsGuideData.safeParse(data);
+  if (!result.success) return undefined;
+  const fields = result.data;
+  return {
+    kind: "parents_guide",
+    ...visitMeta(fields),
+    firstName: fields.first_name,
+    email: fields.email,
+  };
+}
+
 /**
  * Reads an entry back from a Formspark submission's data. Returns undefined
  * for a submission the Website did not send, for example a test post.
  */
 export function entryFromFormspark(data: unknown): FormEntry | undefined {
   const form = data && typeof data === "object" ? (data as { form?: unknown }).form : undefined;
-  return form === undefined ? askAboutCampFromFormspark(data) : memorialCardFromFormspark(data);
+  if (form === undefined) return askAboutCampFromFormspark(data);
+  if (form === FORM_LABELS.parents_guide) return parentsGuideFromFormspark(data);
+  return memorialCardFromFormspark(data);
 }

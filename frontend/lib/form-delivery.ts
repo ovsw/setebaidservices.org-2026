@@ -17,7 +17,8 @@ import type { storeFormEntryTask } from "@/trigger/store-form-entry";
 /**
  * The delivery every Website form shares: the honeypot, the send limit, the
  * submission ID and visit details, and the two paths (the encrypted entry to
- * the Trigger.dev store task, and Formspark, which emails the office).
+ * the Trigger.dev store task, and the form's own Formspark form, which emails
+ * the office).
  */
 
 /** Delivers one entry, or throws. */
@@ -25,7 +26,7 @@ export type FormsparkClient = (entry: FormEntry) => Promise<void>;
 
 export function createFormsparkClient(formId: string | undefined): FormsparkClient {
   return async (entry) => {
-    if (!formId) throw new Error("FORMSPARK_FORM_ID is not set");
+    if (!formId) throw new Error("The Formspark form ID is not set");
     const response = await fetch(`https://submit-form.com/${encodeURIComponent(formId)}`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },

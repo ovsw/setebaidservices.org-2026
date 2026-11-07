@@ -48,12 +48,15 @@ async function recordGap(db: Database, gap: DeliveryGap, now: Date) {
  *   means path B (Formspark) failed.
  *
  * Each gap is recorded one time in delivery_gaps; the returned lists hold
- * only the gaps this run found.
+ * only the gaps this run found. The second check runs only for the forms in
+ * `checkedForms`: a form whose Formspark form could not be read would show
+ * every recent entry as missing.
  */
 export async function fillFormEntryGaps(
   db: Database,
   submissions: FormsparkSubmission[],
   now: Date,
+  checkedForms: readonly FormKind[] = FORM_KINDS,
 ) {
   const copied: DeliveryGap[] = [];
   const missingFromFormspark: DeliveryGap[] = [];
@@ -98,6 +101,7 @@ export async function fillFormEntryGaps(
       [copies.map(({ entry }) => entry.submissionId), copies.map(({ submission }) => submission.id)],
     );
 
+    if (!checkedForms.includes(form)) continue;
     const missing = await db.query(
       `select submission_id, received_at from ${table}
       where formspark_id is null and received_at >= $1 and received_at < $2
@@ -151,7 +155,7 @@ export function gapReportEmail(gaps: UnsentGap[]): ReportEmail {
   if (missing.length) {
     parts.push(
       [
-        "In Neon, but not in Formspark. Path B failed: the office may not have received these by email. Their details are in Neon, in their form's table: form_entries for Ask about camp, memorial_card_entries for Memorial card.",
+        `In Neon, but not in Formspark. Path B failed: the office may not have received these by email. Their details are in Neon, in their form's table: ${FORM_KINDS.map((form) => `${FORM_TABLES[form]} for ${FORM_LABELS[form]}`).join(", ")}.`,
         ...missing.map(gapLine),
       ].join("\n"),
     );

@@ -15,12 +15,12 @@ export async function sendMemorialCard(formData: FormData): Promise<MemorialCard
     requestHeaders.get("x-real-ip") ||
     "unknown";
 
-  // The same Formspark form as "Ask about camp": the nightly gap check and
-  // the retention job read one form. A missing key fails only its own path.
+  // Its own Formspark form, so memorial cards reach the office apart from
+  // camp questions. A missing key fails only its own path.
   return submitMemorialCard(formData, visitor, {
     trigger: createTriggerClient(process.env.TRIGGER_SECRET_KEY),
     encryptionKey: process.env.FORM_ENCRYPTION_KEY ?? "",
-    formspark: createFormsparkClient(process.env.FORMSPARK_FORM_ID),
+    formspark: createFormsparkClient(process.env.FORMSPARK_MEMORIAL_CARD_FORM_ID),
     allow,
   });
 }

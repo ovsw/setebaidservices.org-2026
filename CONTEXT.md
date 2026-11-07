@@ -24,7 +24,9 @@ The ordered section editor used to compose a page.
 
 **Section**
 
-One reusable Page Builder content and layout unit.
+One entry in the Page Builder catalogue: one thumbnail, one design, one set
+of fields. A section never changes its design through a field; a second
+design is a second section. Avoid: layout, variant, look.
 
 **Seam**
 
@@ -72,7 +74,11 @@ The name of the card or page that brought a visitor, for example `chop-nurses`. 
 
 **Form entry**
 
-What a visitor sends through one of the Website's forms: an "Ask about camp" request or a memorial card entry. Every entry travels the same two paths and is kept for three years. Each form keeps its entries in its own Neon table.
+What a visitor sends through one of the Website's forms: an "Ask about camp" request, a memorial card entry or a parent's guide request. Every entry travels the same two paths and is kept for three years. Each form keeps its entries in its own Neon table and posts to its own Formspark form.
+
+**Parent's guide request**
+
+A parent's first name and email, sent from the Parent's guide form on `/parents/guide` to ask for the guide. The office sends the guide by email. Parent's guide requests are not on the team dashboard.
 
 **Memorial card entry**
 

@@ -5,6 +5,8 @@
  * https://documentation.formspark.io/api/reference.html
  */
 
+import { FORMSPARK_FORM_ID_VARIABLES } from "./form-entry";
+
 const API = "https://api.formspark.io/public/v1";
 
 export type FormsparkSubmission = {
@@ -55,6 +57,14 @@ export function createFormsparkApi(token: string, formId: string): FormsparkApi 
       await call("DELETE", `/submissions/${encodeURIComponent(id)}`);
     },
   };
+}
+
+/**
+ * The Formspark form IDs of every Website form, one time each. `read` returns
+ * an environment variable's value and throws when it is missing.
+ */
+export function formsparkFormIds(read: (name: string) => string) {
+  return [...new Set(Object.values(FORMSPARK_FORM_ID_VARIABLES).map(read))];
 }
 
 /** The submissions received at or after `since`, newest first. */
