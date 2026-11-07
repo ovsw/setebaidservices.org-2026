@@ -18,7 +18,7 @@ budget and routing. In this repository it reads as:
 - It changes a stored shape: a Sanity schema, a Page Builder section's fields,
   or the shape a GROQ query returns.
 - It adds, moves, or removes a seam that other code calls through.
-- It adds a term to `CONTEXT.md`, or changes what an existing term means.
+- It adds a term to `GLOSSARY.md`, or changes what an existing term means.
 - It adds a dependency, or is the first instance of a pattern others will copy.
 - If the implementer chose differently, other tickets would have to change.
 
