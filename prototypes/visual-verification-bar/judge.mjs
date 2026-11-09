@@ -151,7 +151,8 @@ Rules for reporting:
 - Intentional white space, asymmetric layouts and text over photos are design choices on this site; do not report them unless they break a rule above.
 - Name the section number and the viewport, and the evidence file, for every item.
 - verdict is "fail" when at least one finding has confidence >= 0.6 and severity blocker or major; otherwise "pass".
-- Do not run commands other than Read. Do not edit anything.`;
+- Do not run commands other than Read. Do not edit anything.
+- Read in batches: every turn, issue several Read calls at once (for example all section screenshots of one viewport in one turn, then all tiles of one viewport in the next). One file per turn resends the whole context each time and makes the run slow and expensive. Aim for under ten turns in total.`;
 
 mkdirSync(path.join(pageDir, "verdicts"), { recursive: true });
 const start = Date.now();
