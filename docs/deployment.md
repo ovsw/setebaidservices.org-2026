@@ -94,9 +94,15 @@ included usage (500,000 a month); each publish uses one.
 
 ## Studio on Sanity
 
+Deploy the Studio after every merge into `main` that changes the Studio code
+or the schema. The agent that merges does it right away, without asking; the
+deploy also deploys the schema. Until then, editors at setebaid.sanity.studio
+work in an outdated Studio: unknown-field warnings, missing fields, wrong
+initial values.
+
 Add the local values from `studio/.env.local.example`. Confirm that the
 deployed Website origin in `studio/.env.production` is correct. Then deploy
-manually from the repository root:
+from a clean checkout of the merged `main`, at the repository root:
 
 ```bash
 pnpm setup:sanity-cors
@@ -113,7 +119,9 @@ Studio; it does not accept arguments that could skip the build.
 Do not deploy with `sanity deploy` directly or preload `.env.local` into the
 terminal. Direct CLI deployment bypasses the guard.
 
-Studio deployment remains manual. Vercel deployment uses the existing project configuration and credentials.
+Vercel deploys the Website on its own; nothing deploys the Studio on its own,
+so the merging agent runs `pnpm deploy:studio`. Vercel deployment uses the
+existing project configuration and credentials.
 
 ## Accounts and keys for the QR mechanism
 

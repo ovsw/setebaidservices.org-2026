@@ -6,7 +6,7 @@ import type {
   SEO_SETTINGS_QUERY_RESULT,
 } from "@/sanity.types";
 import type { CategoryArchive } from "@/sanity/queries/category";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { verifyPostOgImageSignature } from "@/lib/post-og-image";
 import { verifyOgImageSignature } from "@/lib/post-og-image";
 import {
@@ -255,6 +255,39 @@ describe("generatePageMetadata", () => {
     expect(metadata.openGraph.images[0].alt).toBe(
       "Example Knowledge Base | Example Company",
     );
+  });
+});
+
+describe("hidden page robots backstop", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.resetModules();
+  });
+
+  // Robots only varies in production; elsewhere every page is noindex.
+  async function productionMetadata() {
+    vi.stubEnv("NEXT_PUBLIC_SITE_ENV", "production");
+    vi.resetModules();
+    return (await import("./metadata")).generatePageMetadata;
+  }
+
+  it("marks a hidden page noindex, nofollow in production", async () => {
+    const generate = await productionMetadata();
+    const hiddenPage = { ...page, hidden: true } as typeof page;
+
+    expect(generate({ page: hiddenPage, path: "/about" }).robots).toBe(
+      "noindex, nofollow",
+    );
+  });
+
+  it("keeps a page without a Hidden value indexable", async () => {
+    const generate = await productionMetadata();
+
+    expect(generate({ page, path: "/about" }).robots).toBe("index, follow");
+    expect(
+      generate({ page: { ...page, hidden: false } as typeof page, path: "/about" })
+        .robots,
+    ).toBe("index, follow");
   });
 });
 

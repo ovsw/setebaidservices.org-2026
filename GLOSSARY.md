@@ -24,7 +24,9 @@ The ordered section editor used to compose a page.
 
 **Section**
 
-One reusable Page Builder content and layout unit.
+One entry in the Page Builder catalogue: one thumbnail, one design, one set
+of fields. A section never changes its design through a field; a second
+design is a second section. Avoid: layout, variant, look.
 
 **Seam**
 
@@ -53,6 +55,10 @@ Content visible to an authorized editor through preview before publication.
 **Published content**
 
 Content available to public Website visitors.
+
+**Hidden**
+
+A published document the public Website treats as missing: its URL returns 404, it has no sitemap entry, and the header and footer drop links to it. Studio Presentation still shows it, published and draft. Pages, stories, categories and the stories index can be Hidden; new ones start Hidden, and an editor unticks it when the client accepts the page. Only an explicit tick hides a document. Separate from the SEO "No Index" setting, which means public but not for search engines.
 
 **Redirect**
 
