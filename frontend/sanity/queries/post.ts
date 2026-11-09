@@ -1,6 +1,10 @@
 import { groq } from "next-sanity";
 import { ROOT_SLUG_FILTER } from "../../../shared/root-slug-filter";
-import { publishedPostFilter } from "./blog-post-listing";
+import {
+  PUBLIC_VISIBILITY_FILTER,
+  publicVisibilityFilterFor,
+} from "../../../shared/public-visibility";
+import { datedPostFilter } from "./blog-post-listing";
 import { imageQuery } from "./shared/image";
 import { metaQuery } from "./shared/meta";
 import { postSharingPhotoQuery } from "./shared/sharing-photo";
@@ -12,6 +16,7 @@ const POST_PROJECTION = groq`{
     _type,
     title,
     slug,
+    hidden,
     publishedAt,
     "excerpt": pt::text(excerpt),
     image{
@@ -28,12 +33,15 @@ const POST_PROJECTION = groq`{
         ${imageQuery}
       }
     },
-    category->{
-      _id,
-      _type,
-      title,
-      slug
-    },
+    // A Hidden category answers 404, so the story does not link to it.
+    "category": select(
+      ${publicVisibilityFilterFor("category")} => category->{
+        _id,
+        _type,
+        title,
+        slug
+      }
+    ),
     _createdAt,
     _updatedAt,
     ${metaQuery},
@@ -42,8 +50,10 @@ const POST_PROJECTION = groq`{
 
 export const POST_QUERY = groq`*[_type == "post" && ${ROOT_SLUG_FILTER}][0]${POST_PROJECTION}`;
 
+// Not the listing filter: the story route checks Hidden itself, so a hidden
+// story still opens in draft mode with the published perspective.
 export const PUBLISHED_POST_QUERY = groq`*[
-  ${publishedPostFilter} && ${ROOT_SLUG_FILTER}
+  ${datedPostFilter} && ${ROOT_SLUG_FILTER}
 ][0]${POST_PROJECTION}`;
 
 export const POST_OG_IMAGE_QUERY = groq`*[
@@ -64,4 +74,4 @@ export const POSTS_QUERY = groq`*[_type == "post" && defined(slug)] | order(_cre
     },
 }`;
 
-export const POSTS_SLUGS_QUERY = groq`*[_type == "post" && defined(slug)]{slug}`;
+export const POSTS_SLUGS_QUERY = groq`*[_type == "post" && defined(slug) && ${PUBLIC_VISIBILITY_FILTER}]{slug}`;

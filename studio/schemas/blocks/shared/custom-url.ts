@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { InlineObjectField } from "../../inputs/inline-object-field";
+import { hiddenLinkTargetWarning } from "../../validation/hidden-link-target";
 import { isInHiddenCardLink } from "./feature-card-visibility";
 
 const safeProtocols = new Set(["http:", "https:", "mailto:", "tel:"]);
@@ -61,7 +62,7 @@ export default defineType({
         { type: "post" },
       ],
       hidden: ({ parent }) => parent?.type !== "internal",
-      validation: (rule) =>
+      validation: (rule) => [
         rule.custom((value, context) => {
           const parent = context.parent as { type?: string } | undefined;
           if (isInHiddenCardLink(context.document, context.path)) return true;
@@ -69,6 +70,13 @@ export default defineType({
             ? "Select the internal page"
             : true;
         }),
+        hiddenLinkTargetWarning(
+          rule,
+          (context) =>
+            (context.parent as { type?: string } | undefined)?.type === "internal" &&
+            !isInHiddenCardLink(context.document, context.path),
+        ),
+      ],
     }),
     defineField({
       name: "type",

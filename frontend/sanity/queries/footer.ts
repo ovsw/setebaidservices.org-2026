@@ -1,16 +1,11 @@
 import { defineQuery } from "next-sanity";
 import { imageQuery } from "./shared/image";
+import { internalReferenceHref } from "./shared/internal-href";
 
 const destinationProjection = `{
   openInNewTab,
   "href": select(
-    kind == "internal" => select(
-      internal->_id == "homePage" || internal->_type == "homePage" => "/",
-      internal->_id == "blogIndex" => "/stories",
-      internal->_type == "post" && defined(internal->slug.current) => "/stories/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),
-      internal->_type == "category" && defined(internal->slug.current) => "/stories/category/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/"),
-      defined(internal->slug.current) => "/" + array::join(string::split(internal->slug.current, "/")[@ != ""], "/")
-    ),
+    kind == "internal" => ${internalReferenceHref},
     kind == "external" => external
   )
 }`;

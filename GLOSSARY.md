@@ -56,6 +56,10 @@ Content visible to an authorized editor through preview before publication.
 
 Content available to public Website visitors.
 
+**Hidden**
+
+A published document the public Website treats as missing: its URL returns 404, it has no sitemap entry, and the header and footer drop links to it. Studio Presentation still shows it, published and draft. Pages, stories, categories and the stories index can be Hidden; new ones start Hidden, and an editor unticks it when the client accepts the page. Only an explicit tick hides a document. Separate from the SEO "No Index" setting, which means public but not for search engines.
+
 **Redirect**
 
 A route from one public URL to a current page: permanent (301) for an old URL, temporary (302) for a QR redirect.

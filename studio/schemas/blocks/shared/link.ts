@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { hiddenLinkTargetWarning } from "../../validation/hidden-link-target";
 
 export default defineType({
   name: "link",
@@ -17,6 +18,11 @@ export default defineType({
       title: "Internal Link",
       to: [{ type: "homePage" }, { type: "page" }, { type: "post" }],
       hidden: ({ parent }) => parent?.isExternal,
+      validation: (rule) =>
+        hiddenLinkTargetWarning(
+          rule,
+          (context) => !(context.parent as { isExternal?: boolean } | undefined)?.isExternal,
+        ),
     }),
     defineField({
       name: "title",

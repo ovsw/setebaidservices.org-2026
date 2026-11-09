@@ -219,6 +219,12 @@ the schema and projection together, regenerate types, inspect every affected
 Sanity document, and migrate content that no longer matches the stored shape.
 Preserve each document's draft or published state.
 
+Besides `blocks`, a page carries the `hidden` boolean in its Settings group
+(so do stories, categories and the stories index; see "Hidden" in
+`CONTEXT.md`). It starts `true` on a new document; a missing value means
+public. A migration or a seed never unticks it: only an editor makes a page
+public, when the client accepts it.
+
 For visual changes, treat the existing design system as the default:
 
 - Reuse tokens from `frontend/app/globals.css`.

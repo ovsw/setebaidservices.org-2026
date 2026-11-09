@@ -1,6 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { FileText } from "lucide-react";
 import meta from "../blocks/shared/meta";
+import { hiddenField, withHiddenMarker } from "../blocks/shared/hidden";
 import { postPath } from "../../../shared/content-routes.ts";
 import { uniqueRoutedSlug } from "../validation/routed-slug";
 
@@ -42,6 +43,7 @@ export default defineType({
       },
       validation: (Rule) => Rule.required().custom(uniqueRoutedSlug),
     }),
+    hiddenField,
     defineField({
       name: "excerpt",
       title: "Excerpt",
@@ -121,11 +123,12 @@ export default defineType({
       title: "title",
       slug: "slug.current",
       media: "image",
+      hidden: "hidden",
     },
-    prepare({ title, slug, media }) {
+    prepare({ title, slug, media, hidden }) {
       return {
         title,
-        subtitle: postPath(slug) ?? undefined,
+        subtitle: withHiddenMarker(postPath(slug), hidden),
         media,
       };
     },

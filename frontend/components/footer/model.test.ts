@@ -69,6 +69,25 @@ describe("createFooterModel", () => {
     expect(model?.copyrightYears).toBe("2024-2026");
   });
 
+  it("drops links whose target is Hidden (the query yields no href for them)", () => {
+    const hiddenTarget = { _key: "campaigns", label: "Campaigns", destination: { href: null, openInNewTab: false } };
+    const model = createFooterModel(
+      {
+        ...rawFooter,
+        actions: [hiddenTarget, ...rawFooter.actions!],
+        columns: [
+          { _key: "give", heading: "Give", links: [hiddenTarget, rawLink("donate", "Donate", "/donate")] },
+        ],
+        legalLinks: [hiddenTarget, ...rawFooter.legalLinks!],
+      },
+      2026,
+    );
+
+    expect(model?.actions.map((action) => action.key)).toEqual(["enroll"]);
+    expect(model?.columns[0]?.links.map((link) => link.key)).toEqual(["donate"]);
+    expect(model?.legalLinks.map((link) => link.key)).toEqual(["privacy"]);
+  });
+
   it("returns unavailable when required footer data is missing", () => {
     expect(createFooterModel(null, 2026)).toBeNull();
     expect(

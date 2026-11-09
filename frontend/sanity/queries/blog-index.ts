@@ -25,6 +25,7 @@ export const BLOG_INDEX_QUERY = groq`
     _type,
     title,
     description,
+    hidden,
     ${pageBuilderQuery},
     ${metaQuery},
     ${archiveSharingPhotoQuery}
