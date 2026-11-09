@@ -351,6 +351,6 @@ These 7 pages moved out of the MVP. They own no topic now. When they are built, 
 | `/parents/talk-to-a-parent` | Booking a call with a parent ambassador or the camp nurse. | `/ask-about-camp` (stands in today) |
 | `/parents/guide` | "Sending your child with type 1 diabetes to camp", the download for an email address. | — (new content) |
 | `/parents/camp-readiness-quiz` | The readiness quiz and its results. | — (new content) |
-| `/dates-and-prices/find-your-price` | "Which tier is for me?" price quiz; the QR target on the doctors' card. | `/dates-and-prices` (the tiers stay there) |
+| `/dates-and-prices/find-your-price` | "Which tier is for me?" price quiz, reached from the cost card on `/go/doctor` and `/go/nurse` and from `/dates-and-prices`. The QR codes stay on the `/go` pages. | `/dates-and-prices` (the tiers stay there) |
 | `/refer` | The referral kit for doctors and nurses: the one sentence, cards and parent sheet, card orders, thank-you and recognition, one-page medical facts. | `/go/{channel}` doctor and nurse pages |
 | `/donate/impact` | Impact graphs and numbers; the full "why give" case; research on reduced stress; training future health professionals (donor view); donor and sponsor thank-you list. | `/donate` (why give, research, gift examples), `/about` (training program, donor view only) |
