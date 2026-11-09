@@ -32,7 +32,7 @@ const state = (message: string) => z.string().trim().refine(isUsState, message);
 const zip = (message: string) =>
   text(12)
     .min(1, message)
-    .refine((value) => /^[0-9A-Za-z][0-9A-Za-z -]{2,11}$/.test(value), "Enter a zip code like 17889.");
+    .refine((value) => /^\d{5}(-\d{4})?$/.test(value), "Enter a 5-digit zip code, like 17889.");
 
 /** "$1,250.50", "1250.5" or "25" become "1250.50", "1250.50" and "25.00". */
 const AMOUNT = /^\$?\s*(\d{1,3}(,\d{3})+|\d+)(\.\d{1,2})?$/;
