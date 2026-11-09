@@ -1,5 +1,11 @@
 import Image from "next/image";
-import { stegaClean } from "next-sanity";
+import {
+  PortableText,
+  stegaClean,
+  type PortableTextComponents,
+} from "next-sanity";
+import { createCustomLinkMarkRenderer } from "@/components/portable-text/custom-link-mark";
+import { simpleRichTextComponents } from "@/components/simple-rich-text";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { siteName } from "@/lib/site-name";
 import { FooterLink } from "./footer-link";
@@ -12,6 +18,16 @@ import type {
 } from "./model";
 
 const contactIcons = { email: Mail, phone: Phone, pin: MapPin } as const;
+
+const charityComponents: PortableTextComponents = {
+  ...simpleRichTextComponents,
+  marks: {
+    ...simpleRichTextComponents?.marks,
+    customLink: createCustomLinkMarkRenderer(
+      "underline decoration-current/40 underline-offset-2 transition-colors duration-200 hover:text-campfire-amber",
+    ),
+  },
+};
 
 function LinkList({ links }: { links: FooterLinkModel[] }) {
   return (
@@ -219,7 +235,17 @@ export function SiteFooter({
             </FooterLink>
           ))}
         </div>
-        {model.charityStatement ? (
+        {Array.isArray(model.charityStatement) ? (
+          <div
+            className="mt-6 grid max-w-[80ch] gap-2 text-[13px] leading-relaxed text-birch-bark/75"
+            data-sanity={dataAttribute?.("charityNotice")}
+          >
+            <PortableText
+              components={charityComponents}
+              value={model.charityStatement}
+            />
+          </div>
+        ) : model.charityStatement ? (
           <p
             className="mt-6 max-w-[80ch] text-[13px] leading-relaxed text-birch-bark/75"
             data-sanity={dataAttribute?.("charityStatement")}

@@ -6830,6 +6830,14 @@
         },
         "optional": true
       },
+      "charityNotice": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "simpleRichText"
+        },
+        "optional": true
+      },
       "charityStatement": {
         "type": "objectAttribute",
         "value": {
