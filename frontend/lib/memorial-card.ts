@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { FormSendResult } from "@/lib/form-entry";
+import { isUsState } from "@/lib/us-states";
 
 /**
  * The memorial card form: what a donor types into its four steps. The
@@ -24,6 +25,9 @@ const phone = (message: string) =>
       (value) => /^[0-9+()\-. ]*$/.test(value) && value.replace(/\D/g, "").length >= 7,
       "Enter a phone number with at least 7 digits.",
     );
+
+/** A two-letter code from the state dropdown, such as "PA". */
+const state = (message: string) => z.string().trim().refine(isUsState, message);
 
 const zip = (message: string) =>
   text(12)
@@ -55,7 +59,7 @@ const stepShapes = [
     recipientName: required(100, "Enter the name of the person who gets the card."),
     recipientStreet: required(200, "Enter their street address."),
     recipientCity: required(100, "Enter their city."),
-    recipientState: required(40, "Enter their state."),
+    recipientState: state("Choose their state."),
     recipientZip: zip("Enter their zip code."),
   },
   {
@@ -67,7 +71,7 @@ const stepShapes = [
     donorName: required(100, "Enter your name."),
     donorStreet: required(200, "Enter your street address."),
     donorCity: required(100, "Enter your city."),
-    donorState: required(40, "Enter your state."),
+    donorState: state("Choose your state."),
     donorZip: zip("Enter your zip code."),
     donorPhone: phone("Enter your phone number."),
     donorEmail: text(200)

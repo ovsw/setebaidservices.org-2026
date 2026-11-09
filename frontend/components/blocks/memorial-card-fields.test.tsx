@@ -47,7 +47,7 @@ async function fillIn(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText("Name"), "The Baker family");
   await user.type(screen.getByLabelText("Street address"), "12 Orchard Lane");
   await user.type(screen.getByLabelText("City"), "Lewisburg");
-  await user.type(screen.getByLabelText("State"), "PA");
+  await user.selectOptions(screen.getByLabelText("State"), "PA");
   await user.type(screen.getByLabelText("Zip code"), "17837");
   await next(user);
 
@@ -58,7 +58,7 @@ async function fillIn(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText("Name"), "Dana Rivera");
   await user.type(screen.getByLabelText("Street address"), "4 Mill Street");
   await user.type(screen.getByLabelText("City"), "Winfield");
-  await user.type(screen.getByLabelText("State"), "PA");
+  await user.selectOptions(screen.getByLabelText("State"), "PA");
   await user.type(screen.getByLabelText("Zip code"), "17889");
   await user.type(screen.getByLabelText("Phone"), "570-555-0142");
   await user.type(screen.getByLabelText("Email"), "dana@example.com");

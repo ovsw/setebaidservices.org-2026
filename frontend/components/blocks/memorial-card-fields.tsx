@@ -20,9 +20,10 @@ import {
   STEP_FIELDS,
   TRIBUTES,
 } from "@/lib/memorial-card";
+import { US_STATES } from "@/lib/us-states";
 import { currentVisitSource } from "@/lib/visit-source";
 import { cn } from "@/lib/utils";
-import { Check } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { type FormEvent, type ReactNode, useEffect, useRef, useState, useTransition } from "react";
@@ -181,6 +182,51 @@ function ChoiceGroup({
   );
 }
 
+/** A state dropdown that starts blank and sends the two-letter code. */
+function StateField({
+  autoComplete,
+  error,
+  name,
+  register,
+}: {
+  autoComplete: string;
+  error?: string;
+  name: MemorialCardField;
+  register: UseFormRegister<MemorialCardDraft>;
+}) {
+  const id = fieldId(name);
+  return (
+    <div className="flex flex-col gap-2">
+      <Label className="text-[15px] font-semibold leading-snug" htmlFor={id}>
+        State
+      </Label>
+      <div className="relative">
+        <select
+          aria-describedby={error ? `${id}-error` : undefined}
+          aria-invalid={error ? true : undefined}
+          aria-required
+          autoComplete={autoComplete}
+          className="flex min-h-(--control-height) w-full min-w-0 cursor-pointer appearance-none rounded-control border-[1.5px] border-input bg-popover py-3.5 pr-10 pl-4 text-base text-popover-foreground transition-[color,box-shadow] motion-fast focus-ring aria-invalid:border-destructive/60 dark:aria-invalid:border-destructive"
+          id={id}
+          {...register(name)}
+        >
+          <option value="">Choose</option>
+          {US_STATES.map(([code, stateName]) => (
+            <option key={code} value={code}>
+              {stateName}
+            </option>
+          ))}
+        </select>
+        <ChevronDown
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-3.5 my-auto size-4 text-muted-foreground"
+        />
+      </div>
+      <ErrorText id={`${id}-error`} message={error} />
+    </div>
+  );
+}
+
 /** An address block: name, street, city, state and zip code, with autofill. */
 function AddressFields({
   errors,
@@ -206,7 +252,7 @@ function AddressFields({
       />
       <div className="grid gap-5 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)_minmax(0,2fr)]">
         <TextField autoComplete={auto("address-level2")} error={errors[fields.city]} label="City" name={fields.city} register={register} />
-        <TextField autoComplete={auto("address-level1")} error={errors[fields.state]} label="State" name={fields.state} register={register} />
+        <StateField autoComplete={auto("address-level1")} error={errors[fields.state]} name={fields.state} register={register} />
         <TextField
           autoComplete={auto("postal-code")}
           error={errors[fields.zip]}
