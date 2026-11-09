@@ -72,12 +72,12 @@ stays on every section.
   piece (quote dialog, card frames); schemas share nothing that would bring
   hidden fields back one level down.
 - The terms "layout", "variant" and "look" leave the vocabulary
-  (`CONTEXT.md`, Section). "Layout" in the ownership rules means CSS and
+  (`GLOSSARY.md`, Section). "Layout" in the ownership rules means CSS and
   stays.
 
 ## References
 
-- `CONTEXT.md`, Section.
+- `GLOSSARY.md`, Section.
 - `docs/agents/page-builder.md`, the "one section, one look" rule and the
   trait table.
 - [Issue #112](https://github.com/ovsw/setebaidservices.org-2026/issues/112).
