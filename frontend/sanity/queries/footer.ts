@@ -1,6 +1,7 @@
 import { defineQuery } from "next-sanity";
 import { imageQuery } from "./shared/image";
 import { internalReferenceHref } from "./shared/internal-href";
+import { simpleRichTextQuery } from "./shared/simple-rich-text";
 
 const destinationProjection = `{
   openInNewTab,
@@ -44,6 +45,9 @@ export const FOOTER_QUERY = defineQuery(`
     "legalLinks": coalesce(legalLinks, compliance.legalLinks)[]${linkProjection},
     "copyrightStartYear": coalesce(copyrightStartYear, compliance.copyrightStartYear),
     "copyrightOwner": coalesce(copyrightOwner, compliance.copyrightOwner),
-    charityStatement
+    charityStatement,
+    charityNotice[]{
+      ${simpleRichTextQuery}
+    }
   }
 `);

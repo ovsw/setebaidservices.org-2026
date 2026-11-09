@@ -1,3 +1,4 @@
+import { stegaClean, type PortableTextBlock } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 
 export type FooterLinkModel = {
@@ -41,7 +42,8 @@ export type FooterModel = {
   legalLinks: FooterLinkModel[];
   copyrightYears: string;
   copyrightOwner: string;
-  charityStatement: string | null;
+  /** Rich text from `charityNotice`, else the deprecated plain-text field. */
+  charityStatement: PortableTextBlock[] | string | null;
 };
 
 type RawDestination = { href?: string | null; openInNewTab?: boolean | null };
@@ -86,10 +88,23 @@ export type RawFooter = {
   copyrightStartYear?: number | null;
   copyrightOwner?: string | null;
   charityStatement?: string | null;
+  charityNotice?: Array<{
+    _type: string;
+    children?: Array<{ text?: string | null }> | null;
+  }> | null;
 } | null;
 
 function text(value: string | null | undefined): string | null {
   return value?.trim() || null;
+}
+
+/** True when at least one block holds visible text, not just empty spans. */
+function hasBlockText(blocks: NonNullable<RawFooter>["charityNotice"]) {
+  return (blocks ?? []).some((block) =>
+    (block.children ?? []).some((child) =>
+      Boolean(stegaClean(child.text ?? "").trim()),
+    ),
+  );
 }
 
 function normalizeHref(value: string | null | undefined): string | null {
@@ -207,6 +222,8 @@ export function createFooterModel(
     legalLinks: links(raw.legalLinks),
     copyrightYears,
     copyrightOwner: owner,
-    charityStatement: text(raw.charityStatement),
+    charityStatement: hasBlockText(raw.charityNotice)
+      ? (raw.charityNotice as PortableTextBlock[])
+      : text(raw.charityStatement),
   };
 }

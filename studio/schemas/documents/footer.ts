@@ -231,13 +231,26 @@ const footer = defineType({
       group: "legal",
     }),
     defineField({
-      name: "charityStatement",
+      name: "charityNotice",
       title: "Charity registration statement",
+      type: "simpleRichText",
+      group: "legal",
+      description:
+        "The state disclosure required wherever the site asks for money. Copy it word for word. Link the phone number with a tel: URL.",
+    }),
+    defineField({
+      name: "charityStatement",
+      title: "Charity registration statement (plain text, deprecated)",
       type: "text",
       rows: 3,
       group: "legal",
-      description:
-        "The state disclosure required wherever the site asks for money. Copy it word for word.",
+      deprecated: {
+        reason:
+          "The rich-text statement above replaces this field, so the phone number can be a link. The site shows this text only while the field above is empty.",
+      },
+      readOnly: true,
+      hidden: ({ value }) => value === undefined,
+      initialValue: undefined,
     }),
   ],
   preview: { prepare: () => ({ title: "Site Footer" }) },
