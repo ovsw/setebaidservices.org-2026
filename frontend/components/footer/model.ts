@@ -1,4 +1,4 @@
-import type { PortableTextBlock } from "next-sanity";
+import { stegaClean, type PortableTextBlock } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 
 export type FooterLinkModel = {
@@ -88,11 +88,23 @@ export type RawFooter = {
   copyrightStartYear?: number | null;
   copyrightOwner?: string | null;
   charityStatement?: string | null;
-  charityNotice?: Array<{ _type: string }> | null;
+  charityNotice?: Array<{
+    _type: string;
+    children?: Array<{ text?: string | null }> | null;
+  }> | null;
 } | null;
 
 function text(value: string | null | undefined): string | null {
   return value?.trim() || null;
+}
+
+/** True when at least one block holds visible text, not just empty spans. */
+function hasBlockText(blocks: NonNullable<RawFooter>["charityNotice"]) {
+  return (blocks ?? []).some((block) =>
+    (block.children ?? []).some((child) =>
+      Boolean(stegaClean(child.text ?? "").trim()),
+    ),
+  );
 }
 
 function normalizeHref(value: string | null | undefined): string | null {
@@ -210,7 +222,7 @@ export function createFooterModel(
     legalLinks: links(raw.legalLinks),
     copyrightYears,
     copyrightOwner: owner,
-    charityStatement: raw.charityNotice?.length
+    charityStatement: hasBlockText(raw.charityNotice)
       ? (raw.charityNotice as PortableTextBlock[])
       : text(raw.charityStatement),
   };
