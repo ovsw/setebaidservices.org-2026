@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { FormSendResult } from "@/lib/form-entry";
+import { isUsState } from "@/lib/us-states";
 
 /**
  * The memorial card form: what a donor types into its four steps. The
@@ -25,10 +26,13 @@ const phone = (message: string) =>
       "Enter a phone number with at least 7 digits.",
     );
 
+/** A two-letter code from the state dropdown, such as "PA". */
+const state = (message: string) => z.string().trim().refine(isUsState, message);
+
 const zip = (message: string) =>
   text(12)
     .min(1, message)
-    .refine((value) => /^[0-9A-Za-z][0-9A-Za-z -]{2,11}$/.test(value), "Enter a zip code like 17889.");
+    .refine((value) => /^\d{5}(-\d{4})?$/.test(value), "Enter a 5-digit zip code, like 17889.");
 
 /** "$1,250.50", "1250.5" or "25" become "1250.50", "1250.50" and "25.00". */
 const AMOUNT = /^\$?\s*(\d{1,3}(,\d{3})+|\d+)(\.\d{1,2})?$/;
@@ -55,7 +59,7 @@ const stepShapes = [
     recipientName: required(100, "Enter the name of the person who gets the card."),
     recipientStreet: required(200, "Enter their street address."),
     recipientCity: required(100, "Enter their city."),
-    recipientState: required(40, "Enter their state."),
+    recipientState: state("Choose their state."),
     recipientZip: zip("Enter their zip code."),
   },
   {
@@ -67,7 +71,7 @@ const stepShapes = [
     donorName: required(100, "Enter your name."),
     donorStreet: required(200, "Enter your street address."),
     donorCity: required(100, "Enter your city."),
-    donorState: required(40, "Enter your state."),
+    donorState: state("Choose your state."),
     donorZip: zip("Enter your zip code."),
     donorPhone: phone("Enter your phone number."),
     donorEmail: text(200)

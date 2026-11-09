@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { trackVisitEvent } from "@/components/visit-analytics";
 import { HONEYPOT_FIELD } from "@/lib/ask-about-camp";
 import {
+  OK_TO_CONTACT_VALUE,
   type ParentsGuideErrors,
   type ParentsGuideField,
   type ParentsGuideResult,
@@ -25,7 +26,7 @@ type ParentsGuideFieldsProps = {
   successMessage: string;
 };
 
-const FIELD_ORDER: ParentsGuideField[] = ["firstName", "email"];
+const FIELD_ORDER: ParentsGuideField[] = ["firstName", "email", "phone"];
 const initialState: ParentsGuideResult = { status: "idle" };
 
 function focusFirstError(form: HTMLFormElement | null, found: ParentsGuideErrors) {
@@ -39,6 +40,7 @@ function TextField({
   label,
   name,
   onEdit,
+  optional,
   type = "text",
 }: {
   autoComplete: string;
@@ -46,17 +48,22 @@ function TextField({
   label: string;
   name: ParentsGuideField;
   onEdit: (name: ParentsGuideField) => void;
-  type?: "email" | "text";
+  optional?: boolean;
+  type?: "email" | "tel" | "text";
 }) {
   const id = `parents-guide-${name}`;
   return (
     <div className="flex flex-col gap-2">
       <Label className="text-[15px] font-semibold leading-snug" htmlFor={id}>
         {label}
-        {/* The input's required attribute tells screen readers; the star is for the eye. */}
-        <span aria-hidden="true" className="text-destructive">
-          {" "}*
-        </span>
+        {optional ? (
+          <span className="font-normal text-muted-foreground"> (optional)</span>
+        ) : (
+          // The input's required attribute tells screen readers; the star is for the eye.
+          <span aria-hidden="true" className="text-destructive">
+            {" "}*
+          </span>
+        )}
       </Label>
       <Input
         aria-describedby={error ? `${id}-error` : undefined}
@@ -66,7 +73,7 @@ function TextField({
         id={id}
         name={name}
         onInput={() => onEdit(name)}
-        required
+        required={!optional}
         type={type}
       />
       {error ? (
@@ -176,7 +183,30 @@ export function ParentsGuideFields({
             onEdit={clearError}
             type="email"
           />
+          <TextField
+            autoComplete="tel"
+            error={errors.phone}
+            label="Phone"
+            name="phone"
+            onEdit={clearError}
+            optional
+            type="tel"
+          />
         </div>
+
+        {/* Optional and unticked, so the parent chooses whether Setebaid follows up. */}
+        <label className="flex cursor-pointer items-start gap-3 text-[15px] leading-snug">
+          <input
+            className="mt-0.5 size-4 shrink-0 accent-primary"
+            name="okToContact"
+            type="checkbox"
+            value={OK_TO_CONTACT_VALUE}
+          />
+          <span>
+            Setebaid may contact me about camp
+            <span className="text-muted-foreground"> (optional)</span>
+          </span>
+        </label>
 
         {/* Only a bot fills this in; people never see or reach it. */}
         <div aria-hidden="true" className="absolute -left-[9999px] size-px overflow-hidden">

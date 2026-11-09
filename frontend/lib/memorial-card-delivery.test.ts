@@ -150,4 +150,12 @@ describe("the memorial card in Formspark", () => {
     const sent = await entry();
     expect(entryFromFormspark(formsparkPayload(sent))).toEqual(sent);
   });
+
+  it("sends the donor's email as the reply address, and reads back the same entry with it", async () => {
+    const sent = await entry();
+    const payload = formsparkPayload(sent);
+
+    expect(payload).toMatchObject({ _replyto: sent.donorEmail });
+    expect(entryFromFormspark({ ...payload, _replyto: "someone-else@example.com" })).toEqual(sent);
+  });
 });

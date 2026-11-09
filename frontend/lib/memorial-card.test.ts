@@ -58,6 +58,18 @@ describe("memorialCardStepErrors", () => {
     }
   });
 
+  it("takes a US zip code and a state from the list only", () => {
+    for (const recipientZip of ["17889", "17889-1234"]) {
+      expect(memorialCardStepErrors(1, { ...validDraft, recipientZip })).toEqual({});
+    }
+    for (const recipientZip of ["test", "1788", "178890", "17889-12", "K1A 0B1"]) {
+      expect(memorialCardStepErrors(1, { ...validDraft, recipientZip })).toHaveProperty("recipientZip");
+    }
+    for (const recipientState of ["", "test", "Pennsylvania", "XX"]) {
+      expect(memorialCardStepErrors(1, { ...validDraft, recipientState })).toHaveProperty("recipientState");
+    }
+  });
+
   it("finds the first step with an error", () => {
     expect(firstStepWithError({ donorEmail: "x", recipientZip: "y" })).toBe(1);
     expect(firstStepWithError({})).toBeUndefined();

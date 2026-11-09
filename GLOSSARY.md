@@ -78,11 +78,19 @@ What a visitor sends through one of the Website's forms: an "Ask about camp" req
 
 **Parent's guide request**
 
-A parent's first name and email, sent from the Parent's guide form on `/parents/guide` to ask for the guide. The office sends the guide by email. Parent's guide requests are not on the team dashboard.
+A parent's first name and email, an optional phone and an optional OK to contact ("Setebaid may contact me about camp", unticked by default), sent from the Parent's guide form on `/parents/guide` to ask for the guide. The reply email delivers the guide. Parent's guide requests are not on the team dashboard.
 
 **Memorial card entry**
 
 A donor's details for a memorial or honor card, sent from the Memorial card form on `/donate/memorial`: who is remembered or honored, the gift amount and how the donor gives, who gets the card, the card design and its words, and the donor's contact details. The office mails the card and matches it to the gift by the amount; the family never sees the amount. Memorial card entries are not on the team dashboard.
+
+**Office notification**
+
+The email the office gets for each form entry, sent by Formspark: a heading that says what happened, one line on what to do next, the visitor's answers in form order, at most one action button, and small print with the Source, page, campaign and sent time. The office can press Reply to reach the visitor.
+
+**Reply email**
+
+The email a visitor gets right after sending a form, sent by Formspark to the address they gave: it says the entry arrived and what happens next, promises only what Setebaid already does, and is signed "The Setebaid team".
 
 **Delivery gap**
 
