@@ -9,9 +9,7 @@ import testimonial from "./schemas/documents/testimonial";
 import navigation, {
   navigationSchemaTypes,
 } from "./schemas/documents/navigation";
-import settings, {
-  settingsSchemaTypes,
-} from "./schemas/documents/settings";
+import settings, { settingsSchemaTypes } from "./schemas/documents/settings";
 import teamMember from "./schemas/documents/team-member";
 import blogIndex from "./schemas/documents/blog-index";
 import blogPostSettings from "./schemas/documents/blog-post-settings";
@@ -28,7 +26,9 @@ import customUrl from "./schemas/blocks/shared/custom-url";
 import customLink from "./schemas/blocks/shared/custom-link";
 import button from "./schemas/blocks/shared/button";
 import buttonLink from "./schemas/blocks/shared/button-link";
-import richTextContent from "./schemas/blocks/shared/rich-text-content";
+import richTextContent, {
+  storyTextContent,
+} from "./schemas/blocks/shared/rich-text-content";
 import simpleRichText from "./schemas/blocks/shared/simple-rich-text";
 import minimalRichText from "./schemas/blocks/shared/minimal-rich-text";
 import {
@@ -97,6 +97,7 @@ export const schemaTypes = [
   button,
   buttonLink,
   richTextContent,
+  storyTextContent,
   simpleRichText,
   minimalRichText,
   blogPostSidebarAction,

@@ -141,6 +141,29 @@ export function validateBlocks(
   return true;
 }
 
+/** Every block type that is an ask: a band whose job is its call to action. */
+export const askBlockTypes = new Set(["ctaBanner", "directorCta"]);
+
+/**
+ * One ask at a time: two asks in a row read as a false ending and make
+ * their buttons compete. Studio shows this as a warning, so a page that
+ * already breaks the rule can still be published; `pnpm page:check` fails
+ * on it.
+ */
+export function validateAskSpacing(
+  blocks: Array<{ _type?: string }> | undefined,
+): true | string {
+  const pair = (blocks ?? []).findIndex(
+    (block, index) =>
+      index > 0 &&
+      askBlockTypes.has(block?._type ?? "") &&
+      askBlockTypes.has(blocks?.[index - 1]?._type ?? ""),
+  );
+  return pair === -1
+    ? true
+    : `Sections ${pair} and ${pair + 1} are both calls to action. Put a content section between them, or remove one.`;
+}
+
 /** The Blog page lists its posts through exactly one Latest Posts section. */
 export function validateBlogIndexBlocks(
   blocks: Array<{ _type?: string; background?: string }> | undefined,
@@ -225,7 +248,10 @@ function createBlocksField(
     type: "array",
     group: "group" in field ? field.group : "content",
     of: blockTypes.map((type) => ({ type })),
-    validation: (rule) => rule.custom(validate),
+    validation: (rule) => [
+      rule.custom(validate),
+      rule.custom(validateAskSpacing).warning(),
+    ],
     options: {
       insertMenu: {
         groups: groups

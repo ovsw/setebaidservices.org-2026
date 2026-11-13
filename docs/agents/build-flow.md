@@ -48,9 +48,16 @@ Test logic, not looks.
 The skill's own text says: run the full test suite, run `/code-review`, commit.
 In this repo:
 
+- Before you start, check `gh issue list --label main-red`. An open one
+  means main already fails the gate: tell Ovi in one line, and do not
+  blame your own change for that failure.
 - Run the typecheck and the single test files you touched. Do not run
   `pnpm verify` or the full suite while you implement. Run `pnpm verify` one
   time before you open the pull request; it is the PR gate.
+- After a schema or query change, run `pnpm typegen` and commit its output
+  before `pnpm verify`; the gate fails on uncommitted generated files.
+- For a bug in the dev tooling (ports, worktrees, smoke test), first check
+  whether `ovsw/next-sanity-starter` already fixed it, and port that fix.
 - Run the review that [Review policy](#review-policy) routes the ticket to.
   Judge the route yourself; do not ask Ovi to trigger it.
 - Commit on the current branch. Then report: what changed, what was checked,

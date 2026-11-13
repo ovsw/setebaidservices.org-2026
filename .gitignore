@@ -64,3 +64,4 @@ studio/backups/
 /pre-bootstrap/source/
 scripts/__pycache__/
 
+/.worktree-dev.log

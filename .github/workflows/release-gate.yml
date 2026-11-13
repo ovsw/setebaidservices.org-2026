@@ -5,6 +5,11 @@ on:
     branches: [main]
   push:
     branches: [main]
+  # The build reads live Sanity content, so a content edit can turn main red
+  # with no push. The nightly run finds that before an unrelated pull request
+  # does.
+  schedule:
+    - cron: "17 7 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -146,3 +151,30 @@ jobs:
                 ;;
             esac
           done
+
+  # A red main blocks every pull request. Say so in one place: an open issue
+  # labelled main-red, with one comment for each further failed run.
+  alert:
+    name: Report a red main
+    needs: release-gate
+    if: failure() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      issues: write
+    steps:
+      - name: Open or update the main-red issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          body="The release gate failed on main ($EVENT_NAME run): $RUN_URL"
+          existing="$(gh issue list --repo "$GITHUB_REPOSITORY" --label main-red --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "$body"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --label main-red \
+              --title "Main is red: the release gate fails" \
+              --body "$body Close this issue when main is green again."
+          fi

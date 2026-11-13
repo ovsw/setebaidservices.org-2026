@@ -2,11 +2,14 @@ import { ImageIcon, MessageSquareQuoteIcon, Table2Icon } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import RichTextTableInput from "../../inputs/rich-text-table-input";
 
-export default defineType({
-  name: "richTextContent",
-  title: "Rich Text Content",
-  type: "array",
-  of: [
+/**
+ * The members every rich text field shares. `asks` adds the two members that
+ * ask the reader to act: the button link and the callout. A story's text
+ * leaves them out, because on a story an ask is a Page Builder section
+ * (see docs/agents/page-builder.md, "Asks are sections").
+ */
+function richTextMembers({ asks }: { asks: boolean }) {
+  return [
     defineArrayMember({
       name: "block",
       type: "block",
@@ -27,7 +30,7 @@ export default defineType({
       marks: {
         annotations: [
           defineArrayMember({ type: "customLink" }),
-          defineArrayMember({ type: "buttonLink" }),
+          ...(asks ? [defineArrayMember({ type: "buttonLink" })] : []),
         ],
         decorators: [
           { title: "Strong", value: "strong" },
@@ -80,27 +83,44 @@ export default defineType({
         prepare: ({ title }) => ({ title: title || "Table" }),
       },
     }),
-    defineArrayMember({
-      name: "callout",
-      title: "Callout",
-      type: "object",
-      icon: MessageSquareQuoteIcon,
-      fields: [
-        defineField({ name: "title", title: "Title", type: "string" }),
-        defineField({
-          name: "body",
-          title: "Body",
-          type: "text",
-          rows: 3,
-        }),
-      ],
-      preview: {
-        select: { title: "title", subtitle: "body" },
-        prepare: ({ subtitle, title }) => ({
-          title: title || "Callout",
-          subtitle,
-        }),
-      },
+    ...(asks ? [callout] : []),
+  ];
+}
+
+const callout = defineArrayMember({
+  name: "callout",
+  title: "Callout",
+  type: "object",
+  icon: MessageSquareQuoteIcon,
+  fields: [
+    defineField({ name: "title", title: "Title", type: "string" }),
+    defineField({
+      name: "body",
+      title: "Body",
+      type: "text",
+      rows: 3,
     }),
   ],
+  preview: {
+    select: { title: "title", subtitle: "body" },
+    prepare: ({ subtitle, title }) => ({
+      title: title || "Callout",
+      subtitle,
+    }),
+  },
+});
+
+export default defineType({
+  name: "richTextContent",
+  title: "Rich Text Content",
+  type: "array",
+  of: richTextMembers({ asks: true }),
+});
+
+/** A story's text: rich text without button links and callouts. */
+export const storyTextContent = defineType({
+  name: "storyTextContent",
+  title: "Story Text",
+  type: "array",
+  of: richTextMembers({ asks: false }),
 });

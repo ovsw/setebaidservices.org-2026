@@ -29,6 +29,20 @@ its fields; they never choose how a section looks.
   splits them. Do not add a look to them, and do not copy the pattern.
 - The section `background` field (Cream, Sand, Forest) is not a look. It
   stays.
+- `studio/schemas/blocks/page-builder.test.mjs` fails on a new `layout`,
+  `variant` or similar field. A rename does not make the field allowed.
+
+## Asks are sections
+
+A call to action, a button or a callout that asks the reader to act is a
+Page Builder section, never a member of a rich text field or a document
+body. A story's text (`storyTextContent`) has no button link and no
+callout for this reason; its closing sections are stored once on Blog Post
+Settings. Page rich text (`richTextContent`) keeps both for the legal
+pages; do not use them to build an ask on other pages.
+
+Two asks never sit next to each other (`ctaBanner`, `directorCta`). Studio
+warns about it, and `pnpm page:check <id>` fails on it.
 
 ## How a section reaches the page
 

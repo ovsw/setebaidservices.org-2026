@@ -1,19 +1,26 @@
 #!/usr/bin/env node
 
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
+import { existsSync, openSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { allocatePorts, HOST } from "./worktree-config.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
+const LOG_FILE = path.join(repoRoot, ".worktree-dev.log");
+
 function parseArgs(argv) {
   const values = {};
   for (let index = 0; index < argv.length; index += 1) {
     const flag = argv[index];
+    if (flag === "--detach") {
+      values.detach = true;
+      continue;
+    }
     if (flag !== "--frontend-port" && flag !== "--studio-port") {
       throw new Error(
-        "Usage: pnpm dev:worktree [--frontend-port <port> --studio-port <port>]",
+        "Usage: pnpm dev:worktree [--detach] [--frontend-port <port> --studio-port <port>]",
       );
     }
     const value = argv[index + 1];
@@ -24,10 +31,55 @@ function parseArgs(argv) {
   return values;
 }
 
+/** A worktree made by another tool has no env files; copy them once. */
+function ensureEnvFiles() {
+  const missing = ["frontend/.env.local", "studio/.env.local"].filter(
+    (file) => !existsSync(path.join(repoRoot, file)),
+  );
+  if (missing.length === 0) return;
+  console.log(`Missing ${missing.join(" and ")}; running pnpm setup:worktree.`);
+  const setup = spawnSync("node", ["scripts/setup-worktree.mjs"], {
+    cwd: repoRoot,
+    stdio: "inherit",
+  });
+  if (setup.status !== 0) throw new Error("pnpm setup:worktree failed.");
+}
+
+/**
+ * Start the servers in their own session and return once they report their
+ * addresses. They outlive the shell or agent that started them; stop them
+ * with `pnpm dev:stop --here`. Output goes to .worktree-dev.log.
+ */
+async function startDetached(argv) {
+  const log = openSync(LOG_FILE, "w");
+  const child = spawn(
+    process.execPath,
+    [fileURLToPath(import.meta.url), ...argv.filter((flag) => flag !== "--detach")],
+    { cwd: repoRoot, detached: true, stdio: ["ignore", log, log] },
+  );
+  child.unref();
+  const deadline = Date.now() + 30_000;
+  while (Date.now() < deadline) {
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    const output = readFileSync(LOG_FILE, "utf8");
+    if (child.exitCode !== null) throw new Error(`The servers did not start:\n${output}`);
+    if (/^Studio: /m.test(output)) {
+      process.stdout.write(output.match(/^(Worktree slot|Website:|Studio: ).*$/gm).join("\n"));
+      console.log(`\nRunning detached. Log: ${LOG_FILE}. Stop: pnpm dev:stop --here`);
+      return;
+    }
+  }
+  throw new Error(`The servers did not report their addresses; see ${LOG_FILE}.`);
+}
+
 async function main() {
+  const argv = process.argv.slice(2);
+  const { detach, ...overrides } = parseArgs(argv);
+  ensureEnvFiles();
+  if (detach) return startDetached(argv);
   const ports = await allocatePorts({
     worktreeRoot: repoRoot,
-    overrides: parseArgs(process.argv.slice(2)),
+    overrides,
   });
   let reservationReleased = false;
   async function releaseReservation() {
