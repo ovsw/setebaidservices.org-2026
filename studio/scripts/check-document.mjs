@@ -20,6 +20,13 @@ if (!id) {
   process.exit(1);
 }
 
+// Without a token the client cannot read drafts, and the published copy
+// would be checked in the draft's place.
+if (!process.env.SANITY_AUTH_TOKEN) {
+  console.error("SANITY_AUTH_TOKEN is not set; add it to studio/.env.local.");
+  process.exit(1);
+}
+
 const client = getCliClient({ apiVersion: "2026-03-23" });
 const documents = await client.fetch(
   "*[_id in [$draft, $id]]",
@@ -55,15 +62,16 @@ try {
       .join(".");
     console.log(`${marker.level}: ${where || "(document)"}: ${marker.message}`);
   }
-  if (result.status !== 0 && markers.length === 0) {
-    console.error(result.stdout);
-    process.exit(result.status ?? 1);
-  }
+  // Set the exit code instead of exiting, so the cleanup below still runs.
   if (markers.length > 0) {
     console.error(`${markers.length} problem(s). Fix every one before handing the draft over.`);
-    process.exit(1);
+    process.exitCode = 1;
+  } else if (result.status !== 0) {
+    console.error(result.stdout);
+    process.exitCode = result.status ?? 1;
+  } else {
+    console.log("Valid: no errors, no warnings.");
   }
-  console.log("Valid: no errors, no warnings.");
 } finally {
   rmSync(directory, { recursive: true, force: true });
 }
