@@ -51,7 +51,7 @@ export type SanityImageAssetReference = {
 
 export type MetaImage = {
   asset?: SanityImageAssetReference;
-  media?: unknown; // Unable to locate the referenced type "image.media" in schema
+  media?: unknown; // Unable to locate the referenced type "media" in schema
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
   alt?: string;
@@ -820,6 +820,48 @@ export type SimpleRichText = Array<{
   _type: "block";
   _key: string;
 }>;
+
+export type StoryTextContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?:
+        "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote" | "inline";
+      listItem?: "number" | "bullet";
+      markDefs?: Array<
+        {
+          _key: string;
+        } & CustomLink
+      >;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+    }
+  | {
+      title?: string;
+      rows?: Array<{
+        cells?: Array<string>;
+        _type: "tableRow";
+        _key: string;
+      }>;
+      _type: "table";
+      _key: string;
+    }
+>;
 
 export type RichTextContent = Array<
   | {
@@ -1649,7 +1691,7 @@ export type Post = {
     _type: "image";
   };
   category?: CategoryReference;
-  body?: RichTextContent;
+  body?: StoryTextContent;
   meta?: Meta;
 };
 
@@ -1964,6 +2006,7 @@ export type AllSanitySchemaTypes =
   | BlogPostSidebarAction
   | MinimalRichText
   | SimpleRichText
+  | StoryTextContent
   | RichTextContent
   | ButtonLink
   | Button
@@ -3532,7 +3575,7 @@ export type BLOG_INDEX_QUERY_RESULT =
               } | null;
             } | null;
           } | null;
-          media?: unknown; // Unable to locate the referenced type "image.media" in schema
+          media?: unknown; // Unable to locate the referenced type "media" in schema
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt?: string;
@@ -4881,7 +4924,7 @@ export type BLOG_INDEX_QUERY_RESULT =
               } | null;
             } | null;
           } | null;
-          media?: unknown; // Unable to locate the referenced type "image.media" in schema
+          media?: unknown; // Unable to locate the referenced type "media" in schema
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt?: string;
@@ -6464,7 +6507,7 @@ export type BLOG_INDEX_QUERY_RESULT =
               } | null;
             } | null;
           } | null;
-          media?: unknown; // Unable to locate the referenced type "image.media" in schema
+          media?: unknown; // Unable to locate the referenced type "media" in schema
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt?: string;
@@ -8205,7 +8248,7 @@ export type BLOG_INDEX_QUERY_RESULT =
               } | null;
             } | null;
           } | null;
-          media?: unknown; // Unable to locate the referenced type "image.media" in schema
+          media?: unknown; // Unable to locate the referenced type "media" in schema
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt?: string;
@@ -8242,7 +8285,7 @@ export type BLOG_INDEX_QUERY_RESULT =
               } | null;
             } | null;
           } | null;
-          media?: unknown; // Unable to locate the referenced type "image.media" in schema
+          media?: unknown; // Unable to locate the referenced type "media" in schema
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt?: string;
@@ -9755,7 +9798,7 @@ export type CATEGORY_QUERY_RESULT = {
           } | null;
         } | null;
       } | null;
-      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      media?: unknown; // Unable to locate the referenced type "media" in schema
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
@@ -11449,7 +11492,7 @@ export type HOME_PAGE_QUERY_RESULT = {
           } | null;
         } | null;
       } | null;
-      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      media?: unknown; // Unable to locate the referenced type "media" in schema
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
@@ -13257,7 +13300,7 @@ export type PAGE_QUERY_RESULT = {
           } | null;
         } | null;
       } | null;
-      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      media?: unknown; // Unable to locate the referenced type "media" in schema
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
@@ -13354,18 +13397,6 @@ export type POST_QUERY_RESULT = {
         markDefs: Array<
           | {
               _key: string;
-              _type: "buttonLink";
-              customLink?: CustomUrl;
-              href: null | string | "/";
-              openInNewTab: boolean | null;
-            }
-          | {
-              _key: string;
-              _type: "buttonLink";
-              customLink?: CustomUrl;
-            }
-          | {
-              _key: string;
               _type: "customLink";
               customLink?: CustomUrl;
               href: null | string | "/";
@@ -13379,12 +13410,6 @@ export type POST_QUERY_RESULT = {
         > | null;
         level?: number;
         _type: "block";
-        _key: string;
-      }
-    | {
-        title: string | null;
-        body: string | null;
-        _type: "callout";
         _key: string;
       }
     | {
@@ -13469,7 +13494,7 @@ export type POST_QUERY_RESULT = {
           } | null;
         } | null;
       } | null;
-      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      media?: unknown; // Unable to locate the referenced type "media" in schema
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
@@ -13535,18 +13560,6 @@ export type PUBLISHED_POST_QUERY_RESULT = {
         markDefs: Array<
           | {
               _key: string;
-              _type: "buttonLink";
-              customLink?: CustomUrl;
-              href: null | string | "/";
-              openInNewTab: boolean | null;
-            }
-          | {
-              _key: string;
-              _type: "buttonLink";
-              customLink?: CustomUrl;
-            }
-          | {
-              _key: string;
               _type: "customLink";
               customLink?: CustomUrl;
               href: null | string | "/";
@@ -13560,12 +13573,6 @@ export type PUBLISHED_POST_QUERY_RESULT = {
         > | null;
         level?: number;
         _type: "block";
-        _key: string;
-      }
-    | {
-        title: string | null;
-        body: string | null;
-        _type: "callout";
         _key: string;
       }
     | {
@@ -13650,7 +13657,7 @@ export type PUBLISHED_POST_QUERY_RESULT = {
           } | null;
         } | null;
       } | null;
-      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      media?: unknown; // Unable to locate the referenced type "media" in schema
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;

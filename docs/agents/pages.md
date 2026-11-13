@@ -16,8 +16,10 @@ landing pages are the main reason for the sprint.
   record"). Their plan documents in "Page plans" say "Launch: MVP".
 - "Final" pages are later releases. Their cards sit in Backlog, and their
   plan documents say "Launch: Final".
-- No lead magnets in the MVP: no quizzes, no parent's guide, no giveaway,
-  no "talk to a camp parent". No other new features (no full staff roster,
+- No lead magnets in the MVP: no quizzes, no giveaway, no "talk to a camp
+  parent". The parent's guide is the one that shipped: its page and form
+  are live work (PR #117), and the guide reaches the parent by email at
+  once, never by hand from the office. No other new features (no full staff roster,
   no impact graphs, no referral kit, no "Get involved" hub).
 - An MVP page uses the content that exists today, rewritten for the reader.
   It never links to a "Final" page. If its parent is a "Final" page (for
@@ -54,6 +56,16 @@ it with the template's current version; edit the template, not this part.
 - **Logins:** page-card work uses Clark, the agents' Basecamp user (person
   `52809522`): add `--profile claude` to every `basecamp` command for
   this work. Ovi is person `52614802`.
+- **Commands** (all with `--profile claude`; an id or the item's URL both
+  work):
+  - Read a card: `basecamp cards show <card> --md`; its subtasks:
+    `basecamp cards steps <card>`.
+  - Move a card: `basecamp cards move <card> --to <column id>`.
+  - Assign a card: `basecamp cards update <card> --assignee <person id>`.
+  - Comment: `printf '%s' '<html>' | basecamp comments create <card> -`.
+  - Read a plan: `basecamp docs show <document> --md`.
+  - Rewrite a plan: `basecamp docs update <document> --content '<html>'`.
+  - Download an uploaded file: `basecamp docs download <upload>`.
 - **Clients see the card table.** The card holds
   only a short description (the plan link, what the page is, what to
   check, the page link), subtasks for the facts the client confirms, the
@@ -342,6 +354,15 @@ not fill it with a photo that does not fit. A later photo pass fills it.
 
 Project `o36mi5w4`, dataset `production` (see `docs/agents/sanity-cli.md`).
 Verify against the Sanity MCP target before any write.
+
+- Stored shape: a page's sections are in `blocks`; a story (`post`) keeps
+  its text in `body` and takes its closing sections from Blog Post
+  Settings; a redirect's `source` is a slug object. The page skills work on
+  Page Builder pages; for a story, read `studio/schemas/documents/post.ts`
+  and its route first.
+- A draft is ready when `pnpm page:check <document id>` prints "Valid". It
+  runs Studio's own rules, which MCP writes skip, and fails on two calls to
+  action in a row.
 
 - Hosted Studio: https://setebaid.sanity.studio. Local Studio for agents:
   the port in `.worktree-ports.json` after `pnpm dev:worktree`.

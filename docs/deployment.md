@@ -17,9 +17,19 @@ The Website and Studio are separate applications.
    `NEXT_PUBLIC_SITE_ENV=production` in Vercel's Production environment so the
    deployed site is indexable. Keep `development` locally and for Preview
    deployments so unfinished revisions remain `noindex`.
+   The production build fails when a key the example file sets above its
+   "# Optional" line is missing in Vercel, or a Formspark ID is still
+   `echo` (`frontend/scripts/check-production-env.mjs`). The last good
+   deployment stays live. Add a new key to Vercel before you merge the pull
+   request that needs it; Trigger.dev has its own copy of the form keys,
+   which nothing checks.
 4. Use `main` as the production branch.
 5. A ruleset on `main` requires the GitHub `Release gate` check before a pull
    request can merge. Repository admins may bypass it; do not.
+
+Vercel CLI: the project is in the team `studio-rovst`, so add `--scope
+studio-rovst`, for example `vercel env ls production --scope studio-rovst`.
+Do not run `vercel link` inside `frontend/`: it rewrites `.env.local`.
 
 Vercel may create preview deployments for pull requests. Production deploys come only from verified revisions merged into `main`, or from a rebuild of `main` when a redirect changes (below).
 

@@ -27,6 +27,11 @@ Setebaid for children and teens with diabetes.
 
 Before starting a development server, inspect the required port. If the exact server you need is already running there, reuse it.
 
+Start a worktree's servers with `pnpm dev:worktree --detach`. They outlive
+the agent's background time limit, so review links keep working; stop them
+with `pnpm dev:stop --here`. It also copies the env files into a worktree
+that has none. Before you report a server as down, check its port.
+
 ## Sanity browser checks (Codex)
 
 For local frontend reviews, open the draft-preview version of the page and
@@ -177,6 +182,15 @@ content shape, read `docs/agents/page-builder.md`.
 ### Sanity CLI
 
 Always pass `SANITY_AUTH_TOKEN` from `studio/.env.local` when invoking the Sanity CLI. See `docs/agents/sanity-cli.md`.
+
+- Read documents, drafts included: `pnpm sanity:query '<groq>'`.
+- Validate one document with Studio's own rules: `pnpm page:check <id>`.
+  Sanity MCP writes skip those rules, so run it after every content write.
+
+### Vercel CLI
+
+Project `setebaid-2026`; add `--scope studio-rovst` to every command. See
+`docs/deployment.md`.
 
 ### Raster image descriptions
 

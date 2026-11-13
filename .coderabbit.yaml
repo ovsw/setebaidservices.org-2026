@@ -1,3 +1,27 @@
 reviews:
   auto_review:
     enabled: false
+  # The project's judgement rules, for the reviewer. Rules a test can check
+  # live in tests instead (see studio/schemas/blocks/page-builder.test.mjs).
+  path_instructions:
+    - path: "studio/schemas/**"
+      instructions: |
+        Apply docs/agents/page-builder.md. In particular:
+        - One section, one design: flag any field that changes how a section
+          looks, shows or hides other fields, or picks a renderer, whatever
+          its name. A new look is a new section with its own _type.
+        - Asks are sections: flag a call to action, button or callout added
+          inside a rich text field or a document body instead of as a Page
+          Builder section.
+        - A change to a stored shape needs a migration for existing documents
+          that keeps each one's draft or published state.
+    - path: "frontend/components/**"
+      instructions: |
+        A section component renders one design. Flag branches that render a
+        different layout from a stored field, and a component that returns
+        null for a section an editor filled in.
+    - path: "frontend/app/actions/**"
+      instructions: |
+        Each form posts to its own Formspark form and its own environment
+        key. Flag a form that reuses another form's ID, and a new key that
+        is missing from frontend/.env.local.example.

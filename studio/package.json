@@ -16,6 +16,7 @@
     "legacy:page": "node --env-file=.env.local scripts/print-legacy-page.mjs",
     "page:text": "node --env-file=.env.local scripts/print-page-text.mjs",
     "sanity:query": "node --env-file=.env.local scripts/query.mjs",
+    "page:check": "node --env-file=.env.local scripts/check-document.mjs",
     "page:seed": "node --env-file=.env.local scripts/seed-page-draft.mjs",
     "raster:sync": "node --env-file=.env.local scripts/sync-raster-descriptions.mjs"
   },

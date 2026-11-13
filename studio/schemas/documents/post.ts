@@ -112,7 +112,7 @@ export default defineType({
     defineField({
       name: "body",
       title: "Body",
-      type: "richTextContent",
+      type: "storyTextContent",
       group: "content",
     }),
     meta,
