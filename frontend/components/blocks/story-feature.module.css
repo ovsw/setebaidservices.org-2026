@@ -99,8 +99,13 @@
   .copy {
     grid-column: 3 / 4;
     grid-row: 1;
-    padding-inline: clamp(3rem, 7vw, 7.5rem) 0;
-    padding-block: var(--section-pad-top) var(--section-pad-bottom);
+    padding-inline: clamp(2.5rem, 5vw, 5.5rem) 0;
+    /* At a seam the next story feature's photo sits directly above or below
+       the copy, so the halved seam padding would leave the copy cramped
+       against it. The copy keeps at least the full rhythm. */
+    padding-block:
+      max(var(--section-pad-top), var(--section-pad))
+      max(var(--section-pad-bottom), var(--section-pad));
   }
 
   /* Mirror: the odd section in a run of story features flips, so the page
@@ -122,7 +127,7 @@
 
   [data-mirror] .copy {
     grid-column: 2 / 3;
-    padding-inline: 0 clamp(3rem, 7vw, 7.5rem);
+    padding-inline: 0 clamp(2.5rem, 5vw, 5.5rem);
   }
 
   /* No photo: the copy takes both content halves instead of leaving the
