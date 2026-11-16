@@ -78,19 +78,29 @@ const footerSeal = defineType({
       type: "url",
       description:
         "The image address from the seal's embed code (the src of its img tag).",
-      validation: (rule) => rule.required().uri({ scheme: ["https"] }),
+      validation: (rule) =>
+        rule
+          .required()
+          .error("Paste the seal's image URL; without it the footer has nothing to show.")
+          .uri({ scheme: ["https"] }),
     }),
     defineField({
       name: "alt",
       title: "Alternative text",
       type: "string",
       description: "Name the seal, for example “Candid Platinum Transparency Seal”.",
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule
+          .required()
+          .error("Name the seal: screen readers read this, and the footer hides a seal without it."),
     }),
     defineField({
       name: "destination",
       type: "footerDestination",
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule
+          .required()
+          .error("Link the seal to its profile page, so visitors can check the rating."),
     }),
   ],
   preview: {
