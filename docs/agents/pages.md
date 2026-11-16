@@ -68,7 +68,7 @@ it with the template's current version; edit the template, not this part.
   - Download an uploaded file: `basecamp docs download <upload>`.
 - **Clients see the card table.** The card holds
   only a short description (the plan link, what the page is, what to
-  check, the page link), subtasks for the facts the client confirms, the
+  check, the page link from Internal Review on), subtasks for the facts the client confirms, the
   page strategy comment, and the client's comments. Plan text and agent
   notes stay in the plan document.
 - **Taking a page:** Ovi chooses which cards a run works on, so two runs
@@ -80,12 +80,13 @@ it with the template's current version; edit the template, not this part.
 - **Stage moves:**
   - `/page-plan`: the card moves to To Build once its plan document exists.
   - `/page-draft`: the card stays in To Build while the draft is written;
-    at handover it moves to Internal Review, assigned to Ovi.
+    at handover it moves to Internal Review, assigned to Ovi, with the
+    draft page link on the card.
   - `/page-polish`: the card keeps its stage; at the end, assign Ovi.
   - A card moves to Client Review only when Ovi says so: he moves it, or
     tells a run to. With the move: publish the
     page and every document it references, write the card's short
-    description and page link below the plan link, add the facts to
+    description, switch the page link to the published view, add the facts to
     confirm as subtasks, and assign the client's reviewer.
   - The client moves an approved card to Accepted. An approval by comment
     or email counts too.
@@ -108,10 +109,21 @@ it with the template's current version; edit the template, not this part.
   cards update --body` replaces the whole description, so read it first.
 - **Handover notes:** comments on the page's plan document, headed "Draft
   notes" (`/page-draft`) or "Polish notes" (`/page-polish`).
-- **Page link for clients:** the hosted Studio's Presentation view of the
-  published page, never the website directly:
-  `https://setebaid.sanity.studio/presentation?preview=<URL-encoded page path>&perspective=published`
-  Clients need a Sanity login to open it; Ovi sends the invitations.
+- **Page link on the card:** the second line of the description, right
+  below the plan link: `<div><strong>Page:</strong> <a href="<link>">Open
+  the page</a></div>`. The link is the hosted Studio's Presentation view,
+  never the website directly and never a localhost URL:
+  - From `/page-draft` handover (Internal Review): the draft,
+    `https://setebaid.sanity.studio/presentation?preview=<URL-encoded page path>`.
+    Studio shows drafts by default. Never write `perspective=drafts`;
+    Studio reads it as a release name and the document panel shows an
+    error.
+  - From Client Review: the published page, the same URL plus
+    `&perspective=published`.
+  A card in Internal Review or Client Review without this line is not
+  handed over: whoever reviews it opens the page from the card (Ovi,
+  2026-11-16). Clients need a Sanity login to open it; Ovi sends the
+  invitations.
 <!-- ovs-workflow-setup:page-record:end -->
 
 ## Hidden pages (Ovi, 2026-11-06)
