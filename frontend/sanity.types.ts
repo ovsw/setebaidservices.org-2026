@@ -15,11 +15,6 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
-export type Icon = {
-  name?: string;
-  svg?: string;
-};
-
 export type FilmButton = {
   label?: string;
   url?: string;
@@ -58,7 +53,7 @@ export type MetaImage = {
   _type: "image";
 };
 
-export type NavigationChildLinkIcon = {
+export type Icon = {
   name?: string;
   svg?: string;
 };
@@ -922,7 +917,6 @@ export type ButtonLink = {
 export type Button = {
   _type: "button";
   text?: string;
-  icon?: Icon;
   url?: CustomUrl;
 };
 
@@ -1370,7 +1364,7 @@ export type NavigationChildLink = {
   _type: "navigationChildLink";
   label?: string;
   description?: string;
-  icon?: NavigationChildLinkIcon;
+  icon?: Icon;
   destination?: NavigationDestination;
 };
 
@@ -1952,14 +1946,13 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
-  | Icon
   | FilmButton
   | KeyDetails
   | Cta
   | Meta
   | SanityImageAssetReference
   | MetaImage
-  | NavigationChildLinkIcon
+  | Icon
   | FeatureGridItemIcon
   | FeatureCardItemImage
   | FeatureCardItemLink
@@ -11531,7 +11524,7 @@ export type NAVIGATION_QUERY_RESULT = {
           description: string | null;
           icon:
             | {
-                name: NavigationChildLinkIcon | null;
+                name: Icon | null;
                 svg: null;
               }
             | {
