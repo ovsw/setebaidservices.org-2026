@@ -14,7 +14,8 @@ export type FooterColumnModel = {
   links: FooterLinkModel[];
 };
 
-export type FooterLogoModel = {
+export type FooterImageLogoModel = {
+  kind: "image";
   key: string;
   alt: string;
   image: {
@@ -24,6 +25,17 @@ export type FooterLogoModel = {
   };
   link: FooterLinkModel;
 };
+
+/** A seal another service serves and updates, loaded from its own URL. */
+export type FooterSealModel = {
+  kind: "seal";
+  key: string;
+  alt: string;
+  src: string;
+  link: FooterLinkModel;
+};
+
+export type FooterLogoModel = FooterImageLogoModel | FooterSealModel;
 
 export type FooterContactIcon = "pin" | "phone" | "email";
 
@@ -36,7 +48,10 @@ export type FooterModel = {
   heading: string;
   accent: string;
   actions: FooterLinkModel[];
-  logos: FooterLogoModel[];
+  /** The site lockup; it is always the first logo item. */
+  siteLogo: FooterImageLogoModel;
+  /** The affiliation marks and live seals after it, in authored order. */
+  markLogos: FooterLogoModel[];
   contactLinks: FooterContactLinkModel[];
   columns: FooterColumnModel[];
   legalLinks: FooterLinkModel[];
@@ -69,7 +84,9 @@ export type RawFooter = {
   actions?: RawLink[] | null;
   logos?: Array<{
     _key?: string | null;
+    _type?: string | null;
     alt?: string | null;
+    imageUrl?: string | null;
     image?: RawImage | null;
     destination?: RawDestination | null;
   } | null> | null;
@@ -153,6 +170,12 @@ function image(source: RawImage | null | undefined) {
   }
 }
 
+/** A live seal's image address: https only, as Studio requires. */
+function sealUrl(value: string | null | undefined): string | null {
+  const url = text(stegaClean(value ?? ""));
+  return url && /^https:\/\//i.test(url) ? url : null;
+}
+
 function isContactIcon(value: string): value is FooterContactIcon {
   return value === "pin" || value === "phone" || value === "email";
 }
@@ -177,19 +200,25 @@ export function createFooterModel(
   }
 
   const actions = links(raw.actions);
-  const logos = (raw.logos ?? []).flatMap((item) => {
+  const logos = (raw.logos ?? []).flatMap((item): FooterLogoModel[] => {
     const key = text(item?._key);
     const alt = text(item?.alt);
-    const logoImage = image(item?.image);
     const logoLink = link(
       item
         ? { _key: item._key, label: item.alt, destination: item.destination }
         : null,
     );
-    return key && alt && logoImage && logoLink
-      ? [{ key, alt, image: logoImage, link: logoLink }]
+    if (!key || !alt || !logoLink) return [];
+    if (item?._type === "footerSeal") {
+      const src = sealUrl(item.imageUrl);
+      return src ? [{ kind: "seal", key, alt, src, link: logoLink }] : [];
+    }
+    const logoImage = image(item?.image);
+    return logoImage
+      ? [{ kind: "image", key, alt, image: logoImage, link: logoLink }]
       : [];
   });
+  const [siteLogo, ...markLogos] = logos;
   const contactLinks = (raw.contactLinks ?? []).flatMap((item) => {
     const icon = text(item?.icon);
     const contactLink = link(item);
@@ -208,7 +237,12 @@ export function createFooterModel(
   const copyrightYears =
     startYear! < currentYear ? `${startYear}-${currentYear}` : `${currentYear}`;
 
-  if (!actions.length || !logos.length || !contactLinks.length || !columns.length) {
+  if (
+    !actions.length ||
+    siteLogo?.kind !== "image" ||
+    !contactLinks.length ||
+    !columns.length
+  ) {
     return null;
   }
 
@@ -216,7 +250,8 @@ export function createFooterModel(
     heading,
     accent,
     actions,
-    logos,
+    siteLogo,
+    markLogos,
     contactLinks,
     columns,
     legalLinks: links(raw.legalLinks),

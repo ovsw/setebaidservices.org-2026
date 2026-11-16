@@ -25,7 +25,9 @@ export const FOOTER_QUERY = defineQuery(`
     actions[]${linkProjection},
     logos[]{
       _key,
+      _type,
       alt,
+      imageUrl,
       image{
         ${imageQuery}
       },
