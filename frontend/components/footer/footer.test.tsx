@@ -14,18 +14,18 @@ const model: FooterModel = {
   heading: "Until next summer,",
   accent: "see you on the island",
   actions: [link("enroll", "Enroll", "https://example.com", true)],
-  logos: [
-    {
-      key: "site",
-      alt: "Setebaid Services logo",
-      image: {
-        src: "https://cdn.sanity.io/images/test-project/test/logo.png",
-        width: 200,
-        height: 100,
-      },
-      link: link("site", "Setebaid Services logo", "/"),
+  siteLogo: {
+    kind: "image",
+    key: "site",
+    alt: "Setebaid Services logo",
+    image: {
+      src: "https://cdn.sanity.io/images/test-project/test/logo.png",
+      width: 200,
+      height: 100,
     },
-  ],
+    link: link("site", "Setebaid Services logo", "/"),
+  },
+  markLogos: [],
   contactLinks: [
     {
       icon: "pin",

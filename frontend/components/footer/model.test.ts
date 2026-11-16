@@ -61,7 +61,7 @@ describe("createFooterModel", () => {
         openInNewTab: false,
       },
     ]);
-    expect(model?.logos[0]?.alt).toBe("Setebaid Services");
+    expect(model?.siteLogo.alt).toBe("Setebaid Services");
     expect(model?.contactLinks[0]?.link.label).toBe(
       "10 Main Street\nExample City",
     );
@@ -86,6 +86,55 @@ describe("createFooterModel", () => {
     expect(model?.actions.map((action) => action.key)).toEqual(["enroll"]);
     expect(model?.columns[0]?.links.map((link) => link.key)).toEqual(["donate"]);
     expect(model?.legalLinks.map((link) => link.key)).toEqual(["privacy"]);
+  });
+
+  it("keeps live seals among the marks and drops ones without an https image", () => {
+    const seal = (key: string, imageUrl: string) => ({
+      _key: key,
+      _type: "footerSeal",
+      alt: "Candid Platinum Transparency Seal",
+      imageUrl,
+      destination: { href: "https://app.candid.org/profile/1", openInNewTab: true },
+    });
+    const model = createFooterModel(
+      {
+        ...rawFooter,
+        logos: [
+          ...rawFooter.logos!,
+          seal("candid", "https://widgets.example.org/seal/svg"),
+          seal("insecure", "http://widgets.example.org/seal/svg"),
+        ],
+      },
+      2026,
+    );
+
+    expect(model?.markLogos).toEqual([
+      {
+        kind: "seal",
+        key: "candid",
+        alt: "Candid Platinum Transparency Seal",
+        src: "https://widgets.example.org/seal/svg",
+        link: {
+          key: "candid",
+          label: "Candid Platinum Transparency Seal",
+          href: "https://app.candid.org/profile/1",
+          openInNewTab: true,
+        },
+      },
+    ]);
+  });
+
+  it("returns unavailable when the first logo item is not an image logo", () => {
+    const seal = {
+      _key: "candid",
+      _type: "footerSeal",
+      alt: "Candid seal",
+      imageUrl: "https://widgets.example.org/seal/svg",
+      destination: { href: "https://app.candid.org/profile/1", openInNewTab: true },
+    };
+    expect(
+      createFooterModel({ ...rawFooter, logos: [seal, ...rawFooter.logos!] }, 2026),
+    ).toBeNull();
   });
 
   it("returns unavailable when required footer data is missing", () => {

@@ -98,8 +98,9 @@ export function SiteFooter({
 }) {
   // The first logo is the site lockup beside the contact block; the rest are
   // affiliation and historic marks, uploaded as one-colour cream artwork so
-  // they read on the dark footer without a light box behind them.
-  const [siteLogo, ...markLogos] = model.logos;
+  // they read on the dark footer without a light box behind them. Live seals
+  // keep the colours their service draws.
+  const { siteLogo, markLogos } = model;
 
   return (
     <footer
@@ -202,14 +203,28 @@ export function SiteFooter({
                   <span className="flex h-14 items-center opacity-80 transition-opacity duration-200 hover:opacity-100 tablet:h-[72px]">
                     {/* An encoded alt gives the image its own overlay on top
                         of the item's, which blocks dragging the item. */}
-                    <Image
-                      alt={stegaClean(logo.alt)}
-                      className="h-full w-auto max-w-[140px] object-contain"
-                      height={logo.image.height}
-                      sizes="140px"
-                      src={logo.image.src}
-                      width={logo.image.width}
-                    />
+                    {logo.kind === "seal" ? (
+                      // The seal's service redraws it when the rating
+                      // changes, so it loads from its own URL every visit;
+                      // next/image would cache a copy.
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        alt={stegaClean(logo.alt)}
+                        className="h-full w-auto max-w-[140px] object-contain"
+                        decoding="async"
+                        loading="lazy"
+                        src={logo.src}
+                      />
+                    ) : (
+                      <Image
+                        alt={stegaClean(logo.alt)}
+                        className="h-full w-auto max-w-[140px] object-contain"
+                        height={logo.image.height}
+                        sizes="140px"
+                        src={logo.image.src}
+                        width={logo.image.width}
+                      />
+                    )}
                   </span>
                 </FooterLink>
               ),

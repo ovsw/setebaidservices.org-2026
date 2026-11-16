@@ -1,4 +1,5 @@
 import {
+  BadgeCheck,
   Columns3,
   ImageIcon,
   Link,
@@ -60,6 +61,42 @@ const footerLogo = defineType({
     }),
   ],
   preview: { select: { media: "image", title: "alt" } },
+});
+
+// A seal another service draws and keeps current, such as Candid's
+// transparency seal. The site loads it from its URL on every visit, so it
+// changes when the service changes it.
+const footerSeal = defineType({
+  name: "footerSeal",
+  title: "Live seal",
+  type: "object",
+  icon: BadgeCheck,
+  fields: [
+    defineField({
+      name: "imageUrl",
+      title: "Image URL",
+      type: "url",
+      description:
+        "The image address from the seal's embed code (the src of its img tag).",
+      validation: (rule) => rule.required().uri({ scheme: ["https"] }),
+    }),
+    defineField({
+      name: "alt",
+      title: "Alternative text",
+      type: "string",
+      description: "Name the seal, for example “Candid Platinum Transparency Seal”.",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "destination",
+      type: "footerDestination",
+      validation: (rule) => rule.required(),
+    }),
+  ],
+  preview: {
+    select: { title: "alt", subtitle: "imageUrl" },
+    prepare: ({ title, subtitle }) => ({ title, subtitle, media: BadgeCheck }),
+  },
 });
 
 const contactIcons = [
@@ -189,9 +226,22 @@ const footer = defineType({
       title: "Footer logos",
       type: "array",
       group: "content",
-      description: "The site logo and affiliated association marks.",
-      of: [defineArrayMember({ type: "footerLogo" })],
-      validation: (rule) => rule.required().min(1).unique(),
+      description:
+        "The site logo first, then affiliated association marks and live seals.",
+      of: [
+        defineArrayMember({ type: "footerLogo" }),
+        defineArrayMember({ type: "footerSeal" }),
+      ],
+      validation: (rule) =>
+        rule
+          .required()
+          .min(1)
+          .unique()
+          .custom((logos?: Array<{ _type?: string }>) =>
+            !logos?.length || logos[0]?._type === "footerLogo"
+              ? true
+              : "The first item is the site logo: make it a logo, not a live seal.",
+          ),
     }),
     defineField({
       name: "contactLinks",
@@ -260,6 +310,7 @@ export const footerSchemaTypes = [
   destination,
   footerLink,
   footerLogo,
+  footerSeal,
   footerContactLink,
   footerColumn,
 ];
