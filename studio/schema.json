@@ -1,29 +1,6 @@
 [
   {
     "type": "type",
-    "name": "icon",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "name": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "svg": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        }
-      }
-    }
-  },
-  {
-    "type": "type",
     "name": "filmButton",
     "value": {
       "type": "object",
@@ -220,7 +197,7 @@
   },
   {
     "type": "type",
-    "name": "navigationChildLink.icon",
+    "name": "icon",
     "value": {
       "type": "object",
       "attributes": {
@@ -5803,14 +5780,6 @@
           },
           "optional": true
         },
-        "icon": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "icon"
-          },
-          "optional": true
-        },
         "url": {
           "type": "objectAttribute",
           "value": {
@@ -8379,7 +8348,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "inline",
-            "name": "navigationChildLink.icon"
+            "name": "icon"
           },
           "optional": true
         },
