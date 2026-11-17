@@ -10,7 +10,7 @@ const LOGO_GREEN = "#1A8B5A";
 const MARIGOLD = "#F2B93D";
 
 const CARD_HEIGHT = 630;
-const LOGO_ASPECT = 840 / 193;
+const LOGO_ASPECT = 885 / 193;
 const LOGO_WIDTH = 280;
 
 // The Inner Hero's desktop scrims (components/blocks/inner-hero.tsx): a
