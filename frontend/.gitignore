@@ -75,3 +75,4 @@ src/plugins/impeccable-live.client.ts
 !.env*.example
 
 shots/
+visual-compare/
