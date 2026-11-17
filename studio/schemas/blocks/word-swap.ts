@@ -1,6 +1,7 @@
 import { Strikethrough } from "lucide-react";
 import { defineField, defineType } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+import { requiredText } from "../validation/required-text";
 
 export default defineType({
   name: "wordSwap",
@@ -16,12 +17,14 @@ export default defineType({
       title: "Crossed-out word",
       type: "string",
       description: 'Shown crossed out, e.g. "diabetes".',
+      validation: (rule) => requiredText(rule, "Add the crossed-out word. The section is not shown without it."),
     }),
     defineField({
       name: "word",
       title: "Replacement word",
       type: "string",
       description: 'Shown below the crossed-out word, e.g. "setebaid".',
+      validation: (rule) => requiredText(rule, "Add the replacement word. The section is not shown without it."),
     }),
     defineField({
       name: "body",

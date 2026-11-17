@@ -17,7 +17,7 @@ export default defineType({
       title: "Photos",
       type: "array",
       description: "Five photos read best. Phones show the first three.",
-      of: [defineArrayMember({ ...photoField({}) })],
+      of: [defineArrayMember({ ...photoField({ required: true }) })],
       validation: (rule) => rule.required().min(3).max(5),
     }),
     defineField({

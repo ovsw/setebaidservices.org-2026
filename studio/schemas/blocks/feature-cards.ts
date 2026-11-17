@@ -1,6 +1,7 @@
 import { Images } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+import { requiredText } from "../validation/required-text";
 
 const featureCardLink = defineField({
   name: "link",
@@ -11,6 +12,7 @@ const featureCardLink = defineField({
       name: "text",
       title: "Link Text",
       type: "string",
+      validation: (rule) => requiredText(rule, "Add the link text. A card without it is not shown."),
     }),
     defineField({
       name: "url",

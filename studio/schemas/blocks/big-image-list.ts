@@ -1,6 +1,7 @@
 import { Clock } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+import { requiredText } from "../validation/required-text";
 
 const richTextToPlainText = (value: unknown): string => {
   if (!Array.isArray(value)) return "";
@@ -24,12 +25,14 @@ const stop = defineArrayMember({
       title: "What happens",
       type: "string",
       description: "What happens at this point in the list.",
+      validation: (rule) => requiredText(rule, "Add the stop name. A stop without it is not shown."),
     }),
     defineField({
       name: "time",
       title: "Time",
       type: "string",
       description: "Shown as written, e.g. 7:15 am.",
+      validation: (rule) => requiredText(rule, "Add the time. A stop without it is not shown."),
     }),
     defineField({
       name: "text",
@@ -37,7 +40,7 @@ const stop = defineArrayMember({
       type: "string",
       description:
         "One sentence on what happens here and who is with the camper. Explain any camp jargon.",
-      validation: (rule) => rule.max(180),
+      validation: (rule) => [requiredText(rule, "Add the line of text. A stop without it is not shown."), rule.max(180)],
     }),
     defineField({
       name: "image",

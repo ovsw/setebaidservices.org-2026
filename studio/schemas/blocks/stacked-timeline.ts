@@ -1,6 +1,7 @@
 import { ListOrdered } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+import { requiredText } from "../validation/required-text";
 
 const item = defineArrayMember({
   name: "stackedTimelineItem",
@@ -11,6 +12,7 @@ const item = defineArrayMember({
       name: "title",
       type: "string",
       description: "The name of this step, stop, or milestone, e.g. Yorkdale.",
+      validation: (rule) => requiredText(rule, "Add the card title. A card without it is not shown."),
     }),
     defineField({
       name: "meta",
@@ -24,7 +26,7 @@ const item = defineArrayMember({
       type: "string",
       description:
         "One sentence on what happens here. Explain any camp jargon.",
-      validation: (rule) => rule.max(180),
+      validation: (rule) => [requiredText(rule, "Add the line. A card without it is not shown."), rule.max(180)],
     }),
     defineField({
       name: "image",

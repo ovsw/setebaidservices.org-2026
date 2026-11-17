@@ -1,5 +1,6 @@
 import { UserRound } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { requiredText } from "../validation/required-text";
 
 export default defineType({
   name: "teamMember",
@@ -17,6 +18,7 @@ export default defineType({
       type: "string",
       title: "Name",
       description: "The full name shown on this team member profile.",
+      validation: (rule) => requiredText(rule, "Add the name. A profile without it is not shown."),
     }),
     defineField({
       name: "role",

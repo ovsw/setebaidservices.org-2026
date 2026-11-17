@@ -1,6 +1,7 @@
 import { ImageIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+import { requiredText } from "../validation/required-text";
 
 export default defineType({
   name: "headingImage",
@@ -14,6 +15,7 @@ export default defineType({
       name: "title",
       title: "Heading",
       type: "string",
+      validation: (rule) => requiredText(rule, "Add the heading. The section is not shown without it."),
     }),
     defineField({
       name: "richText",

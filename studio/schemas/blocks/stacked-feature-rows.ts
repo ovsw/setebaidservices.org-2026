@@ -5,6 +5,7 @@ import NavigationIconInput, {
   createNavigationIconPreview,
 } from "../inputs/navigation-icon-input";
 import { isNavigationIconName } from "../inputs/lucide-icon-catalog";
+import { requiredText } from "../validation/required-text";
 
 const richTextToPlainText = (value: unknown): string => {
   if (!Array.isArray(value)) return "";
@@ -78,6 +79,7 @@ const row = defineArrayMember({
       name: "title",
       type: "string",
       description: "A short heading beside this row’s supporting text.",
+      validation: (rule) => requiredText(rule, "Add the row heading. A row without it is not shown."),
     }),
     defineField({
       name: "items",
@@ -97,6 +99,7 @@ const row = defineArrayMember({
           name: "text",
           title: "Link Text",
           type: "string",
+          validation: (rule) => requiredText(rule, "Add the link text, or remove the link. A half-filled link is not shown."),
         }),
         defineField({
           name: "url",
