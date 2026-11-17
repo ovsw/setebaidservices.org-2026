@@ -19,10 +19,10 @@ export type TestimonialDataAttribute = (
 ) => string | undefined;
 
 /*
- * One quote card for every Quote wall layout. It reads only the field tokens
- * (card, card-foreground, muted-foreground, emphasis, border), so it is
- * readable on Cream, Sand and Forest alike. The layouts decide only where the
- * card sits, how wide it is and how large its quote type is.
+ * One quote card for the Quote wall and the Quote track. It reads only the
+ * field tokens (card, card-foreground, muted-foreground, emphasis, border), so
+ * it is readable on Cream, Sand and Forest alike. The sections decide only
+ * where the card sits, how wide it is and how large its quote type is.
  */
 export default function QuoteCard({
   bodyClassName,

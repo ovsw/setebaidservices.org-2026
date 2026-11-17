@@ -13,7 +13,6 @@ import QuoteCard, {
 } from "./quote-card";
 import QuoteWallDialog from "./quote-wall-dialog";
 import QuoteWallList from "./quote-wall-list";
-import QuoteWallTrack from "./quote-wall-track";
 import styles from "./quote-wall.module.css";
 
 type PageBlock =
@@ -180,10 +179,4 @@ function QuoteWallColumns({
   );
 }
 
-export default function QuoteWall(props: QuoteWallProps) {
-  return stegaClean(props.layout) === "track" ? (
-    <QuoteWallTrack {...props} />
-  ) : (
-    <QuoteWallColumns {...props} />
-  );
-}
+export default QuoteWallColumns;

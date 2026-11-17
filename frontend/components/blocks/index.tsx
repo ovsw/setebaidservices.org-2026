@@ -26,6 +26,13 @@ import DirectorCta from "@/components/blocks/director-cta";
 import LargeSlides from "@/components/blocks/large-slides";
 import HeadingImage from "@/components/blocks/heading-image";
 import QuoteWall from "@/components/blocks/quote-wall";
+import TiltedFeatureCards from "@/components/blocks/tilted-feature-cards";
+import RingPhotoBenefits from "@/components/blocks/ring-photo-benefits";
+import DateCards from "@/components/blocks/date-cards";
+import QuoteTrack from "@/components/blocks/quote-track";
+import BentoCollage from "@/components/blocks/bento-collage";
+import NudgeBanner from "@/components/blocks/nudge-banner";
+import PhotoBanner from "@/components/blocks/photo-banner";
 import FaqHub from "@/components/blocks/faq-hub";
 import WordSwap from "@/components/blocks/word-swap";
 import FlipCards from "@/components/blocks/flip-cards";
@@ -91,6 +98,12 @@ const serverFieldEditingBlockTypes = new Set<Block["_type"]>([
   "impactNumbers",
   "impactSpotlight",
   "parentsGuideForm",
+  "tiltedFeatureCards",
+  "ringPhotoBenefits",
+  "dateCards",
+  "bentoCollage",
+  "nudgeBanner",
+  "photoBanner",
   // page-builder-generator:editing-types
 ]);
 
@@ -128,6 +141,13 @@ const componentMap: Partial<{
   impactNumbers: ImpactNumbers,
   impactSpotlight: ImpactSpotlight,
   parentsGuideForm: ParentsGuideForm,
+  tiltedFeatureCards: TiltedFeatureCards,
+  ringPhotoBenefits: RingPhotoBenefits,
+  dateCards: DateCards,
+  quoteTrack: QuoteTrack,
+  bentoCollage: BentoCollage,
+  nudgeBanner: NudgeBanner,
+  photoBanner: PhotoBanner,
   // page-builder-generator:component-map
 };
 
@@ -213,7 +233,7 @@ export default function Blocks({
                         }).toString()
                     : undefined,
                 }
-                : block._type === "quoteWall"
+                : block._type === "quoteWall" || block._type === "quoteTrack"
                   ? {
                       dataAttribute,
                       testimonialDataAttribute: stega

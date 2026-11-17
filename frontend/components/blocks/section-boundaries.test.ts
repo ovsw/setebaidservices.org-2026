@@ -220,8 +220,8 @@ describe("resolveSectionBands layer", () => {
   });
 });
 
-describe("resolveSectionBoundaries photo CTA banner", () => {
-  const banner = () => ({ ...block("ctaBanner", "cream"), variant: "photo" }) as Block;
+describe("resolveSectionBoundaries photo band", () => {
+  const banner = () => block("photoBanner");
 
   it("meets both neighbours at straight edges", () => {
     const result = resolveSectionBoundaries([
@@ -242,6 +242,45 @@ describe("resolveSectionBoundaries photo CTA banner", () => {
   it("does not tuck under a photo hero", () => {
     expect(resolveSectionBoundaries([block("innerHero"), banner()])[1].tuck).toBe(false);
   });
+});
+
+describe("resolveSectionBoundaries split sections", () => {
+  it("resolves the closing band from its editor background, never a photo", () => {
+    const legacy = { ...block("ctaBanner"), variant: "photo" } as unknown as Block;
+    expect(
+      resolveSectionBoundaries([block("richTextBlock", "white"), legacy, block("richTextBlock", "white")])[1]
+        .background,
+    ).toBe("green");
+    expect(resolveSectionBoundaries([block("ctaBanner", "cream")])[0].background).toBe("cream");
+  });
+
+  it("tucks the nudge under a photo hero and keeps its editor background", () => {
+    const [, nudge] = resolveSectionBoundaries([block("innerHero"), block("nudgeBanner", "cream")]);
+    expect(nudge.tuck).toBe(true);
+    expect(nudge.background).toBe("cream");
+  });
+
+  it("gives a nudge without a stored background the white field", () => {
+    expect(resolveSectionBoundaries([block("richTextBlock", "green"), block("nudgeBanner")])[1].background).toBe(
+      "white",
+    );
+  });
+
+  it("tucks tilted feature cards under a photo hero", () => {
+    expect(
+      resolveSectionBoundaries([block("innerHero"), block("tiltedFeatureCards", "cream")])[1].tuck,
+    ).toBe(true);
+  });
+
+  it.each(["ringPhotoBenefits", "dateCards", "quoteTrack", "bentoCollage"] as const)(
+    "treats %s as a normal section with the editor background",
+    (type) => {
+      const result = resolveSectionBoundaries([block("richTextBlock", "cream"), block(type, "cream")]);
+      expect(result[1].background).toBe("cream");
+      expect(result[1].seamTop).toBe(true);
+      expect(resolveSectionBoundaries([block("innerHero"), block(type, "cream")])[1].tuck).toBe(false);
+    },
+  );
 });
 
 describe("resolveSectionBoundaries mirror", () => {

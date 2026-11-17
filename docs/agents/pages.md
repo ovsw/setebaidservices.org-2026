@@ -271,11 +271,33 @@ design source is the home page prototype,
 the reused sections.
 
 **Use freely:** `innerHero`, `storyFeature`, `featureCards`,
-`benefitCards`, `stackedFeatureRows`, `stackedTimeline`,
-`imageCollageFeature`, `headingImage`, `largeSlides`, `bigImageList`,
-`quoteWall`, `teamMembers`, `faqAccordion`, `ctaBanner`, `directorCta`,
-`flipCards`. `photoStrip` holds only photos: use it only when at least
-three fitting photos are in Sanity.
+`tiltedFeatureCards`, `benefitCards`, `ringPhotoBenefits`,
+`stackedFeatureRows`, `stackedTimeline`, `dateCards`,
+`imageCollageFeature`, `bentoCollage`, `headingImage`, `largeSlides`,
+`bigImageList`, `quoteWall`, `teamMembers`, `faqAccordion`, `ctaBanner`,
+`nudgeBanner`, `photoBanner`, `directorCta`, `flipCards`. `photoStrip`
+holds only photos: use it only when at least three fitting photos are in
+Sanity.
+
+Each section has one design; pick the section whose design fits the
+content. Some sections do a similar job in a different design:
+
+- `featureCards`: numbered rows of linked image cards.
+  `tiltedFeatureCards`: a few large photo cards with a date badge and two
+  buttons, e.g. camps.
+- `benefitCards`: icon tiles in a grid. `ringPhotoBenefits`: a round photo
+  beside the heading and up to three short points.
+- `stackedTimeline`: ordered steps. `dateCards`: up to three dated items,
+  e.g. events; each card has a `date` field.
+- `quoteWall`: quotes as cards in columns. `quoteTrack`: one row of
+  quotes that visitors drag sideways, only for more than twelve
+  testimonials in one section (Ovi, 2026-11-05). Today only the home page
+  qualifies.
+- `imageCollageFeature`: text and points beside two overlapping photos.
+  `bentoCollage`: a text card with buttons and three captioned photos,
+  e.g. staff.
+- `ctaBanner`: the closing band that ends a page. `nudgeBanner`: a quiet
+  prompt between sections. `photoBanner`: a full-width photo band.
 
 **Use only for their named job:** `faqHub` on /parents/faqs.
 `packingChecklist` for the packing list on /parents/before-camp.
@@ -285,34 +307,9 @@ the legal and policy pages (/privacy-policy, /terms-of-use,
 /cookie-policy, /accessibility, /refund-policy); on other pages, choose a
 designed section.
 
-**Layouts (grandfathered).** Six sections have a second look, set in
-their `layout` field (`variant` on `ctaBanner`). This breaks the rule
-"one section, one look" in `docs/agents/page-builder.md`; they stay
-until [issue #112](https://github.com/ovsw/setebaidservices.org-2026/issues/112)
-splits them into separate sections. The home page uses each one. On other
-pages, use a layout only when the content does the same job; otherwise
-keep the default. Never add a look to any section, and never propose a
-`layout` or `variant` field on a new section: a new look needs Ovi's
-express approval and becomes its own section.
-
-- `featureCards`: `grid` (default), or `tilted` for a few large cards
-  with a tilted photo, a date badge and two buttons, e.g. camps.
-- `benefitCards`: `grid` (default), or `ringPhoto` for a round photo
-  beside the heading and up to three short points.
-- `stackedTimeline`: `timeline` (default) for ordered steps, or
-  `dateCards` for up to three dated items, e.g. events. The item's small
-  label shows large, so put the date there.
-- `quoteWall`: always `wall` (default). Use `track`, one row of quotes
-  that visitors drag sideways, only for more than twelve testimonials in
-  one section (Ovi, 2026-11-05). Today only the home page qualifies.
-- `imageCollageFeature`: `collage` (default), or `bento` for a text card
-  with buttons and three captioned photos, e.g. staff.
-- `ctaBanner` `variant`: `closing` (default) ends a page, `nudge` is a
-  quiet prompt between sections, `photo` is a full-width photo band.
-
-**One ask at a time (Ovi, 2026-11-05).** A page ends with one `ctaBanner`
-(`closing`). Never put two call-to-action sections next to each other
-(`ctaBanner` in any variant, `directorCta`): a `nudge` needs a content
+**One ask at a time (Ovi, 2026-11-05).** A page ends with one
+`ctaBanner`. Never put two call-to-action sections next to each other
+(`ctaBanner`, `nudgeBanner`, `photoBanner`, `directorCta`): a `nudgeBanner` needs a content
 section on both sides, and the section right before the closing band is
 proof (`quoteWall`, a story) or content, never another ask. Two asks in a
 row read as a false ending, make the two primary buttons compete, and
@@ -341,17 +338,17 @@ only, never in code: this repository is public.
 - Name story → `wordSwap`.
 - Turn it around → `flipCards`.
 - Photo strip → `photoStrip`.
-- Camps → `featureCards`, layout `tilted`.
-- Why Setebaid → `benefitCards`, layout `ringPhoto`.
+- Camps → `tiltedFeatureCards`.
+- Why Setebaid → `ringPhotoBenefits`.
 - Pricing → `pricingTiers`.
-- Voices → `quoteWall`, layout `wall` (`track` only for more than twelve
-  testimonials; see "Layouts").
-- Events → `stackedTimeline`, layout `dateCards`.
-- Donate → `ctaBanner`, variant `photo`.
-- Staff → `imageCollageFeature`, layout `bento`.
+- Voices → `quoteWall` (`quoteTrack` only for more than twelve
+  testimonials).
+- Events → `dateCards`.
+- Donate → `photoBanner`.
+- Staff → `bentoCollage`.
 - News: not in the MVP.
 
-**Testimonials.** `quoteWall` shows Testimonial documents. The home
+**Testimonials.** `quoteWall` and `quoteTrack` show Testimonial documents. The home
 page's testimonials (`testimonial-home-*`) are still drafts. Another page
 may show them: reference them the way the home page draft does (a weak
 reference with `_strengthenOnPublish`). Do not edit them.

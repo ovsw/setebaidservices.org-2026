@@ -39,7 +39,6 @@ describe("core Page Builder sections", () => {
     expect(getFeatureCardColumnCount(2)).toBe(2);
     expect(getFeatureCardColumnCount(3)).toBe(3);
     expect(getFeatureCardColumnCount(4)).toBe(4);
-    expect(getFeatureCardColumnCount(4, false)).toBe(2);
     expect(getFeatureCardColumnCount(5)).toBe(3);
     expect(getFeatureCardColumnCount(6)).toBe(3);
   });
@@ -140,7 +139,6 @@ describe("core Page Builder sections", () => {
           ],
           description: null,
           heading: "Draft group",
-          singleRowUpToFour: true,
         },
         {
           _key: "next-group",
@@ -151,7 +149,6 @@ describe("core Page Builder sections", () => {
           ],
           description: null,
           heading: "Next group",
-          singleRowUpToFour: true,
         },
       ],
       title: [paragraph("draft-programs-title", "Draft programs")],
@@ -201,7 +198,6 @@ describe("core Page Builder sections", () => {
           ],
           description: null,
           heading: "Too small",
-          singleRowUpToFour: true,
         },
         {
           _key: "complete",
@@ -212,7 +208,6 @@ describe("core Page Builder sections", () => {
           ],
           description: null,
           heading: "Complete group",
-          singleRowUpToFour: true,
         },
       ],
       title: [paragraph("minimum-cards-title", "Minimum cards")],
@@ -257,7 +252,6 @@ describe("core Page Builder sections", () => {
           ],
           description: null,
           heading: "Incomplete group",
-          singleRowUpToFour: true,
         },
       ],
       title: [paragraph("empty-feature-cards-title", "Empty feature cards")],

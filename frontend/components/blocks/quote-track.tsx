@@ -11,14 +11,14 @@ type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type QuoteWallBlock = Extract<PageBlock, { _type: "quoteWall" }>;
-type QuoteWallProps = QuoteWallBlock & {
+type QuoteTrackBlock = Extract<PageBlock, { _type: "quoteTrack" }>;
+type QuoteTrackProps = QuoteTrackBlock & {
   dataAttribute?: (path: string) => string | undefined;
   testimonialDataAttribute?: (documentId: string, path: string) => string | undefined;
 };
 
 /*
- * Quote wall, track layout: a horizontal masonry of quotes in two rows that
+ * Quote track: a horizontal masonry of quotes in two rows that
  * run past both edges of the page and drag sideways. Every card takes the
  * field's soft card tone (The Soft Card Rule); the variety comes from size,
  * not colour. A quote's length sets its card's width and type, so short
@@ -57,7 +57,7 @@ export function dealRows<T extends { size: { width: number } }>(cards: T[]) {
   return rows;
 }
 
-export default function QuoteWallTrack({
+export default function QuoteTrack({
   _key,
   background,
   dataAttribute,
@@ -65,7 +65,7 @@ export default function QuoteWallTrack({
   hint,
   testimonialDataAttribute,
   testimonials,
-}: QuoteWallProps) {
+}: QuoteTrackProps) {
   const cards: Card[] = (testimonials ?? []).flatMap((reference, index) => {
     const document = reference.document;
     if (!document || !hasText(document.name) || !document.body?.length) return [];

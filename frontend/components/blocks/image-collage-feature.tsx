@@ -11,7 +11,6 @@ import { stegaClean } from "next-sanity";
 import { sectionThemeClass } from "./section-theme";
 import { hotspotPosition, type PageButtonContext } from "./section-parts";
 import styles from "./image-collage-feature.module.css";
-import ImageCollageBento from "./image-collage-bento";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
@@ -210,10 +209,4 @@ function ImageCollageCollage({
   );
 }
 
-export default function ImageCollageFeature(props: ImageCollageFeatureProps) {
-  return stegaClean(props.layout) === "bento" ? (
-    <ImageCollageBento {...props} />
-  ) : (
-    <ImageCollageCollage {...props} />
-  );
-}
+export default ImageCollageCollage;

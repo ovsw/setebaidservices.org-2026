@@ -9,7 +9,6 @@ import Link from "next/link";
 import { stegaClean } from "next-sanity";
 import styles from "./feature-cards.module.css";
 import { sectionThemeClass } from "./section-theme";
-import FeatureCardsTilted from "./feature-cards-tilted";
 import type { PageButtonContext } from "./section-parts";
 
 type PageBlock =
@@ -71,14 +70,12 @@ export function getFeatureCardImageUrl(
   return urlFor(image).width(1600).height(900).fit("crop").url();
 }
 
-export function getFeatureCardColumnCount(
-  cardCount: number,
-  singleRowUpToFour = true,
-) {
-  if (cardCount === 4 && singleRowUpToFour) return 4;
+export function getFeatureCardColumnCount(cardCount: number) {
+  if (cardCount === 4) return 4;
   return cardCount === 3 || cardCount === 5 || cardCount === 6 ? 3 : 2;
 }
 
+/** Feature Cards: numbered rows of linked image cards. */
 function FeatureCardsGrid({
   _key,
   dataAttribute,
@@ -173,18 +170,13 @@ function FeatureCardsGrid({
           {numberedGroups.map(({ cards, group, startNumber }) => {
             const groupPath = `groups[_key=="${group._key}"]`;
 
-            const columnCount = getFeatureCardColumnCount(
-              cards.length,
-              stegaClean(group.singleRowUpToFour) !== false,
-            );
+            const columnCount = getFeatureCardColumnCount(cards.length);
 
             return (
               <section
                 aria-labelledby={`${headingId}-${group._key}`}
                 className={styles.reveal}
-                data-sanity={dataAttribute?.(
-                  `${groupPath}.singleRowUpToFour`,
-                )}
+                data-sanity={dataAttribute?.(groupPath)}
                 key={group._key}
               >
                 <header className="mb-6 max-w-2xl">
@@ -334,10 +326,4 @@ function FeatureCardsGrid({
   );
 }
 
-export default function FeatureCards(props: FeatureCardsProps) {
-  return stegaClean(props.layout) === "tilted" ? (
-    <FeatureCardsTilted {...props} />
-  ) : (
-    <FeatureCardsGrid {...props} />
-  );
-}
+export default FeatureCardsGrid;

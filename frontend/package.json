@@ -19,7 +19,8 @@
     "trigger:deploy": "trigger deploy",
     "test:e2e": "node ../scripts/ensure-worktree-ports.mjs && playwright test",
     "test:smoke": "node ../scripts/ensure-worktree-ports.mjs && playwright test e2e/site.spec.ts",
-    "shot": "node scripts/shot.mjs"
+    "shot": "node scripts/shot.mjs",
+    "visual:compare": "node scripts/visual-compare.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",

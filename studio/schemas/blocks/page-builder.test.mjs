@@ -63,18 +63,10 @@ test("one ask at a time: flags two calls to action in a row", () => {
   assert.equal(validateAskSpacing(undefined), true);
 });
 
-// One section, one design (docs/adr, docs/agents/page-builder.md): a field
-// that picks a look turns one section into several. These six sections still
-// have one until issue #112 splits them; delete each entry as its section is
-// split. Never add an entry without Ovi's written approval.
-const grandfatheredLookFields = new Set([
-  "benefit-cards.ts:layout",
-  "cta-banner.ts:variant",
-  "feature-cards.ts:layout",
-  "image-collage-feature.ts:layout",
-  "quote-wall.ts:layout",
-  "stacked-timeline.ts:layout",
-]);
+// One section, one design (ADR 0003, docs/agents/page-builder.md): a field
+// that picks a look turns one section into several. A new look is a new
+// section. An exception needs Ovi's written approval before it is listed here.
+const approvedLookFields = new Set([]);
 
 test("one section, one design: no section has a field that picks its look", () => {
   const blocksDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -89,13 +81,13 @@ test("one section, one design: no section has a field that picks its look", () =
     }
   }
   assert.deepEqual(
-    [...found].filter((field) => !grandfatheredLookFields.has(field)),
+    [...found].filter((field) => !approvedLookFields.has(field)),
     [],
     "A new look is a new section with its own _type; see docs/agents/page-builder.md.",
   );
   assert.deepEqual(
-    [...grandfatheredLookFields].filter((field) => !found.has(field)),
+    [...approvedLookFields].filter((field) => !found.has(field)),
     [],
-    "This section no longer has its look field; remove it from grandfatheredLookFields.",
+    "This section no longer has its look field; remove it from approvedLookFields.",
   );
 });

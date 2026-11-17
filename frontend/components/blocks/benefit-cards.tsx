@@ -7,7 +7,6 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { stegaClean } from "next-sanity";
 import styles from "./benefit-cards.module.css";
 import { sectionThemeClass } from "./section-theme";
-import BenefitCardsRingPhoto from "./benefit-cards-ring-photo";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
@@ -241,10 +240,4 @@ function BenefitCardsGrid({
   );
 }
 
-export default function BenefitCards(props: BenefitCardsProps) {
-  return stegaClean(props.layout) === "ringPhoto" ? (
-    <BenefitCardsRingPhoto {...props} />
-  ) : (
-    <BenefitCardsGrid {...props} />
-  );
-}
+export default BenefitCardsGrid;

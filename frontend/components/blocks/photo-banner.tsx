@@ -14,17 +14,17 @@ type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type CtaBannerProps = Extract<PageBlock, { _type: "ctaBanner" }> & {
+type PhotoBannerProps = Extract<PageBlock, { _type: "photoBanner" }> & {
   dataAttribute?: DataAttribute;
 };
 
 /*
- * Call to Action, photo band (prototype "Donate"): a full-bleed photo with a
+ * Photo band (prototype "Donate"): a full-bleed photo with a
  * dark fade rising from the bottom. The heading and text sit on the fade at
  * the left; the main button and a text link sit at the right. The Forest
  * field re-points the text tokens to cream and marigold.
  */
-export default function CtaBannerPhoto({
+export default function PhotoBanner({
   _key,
   buttons,
   dataAttribute,
@@ -32,7 +32,7 @@ export default function CtaBannerPhoto({
   eyebrow,
   image,
   title,
-}: CtaBannerProps) {
+}: PhotoBannerProps) {
   if (!title) return null;
 
   const headingId = `cta-banner-${stegaClean(_key)}-title`;
