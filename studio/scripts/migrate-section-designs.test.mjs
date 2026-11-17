@@ -337,3 +337,32 @@ test("a moved block with no stored background is reported as a problem", () => {
   const { problems } = migrateBlocks([{ _key: "n", _type: "ctaBanner", variant: "nudge", title: "Hi" }]);
   assert.match(problems[0], /^blocks\[_key=="n"\]: no stored background/);
 });
+
+test("a suffixed card key never collides with another card's key", () => {
+  const card = (key) => ({ _key: key, _type: "featureCardItem", title: key, image: image(key) });
+  const { block } = migrateBlock({
+    _key: "t",
+    _type: "featureCards",
+    background: "cream",
+    layout: "tilted",
+    groups: [
+      { _key: "g1", _type: "featureCardGroup", cards: [card("c1"), card("c1-g2")] },
+      { _key: "g2", _type: "featureCardGroup", cards: [card("c1")] },
+    ],
+  });
+  assert.deepEqual(block.cards.map((c) => c._key), ["c1", "c1-g2", "c1-g2-2"]);
+});
+
+test("a grid card link with blank text or no destination does not count", () => {
+  const withLink = (link) =>
+    migrateBlock({
+      _key: "g",
+      _type: "featureCards",
+      layout: "grid",
+      groups: [{ _key: "r", _type: "featureCardGroup", heading: "P", cards: [{ _key: "c", _type: "featureCardItem", link, buttons: [button("a", "Read")] }] }],
+    }).block.groups[0].cards[0].link;
+  const read = { text: "Read", url: url("https://x/a") };
+  assert.deepEqual(withLink({ text: "Go", url: { _type: "customUrl", type: "external" } }), read);
+  assert.deepEqual(withLink({ text: "  ", url: url("https://y") }), read);
+  assert.deepEqual(withLink({ text: "Go", url: url("https://y") }), { text: "Go", url: url("https://y") });
+});

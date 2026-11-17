@@ -123,6 +123,13 @@ function hasContent(value) {
   return true;
 }
 
+/** Whether a Custom URL points somewhere: an external address or an internal reference. */
+function hasDestination(url) {
+  if (url?.type === "external") return Boolean(url.external?.trim());
+  if (url?.type === "internal") return Boolean(url.internal?._ref);
+  return false;
+}
+
 /** A Button (`text` + `url`) as a Feature Card link, which has the same two fields. */
 function buttonToCardLink(button) {
   if (!button) return undefined;
@@ -145,6 +152,7 @@ function reshape(block, target) {
     const { groups, ...rest } = block;
     const leftovers = [];
     const seen = new Set();
+    const original = new Set((groups ?? []).flatMap((group) => (group.cards ?? []).map((card) => card?._key)));
     const flat = (groups ?? []).flatMap((group) => {
       for (const key of ["heading", "description"]) {
         if (hasContent(group[key])) leftovers.push({ path: `groups[_key=="${group._key}"].${key}`, value: group[key] });
@@ -155,7 +163,8 @@ function reshape(block, target) {
           if (card?._key) seen.add(card._key);
           return card;
         }
-        const _key = `${card._key}-${group._key}`;
+        let _key = `${card._key}-${group._key}`;
+        for (let n = 2; seen.has(_key) || original.has(_key); n += 1) _key = `${card._key}-${group._key}-${n}`;
         seen.add(_key);
         return { ...card, _key };
       });
@@ -193,7 +202,7 @@ function reshape(block, target) {
       ...group,
       cards: group.cards?.map((card) => {
         // A link draws only with both a text and a destination.
-        if ((card.link?.text && card.link?.url) || !card.buttons?.length) return card;
+        if ((card.link?.text?.trim() && hasDestination(card.link.url)) || !card.buttons?.length) return card;
         const [first, ...others] = card.buttons;
         const path = `groups[_key=="${group._key}"].cards[_key=="${card._key}"]`;
         for (const button of others) {
