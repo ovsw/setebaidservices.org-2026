@@ -105,11 +105,11 @@ settings".
   `image` with `alt`, the `body` (the quote, required) and an optional
   `rating`. Pages show testimonials in the "Quote wall" section
   (`quoteWall`), in the order of its `testimonials` list.
-- A Quote wall's `layout` stays `wall` (the default) on a new or changed
-  section. Use `track` (one row that visitors drag sideways) only when the
+- Use the Quote wall on a new or changed section. Use the "Quote track"
+  section (`quoteTrack`, one row that visitors drag sideways) only when the
   section holds more than twelve testimonials; the wall shows nine cards
-  and a "show more" button, which suits every smaller set. Do not switch an
-  existing section's layout on your own.
+  and a "show more" button, which suits every smaller set. Do not swap an
+  existing section for the other one on your own.
 - Never present a placeholder quote as real, and never write a quote for a
   real person. Campers are children: use only the name form the client gives
   (often the first name only).
@@ -172,13 +172,20 @@ Section library:
 | ---------------------------------------------- | ------------------------------------------------------------------ | ---------- |
 | Image and Text (`storyFeature`)                | A story or point with one photo, key details and buttons           | use freely |
 | Image Feature Cards (`featureCards`)           | Choices the reader picks between; each card has a photo and a link | use freely |
+| Tilted feature cards (`tiltedFeatureCards`)    | A few large photo cards with a date badge and buttons, e.g. camps  | use freely |
 | Feature Grid (`benefitCards`)                  | Text cards with an icon: reasons, features, rules; no photos       | use freely |
+| Benefits with round photo (`ringPhotoBenefits`) | A round photo beside up to three short points                     | use freely |
 | Stacked Feature Rows (`stackedFeatureRows`)    | Short headings with supporting points                              | use freely |
 | Timeline (`stackedTimeline`)                   | Steps or a schedule, 2 to 8 cards                                  | use freely |
+| Date cards (`dateCards`)                       | Up to three dated items, e.g. events                               | use freely |
 | Image Collage Feature (`imageCollageFeature`)  | A story with two photos                                            | use freely |
+| Bento collage (`bentoCollage`)                 | A text card with buttons and three captioned photos                | use freely |
 | Photo Strip (`photoStrip`)                     | 3 to 5 photos in a row with a caption                              | use freely |
-| Call to Action (`ctaBanner`)                   | A short prompt between sections                                    | use freely |
+| Call to Action (`ctaBanner`)                   | The closing band that ends a page                                  | use freely |
+| In-page nudge (`nudgeBanner`)                  | A short prompt between sections                                    | use freely |
+| Photo band (`photoBanner`)                     | A full-width photo with a prompt and actions                       | use freely |
 | Quote wall (`quoteWall`)                       | Testimonials                                                       | use freely |
+| Quote track (`quoteTrack`)                     | More than twelve testimonials                                      | use freely |
 | FAQ Section (`faqAccordion`)                   | The questions for this page; one per page                          | use freely |
 | Pricing Tiers (`pricingTiers`)                 | The tier prices; change the words and prices, do not add one       | reserved   |
 | Flip Cards (`flipCards`), Word Swap (`wordSwap`) | Their place on the pages that have them; change the words only   | reserved   |

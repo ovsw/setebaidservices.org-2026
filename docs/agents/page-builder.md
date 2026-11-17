@@ -22,11 +22,6 @@ its fields; they never choose how a section looks.
 - Any exception needs Ovi's express approval, in writing, before the work
   starts. It is never an agent's own call, and "the prototype has it" is
   not approval.
-- Six sections from the home page prototype still carry a `layout` or
-  `variant` field (`featureCards`, `benefitCards`, `stackedTimeline`,
-  `quoteWall`, `imageCollageFeature`, `ctaBanner`). They are grandfathered
-  until [issue #112](https://github.com/ovsw/setebaidservices.org-2026/issues/112)
-  splits them. Do not add a look to them, and do not copy the pattern.
 - The section `background` field (Cream, Sand, Forest) is not a look. It
   stays.
 - `studio/schemas/blocks/page-builder.test.mjs` fails on a new `layout`,

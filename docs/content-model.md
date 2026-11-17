@@ -32,7 +32,8 @@ accepts.
   `latestArticles`, `faqAccordion`, `teamMembers`, `ctaBanner`,
   `stackedTimeline`, `packingChecklist`, `bigImageList`, `directorCta`,
   `largeSlides`, `headingImage`, `quoteWall`, `wordSwap`, `flipCards`,
-  `photoStrip`, `pricingTiers`.
+  `photoStrip`, `pricingTiers`, `tiltedFeatureCards`, `ringPhotoBenefits`,
+  `dateCards`, `quoteTrack`, `bentoCollage`, `nudgeBanner`, `photoBanner`.
 - `innerHero` on pages and the blog index.
 - `faqHub` on pages only.
 - `homeHero` on the home page and on pages, not on the blog index.
