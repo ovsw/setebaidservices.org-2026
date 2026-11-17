@@ -11,6 +11,7 @@ const featureCardLink = defineField({
       name: "text",
       title: "Link Text",
       type: "string",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "url",

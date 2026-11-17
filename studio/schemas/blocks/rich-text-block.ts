@@ -24,6 +24,7 @@ export default defineType({
       name: "richText",
       title: "Content",
       type: "richTextContent",
+      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

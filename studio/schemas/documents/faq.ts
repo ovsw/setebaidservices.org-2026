@@ -14,12 +14,14 @@ export default defineType({
       type: "string",
       title: "Question",
       description: "The question shown to visitors.",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "body",
       title: "Answer",
       type: "simpleRichText",
       description: "The reusable answer shown inside FAQ sections.",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "category",

@@ -9,8 +9,14 @@ export default defineType({
       name: "text",
       title: "Button Text",
       type: "string",
+      validation: (rule) => rule.required(),
     }),
-    defineField({ name: "url", title: "URL", type: "customUrl" }),
+    defineField({
+      name: "url",
+      title: "URL",
+      type: "customUrl",
+      validation: (rule) => rule.required(),
+    }),
   ],
   preview: {
     select: { title: "text", subtitle: "url.external" },

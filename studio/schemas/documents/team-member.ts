@@ -17,6 +17,7 @@ export default defineType({
       type: "string",
       title: "Name",
       description: "The full name shown on this team member profile.",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "role",

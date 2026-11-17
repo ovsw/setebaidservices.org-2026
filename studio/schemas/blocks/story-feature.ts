@@ -104,7 +104,7 @@ export default defineType({
           name: "items",
           type: "array",
           description: "Short facts to display as pills",
-          of: [defineArrayMember({ type: "string" })],
+          of: [defineArrayMember({ type: "string", validation: (rule) => rule.required() })],
           validation: (rule) => rule.required().min(1).max(8),
         }),
       ],

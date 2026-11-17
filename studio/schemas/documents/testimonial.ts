@@ -17,6 +17,7 @@ export default defineType({
       title: "Name",
       type: "string",
       description: "The person or organization giving the testimonial.",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "title",

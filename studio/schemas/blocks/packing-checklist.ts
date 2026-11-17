@@ -31,6 +31,7 @@ const item = defineArrayMember({
       name: "label",
       type: "string",
       description: "Written to the camper: what to pack, in a few words.",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "quantity",
@@ -56,6 +57,7 @@ const group = defineArrayMember({
     defineField({
       name: "title",
       type: "string",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "tone",

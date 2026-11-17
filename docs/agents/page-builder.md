@@ -27,6 +27,18 @@ its fields; they never choose how a section looks.
 - `studio/schemas/blocks/page-builder.test.mjs` fails on a new `layout`,
   `variant` or similar field. A rename does not make the field allowed.
 
+## A section never hides silently
+
+A section, or an item inside one, never skips rendering because content is
+missing while Studio lets it publish. Whatever a renderer needs in order to
+draw something (a heading, an item's title, a button's text and destination)
+is a required field, so Studio flags the error and blocks publishing.
+
+- When you write or change a renderer guard (`return null`, or a filter that
+  drops items), make every field it tests required in the schema.
+- Data the editor does not control (no posts yet, a reference to a hidden
+  page) is the only exception.
+
 ## Asks are sections
 
 A call to action, a button or a callout that asks the reader to act is a

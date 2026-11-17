@@ -8,9 +8,7 @@ const customUrlSource = readFileSync(
   "utf8",
 );
 
-// Paused on 2026-10-02: every text field is optional while the client
-// reviews content. Restore this test when the required rules come back.
-test.skip("shared buttons require visible text", () => {
+test("shared buttons require visible text", () => {
   assert.match(
     buttonSource,
     /name: "text"[\s\S]*?validation: \(rule\) => rule\.required\(\)/,

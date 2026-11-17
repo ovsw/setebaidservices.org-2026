@@ -11,12 +11,14 @@ const imageCollagePoint = defineArrayMember({
       name: "title",
       type: "string",
       description: "The short lead shown in bold.",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "body",
       type: "text",
       rows: 3,
       description: "The explanation that follows the lead.",
+      validation: (rule) => rule.required(),
     }),
   ],
   preview: {
