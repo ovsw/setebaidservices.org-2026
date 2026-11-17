@@ -997,6 +997,16 @@ body {
   text-size-adjust: 100%;
 }
 
+/* Presentation zooms the page out while an editor drags a section with Shift
+   held (see components/presentation-drag-zoom.tsx). The zoomed-out page does
+   not scroll, so a section that fades in when scrolled to would stay
+   invisible. Show every section as it is while zoomed out. */
+html[data-drag-zoomed-out] *,
+html[data-drag-zoomed-out] *::before,
+html[data-drag-zoomed-out] *::after {
+  animation: none !important;
+}
+
 @layer base {
   /* The Sentence Rule: every paragraph is Merriweather. Interface text
      (labels, buttons, navigation) stays in Work Sans; a paragraph that is

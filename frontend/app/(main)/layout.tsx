@@ -1,6 +1,7 @@
 import { CachedHeader, DynamicHeader } from "@/components/header";
 import { CachedFooter, DynamicFooter } from "@/components/footer";
 import { DisableDraftMode } from "@/components/disable-draft-mode";
+import { PresentationDragZoom } from "@/components/presentation-drag-zoom";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
 import { SanityLive } from "@/sanity/lib/live";
@@ -42,6 +43,7 @@ export default async function MainLayout({
         <>
           <DisableDraftMode />
           <VisualEditing />
+          <PresentationDragZoom />
         </>
       )}
       {isDraftMode ? (
