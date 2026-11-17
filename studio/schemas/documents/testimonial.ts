@@ -1,5 +1,6 @@
 import { Quote } from "lucide-react";
 import { defineField, defineType } from "sanity";
+import { requiredText } from "../validation/required-text";
 
 export default defineType({
   name: "testimonial",
@@ -17,7 +18,7 @@ export default defineType({
       title: "Name",
       type: "string",
       description: "The person or organization giving the testimonial.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => requiredText(rule, "Add the name. A testimonial without it is not shown."),
     }),
     defineField({
       name: "title",

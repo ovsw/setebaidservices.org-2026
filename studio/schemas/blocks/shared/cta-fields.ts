@@ -1,11 +1,12 @@
 import { defineArrayMember, defineField } from "sanity";
+import { requiredText } from "../../validation/required-text";
 
 /** Heading, supporting line and actions shared by the three call-to-action bands. */
 export const ctaTitleField = defineField({
   name: "title",
   type: "string",
   description: "The question or statement that prompts visitors to act.",
-  validation: (rule) => rule.required(),
+  validation: (rule) => requiredText(rule, "Add the heading. The section is not shown without it."),
 });
 
 export const ctaDescriptionField = defineField({

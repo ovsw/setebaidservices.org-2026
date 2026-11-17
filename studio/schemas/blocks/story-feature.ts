@@ -1,6 +1,7 @@
 import { BookOpenText } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+import { requiredText } from "../validation/required-text";
 
 const richTextToPlainText = (value: unknown): string => {
   if (!Array.isArray(value)) return "";
@@ -104,7 +105,13 @@ export default defineType({
           name: "items",
           type: "array",
           description: "Short facts to display as pills",
-          of: [defineArrayMember({ type: "string", validation: (rule) => rule.required() })],
+          of: [
+            defineArrayMember({
+              type: "string",
+              validation: (rule) =>
+                requiredText(rule, "Fill in this fact or remove it. A blank one is not shown."),
+            }),
+          ],
           validation: (rule) => rule.required().min(1).max(8),
         }),
       ],

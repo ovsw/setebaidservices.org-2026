@@ -24,7 +24,8 @@ export default defineType({
       name: "richText",
       title: "Content",
       type: "richTextContent",
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule.required().min(1).error("Add the content. The section is not shown without it."),
     }),
   ],
   preview: {

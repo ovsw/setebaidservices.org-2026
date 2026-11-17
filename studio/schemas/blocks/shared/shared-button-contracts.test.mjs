@@ -11,7 +11,8 @@ const customUrlSource = readFileSync(
 test("shared buttons require visible text", () => {
   assert.match(
     buttonSource,
-    /name: "text"[\s\S]*?validation: \(rule\) => rule\.required\(\)/,
+    // [^}] keeps the match inside the text field, so the URL rule cannot satisfy it.
+    /name: "text",[^}]*validation: \(rule\) => requiredText\(/,
   );
 });
 

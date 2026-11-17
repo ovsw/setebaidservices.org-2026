@@ -1,6 +1,7 @@
 import { GalleryVertical } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+import { requiredText } from "../validation/required-text";
 
 const richTextToPlainText = (value: unknown): string => {
   if (!Array.isArray(value)) return "";
@@ -24,7 +25,7 @@ const slide = defineArrayMember({
       title: "Title",
       type: "string",
       description: "The name of this slide: a place, a moment, or a step.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => requiredText(rule, "Add the slide name. A slide without it is not shown."),
     }),
     defineField({
       name: "time",
@@ -39,7 +40,7 @@ const slide = defineArrayMember({
       type: "string",
       description:
         "One or two sentences about this slide. Explain any camp jargon.",
-      validation: (rule) => rule.required().max(260),
+      validation: (rule) => [requiredText(rule, "Add the slide text. A slide without it is not shown."), rule.max(260)],
     }),
     defineField({
       name: "image",

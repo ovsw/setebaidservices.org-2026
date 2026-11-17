@@ -1,6 +1,7 @@
 import { Images } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+import { requiredText } from "../validation/required-text";
 
 const imageCollagePoint = defineArrayMember({
   name: "imageCollageFeaturePoint",
@@ -11,14 +12,14 @@ const imageCollagePoint = defineArrayMember({
       name: "title",
       type: "string",
       description: "The short lead shown in bold.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => requiredText(rule, "Add the lead. A point without it is not shown."),
     }),
     defineField({
       name: "body",
       type: "text",
       rows: 3,
       description: "The explanation that follows the lead.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => requiredText(rule, "Add the explanation. A point without it is not shown."),
     }),
   ],
   preview: {

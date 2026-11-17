@@ -1,6 +1,7 @@
 import { ListChecks } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { sectionBackgroundField } from "./shared/section-background";
+import { requiredText } from "../validation/required-text";
 
 const richTextToPlainText = (value: unknown): string => {
   if (!Array.isArray(value)) return "";
@@ -31,7 +32,7 @@ const item = defineArrayMember({
       name: "label",
       type: "string",
       description: "Written to the camper: what to pack, in a few words.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => requiredText(rule, "Add what to pack. An item without it is not shown."),
     }),
     defineField({
       name: "quantity",
@@ -57,7 +58,7 @@ const group = defineArrayMember({
     defineField({
       name: "title",
       type: "string",
-      validation: (rule) => rule.required(),
+      validation: (rule) => requiredText(rule, "Add the group title. A group without it is not shown."),
     }),
     defineField({
       name: "tone",

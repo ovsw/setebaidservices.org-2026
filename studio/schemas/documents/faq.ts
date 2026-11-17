@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { ListCollapse } from "lucide-react";
+import { requiredText } from "../validation/required-text";
 
 export default defineType({
   name: "faq",
@@ -14,14 +15,14 @@ export default defineType({
       type: "string",
       title: "Question",
       description: "The question shown to visitors.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => requiredText(rule, "Add the question. An FAQ without it is not shown."),
     }),
     defineField({
       name: "body",
       title: "Answer",
       type: "simpleRichText",
       description: "The reusable answer shown inside FAQ sections.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().min(1).error("Add the answer."),
     }),
     defineField({
       name: "category",
