@@ -96,6 +96,13 @@ const pageBuilderPreviewBlockTypes = new Set<PageBuilderBlockType>([
   "pricingTiers",
   "askAboutCampForm",
   "memorialCardForm",
+  "tiltedFeatureCards",
+  "ringPhotoBenefits",
+  "dateCards",
+  "quoteTrack",
+  "bentoCollage",
+  "nudgeBanner",
+  "photoBanner",
   // page-builder-generator:preview-types
 ]);
 
