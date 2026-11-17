@@ -17,35 +17,33 @@ type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type FeatureCardsProps = Extract<PageBlock, { _type: "featureCards" }> &
+type TiltedFeatureCardsProps = Extract<PageBlock, { _type: "tiltedFeatureCards" }> &
   PageButtonContext & {
     dataAttribute?: DataAttribute;
   };
 
 /*
- * Feature Cards, tilted layout (prototype "Camps"): large cards with a
- * straight photo and a date badge pinned over its lower edge. The prototype
- * tilted the photos; the system keeps every photo straight (DESIGN.md §
- * Shapes), and "tilted" survives only as the stored layout name. Badges alternate marigold and camp green. Row
- * headings are not shown; the cards of every row run as one grid.
+ * Tilted feature cards (prototype "Camps"): large cards with a straight
+ * photo and a date badge pinned over its lower edge. The prototype tilted
+ * the photos; the system keeps every photo straight (DESIGN.md § Shapes), and
+ * "tilted" survives only as the section name. Badges alternate marigold and
+ * camp green.
  */
 const BADGES = ["card-warm", "card-bold"] as const;
 
-export default function FeatureCardsTilted({
+export default function TiltedFeatureCards({
   _key,
   background,
   dataAttribute,
   giving,
-  groups,
+  cards: storedCards,
   link,
   title,
-}: FeatureCardsProps) {
-  const cards = (groups ?? []).flatMap((group) =>
-    (group.cards ?? []).map((card) => ({
-      ...card,
-      path: `groups[_key=="${group._key}"].cards[_key=="${card._key}"]`,
-    })),
-  );
+}: TiltedFeatureCardsProps) {
+  const cards = (storedCards ?? []).map((card) => ({
+    ...card,
+    path: `cards[_key=="${card._key}"]`,
+  }));
   if (!title?.length || !cards.length) return null;
 
   const headingId = `feature-cards-${stegaClean(_key)}`;
@@ -78,7 +76,7 @@ export default function FeatureCardsTilted({
             and three across reads as crowded. */}
         <div
           className={cn("grid gap-x-8 gap-y-14", cards.length >= 2 && "md:grid-cols-2")}
-          data-sanity={dataAttribute?.("groups")}
+          data-sanity={dataAttribute?.("cards")}
         >
           {cards.map((card, index) => {
             const cardData: DataAttribute | undefined = dataAttribute

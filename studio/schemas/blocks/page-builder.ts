@@ -27,6 +27,13 @@ export const contentPageBuilderBlockTypes = [
   "impactNumbers",
   "impactSpotlight",
   "parentsGuideForm",
+  "tiltedFeatureCards",
+  "ringPhotoBenefits",
+  "dateCards",
+  "quoteTrack",
+  "bentoCollage",
+  "nudgeBanner",
+  "photoBanner",
   // page-builder-generator:content-types
 ] as const;
 
@@ -142,7 +149,7 @@ export function validateBlocks(
 }
 
 /** Every block type that is an ask: a band whose job is its call to action. */
-export const askBlockTypes = new Set(["ctaBanner", "directorCta"]);
+export const askBlockTypes = new Set(["ctaBanner", "nudgeBanner", "photoBanner", "directorCta"]);
 
 /**
  * One ask at a time: two asks in a row read as a false ending and make
@@ -195,7 +202,15 @@ function createBlocksField(
     {
       name: "cta",
       title: "CTA",
-      of: ["ctaBanner", "directorCta", "askAboutCampForm", "memorialCardForm", "parentsGuideForm"],
+      of: [
+        "ctaBanner",
+        "nudgeBanner",
+        "photoBanner",
+        "directorCta",
+        "askAboutCampForm",
+        "memorialCardForm",
+        "parentsGuideForm",
+      ],
     },
     {
       name: "image-rich",
@@ -204,7 +219,10 @@ function createBlocksField(
         "headingImage",
         "storyFeature",
         "imageCollageFeature",
+        "bentoCollage",
         "featureCards",
+        "tiltedFeatureCards",
+        "ringPhotoBenefits",
         "bigImageList",
         "largeSlides",
         "latestArticles",
@@ -222,6 +240,7 @@ function createBlocksField(
         "faqAccordion",
         "faqHub",
         "stackedTimeline",
+        "dateCards",
         "packingChecklist",
         "impactNumbers",
         "impactSpotlight",
@@ -230,7 +249,7 @@ function createBlocksField(
     {
       name: "people-quotes",
       title: "People & Quotes",
-      of: ["teamMembers", "quoteWall", "directorCta"],
+      of: ["teamMembers", "quoteWall", "quoteTrack", "directorCta"],
     },
     {
       name: "camp-info",

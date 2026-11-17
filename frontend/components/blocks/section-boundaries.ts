@@ -88,6 +88,13 @@ export const sectionTraits: Record<Block["_type"], SectionTrait> = {
   flipCards: {},
   photoStrip: {},
   pricingTiers: {},
+  tiltedFeatureCards: { tuck: true },
+  ringPhotoBenefits: {},
+  dateCards: {},
+  quoteTrack: {},
+  bentoCollage: {},
+  nudgeBanner: { tuck: true },
+  photoBanner: { background: "photo", tuck: true },
 };
 
 export type SectionBoundary = {
@@ -113,7 +120,7 @@ export type SectionBoundary = {
  * omits `background` for these, so the type guard below has to exclude them
  * by `_type`; keep this list and the table's `background` entries in step.
  */
-type FixedBackgroundType = "homeHero" | "innerHero";
+type FixedBackgroundType = "homeHero" | "innerHero" | "photoBanner";
 
 /** Blocks whose GROQ projection carries the editor `background` field. */
 export type EditorBackgroundBlock = Exclude<Block, { _type: FixedBackgroundType }>;
@@ -139,7 +146,7 @@ export function resolveEditorBackground(block: Block, isFinal: boolean): EditorB
     return isFinal && background === "green" ? "cream" : background;
   }
 
-  const legacyBlock = block as Block & { useCreamBackground?: boolean | null; variant?: string | null };
+  const legacyBlock = block as Block & { useCreamBackground?: boolean | null };
   const cream = legacyBlock.useCreamBackground === true;
   const legacyBackground: EditorBackground =
     block._type === "teamMembers"
@@ -155,9 +162,7 @@ export function resolveEditorBackground(block: Block, isFinal: boolean): EditorB
             ? "cream"
             : "green"
           : block._type === "ctaBanner"
-            ? stegaClean(legacyBlock.variant) === "nudge"
-              ? "white"
-              : "green"
+            ? "green"
             : [
                   "bigImageList",
                   "directorCta",
@@ -176,10 +181,6 @@ export function resolveEditorBackground(block: Block, isFinal: boolean): EditorB
 }
 
 export function resolveSectionBackground(block: Block, isFinal: boolean): SectionBackground {
-  // The photo CTA banner fills itself with a dark photo whatever the editor
-  // field says, so its neighbours must meet it as a photo, not as the field:
-  // at a straight edge.
-  if (block._type === "ctaBanner" && stegaClean(block.variant) === "photo") return "photo";
   return sectionTraits[block._type].background ?? resolveEditorBackground(block, isFinal);
 }
 

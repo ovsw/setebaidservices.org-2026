@@ -16,13 +16,13 @@ type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type ImageCollageFeatureProps = Extract<PageBlock, { _type: "imageCollageFeature" }> &
+type BentoCollageProps = Extract<PageBlock, { _type: "bentoCollage" }> &
   PageButtonContext & {
     dataAttribute?: DataAttribute;
   };
 
 /*
- * Image Collage, bento layout (prototype "Staff"): a four-column grid. The
+ * Bento collage (prototype "Staff"): a four-column grid. The
  * text card takes the top-left half, the primary photo the whole right half,
  * and the other two photos the bottom-left quarters. Each photo has a dark
  * fade at its foot for a handwritten caption.
@@ -48,7 +48,7 @@ const CELLS = [
   },
 ] as const;
 
-export default function ImageCollageBento({
+export default function BentoCollage({
   _key,
   background,
   body,
@@ -60,7 +60,7 @@ export default function ImageCollageBento({
   secondaryImage,
   tertiaryImage,
   title,
-}: ImageCollageFeatureProps) {
+}: BentoCollageProps) {
   if (!title?.length) return null;
 
   const headingId = `image-collage-${stegaClean(_key)}-title`;

@@ -27,13 +27,20 @@ import { memorialCardFormQuery } from "./memorial-card-form";
 import { impactNumbersQuery } from "./impact-numbers";
 import { impactSpotlightQuery } from "./impact-spotlight";
 import { parentsGuideFormQuery } from "./parents-guide-form";
+import { tiltedFeatureCardsQuery } from "./tilted-feature-cards";
+import { ringPhotoBenefitsQuery } from "./ring-photo-benefits";
+import { dateCardsQuery } from "./date-cards";
+import { quoteTrackQuery } from "./quote-track";
+import { bentoCollageQuery } from "./bento-collage";
+import { nudgeBannerQuery } from "./nudge-banner";
+import { photoBannerQuery } from "./photo-banner";
 // page-builder-generator:query-imports
 
 export const pageBuilderQuery = `
   blocks[]{
     _key,
     _type,
-    !(_type in ["homeHero", "innerHero"]) => {background},
+    !(_type in ["homeHero", "innerHero", "photoBanner"]) => {background},
     ${latestArticlesQuery},
     ${faqAccordionQuery},
     ${storyFeatureQuery},
@@ -63,6 +70,13 @@ export const pageBuilderQuery = `
     ${impactNumbersQuery},
     ${impactSpotlightQuery},
     ${parentsGuideFormQuery},
+    ${tiltedFeatureCardsQuery},
+    ${ringPhotoBenefitsQuery},
+    ${dateCardsQuery},
+    ${quoteTrackQuery},
+    ${bentoCollageQuery},
+    ${nudgeBannerQuery},
+    ${photoBannerQuery},
     ${"" /* page-builder-generator:query-spreads */}
   }
 `;

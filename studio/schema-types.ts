@@ -55,6 +55,13 @@ import directorCta from "./schemas/blocks/director-cta";
 import largeSlides from "./schemas/blocks/large-slides";
 import headingImage from "./schemas/blocks/heading-image";
 import quoteWall from "./schemas/blocks/quote-wall";
+import tiltedFeatureCards from "./schemas/blocks/tilted-feature-cards";
+import ringPhotoBenefits from "./schemas/blocks/ring-photo-benefits";
+import dateCards from "./schemas/blocks/date-cards";
+import quoteTrack from "./schemas/blocks/quote-track";
+import bentoCollage from "./schemas/blocks/bento-collage";
+import nudgeBanner from "./schemas/blocks/nudge-banner";
+import photoBanner from "./schemas/blocks/photo-banner";
 import faqHub from "./schemas/blocks/faq-hub";
 import wordSwap from "./schemas/blocks/word-swap";
 import flipCards from "./schemas/blocks/flip-cards";
@@ -122,6 +129,13 @@ export const schemaTypes = [
   largeSlides,
   headingImage,
   quoteWall,
+  tiltedFeatureCards,
+  ringPhotoBenefits,
+  dateCards,
+  quoteTrack,
+  bentoCollage,
+  nudgeBanner,
+  photoBanner,
   faqHub,
   wordSwap,
   flipCards,

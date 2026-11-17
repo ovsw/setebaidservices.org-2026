@@ -1,7 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { InlineObjectField } from "../../inputs/inline-object-field";
 import { hiddenLinkTargetWarning } from "../../validation/hidden-link-target";
-import { isInHiddenCardLink } from "./feature-card-visibility";
 
 const safeProtocols = new Set(["http:", "https:", "mailto:", "tel:"]);
 
@@ -47,7 +46,6 @@ export default defineType({
       validation: (rule) =>
         rule.custom((value, context) => {
           const parent = context.parent as { type?: string } | undefined;
-          if (isInHiddenCardLink(context.document, context.path)) return true;
           return parent?.type === "external" ? validateExternalUrl(value) : true;
         }),
     }),
@@ -65,7 +63,6 @@ export default defineType({
       validation: (rule) => [
         rule.custom((value, context) => {
           const parent = context.parent as { type?: string } | undefined;
-          if (isInHiddenCardLink(context.document, context.path)) return true;
           return parent?.type === "internal" && !value
             ? "Select the internal page"
             : true;
@@ -73,8 +70,7 @@ export default defineType({
         hiddenLinkTargetWarning(
           rule,
           (context) =>
-            (context.parent as { type?: string } | undefined)?.type === "internal" &&
-            !isInHiddenCardLink(context.document, context.path),
+            (context.parent as { type?: string } | undefined)?.type === "internal",
         ),
       ],
     }),
@@ -90,10 +86,7 @@ export default defineType({
           { title: "External", value: "external" },
         ],
       },
-      validation: (rule) =>
-        rule.custom((value, context) =>
-          value || isInHiddenCardLink(context.document, context.path) ? true : "Required",
-        ),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "openInNewTab",

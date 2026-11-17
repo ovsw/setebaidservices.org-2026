@@ -1,110 +1,28 @@
 import { sectionThemeClass } from "./section-theme";
-import { Button } from "@/components/ui/button";
-import { getSafeLinkHref } from "@/lib/safe-href";
 import { cn } from "@/lib/utils";
 import type { HOME_PAGE_QUERY_RESULT, PAGE_QUERY_RESULT } from "@/sanity.types";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { stegaClean } from "next-sanity";
-import Link from "next/link";
 import styles from "./cta-banner.module.css";
-import CtaBannerPhoto from "./cta-banner-photo";
-import { buttonVariantAt, type PageButtonContext } from "./section-parts";
+import { CtaButtons } from "./cta-buttons";
+import type { PageButtonContext } from "./section-parts";
 
 type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type CtaBannerBlock = Extract<PageBlock, { _type: "ctaBanner" }>;
-
-type CtaBannerProps = CtaBannerBlock &
+type CtaBannerProps = Extract<PageBlock, { _type: "ctaBanner" }> &
   PageButtonContext & {
     dataAttribute?: (path: string) => string | undefined;
   };
 
 /*
- * CTA Banner — the handoff block, in two weights.
- *
- * Closing band: the last thing before the footer. Forest Floor field with
- * rounded top corners tucked under the section above, headline left, the two actions right, one amber
- * primary and one ghost. Nudge: a quiet card between sections for "not sure
- * yet?" moments; the card takes the surface one step off its field (cream on
- * white, white on cream, Forest Panel on green) and a hairline divides copy
- * from action on desktop. Both weights use the section rhythm and tuck like
- * every other section. Buttons stack on phones in both weights. Both reveal
- * on scroll; reduced motion skips it.
+ * Call to Action, closing band: the last thing before the footer. Forest
+ * Floor field with rounded top corners tucked under the section above,
+ * headline left, the two actions right, one amber primary and one ghost.
+ * Uses the section rhythm and tucks like every other section. Buttons stack
+ * on phones. Reveals on scroll; reduced motion skips it.
  */
-
-export function resolveCtaBannerVariant(variant?: string | null) {
-  return stegaClean(variant) === "nudge" ? "nudge" : "closing";
-}
-
-function CtaButtons({
-  buttons,
-  dataAttribute,
-  giving,
-  onDark,
-}: Readonly<{
-  buttons: CtaBannerProps["buttons"];
-  dataAttribute?: CtaBannerProps["dataAttribute"];
-  giving?: boolean;
-  onDark: boolean;
-}>) {
-  const actions = (buttons ?? []).slice(0, 2).flatMap((button, index) => {
-    const href = getSafeLinkHref(button.href);
-    if (!href) return [];
-    return [
-      {
-        href,
-        key: button._key ?? `${href}-${index}`,
-        label: stegaClean(button.text)?.trim() || "Learn more",
-        openInNewTab: Boolean(stegaClean(button.openInNewTab)),
-        path: `buttons[_key=="${button._key}"]`,
-      },
-    ];
-  }).map((action, index) => ({
-    ...action,
-    primary: index === 0,
-    variant: buttonVariantAt(["primary", "outline"], index, giving),
-  }));
-
-  if (!actions.length) return null;
-
-  return (
-    <div
-      className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
-      data-sanity={dataAttribute?.("buttons")}
-    >
-      {actions.map((action) => (
-        <Button
-          asChild
-          // Phones stack full-width buttons, and a label can be an email
-          // address wider than the screen. There the label wraps and the
-          // button grows past its standard height instead of overflowing.
-          className="w-full max-sm:h-auto max-sm:min-h-(--control-height) max-sm:py-3 max-sm:text-center max-sm:whitespace-normal max-sm:wrap-anywhere sm:w-auto"
-          key={action.key}
-          onDark={onDark}
-          variant={action.variant}
-        >
-          <Link
-            data-sanity={dataAttribute?.(action.path)}
-            href={action.href}
-            rel={action.openInNewTab ? "noopener noreferrer" : undefined}
-            target={action.openInNewTab ? "_blank" : undefined}
-          >
-            {action.label}
-            {action.openInNewTab ? (
-              <ArrowUpRight aria-hidden="true" className="size-4" />
-            ) : action.primary ? (
-              <ArrowRight aria-hidden="true" className="size-4" />
-            ) : null}
-          </Link>
-        </Button>
-      ))}
-    </div>
-  );
-}
-
-function CtaBannerBand({
+export default function CtaBanner({
   _key,
   background,
   buttons,
@@ -112,61 +30,13 @@ function CtaBannerBand({
   description,
   giving,
   title,
-  variant,
 }: CtaBannerProps) {
   if (!title) return null;
 
   const cleanKey = stegaClean(_key);
   const titleId = `cta-banner-${cleanKey}-title`;
   const cleanDescription = stegaClean(description)?.trim();
-  const weight = resolveCtaBannerVariant(variant);
-  const theme = background ?? (weight === "nudge" ? "white" : "green");
-
-  if (weight === "nudge") {
-    return (
-      <section
-        aria-labelledby={titleId}
-        className={`${sectionThemeClass(theme)} py-section`}
-        id={`cta-banner-${cleanKey}`}
-      >
-        <div className="container-content">
-          <div
-            className={cn(
-              // A flat card fill from the field, no outline (DESIGN.md § Elevation).
-              "grid gap-7 rounded-xl bg-card px-6 py-7 text-card-foreground sm:px-[38px] sm:py-[34px] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-0",
-              styles.reveal,
-            )}
-          >
-            <div className="grid gap-3 lg:pr-12">
-              <h2
-                className="text-balance font-display text-title-lg leading-[1.05] tracking-[-0.02em] font-extrabold sm:text-[34px]"
-                data-sanity={dataAttribute?.("title")}
-                id={titleId}
-              >
-                {title}
-              </h2>
-              {cleanDescription ? (
-                <p
-                  className="max-w-[36rem] text-pretty text-[17px]/[1.6] opacity-75"
-                  data-sanity={dataAttribute?.("description")}
-                >
-                  {description}
-                </p>
-              ) : null}
-            </div>
-            <div className="border-current/15 lg:border-l lg:pl-12">
-              <CtaButtons
-                buttons={buttons}
-                dataAttribute={dataAttribute}
-                giving={giving}
-                onDark={theme === "green"}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const theme = background ?? "green";
 
   return (
     <section
@@ -207,13 +77,5 @@ function CtaBannerBand({
         </div>
       </div>
     </section>
-  );
-}
-
-export default function CtaBanner(props: CtaBannerProps) {
-  return stegaClean(props.variant) === "photo" ? (
-    <CtaBannerPhoto {...props} />
-  ) : (
-    <CtaBannerBand {...props} />
   );
 }

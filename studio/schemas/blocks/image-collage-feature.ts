@@ -1,16 +1,6 @@
 import { Images } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { photoField } from "./shared/photo-field";
 import { sectionBackgroundField } from "./shared/section-background";
-
-const isBento = (parent: unknown) =>
-  (parent as { layout?: string } | undefined)?.layout === "bento";
-
-const captionField = defineField({
-  name: "caption",
-  type: "string",
-  description: "Bento layout only. Short handwritten caption on the photo.",
-});
 
 const imageCollagePoint = defineArrayMember({
   name: "imageCollageFeaturePoint",
@@ -64,20 +54,6 @@ export default defineType({
   fields: [
     sectionBackgroundField,
     defineField({
-      name: "layout",
-      type: "string",
-      description:
-        "Collage: text and points beside two overlapping photos. Bento: a text card with buttons and three captioned photos in a grid.",
-      initialValue: "collage",
-      options: {
-        layout: "radio",
-        list: [
-          { title: "Collage", value: "collage" },
-          { title: "Bento", value: "bento" },
-        ],
-      },
-    }),
-    defineField({
       name: "eyebrow",
       type: "string",
       description: "Optional short label shown above the heading.",
@@ -103,13 +79,7 @@ export default defineType({
       type: "array",
       description: "Add points in the order visitors should read them.",
       of: [imageCollagePoint],
-      hidden: ({ parent }) => isBento(parent),
-      validation: (rule) =>
-        rule.custom((points, context) =>
-          isBento(context.parent) || (Array.isArray(points) && points.length > 0)
-            ? true
-            : "Add at least one point",
-        ),
+      validation: (rule) => rule.required().min(1).error("Add at least one point"),
     }),
     defineField({
       name: "primaryImage",
@@ -125,7 +95,6 @@ export default defineType({
           type: "string",
           description: "Describe the image for visitors who cannot see it.",
         }),
-        captionField,
       ],
       validation: (rule) => rule.required(),
     }),
@@ -143,27 +112,10 @@ export default defineType({
           type: "string",
           description: "Describe the image for visitors who cannot see it.",
         }),
-        captionField,
       ],
       validation: (rule) => rule.required(),
     }),
-    photoField({
-      name: "tertiaryImage",
-      title: "Third Image",
-      description: "Bento layout only. The second small photo.",
-      extraFields: [captionField],
-      requiredWhen: isBento,
-      showWhen: isBento,
-    }),
-    defineField({
-      name: "buttons",
-      type: "array",
-      description: "Bento layout only. Up to two buttons in the text card. The first is the main action.",
-      of: [defineArrayMember({ type: "button" })],
-      hidden: ({ parent }) => !isBento(parent),
-      validation: (rule) => rule.max(2),
-    }),
-    { ...imageCollageCta, hidden: ({ parent }: { parent?: unknown }) => isBento(parent) },
+    imageCollageCta,
   ],
   preview: {
     select: { eyebrow: "eyebrow", media: "primaryImage" },

@@ -18,16 +18,16 @@ type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type StackedTimelineProps = Extract<PageBlock, { _type: "stackedTimeline" }> & {
+type DateCardsProps = Extract<PageBlock, { _type: "dateCards" }> & {
   dataAttribute?: DataAttribute;
 };
 
 /*
- * Timeline, date cards layout (prototype "Events"): up to three coloured
- * cards that lead with the item's small label set large, usually a date.
- * A card with a photo shows it across its top, flush with the card's top
- * and side edges. Fills rotate camp green, marigold and lake. The first section button shows
- * as a text link beside the heading. A faint open brand ring and a marigold
+ * Date cards (prototype "Events"): up to three coloured cards that lead
+ * with the card's date set large. A card with a photo shows it across its
+ * top, flush with the card's top and side edges. Fills rotate camp green,
+ * marigold and lake. The section link shows as a text link beside the
+ * heading. A faint open brand ring and a marigold
  * dot sit behind the cards.
  */
 const FILLS = ["card-bold", "card-warm", "card-cool"] as const;
@@ -66,19 +66,18 @@ function CardShell({
   );
 }
 
-export default function StackedTimelineDateCards({
+export default function DateCards({
   _key,
   background,
-  buttons,
   dataAttribute,
   items,
+  link,
   title,
-}: StackedTimelineProps) {
+}: DateCardsProps) {
   const cards = (items ?? []).slice(0, 3);
   if (!title?.length || !cards.length) return null;
 
   const headingId = `stacked-timeline-${stegaClean(_key)}-title`;
-  const headerLink = buttons?.[0];
 
   return (
     <section
@@ -100,10 +99,7 @@ export default function StackedTimelineDateCards({
           <h2 className="text-headline" data-sanity={dataAttribute?.("title")} id={headingId}>
             <HeadingText value={title} />
           </h2>
-          <ArrowLink
-            button={headerLink}
-            dataSanity={dataAttribute?.(`buttons[_key=="${headerLink?._key}"]`)}
-          />
+          <ArrowLink button={link} dataSanity={dataAttribute?.("link")} />
         </div>
         <ul
           className={cn(
@@ -143,7 +139,7 @@ export default function StackedTimelineDateCards({
                     </span>
                   ) : null}
                   <span className="flex flex-1 flex-col gap-4 p-7">
-                    {hasText(card.meta) ? <span className="text-figure">{card.meta}</span> : null}
+                    {hasText(card.date) ? <span className="text-figure">{card.date}</span> : null}
                     <span className="mt-2 text-title">{card.title}</span>
                     {hasText(card.text) ? (
                       <span className="text-small">{card.text}</span>

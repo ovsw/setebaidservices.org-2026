@@ -1,12 +1,10 @@
 import { groq } from "next-sanity";
-import { buttonQuery } from "./shared/button";
 import { imageQuery } from "./shared/image";
 import { urlInternalHref } from "./shared/internal-href";
 
 // @sanity-typegen-ignore
 export const imageCollageFeatureQuery = groq`
   _type == "imageCollageFeature" => {
-    "layout": coalesce(layout, "collage"),
     eyebrow,
     title[]{
       ...
@@ -23,12 +21,6 @@ export const imageCollageFeatureQuery = groq`
     secondaryImage {
       ${imageQuery}
     },
-    tertiaryImage {
-      ${imageQuery}
-    },
-    "buttons": array::compact(buttons[]{
-      ${buttonQuery}
-    }),
     cta {
       text,
       "openInNewTab": url.openInNewTab,

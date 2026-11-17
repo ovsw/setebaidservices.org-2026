@@ -1,6 +1,5 @@
 import { Images } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { isInHiddenCardLink, isTiltedSection } from "./shared/feature-card-visibility";
 import { sectionBackgroundField } from "./shared/section-background";
 
 const featureCardLink = defineField({
@@ -17,18 +16,11 @@ const featureCardLink = defineField({
       name: "url",
       title: "Destination",
       type: "customUrl",
-      validation: (rule) =>
-        rule.custom((value, context) =>
-          value || isInHiddenCardLink(context.document, context.path) ? true : "Required",
-        ),
+      validation: (rule) => rule.required(),
     }),
   ],
-  description: "Numbered grid only. The whole card links here.",
-  hidden: ({ document, path }) => isTiltedSection(document, path),
-  validation: (rule) =>
-    rule.custom((value, context) =>
-      value || isTiltedSection(context.document, context.path) ? true : "Required",
-    ),
+  description: "The whole card links here.",
+  validation: (rule) => rule.required(),
 });
 
 const featureCard = defineArrayMember({
@@ -62,31 +54,6 @@ const featureCard = defineArrayMember({
       rows: 4,
     }),
     featureCardLink,
-    defineField({
-      name: "buttons",
-      type: "array",
-      description: "Tilted photos only. Up to two buttons. The first is the main action.",
-      of: [defineArrayMember({ type: "button" })],
-      hidden: ({ document, path }) => !isTiltedSection(document, path),
-      validation: (rule) => rule.max(2),
-    }),
-    defineField({
-      name: "eyebrow",
-      type: "string",
-      description: 'Tilted layout only. Short uppercase label above the title, e.g. "Ages 7–13".',
-    }),
-    defineField({
-      name: "badgeLabel",
-      title: "Badge label",
-      type: "string",
-      description: 'Tilted layout only. Small text in the badge on the photo, e.g. "JUL".',
-    }),
-    defineField({
-      name: "badgeValue",
-      title: "Badge value",
-      type: "string",
-      description: 'Tilted layout only. Large text in the badge, e.g. "11–17".',
-    }),
   ],
   preview: {
     select: { media: "image", title: "title", subtitle: "text" },
@@ -97,14 +64,11 @@ const featureCardGroup = defineArrayMember({
   name: "featureCardGroup",
   title: "Row",
   type: "object",
-  initialValue: {
-    singleRowUpToFour: true,
-  },
   fields: [
     defineField({
       name: "heading",
       type: "string",
-      description: "Shown above the row in the numbered grid. The tilted layout does not show it.",
+      description: "Shown above the row.",
     }),
     defineField({
       name: "description",
@@ -112,22 +76,10 @@ const featureCardGroup = defineArrayMember({
       rows: 3,
     }),
     defineField({
-      name: "singleRowUpToFour",
-      title: "Keep up to four cards in one row",
-      type: "boolean",
-      description:
-        "When enabled, four cards stay together on one row on desktop. Turn it off for a two-by-two layout.",
-      initialValue: true,
-      components: {
-        input: (props) =>
-          props.renderDefault({ ...props, value: props.value ?? true }),
-      },
-    }),
-    defineField({
       name: "cards",
       type: "array",
       description:
-        "Add 2 to 6 cards. The layout follows the number of cards and the row setting above.",
+        "Add 2 to 6 cards. The columns follow the number of cards.",
       of: [featureCard],
       validation: (rule) => rule.required().min(2).max(6),
     }),
@@ -153,20 +105,6 @@ export default defineType({
     "One or two rows of linked image cards with automatic numbering and columns.",
   fields: [
     sectionBackgroundField,
-    defineField({
-      name: "layout",
-      type: "string",
-      description:
-        "Numbered grid: linked image cards in rows. Tilted photos: large cards with a tilted photo, a date badge and up to two buttons.",
-      initialValue: "grid",
-      options: {
-        layout: "radio",
-        list: [
-          { title: "Numbered grid", value: "grid" },
-          { title: "Tilted photos", value: "tilted" },
-        ],
-      },
-    }),
     defineField({
       name: "eyebrow",
       type: "string",
@@ -195,20 +133,12 @@ export default defineType({
           .required()
           .min(1)
           .max(2)
-          .custom((groups, context) => {
-            const layout = (context.parent as { layout?: string } | undefined)?.layout;
-            if (layout === "tilted") return true;
+          .custom((groups) => {
             const missing = (groups as { heading?: string }[] | undefined)?.some(
               (group) => !group?.heading?.trim(),
             );
             return missing ? "Give every row a heading" : true;
           }),
-    }),
-    defineField({
-      name: "link",
-      type: "button",
-      description: "Tilted layout only. Optional text link beside the heading.",
-      hidden: ({ parent }) => (parent as { layout?: string } | undefined)?.layout !== "tilted",
     }),
   ],
   preview: {

@@ -1,25 +1,19 @@
 import { groq } from "next-sanity";
-import { buttonQuery } from "./shared/button";
 import { imageQuery } from "./shared/image";
 import { urlInternalHref } from "./shared/internal-href";
 
 // @sanity-typegen-ignore
 export const featureCardsQuery = groq`
   _type == "featureCards" => {
-    "layout": coalesce(layout, "grid"),
     eyebrow,
     title[]{
       ...
     },
     description,
-    link{
-      ${buttonQuery}
-    },
     "groups": array::compact(groups[]{
       _key,
       heading,
       description,
-      "singleRowUpToFour": coalesce(singleRowUpToFour, true),
       "cards": array::compact(cards[]{
         _key,
         image {
@@ -27,12 +21,6 @@ export const featureCardsQuery = groq`
         },
         title,
         text,
-        eyebrow,
-        badgeLabel,
-        badgeValue,
-        "buttons": array::compact(buttons[]{
-          ${buttonQuery}
-        }),
         link {
           text,
           "openInNewTab": url.openInNewTab,

@@ -16,27 +16,27 @@ type PageBlock =
   | NonNullable<NonNullable<HOME_PAGE_QUERY_RESULT>["blocks"]>[number]
   | NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
-type BenefitCardsProps = Extract<PageBlock, { _type: "benefitCards" }> & {
+type RingPhotoBenefitsProps = Extract<PageBlock, { _type: "ringPhotoBenefits" }> & {
   dataAttribute?: DataAttribute;
 };
 
 /*
- * Feature Grid, round photo layout (prototype "Why Setebaid"): a round photo
+ * Benefits with round photo (prototype "Why Setebaid"): a round photo
  * inside the open brand ring with a marigold dot and a handwritten caption,
  * beside the heading and short points, each under a coloured rule.
  */
 const RULES = ["border-mark", "border-highlight", "border-fill-cool"] as const;
 
-export default function BenefitCardsRingPhoto({
+export default function RingPhotoBenefits({
   _key,
   background,
   caption,
-  cards,
   dataAttribute,
   image,
   link,
+  points,
   title,
-}: BenefitCardsProps) {
+}: RingPhotoBenefitsProps) {
   if (!title?.length) return null;
 
   const headingId = `benefit-cards-${stegaClean(_key)}-title`;
@@ -81,22 +81,22 @@ export default function BenefitCardsRingPhoto({
           <h2 className="text-headline" data-sanity={dataAttribute?.("title")} id={headingId}>
             <HeadingText value={title} />
           </h2>
-          {cards?.length ? (
+          {points?.length ? (
             <ul
               className="grid list-none grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-7 p-0"
-              data-sanity={dataAttribute?.("cards")}
+              data-sanity={dataAttribute?.("points")}
             >
-              {cards.map((card, index) => (
+              {points.map((point, index) => (
                 <li
                   className={cn(
                     "flex flex-col gap-3 border-t-[3px] pt-4",
                     RULES[index % RULES.length],
                   )}
-                  key={card._key}
+                  key={point._key}
                 >
-                  <h3 className="text-title leading-[1.15]">{card.title}</h3>
+                  <h3 className="text-title leading-[1.15]">{point.title}</h3>
                   <div className="grid gap-3 text-body leading-[1.6] text-muted-foreground">
-                    <BodyText value={card.body} />
+                    <BodyText value={point.body} />
                   </div>
                 </li>
               ))}

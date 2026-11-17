@@ -1,27 +1,11 @@
 import { groq } from "next-sanity";
-import { imageQuery } from "./shared/image";
-import { urlInternalHref } from "./shared/internal-href";
+import { ctaButtonsQuery } from "./shared/cta-buttons";
 
 // @sanity-typegen-ignore
 export const ctaBannerQuery = groq`
   _type == "ctaBanner" => {
-    variant,
-    eyebrow,
-    image{
-      ${imageQuery}
-    },
     title,
     description,
-    "buttons": array::compact(buttons[]{
-      _key,
-      _type,
-      text,
-      "openInNewTab": url.openInNewTab,
-      "href": select(
-        url.type == "internal" => ${urlInternalHref},
-        url.type == "external" => url.external,
-        url.href
-      )
-    })
+    ${ctaButtonsQuery}
   }
 `;
