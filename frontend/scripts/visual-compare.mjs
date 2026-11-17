@@ -45,8 +45,11 @@ const out = path.resolve(flag("--out", path.join("visual-compare", new Date().to
 mkdirSync(out, { recursive: true });
 
 async function sitemapPaths() {
-  const xml = await (await fetch(new URL("/sitemap.xml", base))).text();
-  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
+  const response = await fetch(new URL("/sitemap.xml", base));
+  if (!response.ok) throw new Error(`No sitemap at ${base}: HTTP ${response.status}. Pass --paths instead.`);
+  const found = [...(await response.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
+  if (!found.length) throw new Error(`The sitemap at ${base} lists no pages. Pass --paths instead.`);
+  return found;
 }
 const paths = flag("--paths") ? flag("--paths").split(",") : await sitemapPaths();
 
@@ -94,8 +97,13 @@ async function compare(a, b, diff) {
   const h = Math.max(sa.h, sb.h);
   if (sa.w !== w || sa.h !== h) await run("magick", [a, "-background", "magenta", "-gravity", "north", "-extent", `${w}x${h}`, a]);
   if (sb.w !== w || sb.h !== h) await run("magick", [b, "-background", "magenta", "-gravity", "north", "-extent", `${w}x${h}`, b]);
-  const result = await run("magick", ["compare", "-metric", "AE", "-fuzz", fuzz, a, b, diff]).catch((error) => error);
+  // `magick compare` exits 1 when the images differ, 2 on a real error.
+  const result = await run("magick", ["compare", "-metric", "AE", "-fuzz", fuzz, a, b, diff]).catch((error) => {
+    if (error.code === 1) return error;
+    throw error;
+  });
   const pixels = Number.parseFloat(String(result.stderr).trim().split(" ")[0]);
+  if (!Number.isFinite(pixels)) throw new Error(`magick compare gave no pixel count: ${String(result.stderr).trim()}`);
   return { pixels, total: w * h, baseHeight: sa.h, headHeight: sb.h };
 }
 

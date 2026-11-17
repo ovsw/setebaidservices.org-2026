@@ -32,6 +32,9 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 const DESIGN_FIELD = { ctaBanner: "variant" };
+const TILTED_CARD_LIMIT = 6;
+/** New sections whose background is fixed, so a missing stored one is fine. */
+const FIXED_BACKGROUND = new Set(["photoBanner"]);
 
 /** Old type and stored design value -> new section type. */
 const SPLITS = {
@@ -141,12 +144,27 @@ function reshape(block, target) {
   if (target === "tiltedFeatureCards") {
     const { groups, ...rest } = block;
     const leftovers = [];
-    const cards = (groups ?? []).flatMap((group) => {
+    const seen = new Set();
+    const flat = (groups ?? []).flatMap((group) => {
       for (const key of ["heading", "description"]) {
         if (hasContent(group[key])) leftovers.push({ path: `groups[_key=="${group._key}"].${key}`, value: group[key] });
       }
-      return group.cards ?? [];
+      // Rows kept their own card keys; one flat list needs unique ones.
+      return (group.cards ?? []).map((card) => {
+        if (!card?._key || !seen.has(card._key)) {
+          if (card?._key) seen.add(card._key);
+          return card;
+        }
+        const _key = `${card._key}-${group._key}`;
+        seen.add(_key);
+        return { ...card, _key };
+      });
     });
+    // The new section holds at most six cards; report any beyond that.
+    for (const card of flat.slice(TILTED_CARD_LIMIT)) {
+      leftovers.push({ path: `cards[_key=="${card?._key}"]`, value: card });
+    }
+    const cards = flat.slice(0, TILTED_CARD_LIMIT);
     return { block: groups === undefined ? rest : { ...rest, cards }, leftovers };
   }
   if (target === "ringPhotoBenefits") {
@@ -174,7 +192,8 @@ function reshape(block, target) {
     const groups = block.groups?.map((group) => ({
       ...group,
       cards: group.cards?.map((card) => {
-        if (card.link || !card.buttons?.length) return card;
+        // A link draws only with both a text and a destination.
+        if ((card.link?.text && card.link?.url) || !card.buttons?.length) return card;
         const [first, ...others] = card.buttons;
         const path = `groups[_key=="${group._key}"].cards[_key=="${card._key}"]`;
         for (const button of others) {
@@ -229,26 +248,34 @@ function trim(node, shape, path, leftovers) {
  * Blocks of other types come back unchanged. Running it twice changes nothing.
  */
 export function migrateBlock(block) {
-  if (!block || !(block._type in SPLITS)) return { block, leftovers: [] };
+  if (!block || !(block._type in SPLITS)) return { block, leftovers: [], problems: [] };
   const designField = DESIGN_FIELD[block._type] ?? "layout";
   const target = SPLITS[block._type][block[designField]] ?? block._type;
   const reshaped = reshape(block, target);
   const leftovers = [...reshaped.leftovers];
   const migrated = trim({ ...reshaped.block, _type: target }, SHAPES[target], "", leftovers);
-  return { block: migrated, leftovers };
+  // A block with no stored background got its colour from the old type's
+  // legacy fallback, which the new type does not have: it would change colour.
+  const problems =
+    target !== block._type && !FIXED_BACKGROUND.has(target) && !hasContent(block.background)
+      ? [`no stored background; moving it to ${target} would change its colour`]
+      : [];
+  return { block: migrated, leftovers, problems };
 }
 
 /** A document's `blocks` in the new shape, with the leftovers of every block. */
 export function migrateBlocks(blocks) {
   const leftovers = [];
+  const problems = [];
   const migrated = blocks.map((block) => {
     const result = migrateBlock(block);
     for (const leftover of result.leftovers) {
       leftovers.push({ ...leftover, path: `blocks[_key=="${block._key}"].${leftover.path}` });
     }
+    for (const problem of result.problems) problems.push(`blocks[_key=="${block._key}"]: ${problem}`);
     return result.block;
   });
-  return { blocks: migrated, leftovers };
+  return { blocks: migrated, leftovers, problems };
 }
 
 /** Throws unless `file` exists, is under 24 hours old, and passes `gzip -t`. */
@@ -286,8 +313,10 @@ async function main() {
 
   const changes = [];
   const counts = {};
+  const allProblems = [];
   for (const document of documents) {
-    const { blocks, leftovers } = migrateBlocks(document.blocks);
+    const { blocks, leftovers, problems } = migrateBlocks(document.blocks);
+    for (const problem of problems) allProblems.push(`${document._id} ${problem}`);
     const changed = blocks.filter(
       (block, index) => JSON.stringify(block) !== JSON.stringify(document.blocks[index]),
     );
@@ -308,6 +337,11 @@ async function main() {
   console.log("\nBlocks changed:");
   for (const [label, count] of Object.entries(counts).sort()) console.log(`  ${count}  ${label}`);
   console.log(`${changes.length} of ${documents.length} documents need the new shape.`);
+  if (allProblems.length) {
+    console.log("\nProblems (fix these first; --apply refuses while any remain):");
+    for (const problem of allProblems) console.log(`  ${problem}`);
+    if (apply) process.exit(1);
+  }
   if (!apply || !changes.length) return;
 
   const transaction = client.transaction();

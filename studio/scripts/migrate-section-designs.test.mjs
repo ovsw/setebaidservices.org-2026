@@ -248,12 +248,12 @@ test("a default-design block loses only its stored design value", () => {
 
 test("a block with no stored design value and only its own fields comes back unchanged", () => {
   const timeline = { _key: "t", _type: "stackedTimeline", title: heading, items: [{ _key: "i", _type: "stackedTimelineItem", title: "Bus", meta: "9 am" }] };
-  assert.deepEqual(migrateBlock(timeline), { block: timeline, leftovers: [] });
+  assert.deepEqual(migrateBlock(timeline), { block: timeline, leftovers: [], problems: [] });
 });
 
 test("a block of an unrelated type comes back unchanged, extra fields and all", () => {
   const story = { _key: "s", _type: "storyFeature", layout: "anything", title: "Story" };
-  assert.deepEqual(migrateBlock(story), { block: story, leftovers: [] });
+  assert.deepEqual(migrateBlock(story), { block: story, leftovers: [], problems: [] });
 });
 
 test("running the migration twice changes nothing", () => {
@@ -291,4 +291,49 @@ test("--apply refuses a missing, stale or broken backup", () => {
   const broken = join(dir, "broken.tar.gz");
   writeFileSync(broken, "not gzip");
   assert.throws(() => assertFreshBackup(broken));
+});
+
+test("flattened tilted cards get unique keys and stop at six", () => {
+  const card = (key) => ({ _key: key, _type: "featureCardItem", title: key, image: image(key) });
+  const { block, leftovers } = migrateBlock({
+    _key: "t",
+    _type: "featureCards",
+    background: "cream",
+    layout: "tilted",
+    groups: [
+      { _key: "g1", _type: "featureCardGroup", cards: [card("c1"), card("c2"), card("c3"), card("c4")] },
+      { _key: "g2", _type: "featureCardGroup", cards: [card("c1"), card("c5"), card("c6"), card("c7")] },
+    ],
+  });
+  assert.deepEqual(block.cards.map((c) => c._key), ["c1", "c2", "c3", "c4", "c1-g2", "c5"]);
+  assert.deepEqual(leftovers.map((l) => l.path), ['cards[_key=="c6"]', 'cards[_key=="c7"]']);
+});
+
+test("a grid card whose link cannot draw takes its first button instead", () => {
+  const { block } = migrateBlock({
+    _key: "g",
+    _type: "featureCards",
+    layout: "grid",
+    groups: [
+      {
+        _key: "r",
+        _type: "featureCardGroup",
+        heading: "Programs",
+        cards: [{ _key: "c", _type: "featureCardItem", title: "CIT", link: { text: "" }, buttons: [button("a", "Read")] }],
+      },
+    ],
+  });
+  assert.deepEqual(block.groups[0].cards[0].link, { text: "Read", url: url("https://x/a") });
+  assert.equal("buttons" in block.groups[0].cards[0], false);
+});
+
+test("a moved block with no stored background is reported as a problem", () => {
+  const moved = migrateBlock({ _key: "n", _type: "ctaBanner", variant: "nudge", title: "Hi" });
+  assert.equal(moved.problems.length, 1);
+  const photo = migrateBlock({ _key: "p", _type: "ctaBanner", variant: "photo", title: "Hi", image: image("x") });
+  assert.deepEqual(photo.problems, []);
+  const kept = migrateBlock({ _key: "k", _type: "ctaBanner", variant: "closing", title: "Hi" });
+  assert.deepEqual(kept.problems, []);
+  const { problems } = migrateBlocks([{ _key: "n", _type: "ctaBanner", variant: "nudge", title: "Hi" }]);
+  assert.match(problems[0], /^blocks\[_key=="n"\]: no stored background/);
 });
