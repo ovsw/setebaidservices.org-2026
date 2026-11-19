@@ -15,7 +15,8 @@ export async function GET(
 ) {
   const { appeal } = await ctx.params;
 
-  if (!isRouterRequest(request.headers)) {
+  // Next answers HEAD with this handler too; link checkers send HEAD.
+  if (request.method === "GET" && !isRouterRequest(request.headers)) {
     const code = APPEAL_CODE_PATTERN.test(appeal) ? appeal : "unknown";
     const headers = new Headers(request.headers);
     after(() => track("give_click", { appeal: code }, { headers }));
