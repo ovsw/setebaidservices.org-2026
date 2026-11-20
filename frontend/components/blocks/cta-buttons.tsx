@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { givingLink } from "@/lib/giving";
 import { getSafeLinkHref } from "@/lib/safe-href";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { stegaClean } from "next-sanity";
@@ -65,7 +66,7 @@ export function CtaButtons({
         >
           <Link
             data-sanity={dataAttribute?.(action.path)}
-            href={action.href}
+            {...givingLink(action.href)}
             rel={action.openInNewTab ? "noopener noreferrer" : undefined}
             target={action.openInNewTab ? "_blank" : undefined}
           >

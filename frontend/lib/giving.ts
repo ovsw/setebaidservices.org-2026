@@ -18,3 +18,16 @@ export function isRouterRequest(headers: Headers) {
     Boolean(headers.get("sec-purpose")?.includes("prefetch"))
   );
 }
+
+const GIVE_ADDRESS = /^\/give\/[a-z0-9-]{1,64}$/;
+
+/**
+ * The link attributes for a button whose address is a /give/ address. The
+ * button links straight to Camp Brain, and the browser pings the /give/
+ * address in the background when it is clicked, so the server still counts
+ * the click. A redirect from our domain to Camp Brain's looks like phishing
+ * to some phone mail apps, which then show an "unsafe page" warning.
+ */
+export function givingLink(href: string): { href: string; ping?: string } {
+  return GIVE_ADDRESS.test(href) ? { href: GIVING_URL, ping: href } : { href };
+}

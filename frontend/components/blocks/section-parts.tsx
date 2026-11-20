@@ -1,5 +1,6 @@
 import { simpleRichTextComponents } from "@/components/simple-rich-text";
 import { Button } from "@/components/ui/button";
+import { givingLink } from "@/lib/giving";
 import { getSafeLinkHref } from "@/lib/safe-href";
 import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
@@ -220,7 +221,7 @@ export function SectionButtonLink({
     >
       <Link
         data-sanity={dataSanity}
-        href={action.href}
+        {...givingLink(action.href)}
         rel={action.openInNewTab ? "noopener noreferrer" : undefined}
         target={action.openInNewTab ? "_blank" : undefined}
       >
@@ -296,7 +297,7 @@ export function ArrowLink({
         className,
       )}
       data-sanity={dataSanity}
-      href={action.href}
+      {...givingLink(action.href)}
       rel={action.openInNewTab ? "noopener noreferrer" : undefined}
       target={action.openInNewTab ? "_blank" : undefined}
     >
