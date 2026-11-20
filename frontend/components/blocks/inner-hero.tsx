@@ -7,6 +7,7 @@ import {
   type PageButtonContext,
 } from "@/components/blocks/section-parts";
 import { Button } from "@/components/ui/button";
+import { givingLink } from "@/lib/giving";
 import { getSafeLinkHref } from "@/lib/safe-href";
 import { urlFor } from "@/sanity/lib/image";
 import type { HOME_PAGE_QUERY_RESULT, PAGE_QUERY_RESULT } from "@/sanity.types";
@@ -177,7 +178,7 @@ export default function InnerHero({
                       data-sanity={dataAttribute?.(
                         `buttons[_key=="${button._key}"]`,
                       )}
-                      href={href}
+                      {...givingLink(href)}
                       rel={
                         stegaClean(button.openInNewTab)
                           ? "noopener noreferrer"
